@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0D1B2A">
+<title>تسجيل حضور — شماماسة 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0D1B2A;--blue:#1A56DB;--lblue:#DBEAFE;--green:#16A34A;--lgreen:#DCFCE7;--red:#DC2626;--lred:#FEE2E2;--amber:#D97706;--lamber:#FEF3C7;--purple:#7C3AED;--lpurp:#EDE9FE;--gray:#F1F5F9;--border:#E2E8F0;--text2:#64748B;--r:12px;--sh:0 1px 3px rgba(0,0,0,.1)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:'Tajawal',sans-serif;background:#F8FAFC;color:var(--ink);direction:rtl;-webkit-font-smoothing:antialiased}
+.hdr{background:var(--ink);padding:12px 16px 10px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.hdr h1{font-size:14px;font-weight:900;color:#fff;line-height:1.2;flex:1}
+.hdr p{font-size:10px;color:#94A3B8;margin-top:1px}
+.wpill{background:rgba(255,255,255,.1);color:#CBD5E1;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
+.ubar{background:#16294d;padding:6px 16px;display:flex;align-items:center;gap:10px;min-height:36px}
+.uname{font-size:11px;font-weight:700;color:#94A3B8}
+.urole{background:rgba(255,255,255,.1);color:#CBD5E1;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
+.uchurch{font-size:10px;color:#64748B;flex:1}
+.logout-btn{background:none;border:1px solid rgba(255,255,255,.2);color:#94A3B8;padding:4px 10px;border-radius:6px;font-family:Tajawal,sans-serif;font-size:11px;font-weight:700;cursor:pointer}
+.login-prompt{font-size:11px;color:#64748B;flex:1}
+.login-link{color:#60A5FA;font-weight:700;cursor:pointer;text-decoration:underline}
+.stats{background:var(--ink);padding:0 16px 12px;display:flex;gap:10px}
+.sc{flex:1;background:rgba(255,255,255,.07);border-radius:10px;padding:8px;text-align:center}
+.sn{font-size:20px;font-weight:900;color:#fff;line-height:1}
+.sl{font-size:9px;color:#94A3B8;margin-top:1px}
+.tabs{display:flex;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:99;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1;min-width:55px;padding:10px 3px;border:none;background:none;font-family:'Tajawal',sans-serif;font-size:10px;font-weight:700;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue)}
+.cnt{padding:12px;max-width:520px;margin:0 auto}
+.panel{display:none}.panel.on{display:block}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
+.cb{padding:14px}
+.cb label{display:block;font-size:11px;font-weight:700;color:var(--text2);margin-bottom:5px}
+.fld{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;color:var(--ink);background:var(--gray);outline:none;transition:.2s}
+.fld:focus{border-color:var(--blue);background:#fff}
+.fnum{text-align:center;letter-spacing:3px;font-size:20px}
+select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;padding-left:30px}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;border:none;border-radius:10px;margin-top:10px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:.15s}
+.btn:active{transform:scale(.97)}
+.bp{background:var(--blue);color:#fff}
+.bg_{background:var(--gray);color:var(--ink);border:1.5px solid var(--border)}
+.qwrap{background:#000;border-radius:var(--r);overflow:hidden;aspect-ratio:1;max-width:300px;margin:0 auto 10px;position:relative}
+#qr-reader{width:100%!important}
+#qr-reader>*{border:none!important}
+.qframe{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.qbox{width:180px;height:180px;border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.45);position:relative}
+.qbox::before,.qbox::after,.qcbl,.qctr{content:'';position:absolute;width:24px;height:24px;border-color:#4ADE80;border-style:solid}
+.qbox::before{top:-2px;right:-2px;border-width:3px 3px 0 0;border-radius:0 6px 0 0}
+.qbox::after{bottom:-2px;left:-2px;border-width:0 0 3px 3px;border-radius:0 0 0 6px}
+.qcbl{bottom:-2px;right:-2px;border-width:0 3px 3px 0;border-radius:0 0 6px 0}
+.qctr{top:-2px;left:-2px;border-width:3px 0 0 3px;border-radius:6px 0 0 0}
+.shint{text-align:center;font-size:11px;color:var(--text2);margin-bottom:8px}
+.res{border-radius:var(--r);padding:14px;margin-bottom:10px;animation:pop .2s ease}
+@keyframes pop{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
+.ok_{background:var(--lgreen);border:1.5px solid #86EFAC}
+.err_{background:var(--lred);border:1.5px solid #FCA5A5}
+.warn_{background:var(--lamber);border:1.5px solid #FCD34D}
+.info_{background:var(--lblue);border:1.5px solid #93C5FD}
+.ri{font-size:26px;margin-bottom:5px;text-align:center}
+.rn{font-size:17px;font-weight:900;text-align:center;margin-bottom:3px}
+.rm{font-size:12px;font-weight:700;text-align:center;margin-bottom:10px}
+.ok_ .rm{color:var(--green)}.err_ .rm{color:var(--red)}.warn_ .rm{color:var(--amber)}.info_ .rm{color:var(--blue)}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(255,255,255,.6);border-radius:8px;padding:8px}
+.ri2{text-align:center}.rl{font-size:9px;color:var(--text2)}.rv{font-size:11px;font-weight:800}
+.prow{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:.1s}
+.prow:last-child{border-bottom:none}
+.prow:hover,.prow:active{background:var(--gray)}
+.prow.qual{background:#F0FDF4}
+.prnk{font-size:10px;color:#CBD5E1;min-width:18px;text-align:center;font-weight:700}
+.pi{flex:1;min-width:0}
+.pn{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm{font-size:9.5px;color:var(--text2);margin-top:1px}
+.pr{text-align:left;flex-shrink:0}
+.pt{font-size:18px;font-weight:900;line-height:1}
+.pof{font-size:9px;color:var(--text2)}
+.mbar{height:4px;border-radius:2px;background:var(--border);width:44px;margin-top:2px;overflow:hidden}
+.mfill{height:100%;border-radius:2px}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px}
+.mc{border-radius:8px;padding:7px 4px;text-align:center}
+.mc .mn{font-size:9px;font-weight:700;margin-bottom:2px}
+.mc .mv{font-size:16px;font-weight:900}
+.mz{background:var(--gray)}.mz .mn,.mz .mv{color:#CBD5E1}
+.ml{background:#DBEAFE}.ml .mn{color:#1E40AF}.ml .mv{color:#1E3A8A}
+.mm{background:#BFDBFE}.mm .mn,.mm .mv{color:#1E3A8A}
+.mh{background:#2563EB}.mh .mn,.mh .mv{color:#fff}
+.de{display:flex;align-items:flex-start;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)}
+.de:last-child{border-bottom:none}
+.dedot{width:7px;height:7px;border-radius:50%;background:var(--green);margin-top:4px;flex-shrink:0}
+.dei{flex:1}
+.des{font-size:12px;font-weight:800}
+.desp{font-size:10px;color:var(--blue);font-weight:700;margin-top:1px}
+.der{font-size:10px;color:var(--text2);margin-top:1px}
+.krow{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.kpi{background:#fff;border-radius:var(--r);padding:10px;box-shadow:var(--sh);text-align:center;border-top:3px solid var(--blue)}
+.kpi.g{border-color:var(--green)}.kpi.a{border-color:var(--amber)}.kpi.v{border-color:var(--purple)}
+.knum{font-size:22px;font-weight:900}
+.kpi.g .knum{color:var(--green)}.kpi.a .knum{color:var(--amber)}.kpi.v .knum{color:var(--purple)}
+.klbl{font-size:9.5px;color:var(--text2);margin-top:2px;font-weight:600}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700}
+.b-b{background:var(--lblue);color:var(--blue)}.b-p{background:var(--lpurp);color:var(--purple)}.b-a{background:var(--lamber);color:var(--amber)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center;z-index:999;animation:fi .2s}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.ovc{background:#fff;border-radius:18px 18px 0 0;width:100%;max-width:520px;padding:18px 16px 28px;animation:si .22s ease}
+@keyframes si{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.ovh{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 14px}
+.ovn{font-size:18px;font-weight:900;text-align:center;margin-bottom:10px}
+.ovg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--gray);border-radius:10px;padding:10px;margin-bottom:14px}
+.ovi{text-align:center}.ovl{font-size:9px;color:var(--text2)}.ovv{font-size:11px;font-weight:800}
+.ovb{display:flex;gap:8px}.ovb .btn{margin-top:0;flex:1}
+.swrap{position:relative;margin-bottom:10px}
+.swrap .fld{padding-right:38px}
+.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none}
+.lock{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:40vh;text-align:center;padding:24px}
+.lock-icon{font-size:48px;margin-bottom:12px}
+.lock-title{font-size:16px;font-weight:900;margin-bottom:6px}
+.lock-sub{font-size:12px;color:var(--text2);margin-bottom:20px;line-height:1.7}
+.form-grid{display:grid;gap:8px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cat-info{font-size:10px;color:var(--text2);margin-top:4px;font-style:italic}
+.role-sa{color:#D97706;font-weight:700}.role-ad{color:#7C3AED;font-weight:700}.role-sv{color:#1A56DB;font-weight:700}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:30px;font-size:12px;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:9999;white-space:nowrap;animation:ti .25s ease}
+@keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(8px)}}
+.spin{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.spin-b{border-top-color:var(--blue);border-color:var(--border)}
+.empty{text-align:center;padding:36px 16px;color:#CBD5E1}
+.ei{font-size:32px;margin-bottom:8px}
+.ldg{text-align:center;padding:28px;color:var(--text2);font-size:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div style="flex:1">
+    <h1>⛪ تسجيل حضور قداس الأحد</h1>
+    <p>مهرجان شماماسة 2026 — إيبارشية المعادي</p>
+  </div>
+  <div class="wpill" id="wPill">أسبوع —</div>
+</div>
+
+<div class="ubar" id="ubar">
+  <span class="login-prompt">لتسجيل الدخول وعرض التقارير:
+    <span class="login-link" onclick="openLogin()">دخول</span>
+  </span>
+</div>
+
+<div class="stats">
+  <div class="sc"><div class="sn" id="sToday">—</div><div class="sl">سجّلوا اليوم</div></div>
+  <div class="sc"><div class="sn" id="sWeek">—</div><div class="sl">سجّلوا الأسبوع</div></div>
+  <div class="sc"><div class="sn" id="sSess">0</div><div class="sl">الجلسة</div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" id="tab-qr"     onclick="sw('qr',this)">📷 سكان</button>
+  <button class="tab"    id="tab-manual" onclick="sw('manual',this)">⌨️ يدوي</button>
+  <button class="tab"    id="tab-search" onclick="swAuth('search',this)">🔍 بحث</button>
+  <button class="tab"    id="tab-mine"   onclick="sw('mine',this)">📊 سجلّي</button>
+  <button class="tab"    id="tab-church" onclick="swAuth('church',this)">🏛️ كنيسة</button>
+  <button class="tab"    id="tab-add"    onclick="swAuth('add',this)">➕ إضافة</button>
+  <button class="tab"    id="tab-hist"   onclick="sw('hist',this)">📋 جلسة</button>
+</div>
+
+<div class="cnt">
+
+<!-- QR -->
+<div class="panel on" id="p-qr">
+  <div id="qask" class="card"><div class="cb" style="text-align:center;padding:22px 16px">
+    <div style="font-size:44px;margin-bottom:10px">📷</div>
+    <div style="font-size:15px;font-weight:900;margin-bottom:6px">تفعيل الكاميرا</div>
+    <div style="font-size:11px;color:var(--text2);margin-bottom:18px;line-height:1.7">اضغط الزر — التليفون هيسألك تصريح الكاميرا — اضغط <strong>السماح</strong></div>
+    <button onclick="reqCam()" class="btn bp" style="margin-top:0">📷 تفعيل الكاميرا</button>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">أو سكان من صورة محفوظة</div>
+      <button onclick="scanFile()" style="background:var(--gray);border:1.5px solid var(--border);border-radius:10px;padding:8px 18px;font-family:Tajawal,sans-serif;font-size:12px;font-weight:700;color:var(--blue);cursor:pointer">🖼️ اختر صورة QR</button>
+    </div>
+  </div></div>
+  <div id="qwrap" style="display:none">
+    <div class="card"><div class="cb" style="padding:8px">
+      <div class="qwrap"><div id="qr-reader"></div>
+        <div class="qframe"><div class="qbox"><span class="qcbl"></span><span class="qctr"></span></div></div>
+      </div>
+    </div></div>
+    <div class="shint">📱 وجّه الكاميرا على كارنيه الشخص</div>
+    <div style="text-align:center;margin-bottom:10px">
+      <button onclick="scanFile()" style="background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:8px 16px;font-family:Tajawal,sans-serif;font-size:12px;font-weight:700;color:var(--blue);cursor:pointer;box-shadow:var(--sh)">🖼️ سكان من صورة</button>
+    </div>
+  </div>
+  <div id="qerr" style="display:none"></div>
+  <div id="r-qr"></div>
+</div>
+
+<!-- MANUAL -->
+<div class="panel" id="p-manual">
+  <div class="card"><div class="cb">
+    <label>الكود</label>
+    <input class="fld fnum" id="mCode" type="number" placeholder="00000" inputmode="numeric" onkeydown="if(event.key==='Enter')doMan()">
+    <button class="btn bp" onclick="doMan()">🔍 بحث وتسجيل</button>
+  </div></div>
+  <div id="r-man"></div>
+</div>
+
+<!-- SEARCH -->
+<div class="panel" id="p-search">
+  <div id="search-lock" class="lock" style="display:none">
+    <div class="lock-icon">🔒</div><div class="lock-title">تسجيل الدخول مطلوب</div>
+    <div class="lock-sub">البحث متاح للمشرفين فقط</div>
+    <button class="btn bp" style="margin-top:0;max-width:200px" onclick="openLogin()">🔑 دخول</button>
+  </div>
+  <div id="search-content" style="display:none">
+    <div class="card"><div class="cb">
+      <label>ابحث بالاسم أو الكود</label>
+      <div class="swrap"><input class="fld" id="sInput" type="text" placeholder="اكتب اسم أو كود..." oninput="doSearch()" autocomplete="off"><span class="sico">🔍</span></div>
+    </div></div>
+    <div class="card" id="sResults"><div class="empty"><div class="ei">🔍</div>ابدأ الكتابة</div></div>
+  </div>
+</div>
+
+<!-- MY RECORD -->
+<div class="panel" id="p-mine">
+  <div class="card"><div class="cb">
+    <label>كودك</label>
+    <input class="fld fnum" id="myCode" type="number" placeholder="00000" inputmode="numeric" onkeydown="if(event.key==='Enter')doMine()">
+    <button class="btn bp" onclick="doMine()">📊 اعرض سجلّي</button>
+  </div></div>
+  <div id="r-mine"></div>
+</div>
+
+<!-- CHURCH -->
+<div class="panel" id="p-church">
+  <div id="church-lock" class="lock" style="display:none">
+    <div class="lock-icon">🔒</div><div class="lock-title">تسجيل الدخول مطلوب</div>
+    <button class="btn bp" style="margin-top:0;max-width:200px" onclick="openLogin()">🔑 دخول</button>
+  </div>
+  <div id="church-content" style="display:none">
+    <div class="card"><div class="cb">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div style="flex:1;min-width:140px"><label>الكنيسة</label><select class="fld" id="chSel" onchange="loadChurch()"><option value="">— اختر —</option></select></div>
+        <div style="min-width:100px"><label>الفئة</label><select class="fld" id="catSel" onchange="filterChurch()"><option value="">الكل</option><option value="طالب">طالب</option><option value="ثانوية">ثانوية</option><option value="موظف">موظف</option></select></div>
+        <div style="min-width:90px"><label>النوع</label><select class="fld" id="genSel" onchange="filterChurch()"><option value="">الكل</option><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select></div>
+      </div>
+      <div id="chSearchWrap" style="display:none;margin-top:8px">
+        <div class="swrap" style="margin-bottom:0"><input class="fld" id="chSearch" type="text" placeholder="بحث في الأعضاء..." oninput="filterChurch()" autocomplete="off"><span class="sico">🔍</span></div>
+      </div>
+    </div></div>
+    <div id="chKpi" style="display:none" class="krow"></div>
+    <div class="card" id="chCard" style="display:none"><div id="chList"></div></div>
+    <div id="chAdmin" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ADD -->
+<div class="panel" id="p-add">
+  <div id="add-lock" class="lock" style="display:none">
+    <div class="lock-icon">🔒</div><div class="lock-title">للأدمن العام فقط</div>
+  </div>
+  <div id="add-content" style="display:none">
+    <div class="card"><div class="cb">
+      <div style="font-size:14px;font-weight:900;margin-bottom:12px">➕ إضافة عضو جديد</div>
+      <div class="form-grid">
+        <div><label>الكود *</label><input class="fld fnum" id="addCode" type="number" placeholder="00000" inputmode="numeric"></div>
+        <div><label>الاسم الكامل *</label><input class="fld" id="addName" type="text" placeholder="الاسم الثلاثي"></div>
+        <div><label>الكنيسة *</label><select class="fld" id="addChurch"><option value="">— اختر —</option></select></div>
+        <div><label>المستوى</label><input class="fld" id="addLevel" type="text" placeholder="1-a, 1-b, 2..."></div>
+        <div class="form-row">
+          <div>
+            <label>الفئة *</label>
+            <select class="fld" id="addCat" onchange="updateCatInfo()">
+              <option value="">— اختر —</option>
+              <option value="طالب">طالب (حد 12)</option>
+              <option value="ثانوية">ثانوية (حد 6)</option>
+              <option value="موظف">موظف (حد 6)</option>
+            </select>
+            <div class="cat-info" id="catInfo"></div>
+          </div>
+          <div><label>النوع *</label><select class="fld" id="addGender"><option value="">— اختر —</option><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select></div>
+        </div>
+      </div>
+      <button class="btn bp" onclick="doAdd()" style="margin-top:14px">➕ إضافة</button>
+    </div></div>
+    <div id="r-add"></div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div class="panel" id="p-hist">
+  <div class="card">
+    <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:13px;font-weight:800">سجل الجلسة</span>
+      <span id="hCnt" style="font-size:11px;color:var(--text2)">0 تسجيل</span>
+    </div>
+    <div id="hList"><div class="empty"><div class="ei">🕐</div>لا يوجد تسجيلات بعد</div></div>
+  </div>
+</div>
+
+</div>
+
+<!-- OVERLAYS -->
+<div class="ov" id="ov" style="display:none" onclick="ovTap(event)">
+  <div class="ovc">
+    <div class="ovh"></div>
+    <div class="ovn" id="ovN">—</div>
+    <div class="ovg">
+      <div class="ovi"><div class="ovl">الكود</div><div class="ovv" id="ovC">—</div></div>
+      <div class="ovi"><div class="ovl">المستوى</div><div class="ovv" id="ovL">—</div></div>
+      <div class="ovi"><div class="ovl">الكنيسة</div><div class="ovv" id="ovCh" style="font-size:9px">—</div></div>
+      <div class="ovi"><div class="ovl">الفئة</div><div class="ovv" id="ovCat">—</div></div>
+      <div class="ovi"><div class="ovl">النوع</div><div class="ovv" id="ovGen">—</div></div>
+      <div class="ovi"><div class="ovl">الحد</div><div class="ovv" id="ovMax">—</div></div>
+    </div>
+    <div class="ovb">
+      <button class="btn bg_" onclick="closeOv()">إلغاء</button>
+      <button class="btn bp" id="ovBtn" onclick="doAttend()">✅ تأكيد الحضور</button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="loginOv" style="display:none" onclick="loginOvTap(event)">
+  <div class="ovc">
+    <div class="ovh"></div>
+    <div style="text-align:center;font-size:28px;margin-bottom:8px">🔑</div>
+    <div style="font-size:16px;font-weight:900;text-align:center;margin-bottom:14px">تسجيل الدخول</div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:11px;font-weight:700;color:var(--text2);display:block;margin-bottom:5px">اسم المستخدم</label>
+      <input class="fld" id="loginUser" type="text" placeholder="username" autocomplete="username" autocapitalize="off">
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;font-weight:700;color:var(--text2);display:block;margin-bottom:5px">كلمة السر</label>
+      <input class="fld" id="loginPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div id="loginErr" style="font-size:12px;color:var(--red);font-weight:700;text-align:center;margin-bottom:10px;display:none"></div>
+    <div class="ovb">
+      <button class="btn bg_" onclick="closeLogin()">إلغاء</button>
+      <button class="btn bp" id="loginBtn" onclick="doLogin()">🔑 دخول</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB  = 'https://pyvbyrnpwbmhmdyucjwi.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dmJ5cm5wd2JtaG1keXVjandpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwMzAxMzksImV4cCI6MjA5MzYwNjEzOX0.nVmjoT5LywIKMwFYW2HqFvSUd_evekuQglZLVERebe8';
+const MN  = ["سبتمبر 2025", "أكتوبر 2025", "نوفمبر 2025", "ديسمبر 2025", "يناير 2026", "فبراير 2026", "مارس 2026", "أبريل 2026", "مايو 2026", "يونيو 2026", "يوليو 2026", "أغسطس 2026"];
+const SP  = {"2025-12-14": "🕯️ أحد كيهك الأول", "2025-12-21": "🕯️ أحد كيهك الثاني", "2025-12-28": "🕯️ أحد كيهك الثالث", "2026-01-04": "🕯️ أحد كيهك الرابع — وأحد عيد الميلاد", "2026-01-18": "🕊️ أحد عيد الغطاس المجيد", "2026-04-05": "🌿 أحد الشعانين", "2026-04-12": "✝️ أحد القيامة المجيد 🌟", "2026-04-19": "🙏 أحد توما"};
+const CAT_MAX = {طالب:12, ثانوية:6, موظف:6};
+const MAX_DEF = 12;
+const TOKEN_TTL = 12*60*60*1000;
+
+let user=null, pend=null, qrSc=null, qrCD=false;
+let sessLog=[], sessCnt=0, chData=null;
+let adTps=0, adTmr=null, adMode=false;
+
+// ── Supabase helpers ──────────────────────────────────────
+async function sbGet(table, query='') {
+  const r = await fetch(`${SB}/rest/v1/${table}?${query}`, {
+    headers: { 'apikey': KEY, 'Authorization': 'Bearer '+KEY }
+  });
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function sbPost(table, data) {
+  const r = await fetch(`${SB}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: { 'apikey': KEY, 'Authorization': 'Bearer '+KEY,
+               'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+    body: JSON.stringify(data)
+  });
+  return { status: r.status, data: await r.json() };
+}
+
+async function sbSelect(table, filter='', cols='*') {
+  return sbGet(table, `select=${cols}&${filter}`);
+}
+
+// ── AUTH ──────────────────────────────────────────────────
+function makeToken(u) {
+  return btoa(JSON.stringify({...u, exp: Date.now()+TOKEN_TTL}));
+}
+function readToken(t) {
+  try { const d=JSON.parse(atob(t)); return Date.now()<d.exp?d:null; } catch{return null;}
+}
+
+async function doLogin() {
+  const btn=document.getElementById('loginBtn');
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  const err=document.getElementById('loginErr');
+  if(!u||!p){err.textContent='أدخل اسم المستخدم وكلمة السر';err.style.display='block';return;}
+  btn.innerHTML='<div class="spin"></div>';btn.disabled=true;
+  try {
+    // Query users table directly from Supabase
+    const rows = await sbGet('users',
+      `select=username,password,church,role&username=eq.${encodeURIComponent(u)}&active=eq.true`);
+    if(!rows.length || rows[0].password !== p) {
+      err.textContent='اسم المستخدم أو كلمة السر غلط';err.style.display='block';
+    } else {
+      const d = rows[0];
+      const token = makeToken(d);
+      user = {...d, token};
+      sessionStorage.setItem('user', JSON.stringify(user));
+      closeLogin();
+      setUserBar();
+      toast('✅ أهلاً '+d.username);
+      updateTabs();
+      if(currentTab==='search') renderSearch();
+      if(currentTab==='church') renderChurch();
+      if(currentTab==='add')    renderAdd();
+    }
+  } catch(e){err.textContent='تعذّر الاتصال';err.style.display='block';}
+  btn.innerHTML='🔑 دخول';btn.disabled=false;
+}
+
+function setUserBar() {
+  const rl={super_admin:'أدمن عام',admin:'أدمن',supervisor:'مشرف'};
+  const rc={super_admin:'role-sa',admin:'role-ad',supervisor:'role-sv'};
+  document.getElementById('ubar').innerHTML=`
+    <span class="uname">👤 ${user.username}</span>
+    <span class="urole ${rc[user.role]||''}">${rl[user.role]||user.role}</span>
+    ${user.church?`<span class="uchurch">🏛️ ${user.church}</span>`:'<span class="uchurch" style="color:#60A5FA">كل الكنائس</span>'}
+    <button class="logout-btn" onclick="logout()">خروج</button>`;
+}
+
+function logout() {
+  user=null; sessionStorage.removeItem('user');
+  document.getElementById('ubar').innerHTML=`<span class="login-prompt">لتسجيل الدخول وعرض التقارير: <span class="login-link" onclick="openLogin()">دخول</span></span>`;
+  updateTabs(); toast('تم تسجيل الخروج');
+  sw('qr',document.getElementById('tab-qr'));
+}
+
+// ── INIT ─────────────────────────────────────────────────
+let currentTab='qr';
+window.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('wPill').textContent='أسبوع '+wkNo();
+  const saved=sessionStorage.getItem('user');
+  if(saved) try{const d=JSON.parse(saved);if(readToken(d.token)){user=d;setUserBar();}}catch{}
+  updateTabs(); loadStats();
+});
+
+function wkNo(){
+  const d=new Date(),day=d.getDay()||7;
+  d.setDate(d.getDate()+4-day);
+  const y=new Date(d.getFullYear(),0,1);
+  return Math.ceil(((d-y)/86400000+1)/7);
+}
+
+function fmtDate(d){
+  const dd=new Date(d);
+  return `${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`;
+}
+
+function precedingSunday(d){
+  const dd=new Date(d); dd.setDate(dd.getDate()-dd.getDay()); return dd;
+}
+
+async function loadStats(){
+  try{
+    const today=fmtDate(new Date());
+    const wk=wkNo(), yr=new Date().getFullYear();
+    const [t,w]=await Promise.all([
+      sbGet('attendance',`select=id&reg_date=eq.${today}`),
+      sbGet('attendance',`select=id&week_no=eq.${wk}&year=eq.${yr}`)
+    ]);
+    document.getElementById('sToday').textContent=t.length;
+    document.getElementById('sWeek').textContent=w.length;
+  }catch{}
+}
+
+// ── TABS ─────────────────────────────────────────────────
+function updateTabs(){
+  document.getElementById('tab-add').style.display=(user&&user.role==='super_admin')?'':'none';
+}
+function sw(id,btn){
+  currentTab=id;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on'); document.getElementById('p-'+id).classList.add('on');
+  if(id==='hist') renderHist();
+  if(id==='search') renderSearch();
+  if(id==='church') renderChurch();
+  if(id==='add') renderAdd();
+}
+function swAuth(id,btn){if(!user){sw(id,btn);openLogin();}else sw(id,btn);}
+
+// ── CAMERA ───────────────────────────────────────────────
+async function reqCam(){
+  const ask=document.getElementById('qask'),wrap=document.getElementById('qwrap'),err=document.getElementById('qerr');
+  if(!navigator.mediaDevices?.getUserMedia){
+    ask.style.display='none';err.style.display='block';
+    err.innerHTML=rc('err_','📵','','المتصفح لا يدعم الكاميرا — استخدم Chrome أو Safari')+
+      '<button onclick="scanFile()" class="btn bp" style="margin-top:8px">🖼️ سكان من صورة</button>';
+    return;
+  }
+  ask.style.display='none';wrap.style.display='block';
+  if(qrSc)return;
+  qrSc=new Html5Qrcode('qr-reader');
+  const tryStart=c=>qrSc.start(c,{fps:10,qrbox:{width:200,height:200},aspectRatio:1},
+    dec=>{if(qrCD)return;const c=dec.replace(/\D/g,'');if(!c)return;qrCD=true;vibr();showOv(parseInt(c),'r-qr');setTimeout(()=>{qrCD=false;},3000);},()=>{});
+  tryStart({facingMode:'environment'})
+    .catch(()=>tryStart({facingMode:'user'}))
+    .catch(e=>{
+      wrap.style.display='none';err.style.display='block';
+      const msg=e.name==='NotAllowedError'?'رفضت التصريح — فعّله من إعدادات التليفون':'تعذّر تشغيل الكاميرا: '+e.message;
+      err.innerHTML=rc('err_','📵','',msg)+'<button onclick="scanFile()" class="btn bp" style="margin-top:8px">🖼️ سكان من صورة</button>';
+    });
+}
+
+function scanFile(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=async e=>{
+    const file=e.target.files[0];if(!file)return;
+    const el=document.getElementById('r-qr');
+    el.innerHTML=rc('info_','⏳','','جارٍ قراءة الصورة...');
+    try{
+      let tmp=document.getElementById('_tmp');
+      if(!tmp){tmp=document.createElement('div');tmp.id='_tmp';tmp.style.display='none';document.body.appendChild(tmp);}
+      const result=await new Html5Qrcode('_tmp').scanFile(file,true);
+      const code=result.replace(/\D/g,'');
+      if(!code){el.innerHTML=rc('err_','❌','','لم يتم العثور على كود في الصورة');return;}
+      vibr();showOv(parseInt(code),'r-qr');
+    }catch{el.innerHTML=rc('err_','❌','','تعذّر قراءة QR — تأكد أن الصورة واضحة');}
+  };inp.click();
+}
+
+// ── LOOKUP & ATTEND ──────────────────────────────────────
+function doMan(){
+  const code=parseInt(document.getElementById('mCode').value);
+  if(!code){toast('⚠️ أدخل الكود');return;}showOv(code,'r-man');
+}
+
+async function showOv(code,rid){
+  const target=document.getElementById(rid);
+  target.innerHTML=rc('info_','<div class="spin"></div>','','جارٍ البحث...');
+  try{
+    const rows=await sbGet('members',`select=*&code=eq.${code}&active=eq.true`);
+    if(!rows.length){target.innerHTML=rc('err_','❌','كود: '+code,'❌ الكود غير موجود في قاعدة البيانات');vibr([200,100,200]);return;}
+    const m=rows[0];
+    pend={code:m.code,name:m.name,church:m.church,level:m.level||'',cat:m.category,gender:m.gender,maxAtt:m.max_att,rid};
+    document.getElementById('ovN').textContent=m.name;
+    document.getElementById('ovC').textContent=m.code;
+    document.getElementById('ovL').textContent=m.level||'—';
+    document.getElementById('ovCh').textContent=m.church;
+    document.getElementById('ovCat').textContent=m.category||'—';
+    document.getElementById('ovGen').textContent=m.gender||'—';
+    document.getElementById('ovMax').textContent=m.max_att||MAX_DEF;
+    document.getElementById('ov').style.display='flex';
+    target.innerHTML='';
+  }catch(e){target.innerHTML=rc('err_','🔌','','تعذّر الاتصال: '+e.message);}
+}
+
+function ovTap(e){if(e.target===document.getElementById('ov'))closeOv();}
+function closeOv(){document.getElementById('ov').style.display='none';pend=null;}
+
+async function doAttend(){
+  if(!pend)return;
+  const btn=document.getElementById('ovBtn');
+  btn.innerHTML='<div class="spin"></div>';btn.disabled=true;
+
+  // Check day — closed Fri/Sat
+  const day=new Date().getDay();
+  if(day===5||day===6){
+    closeOv();
+    document.getElementById(pend.rid||'r-man').innerHTML=rc('warn_','🔒','','🔒 التسجيل مقفول الجمعة والسبت — يفتح يوم الأحد');
+    btn.innerHTML='✅ تأكيد الحضور';btn.disabled=false;return;
+  }
+
+  const now=new Date();
+  const sunDate=fmtDate(precedingSunday(now));
+  const regDate=fmtDate(now);
+  const weekNo=wkNo(), year=now.getFullYear();
+
+  try{
+    const res=await sbPost('attendance',{code:pend.code,sunday_date:sunDate,reg_date:regDate,week_no:weekNo,year});
+    closeOv();
+    const target=document.getElementById(pend.rid||'r-man');
+
+    if(res.status===201){
+      sessCnt++;sessLog.unshift({...pend,time:new Date()});
+      document.getElementById('sSess').textContent=sessCnt;
+      vibr([50,30,50]);
+      document.getElementById('mCode').value='';
+      target.innerHTML=rc('ok_','✅',pend.name,'تم تسجيل الحضور بنجاح',
+        `<div class="rgrid">
+          <div class="ri2"><div class="rl">الكود</div><div class="rv">${pend.code}</div></div>
+          <div class="ri2"><div class="rl">الفئة</div><div class="rv">${pend.cat||'—'}</div></div>
+          <div class="ri2"><div class="rl">الأسبوع</div><div class="rv">${weekNo}</div></div>
+          <div class="ri2"><div class="rl">الكنيسة</div><div class="rv" style="font-size:9px">${pend.church}</div></div>
+          <div class="ri2"><div class="rl">النوع</div><div class="rv">${pend.gender||'—'}</div></div>
+          <div class="ri2"><div class="rl">الأحد</div><div class="rv">${sunDate}</div></div>
+        </div>`);
+      loadStats();
+    } else if(res.status===409||res.data?.code==='23505'){
+      vibr([300]);
+      target.innerHTML=rc('warn_','⚠️',pend.name,`⚠️ تم تسجيل الحضور هذا الأسبوع (${sunDate}) مسبقاً`);
+    } else {
+      target.innerHTML=rc('err_','❌','',JSON.stringify(res.data));
+    }
+  }catch(e){closeOv();toast('❌ خطأ: '+e.message);}
+  btn.innerHTML='✅ تأكيد الحضور';btn.disabled=false;pend=null;
+}
+
+// ── SEARCH ───────────────────────────────────────────────
+function renderSearch(){
+  document.getElementById('search-lock').style.display=user?'none':'flex';
+  document.getElementById('search-content').style.display=user?'block':'none';
+}
+
+let sTimer=null;
+function doSearch(){
+  clearTimeout(sTimer);
+  sTimer=setTimeout(async()=>{
+    const q=document.getElementById('sInput').value.trim();
+    const el=document.getElementById('sResults');
+    if(q.length<2){el.innerHTML='<div class="empty"><div class="ei">🔍</div>اكتب حرفين على الأقل</div>';return;}
+    el.innerHTML='<div class="ldg"><div class="spin spin-b"></div> جارٍ البحث...</div>';
+    try{
+      const isNum=/^\d+$/.test(q);
+      let filter=isNum?`code=eq.${parseInt(q)}`:`name=ilike.*${encodeURIComponent(q)}*`;
+      if(user?.role==='supervisor'&&user.church) filter+=`&church=eq.${encodeURIComponent(user.church)}`;
+      filter+='&active=eq.true&limit=30&select=*';
+      const rows=await sbGet('members',filter);
+      if(!rows.length){el.innerHTML='<div class="empty"><div class="ei">😶</div>لا نتائج</div>';return;}
+      // get totals
+      const codes=rows.map(r=>r.code).join(',');
+      const att=await sbGet('attendance',`select=code&code=in.(${codes})&sunday_date=gte.2025-09-01`);
+      const totMap={};att.forEach(a=>{totMap[a.code]=(totMap[a.code]||0)+1;});
+      el.innerHTML=rows.map(m=>{
+        const t=totMap[m.code]||0,mx=m.max_att||MAX_DEF;
+        const bc=bclr(t,mx),pct=Math.min(Math.round(t/mx*100),100);
+        return `<div class="prow ${t>=mx?'qual':''}" onclick="showOv(${m.code},'r-man');sw('manual',document.getElementById('tab-manual'))">
+          <div class="pi"><div class="pn">${m.name||'—'}</div><div class="pm">${m.code} · ${m.level||'—'} · ${m.category||'—'} · ${m.gender||'—'}</div></div>
+          <div class="pr"><div class="pt" style="color:${bc}">${t}</div><div class="pof">من ${mx}</div>
+          <div class="mbar"><div class="mfill" style="width:${pct}%;background:${bc}"></div></div></div>
+        </div>`;
+      }).join('');
+    }catch(e){el.innerHTML=rc('err_','🔌','','تعذّر الاتصال');}
+  },400);
+}
+
+// ── MY RECORD ────────────────────────────────────────────
+async function doMine(){
+  const code=parseInt(document.getElementById('myCode').value);
+  if(!code){toast('⚠️ أدخل كودك');return;}
+  const el=document.getElementById('r-mine');
+  el.innerHTML='<div class="ldg"><div class="spin spin-b"></div> جارٍ التحميل...</div>';
+  try{
+    const [members,att]=await Promise.all([
+      sbGet('members',`select=*&code=eq.${code}&active=eq.true`),
+      sbGet('attendance',`select=sunday_date,reg_date&code=eq.${code}&sunday_date=gte.2025-09-01&order=sunday_date.asc`)
+    ]);
+    if(!members.length){el.innerHTML=rc('err_','❌','','❌ الكود غير موجود في قاعدة البيانات');return;}
+    const m=members[0];
+    if(!att.length){el.innerHTML=rc('warn_','📭',m.name,'لا يوجد حضور مسجّل');return;}
+    const mx=m.max_att||MAX_DEF;
+    const MONTHS_K=[[2025,9],[2025,10],[2025,11],[2025,12],[2026,1],[2026,2],[2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8]];
+    const mc={};
+    att.forEach(a=>{const d=new Date(a.sunday_date);const k=d.getFullYear()+'-'+(d.getMonth()+1);mc[k]=(mc[k]||0)+1;});
+    const months=MONTHS_K.map(([y,mo])=>mc[`${y}-${mo}`]||0);
+    const t=months.reduce((a,b)=>a+b,0);
+    const pct=Math.min(Math.round(t/mx*100),100),bc=bclr(t,mx);
+    const mcHtml=months.map((v,i)=>{
+      const cl=v===0?'mz':v>=4?'mh':v>=2?'mm':'ml';
+      return `<div class="mc ${cl}"><div class="mn">${MN[i].split(' ')[0]}</div><div class="mv">${v||'—'}</div></div>`;
+    }).join('');
+    const entries=att.map(a=>{
+      const sun=new Date(a.sunday_date+'T00:00:00');
+      const reg=new Date(a.reg_date+'T00:00:00');
+      const sStr=sun.toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+      const rStr=reg.toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'});
+      const sp=SP[a.sunday_date]||'';
+      return `<div class="de"><div class="dedot"></div><div class="dei">
+        <div class="des">${sStr}</div>
+        ${sp?`<div class="desp">✨ ${sp}</div>`:''}
+        ${a.sunday_date!==a.reg_date?`<div class="der">📝 تاريخ التسجيل: ${rStr}</div>`:''}
+      </div></div>`;
+    }).join('');
+    el.innerHTML=`
+      <div class="card"><div class="cb">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="font-size:22px">${t>=mx?'🏆':t>=mx*.6?'🔵':t>=mx*.3?'🟡':'🔴'}</div>
+          <div>
+            <div style="font-size:16px;font-weight:900">${m.name}</div>
+            <div style="font-size:10px;color:var(--text2)">${code} · ${m.level||'—'} · ${m.category||'—'} · ${m.gender||'—'}</div>
+            <div style="font-size:10px;color:var(--text2)">${m.church}</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:12px;color:var(--text2)">${slbl(t,mx)}</span>
+          <span style="color:${bc};font-size:15px;font-weight:900" dir="ltr">${t} / ${mx}</span>
+        </div>
+        <div style="height:11px;background:var(--border);border-radius:8px;overflow:hidden;margin-bottom:6px">
+          <div style="height:100%;width:${pct}%;background:${bc};border-radius:8px"></div>
+        </div>
+        <div style="text-align:center;font-size:20px;font-weight:900;color:${bc};margin-bottom:12px">${pct}%</div>
+        <div class="mgrid">${mcHtml}</div>
+      </div></div>
+      <div class="card"><div class="cb">
+        <div style="font-size:13px;font-weight:800;margin-bottom:8px">🗓️ تواريخ الحضور (${t} قداس)</div>
+        ${entries}
+      </div></div>`;
+  }catch(e){el.innerHTML=rc('err_','🔌','','تعذّر الاتصال: '+e.message);}
+}
+
+// ── CHURCH ───────────────────────────────────────────────
+function renderChurch(){
+  document.getElementById('church-lock').style.display=user?'none':'flex';
+  document.getElementById('church-content').style.display=user?'block':'none';
+  if(user) loadChurchList();
+}
+
+async function loadChurchList(){
+  try{
+    let filter='active=eq.true&select=church';
+    if(user?.role==='supervisor'&&user.church) filter+=`&church=eq.${encodeURIComponent(user.church)}`;
+    const rows=await sbGet('members',filter);
+    const counts={};rows.forEach(r=>{counts[r.church]=(counts[r.church]||0)+1;});
+    const sel=document.getElementById('chSel');
+    while(sel.options.length>1)sel.remove(1);
+    Object.entries(counts).sort((a,b)=>b[1]-a[1]).forEach(([ch,cnt])=>{
+      const o=document.createElement('option');o.value=ch;o.textContent=ch+' ('+cnt+')';sel.appendChild(o);
+    });
+    if(user?.role==='supervisor'&&user.church){sel.value=user.church;sel.disabled=true;loadChurch();}
+  }catch{}
+}
+
+async function loadChurch(){
+  const ch=document.getElementById('chSel').value;
+  if(!ch)return;
+  document.getElementById('chKpi').style.display='none';
+  document.getElementById('chCard').style.display='none';
+  document.getElementById('chAdmin').style.display='none';
+  document.getElementById('chSearchWrap').style.display='none';
+  document.getElementById('chList').innerHTML='<div class="ldg"><div class="spin spin-b"></div> جارٍ التحميل...</div>';
+  document.getElementById('chCard').style.display='block';
+  try{
+    // Fetch members and all their attendance in 2 queries
+    const [members,allAtt]=await Promise.all([
+      sbGet('members',`select=*&church=eq.${encodeURIComponent(ch)}&active=eq.true`),
+      sbGet('attendance',`select=code,sunday_date&sunday_date=gte.2025-09-01`)
+    ]);
+    // filter attendance for this church's codes
+    const chCodes=new Set(members.map(m=>m.code));
+    const attMap={};
+    allAtt.filter(a=>chCodes.has(a.code)).forEach(a=>{
+      if(!attMap[a.code])attMap[a.code]=[];
+      attMap[a.code].push(a.sunday_date);
+    });
+    const MONTHS_K=[[2025,9],[2025,10],[2025,11],[2025,12],[2026,1],[2026,2],[2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8]];
+    chData=members.map(m=>{
+      const sundays=attMap[m.code]||[];
+      const mc={};sundays.forEach(s=>{const d=new Date(s);const k=d.getFullYear()+'-'+(d.getMonth()+1);mc[k]=(mc[k]||0)+1;});
+      const months=MONTHS_K.map(([y,mo])=>mc[`${y}-${mo}`]||0);
+      const total=months.reduce((a,b)=>a+b,0);
+      const mx=m.max_att||MAX_DEF;
+      return{code:m.code,name:m.name,level:m.level||'',cat:m.category,gender:m.gender,maxAtt:mx,months,total,qualified:total>=mx,pct:Math.round(total/mx*100)};
+    });
+    document.getElementById('chSearchWrap').style.display='block';
+    filterChurch();
+  }catch(e){document.getElementById('chList').innerHTML=rc('err_','🔌','','تعذّر الاتصال: '+e.message);}
+}
+
+function filterChurch(){
+  if(!chData)return;
+  const cat=document.getElementById('catSel').value;
+  const gen=document.getElementById('genSel').value;
+  const q=(document.getElementById('chSearch').value||'').trim();
+  let ppl=chData;
+  if(cat)ppl=ppl.filter(p=>p.cat===cat);
+  if(gen)ppl=ppl.filter(p=>p.gender===gen);
+  if(q)ppl=ppl.filter(p=>p.name.includes(q)||String(p.code).includes(q));
+  const allF=cat?chData.filter(p=>p.cat===cat):chData;
+  const qual=allF.filter(p=>p.qualified).length;
+  const near=allF.filter(p=>!p.qualified&&p.pct>=60).length;
+  const att=allF.filter(p=>p.total>0).length;
+  const avg=allF.length?(allF.reduce((s,p)=>s+p.total,0)/allF.length).toFixed(1):0;
+  document.getElementById('chKpi').style.display='grid';
+  document.getElementById('chKpi').innerHTML=`
+    <div class="kpi g"><div class="knum">${qual}</div><div class="klbl">🏆 مؤهّلون</div></div>
+    <div class="kpi"><div class="knum">${att}</div><div class="klbl">حضروا</div></div>
+    <div class="kpi a"><div class="knum">${near}</div><div class="klbl">🔵 قريبون</div></div>
+    <div class="kpi v"><div class="knum">${avg}</div><div class="klbl">متوسط</div></div>`;
+  document.getElementById('chList').innerHTML=ppl.length?[...ppl].sort((a,b)=>b.total-a.total).map((p,i)=>{
+    const bc=bclr(p.total,p.maxAtt),pct=p.pct;
+    return `<div class="prow ${p.qualified?'qual':''}" onclick="goMine(${p.code})">
+      <div class="prnk">${i+1}</div>
+      <div class="pi"><div class="pn">${p.name||'—'}</div><div class="pm">${p.code} · ${p.level||'—'} · ${p.cat||'—'} · ${p.gender||'—'}</div></div>
+      <div class="pr"><div class="pt" style="color:${bc}">${p.total}</div><div class="pof">من ${p.maxAtt}</div>
+      <div class="mbar"><div class="mfill" style="width:${pct}%;background:${bc}"></div></div></div>
+    </div>`;
+  }).join(''):'<div class="empty"><div class="ei">😶</div>لا يوجد أشخاص</div>';
+}
+
+function goMine(code){document.getElementById('myCode').value=code;doMine();sw('mine',document.getElementById('tab-mine'));}
+
+// ── ADD MEMBER ───────────────────────────────────────────
+function renderAdd(){
+  const isAdmin=user&&user.role==='super_admin';
+  document.getElementById('add-lock').style.display=isAdmin?'none':'flex';
+  document.getElementById('add-content').style.display=isAdmin?'block':'none';
+  if(isAdmin)populateAddChurch();
+}
+
+async function populateAddChurch(){
+  try{
+    const rows=await sbGet('members','select=church&active=eq.true');
+    const churches=[...new Set(rows.map(r=>r.church))].sort();
+    const sel=document.getElementById('addChurch');
+    while(sel.options.length>1)sel.remove(1);
+    churches.forEach(ch=>{const o=document.createElement('option');o.value=ch;o.textContent=ch;sel.appendChild(o);});
+  }catch{}
+}
+
+function updateCatInfo(){
+  const cat=document.getElementById('addCat').value;
+  const max=CAT_MAX[cat];
+  document.getElementById('catInfo').textContent=max?`الحد الأقصى: ${max} قداس`:'';
+}
+
+async function doAdd(){
+  const code=parseInt(document.getElementById('addCode').value);
+  const name=document.getElementById('addName').value.trim();
+  const church=document.getElementById('addChurch').value;
+  const level=document.getElementById('addLevel').value.trim();
+  const cat=document.getElementById('addCat').value;
+  const gender=document.getElementById('addGender').value;
+  const el=document.getElementById('r-add');
+  if(!code||!name||!church||!cat||!gender){el.innerHTML=rc('warn_','⚠️','','يرجى ملء كل الحقول الإلزامية *');return;}
+  el.innerHTML=rc('info_','<div class="spin"></div>','','جارٍ الإضافة...');
+  try{
+    // check duplicate
+    const existing=await sbGet('members',`select=code,name&code=eq.${code}`);
+    if(existing.length){el.innerHTML=rc('err_','❌','','الكود '+code+' موجود مسبقاً — '+existing[0].name);return;}
+    const res=await sbPost('members',{code,church,name,level:level||'',category:cat,gender});
+    if(res.status===201){
+      el.innerHTML=rc('ok_','✅',name,'✅ تم إضافة العضو بنجاح');
+      document.getElementById('addCode').value='';
+      document.getElementById('addName').value='';
+      document.getElementById('addLevel').value='';
+      document.getElementById('addCat').value='';
+      document.getElementById('addGender').value='';
+      document.getElementById('catInfo').textContent='';
+      toast('✅ تم الإضافة');
+    } else {
+      el.innerHTML=rc('err_','❌','',JSON.stringify(res.data));
+    }
+  }catch(e){el.innerHTML=rc('err_','🔌','','تعذّر الاتصال');}
+}
+
+// ── HISTORY ──────────────────────────────────────────────
+function renderHist(){
+  document.getElementById('hCnt').textContent=sessCnt+' تسجيل';
+  const el=document.getElementById('hList');
+  if(!sessLog.length){el.innerHTML='<div class="empty"><div class="ei">🕐</div>لا يوجد تسجيلات بعد</div>';return;}
+  el.innerHTML=sessLog.map((r,i)=>`<div class="prow">
+    <div style="background:var(--blue);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">${sessCnt-i}</div>
+    <div class="pi"><div class="pn">${r.name}</div><div class="pm">${r.code} · ${r.cat||'—'} · ${r.church}</div></div>
+    <div style="font-size:10px;color:var(--text2)">${r.time.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'})}</div>
+  </div>`).join('');
+}
+
+// ── HELPERS ──────────────────────────────────────────────
+function rc(type,icon,name,msg,extra=''){
+  return `<div class="res ${type}"><div class="ri">${icon}</div>${name?`<div class="rn">${name}</div>`:''}<div class="rm">${msg}</div>${extra}</div>`;
+}
+function bclr(t,mx){mx=mx||MAX_DEF;if(t>=mx)return'#16A34A';if(t>=mx*.6)return'#1A56DB';if(t>=mx*.3)return'#D97706';if(t>=1)return'#DC2626';return'#CBD5E1';}
+function slbl(t,mx){mx=mx||MAX_DEF;if(t>=mx)return'🏆 مؤهّل للمسابقة';if(t>=mx*.6)return'🔵 قريب من الهدف';if(t>=mx*.3)return'🟡 متوسط';return'🔴 يحتاج مزيداً';}
+function openLogin(){document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';document.getElementById('loginErr').style.display='none';document.getElementById('loginOv').style.display='flex';setTimeout(()=>document.getElementById('loginUser').focus(),300);}
+function closeLogin(){document.getElementById('loginOv').style.display='none';}
+function loginOvTap(e){if(e.target===document.getElementById('loginOv'))closeLogin();}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
+function vibr(p){if(navigator.vibrate)navigator.vibrate(p||[60]);}
+</script>
+</body></html>
