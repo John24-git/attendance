@@ -43,7 +43,6 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
 .prow.qual{background:#F0FDF4}
 .prnk{font-size:10px;color:#CBD5E1;min-width:22px;text-align:center;font-weight:700}
 .pi{flex:1;min-width:0}
-.pn覆{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pn{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pm{font-size:10px;color:var(--text2);margin-top:1px}
 .pr{text-align:left;flex-shrink:0}
@@ -64,7 +63,7 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
 .ovh{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
 .swrap{position:relative;margin-bottom:10px}
 .swrap .fld{padding-right:38px}
-.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+.sico">🔍</span>
 .mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px}
 .mc{border-radius:8px;padding:7px 4px;text-align:center}
 .mc .mn{font-size:9px;font-weight:700;margin-bottom:2px}
@@ -311,7 +310,6 @@ async function loadAllData(){
     const attRows=await readSheet(SHEET_ATT);
     ATT=[];
     attRows.forEach(r=>{
-      // حل مرن ومقاوم للمسافات أو الكشيدة في تسمية رأس عمود الكود (مثل الـكـود)
       const dynamicCodeKey = Object.keys(r).find(k => k.replace(/\s+/g, '').includes('كود') || k.toLowerCase().includes('code'));
       const code=parseInt(r[dynamicCodeKey] || r['الكود'] || r['code'] || 0);
       
@@ -340,13 +338,13 @@ async function loadAllData(){
         const keys = Object.keys(r);
         const rawChurch = String(r['church']||r['الكنيسة']||r[keys[2]]||'').trim();
         return {
-          username:String(r['username']||r[keys[0]]||'').trim(),
-          password:String(r['password']||r[keys[1]]||'').trim(),
+          username:String(r['username']||r['اسم المستخدم']||r[keys[0]]||'').trim(),
+          password:String(r['password']||r['كلمة السر']||r[keys[1]]||'').trim(),
           church:  rawChurch,
           cleanCh: cleanChurchName(rawChurch),
-          role:    String(r['role']||r[keys[3]]||'supervisor').trim(),
+          role:    String(r['role']||r['الدور']||r[keys[3]]||'supervisor').trim(),
         };
-      }).filter(u=>u.username);
+      }).filter(u=>u.username && u.password);
     }catch(e){USERS=[];}
 
     dataLoaded=true;
@@ -360,7 +358,6 @@ async function loadAllData(){
       <div style="background:var(--lred);border:1.5px solid #FCA5A5;border-radius:var(--r);padding:20px;text-align:center">
         <div style="font-size:28px;margin-bottom:8px">❌</div>
         <div style="font-weight:700;color:var(--red);margin-bottom:6px">تعذّر تحميل البيانات</div>
-        <div style="font-size:11px;color:var(--text2);margin-bottom:14px">تأكد من مطابقة أسماء صفحات الشيت ومشاركة الرابط للجميع (Anyone with link)</div>
         <button class="btn bp" onclick="refreshData()" style="max-width:200px;margin:0 auto">🔄 حاول تاني</button>
       </div>`;
   }
@@ -468,13 +465,6 @@ async function doMine(){
     for(let i=0;i<30;i++){
       await new Promise(r=>setTimeout(r,500));
       if(dataLoaded) break;
-    }
-    if(!dataLoaded){
-      el.innerHTML=`<div style="background:var(--lred);border:1.5px solid #FCA5A5;border-radius:var(--r);padding:16px;text-align:center">
-        <div style="font-weight:700;color:var(--red);margin-bottom:8px">❌ تعذّر تحميل البيانات</div>
-        <button class="btn bp" onclick="refreshData().then(()=>doMine())" style="max-width:200px;margin:0 auto">🔄 حاول تاني</button>
-      </div>`;
-      return;
     }
   }
 
@@ -639,30 +629,6 @@ async function doLogin(){
   if(!dataLoaded){
     err.textContent='البيانات لم تُحمَّل بعد — اضغط زرار تحديث ثم حاول';err.style.display='block';return;
   }
-  if(!USERS.length){
-    err.textContent='جاري تحميل المشرفين...';err.style.display='block';
-    try{
-      const uRows=await readSheet(SHEET_USERS);
-      USERS=uRows.map(r=>{
-        const keys = Object.keys(r);
-        const rawChurch = String(r['church']||r['الكنيسة']||r[keys[2]]||'').trim();
-        return {
-          username:String(r['username']||r['اسم المستخدم']||r[keys[0]]||'').trim(),
-          password:String(r['password']||r['كلمة السر']||r[keys[1]]||'').trim(),
-          church:  rawChurch,
-          cleanCh: cleanChurchName(rawChurch),
-          role:    String(r['role']||r['الدور']||r[keys[3]]||'supervisor').trim(),
-        };
-      }).filter(u=>u.username);
-    }catch(e){
-      err.textContent='تعذّر تحميل المستخدمين: '+e.message;err.style.display='block';
-      return;
-    }
-    if(!USERS.length){
-      err.textContent='شيت Users فاضي أو الأعمدة غلط';err.style.display='block';
-      return;
-    }
-  }
 
   const found=USERS.find(x=>x.username===u&&x.password===p);
   if(found){
@@ -673,7 +639,7 @@ async function doLogin(){
     if(currentTab==='church')renderChurchPanel();
     if(currentTab==='all')renderAllPanel();
   }else{
-    err.textContent='اسم المستخدم أو كلمة السر غلط';err.style.display='block';
+    err.textContent='اسم المستخدم أو كلمة السر غلط، أو الشيت غير مقروء';err.style.display='block';
   }
 }
 
