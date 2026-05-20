@@ -436,13 +436,33 @@ function buildMineHTML(member,rec){
 }
 
 // ══ MY RECORD ═════════════════════════════════════════════
-function doMine(){
+async function doMine(){
   const code=parseInt(document.getElementById('myCode').value);
   if(!code){toast('⚠️ أدخل كودك');return;}
   const el=document.getElementById('r-mine');
-  if(!dataLoaded){el.innerHTML='<div class="ldg"><div class="spin spin-b"></div> جارٍ تحميل البيانات...</div>';return;}
+
+  // Wait for data if not loaded yet
+  if(!dataLoaded){
+    el.innerHTML='<div class="ldg"><div class="spin spin-b"></div> جارٍ تحميل البيانات... انتظر لحظة</div>';
+    // wait up to 15 seconds
+    for(let i=0;i<30;i++){
+      await new Promise(r=>setTimeout(r,500));
+      if(dataLoaded) break;
+    }
+    if(!dataLoaded){
+      el.innerHTML=`<div style="background:var(--lred);border:1.5px solid #FCA5A5;border-radius:var(--r);padding:16px;text-align:center">
+        <div style="font-weight:700;color:var(--red);margin-bottom:8px">❌ تعذّر تحميل البيانات</div>
+        <button class="btn bp" onclick="refreshData().then(()=>doMine())" style="max-width:200px;margin:0 auto">🔄 حاول تاني</button>
+      </div>`;
+      return;
+    }
+  }
+
   const member=DB.find(m=>m.code===code);
-  if(!member){el.innerHTML=`<div style="background:var(--lred);border:1.5px solid #FCA5A5;border-radius:var(--r);padding:16px;text-align:center;font-weight:700;color:var(--red)">❌ الكود ${code} غير موجود</div>`;return;}
+  if(!member){
+    el.innerHTML=`<div style="background:var(--lred);border:1.5px solid #FCA5A5;border-radius:var(--r);padding:16px;text-align:center;font-weight:700;color:var(--red)">❌ الكود ${code} غير موجود في قاعدة البيانات</div>`;
+    return;
+  }
   el.innerHTML=buildMineHTML(member,getPersonRec(code));
 }
 
@@ -589,15 +609,36 @@ function openLogin(){
 }
 function closeLogin(){document.getElementById('loginOv').style.display='none';}
 
-function doLogin(){
+async function doLogin(){
   const btn=document.getElementById('loginBtn');
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value;
   const err=document.getElementById('loginErr');
   if(!u||!p){err.textContent='أدخل اسم المستخدم وكلمة السر';err.style.display='block';return;}
 
+  if(!dataLoaded){
+    err.textContent='البيانات لم تُحمَّل بعد — اضغط زرار تحديث ثم حاول';err.style.display='block';return;
+  }
   if(!USERS.length){
-    err.textContent='البيانات لم تُحمَّل بعد — انتظر ثم حاول';err.style.display='block';return;
+    // try reload users
+    err.textContent='جارٍ تحميل بيانات المستخدمين...';err.style.display='block';
+    try{
+      const uRows=await readSheet('Users');
+      USERS=uRows.map(r=>({
+        username:String(r['username']||r['اسم المستخدم']||Object.values(r)[0]||'').trim(),
+        password:String(r['password']||r['كلمة السر']||Object.values(r)[1]||'').trim(),
+        church:  String(r['church']||r['الكنيسة']||Object.values(r)[2]||'').trim(),
+        role:    String(r['role']||r['الدور']||Object.values(r)[3]||'supervisor').trim(),
+      })).filter(u=>u.username);
+      console.log('Users loaded:', USERS.length, USERS);
+    }catch(e){
+      err.textContent='تعذّر تحميل المستخدمين: '+e.message;err.style.display='block';
+      btn.innerHTML='🔑 دخول';btn.disabled=false;return;
+    }
+    if(!USERS.length){
+      err.textContent='شيت Users فاضي أو الأعمدة غلط';err.style.display='block';
+      btn.innerHTML='🔑 دخول';btn.disabled=false;return;
+    }
   }
 
   const found=USERS.find(x=>x.username===u&&x.password===p);
