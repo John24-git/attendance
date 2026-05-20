@@ -272,19 +272,30 @@ window.addEventListener('DOMContentLoaded',async()=>{
 
 // ══ DATA LOADING ══════════════════════════════════════════
 async function readSheet(name){
-  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&headers=1&_=${Date.now()}`;
   const r=await fetch(url);
   const text=await r.text();
   const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
   if(!json.table||!json.table.rows) return [];
-  const cols=json.table.cols.map(c=>c.label);
-  console.log(`📊 Sheet "${name}" cols:`, cols);
-  if(json.table.rows.length>0){
-    const raw=json.table.rows[0].c;
-    console.log(`📊 Sheet "${name}" first row raw:`, JSON.stringify(raw));
+
+  let cols=json.table.cols.map(c=>c.label||c.id||'');
+
+  // If all column labels are empty, the first data row contains the headers
+  if(cols.every(c=>!c.trim()) && json.table.rows.length>0){
+    const headerRow=json.table.rows[0].c;
+    cols=headerRow.map(c=>c?String(c.v||c.f||'').trim():'');
+    json.table.rows=json.table.rows.slice(1); // skip header row from data
+    console.log(`📊 Sheet "${name}" — headers extracted from row 1:`, cols);
+  } else {
+    console.log(`📊 Sheet "${name}" cols:`, cols);
   }
+
+  if(json.table.rows.length>0){
+    console.log(`📊 Sheet "${name}" first data row raw:`, JSON.stringify(json.table.rows[0].c));
+  }
+
   return json.table.rows.map(row=>
-    Object.fromEntries(cols.map((col,i)=>[col,row.c&&row.c[i]?row.c[i].v??'':'']).filter(([k])=>k))
+    Object.fromEntries(cols.map((col,i)=>[col,row.c&&row.c[i]?row.c[i].v??'':'']).filter(([k])=>k.trim()))
   );
 }
 
