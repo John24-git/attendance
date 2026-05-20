@@ -277,26 +277,42 @@ async function readSheet(name){
   const text=await r.text();
   const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
   if(!json.table||!json.table.rows) return [];
-
   let cols=json.table.cols.map(c=>c.label||'');
-
-  // If all column labels are empty, the first data row contains the headers
-  if(cols.every(c=>!c.trim()) && json.table.rows.length>0){
-    const headerRow=json.table.rows[0].c;
-    cols=headerRow.map(c=>c?String(c.v||c.f||'').trim():'');
-    json.table.rows=json.table.rows.slice(1); // skip header row from data
-    console.log(`📊 Sheet "${name}" — headers extracted from row 1:`, cols);
-  } else {
-    console.log(`📊 Sheet "${name}" cols:`, cols);
+  let rows=json.table.rows;
+  if(cols.every(c=>!c.trim())&&rows.length>0){
+    cols=rows[0].c.map(c=>c?String(c.v!==undefined?c.v:(c.f||'')).trim():'');
+    rows=rows.slice(1);
   }
-
-  if(json.table.rows.length>0){
-    console.log(`📊 Sheet "${name}" first data row raw:`, JSON.stringify(json.table.rows[0].c));
-  }
-
-  return json.table.rows.map(row=>
+  return rows.map(row=>
     Object.fromEntries(cols.map((col,i)=>[col,row.c&&row.c[i]?row.c[i].v??'':'']).filter(([k])=>k.trim()))
   );
+}
+
+async function readSheetCSV(name){
+  // Read sheet as CSV — solves gviz header detection issues
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
+  const r=await fetch(url);
+  const text=await r.text();
+  const lines=text.trim().split('\n').filter(l=>l.trim());
+  if(lines.length<2) return [];
+  const parseCSVRow=row=>{
+    const result=[];let cur='';let inQ=false;
+    for(let i=0;i<row.length;i++){
+      if(row[i]==='"'&&!inQ){inQ=true;}
+      else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}
+      else if(row[i]==='"'&&inQ){inQ=false;}
+      else if(row[i]===','&&!inQ){result.push(cur.trim());cur='';}
+      else cur+=row[i];
+    }
+    result.push(cur.trim());
+    return result;
+  };
+  const headers=parseCSVRow(lines[0]);
+  console.log(`📊 CSV Sheet "${name}" headers:`, headers);
+  return lines.slice(1).map(line=>{
+    const vals=parseCSVRow(line);
+    return Object.fromEntries(headers.map((h,i)=>[h,vals[i]||'']));
+  });
 }
 
 async function loadAllData(){
@@ -336,10 +352,10 @@ async function loadAllData(){
       }
     });
 
-    // Users
+    // Users — CSV avoids gviz header detection issues
     let usersErr='';
     try{
-      const uRows=await readSheet(SHEET_USERS);
+      const uRows=await readSheetCSV(SHEET_USERS);
       console.log('👤 Users raw rows:', JSON.stringify(uRows.slice(0,3)));
       USERS=uRows.map(r=>{
         const vals=Object.values(r);
@@ -664,17 +680,10 @@ function closeLogin(){document.getElementById('loginOv').style.display='none';}
 async function debugUsers(){
   const dbg=document.getElementById('usersDebug');
   dbg.style.display='block';
-  dbg.textContent='جارٍ الاختبار...';
+  dbg.textContent='جارٍ الاختبار (CSV)...';
   try{
-    const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Users&_=${Date.now()}`;
-    const r=await fetch(url);
-    const text=await r.text();
-    const inner=text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)?.[1];
-    if(!inner){dbg.textContent='❌ الاستجابة مش صح:\n'+text.slice(0,300);return;}
-    const json=JSON.parse(inner);
-    const cols=json.table?.cols?.map(c=>c.label)||[];
-    const rows=json.table?.rows||[];
-    dbg.innerHTML=`<b>الأعمدة:</b> ${JSON.stringify(cols)}<br><b>عدد الصفوف:</b> ${rows.length}<br><b>أول صف raw:</b> ${JSON.stringify(rows[0]?.c?.map(c=>c?.v))}`;
+    const rows=await readSheetCSV('Users');
+    dbg.innerHTML=`<b>عدد المستخدمين:</b> ${rows.length}<br><b>أسماء الأعمدة:</b> ${JSON.stringify(Object.keys(rows[0]||{}))}<br><b>أول مستخدم:</b> ${JSON.stringify({...rows[0],password:'***'})}`;
   }catch(e){
     dbg.textContent='❌ خطأ: '+e.message;
   }
@@ -694,7 +703,7 @@ async function doLogin(){
     // try reload users
     err.textContent='جارٍ تحميل بيانات المستخدمين...';err.style.display='block';
     try{
-      const uRows=await readSheet('Users');
+      const uRows=await readSheetCSV('Users');
       USERS=uRows.map(r=>({
         username:String(r['username']||r['اسم المستخدم']||Object.values(r)[0]||'').trim(),
         password:String(r['password']||r['كلمة السر']||Object.values(r)[1]||'').trim(),
