@@ -340,11 +340,11 @@ async function loadAllData(){
         const keys = Object.keys(r);
         const rawChurch = String(r['church']||r['الكنيسة']||r[keys[2]]||'').trim();
         return {
-          username:String(r['username']||r['اسم المستخدم']||r[keys[0]]||'').trim(),
-          password:String(r['password']||r['كلمة السر']||r[keys[1]]||'').trim(),
+          username:String(r['username']||r[keys[0]]||'').trim(),
+          password:String(r['password']||r[keys[1]]||'').trim(),
           church:  rawChurch,
           cleanCh: cleanChurchName(rawChurch),
-          role:    String(r['role']||r['الدور']||r[keys[3]]||'supervisor').trim(),
+          role:    String(r['role']||r[keys[3]]||'supervisor').trim(),
         };
       }).filter(u=>u.username);
     }catch(e){USERS=[];}
