@@ -286,7 +286,7 @@ async function loadAllData(){
     // Members
     const dbRows=await readSheet(SHEET_DB);
     DB=dbRows.map(r=>({
-      code:    parseInt(r['الكود']||r['code']||0),
+      code:    Math.round(parseFloat(r['الكود']||r['code']||0)),
       church:  String(r['الكنيسة']||r['church']||'').trim(),
       name:    String(r['الاسم الكامل']||r['الاسم']||r['name']||'').trim(),
       level:   String(r['المستوى']||r['level']||'').trim(),
@@ -298,7 +298,7 @@ async function loadAllData(){
     const attRows=await readSheet(SHEET_ATT);
     ATT=[];
     attRows.forEach(r=>{
-      const code=parseInt(r['الكود']||r['code']||0);
+      const code=Math.round(parseFloat(r['الكود']||r['code']||0));
       if(!code) return;
       const ts=parseDate(r['Timestamp']||r['التاريخ']||r['timestamp']||'');
       if(!ts) return;
@@ -320,17 +320,24 @@ async function loadAllData(){
     // Users
     try{
       const uRows=await readSheet(SHEET_USERS);
-      USERS=uRows.map(r=>({
-        username:String(r['username']||r['اسم المستخدم']||'').trim(),
-        password:String(r['password']||r['كلمة السر']||'').trim(),
-        church:  String(r['church']||r['الكنيسة']||'').trim(),
-        role:    String(r['role']||r['الدور']||'supervisor').trim(),
-      })).filter(u=>u.username);
+      USERS=uRows.map(r=>{
+        const vals=Object.values(r);
+        return {
+          username:String(r['username']||r['اسم المستخدم']||vals[0]||'').trim(),
+          password:String(r['password']||r['كلمة السر']||vals[1]||'').trim(),
+          church:  String(r['church']||r['الكنيسة']||vals[2]||'').trim(),
+          role:    String(r['role']||r['الدور']||vals[3]||'supervisor').trim(),
+        };
+      }).filter(u=>u.username);
     }catch{USERS=[];}
 
     dataLoaded=true;
     populateChurches();
     console.log(`✅ DB:${DB.length} ATT:${ATT.length} USERS:${USERS.length}`);
+    if(DB.length>0) console.log('📋 DB sample:', JSON.stringify(DB[0]));
+    if(ATT.length>0) console.log('📅 ATT sample:', JSON.stringify(ATT[0]));
+    if(USERS.length>0) console.log('👤 USERS sample:', JSON.stringify({...USERS[0],password:'***'}));
+    console.log('🗺️ attMap codes:', Object.keys(attMap).slice(0,5));
     document.getElementById('refreshBtn').title='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
 
   }catch(e){
@@ -372,7 +379,14 @@ function fmtDate(d){
   const dd=new Date(d);
   return `${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`;
 }
-function parseDate(v){if(!v)return null;const d=new Date(v);return isNaN(d)?null:d;}
+function parseDate(v){
+  if(!v) return null;
+  // Google gviz returns dates as "Date(2025,11,14,0,0,0)" — month is 0-indexed
+  const gm=String(v).match(/^Date\((\d+),(\d+),(\d+)/);
+  if(gm) return new Date(+gm[1],+gm[2],+gm[3]);
+  const d=new Date(v);
+  return isNaN(d)?null:d;
+}
 function bclr(t,mx){mx=mx||MAX_DEF;if(t>=mx)return'#16A34A';if(t>=mx*.6)return'#1A56DB';if(t>=mx*.3)return'#D97706';if(t>=1)return'#DC2626';return'#CBD5E1';}
 function slbl(t,mx){mx=mx||MAX_DEF;if(t>=mx)return'🏆 مؤهّل للمسابقة';if(t>=mx*.6)return'🔵 قريب من الهدف';if(t>=mx*.3)return'🟡 متوسط';return'🔴 يحتاج مزيداً';}
 function catClass(c){return c==='طالب'?'badge b-b':c==='ثانوية'?'badge b-p':'badge b-a';}
