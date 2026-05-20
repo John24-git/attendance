@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0D1B2A">
 <title>تقارير حضور — شماماسة 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -121,7 +121,6 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
 
 <div class="cnt">
 
-<!-- MY RECORD -->
 <div class="panel on" id="p-mine">
   <div id="loadStatus" class="ldg" style="display:none">
     <div class="spin spin-b"></div> جارٍ تحميل البيانات...
@@ -136,7 +135,6 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   <div id="r-mine"></div>
 </div>
 
-<!-- CHURCH -->
 <div class="panel" id="p-church">
   <div id="church-lock" class="lock" style="display:none">
     <div class="lock-icon">🔒</div>
@@ -181,7 +179,6 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   </div>
 </div>
 
-<!-- ALL CHURCHES -->
 <div class="panel" id="p-all">
   <div id="all-lock" class="lock" style="display:none">
     <div class="lock-icon">🔒</div>
@@ -203,10 +200,7 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   </div>
 </div>
 
-</div><!-- /cnt -->
-
-<!-- LOGIN OVERLAY -->
-<div class="ov" id="loginOv" style="display:none">
+</div><div class="ov" id="loginOv" style="display:none">
   <div class="ovc">
     <div class="ovh"></div>
     <div style="text-align:center;font-size:30px;margin-bottom:10px">🔑</div>
@@ -227,7 +221,6 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   </div>
 </div>
 
-<!-- DETAIL OVERLAY -->
 <div class="ov" id="detailOv" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="ovc">
     <div class="ovh"></div>
@@ -247,7 +240,7 @@ const MAX_DEF  = 12;
 const TOKEN_TTL = 12*60*60*1000;
 const SPECIAL  = {
   '2025-12-14':'🕯️ أحد كيهك الأول','2025-12-21':'🕯️ أحد كيهك الثاني',
-  '2025-12-28':'🕯️ أحد كيهك الثالث','2026-01-04':'🕯️ أحد كيهك الرابع — وعيد الميلاد',
+  '2025-12-28':'🕯️ أحد كيهك الثالث','2026-01-04':'🕯️ أحد كيهك الرابع د',
   '2026-01-18':'🕊️ أحد عيد الغطاس المجيد','2026-04-05':'🌿 أحد الشعانين',
   '2026-04-12':'✝️ أحد القيامة المجيد 🌟','2026-04-19':'🙏 أحد توما'
 };
@@ -267,17 +260,57 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadAllData();
 });
 
+// ══ دالة تنظيف ومطابقة أسماء الكنائس بشكل مرن لضمان الربط الصحيح ══════════════
+function cleanChurchName(str) {
+  if (!str) return '';
+  return str.toString().trim()
+    .replace(/^كنيسة\s+/g, '')               // إزالة كلمة "كنيسة" من البداية إن وجدت
+    .replace(/^السيدة\s+/g, '')              // إزالة "السيدة" لتسهيل الربط
+    .replace(/ة/g, 'ه')                      // توحيد التاء المربوطة والهاء
+    .replace(/[أإآا]/g, 'ا')                  // توحيد الألفات
+    .replace(/ى/g, 'ي')                      // توحيد الألف اللينة والياء
+    .replace(/\s+/g, '');                    // إزالة المسافات بالكامل للمقارنة المطلقة
+}
+
 // ══ DATA LOADING ══════════════════════════════════════════
 async function readSheet(name){
-  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
-  const r=await fetch(url);
-  const text=await r.text();
-  const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-  if(!json.table||!json.table.rows) return [];
-  const cols=json.table.cols.map(c=>c.label);
-  return json.table.rows.map(row=>
-    Object.fromEntries(cols.map((col,i)=>[col,row.c&&row.c[i]?row.c[i].v??'':'']).filter(([k])=>k))
-  );
+  try {
+    const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
+    const r=await fetch(url);
+    const text=await r.text();
+    const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+    if(!match) return [];
+    
+    const json=JSON.parse(match[1]);
+    if(!json.table||!json.table.rows) return [];
+    const cols=json.table.cols.map(c=>c.label || '');
+    
+    return json.table.rows.map(row=>{
+      return Object.fromEntries(cols.map((col,i)=>{
+        let val = row.c&&row.c[i]?row.c[i].v??'':'';
+        // إذا كانت القيمة تاريخ قادم من جوجل، نقوم بتنظيفه
+        if(val && typeof val === 'string' && val.startsWith('Date(')) {
+           val = parseGoogleDate(val);
+        }
+        return [col, val];
+      }).filter(([k])=>k));
+    });
+  } catch(e) {
+    console.error("Error reading sheet " + name, e);
+    return [];
+  }
+}
+
+function parseGoogleDate(dateStr) {
+  // تحويل صيغة Date(2025,8,14) إلى صيغة صالحة
+  const matches = dateStr.match(/\d+/g);
+  if (matches && matches.length >= 3) {
+    const y = parseInt(matches[0]);
+    const m = parseInt(matches[1]) + 1; // أشهر جافاسكريبت تبدأ من 0
+    const d = parseInt(matches[2]);
+    return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+  return dateStr;
 }
 
 async function loadAllData(){
@@ -318,19 +351,16 @@ async function loadAllData(){
     });
 
     // Users
-    try{
-      const uRows=await readSheet(SHEET_USERS);
-      USERS=uRows.map(r=>({
-        username:String(r['username']||r['اسم المستخدم']||'').trim(),
-        password:String(r['password']||r['كلمة السر']||'').trim(),
-        church:  String(r['church']||r['الكنيسة']||'').trim(),
-        role:    String(r['role']||r['الدور']||'supervisor').trim(),
-      })).filter(u=>u.username);
-    }catch{USERS=[];}
+    const uRows=await readSheet(SHEET_USERS);
+    USERS=uRows.map(r=>({
+      username:String(r['username']||r['اسم المستخدم']||'').trim(),
+      password:String(r['password']||r['كلمة السر']||'').trim(),
+      church:  String(r['church']||r['الكنيسة']||'').trim(),
+      role:    String(r['role']||r['الدور']||'supervisor').trim(),
+    })).filter(u=>u.username);
 
     dataLoaded=true;
     populateChurches();
-    console.log(`✅ DB:${DB.length} ATT:${ATT.length} USERS:${USERS.length}`);
     document.getElementById('refreshBtn').title='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
 
   }catch(e){
@@ -350,7 +380,7 @@ async function refreshData(){
   DB=[];ATT=[];USERS=[];attMap={};chData=null;dataLoaded=false;
   await loadAllData();
   document.getElementById('refreshBtn').textContent='🔄 تحديث';
-  toast('✅ تم تحديث البيانات');
+  toast('✅ تم تحديث البيانات بنجاح');
   if(chData&&currentTab==='church') loadChurch();
   if(currentTab==='all') renderAll();
 }
@@ -441,10 +471,8 @@ async function doMine(){
   if(!code){toast('⚠️ أدخل كودك');return;}
   const el=document.getElementById('r-mine');
 
-  // Wait for data if not loaded yet
   if(!dataLoaded){
     el.innerHTML='<div class="ldg"><div class="spin spin-b"></div> جارٍ تحميل البيانات... انتظر لحظة</div>';
-    // wait up to 15 seconds
     for(let i=0;i<30;i++){
       await new Promise(r=>setTimeout(r,500));
       if(dataLoaded) break;
@@ -619,28 +647,8 @@ async function doLogin(){
   if(!dataLoaded){
     err.textContent='البيانات لم تُحمَّل بعد — اضغط زرار تحديث ثم حاول';err.style.display='block';return;
   }
-  if(!USERS.length){
-    // try reload users
-    err.textContent='جارٍ تحميل بيانات المستخدمين...';err.style.display='block';
-    try{
-      const uRows=await readSheet('Users');
-      USERS=uRows.map(r=>({
-        username:String(r['username']||r['اسم المستخدم']||Object.values(r)[0]||'').trim(),
-        password:String(r['password']||r['كلمة السر']||Object.values(r)[1]||'').trim(),
-        church:  String(r['church']||r['الكنيسة']||Object.values(r)[2]||'').trim(),
-        role:    String(r['role']||r['الدور']||Object.values(r)[3]||'supervisor').trim(),
-      })).filter(u=>u.username);
-      console.log('Users loaded:', USERS.length, USERS);
-    }catch(e){
-      err.textContent='تعذّر تحميل المستخدمين: '+e.message;err.style.display='block';
-      btn.innerHTML='🔑 دخول';btn.disabled=false;return;
-    }
-    if(!USERS.length){
-      err.textContent='شيت Users فاضي أو الأعمدة غلط';err.style.display='block';
-      btn.innerHTML='🔑 دخول';btn.disabled=false;return;
-    }
-  }
 
+  // استخدام المقارنة المرنة لربط حساب المشرف مع الكنيسة المسجلة في الـ DB
   const found=USERS.find(x=>x.username===u&&x.password===p);
   if(found){
     user={...found,exp:Date.now()+TOKEN_TTL};
@@ -691,10 +699,23 @@ function renderChurchPanel(){
   document.getElementById('church-content').style.display=ok?'block':'none';
   if(ok){
     populateChurches();
-    if(user.role==='supervisor'&&user.church){
-      const sel=document.getElementById('chSel');
-      sel.value=user.church;sel.disabled=true;
-      loadChurch();
+    if(user.role==='supervisor' && user.church){
+      const sel = document.getElementById('chSel');
+      // محاولة المطابقة عبر دالة تنظيف النصوص لحل مشكلة الاختصارات
+      let targetValue = "";
+      for (let i = 0; i < sel.options.length; i++) {
+        if(cleanChurchName(sel.options[i].value) === cleanChurchName(user.church)) {
+          targetValue = sel.options[i].value;
+          break;
+        }
+      }
+      if(targetValue) {
+        sel.value = targetValue;
+        sel.disabled = true;
+        loadChurch();
+      } else {
+        sel.disabled = false;
+      }
     }
   }
 }
