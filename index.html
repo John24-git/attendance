@@ -278,7 +278,7 @@ async function readSheet(name){
   const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
   if(!json.table||!json.table.rows) return [];
 
-  let cols=json.table.cols.map(c=>c.label||c.id||'');
+  let cols=json.table.cols.map(c=>c.label||'');
 
   // If all column labels are empty, the first data row contains the headers
   if(cols.every(c=>!c.trim()) && json.table.rows.length>0){
