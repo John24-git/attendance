@@ -63,7 +63,7 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
 .ovh{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
 .swrap{position:relative;margin-bottom:10px}
 .swrap .fld{padding-right:38px}
-.sico">🔍</span>
+.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
 .mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px}
 .mc{border-radius:8px;padding:7px 4px;text-align:center}
 .mc .mn{font-size:9px;font-weight:700;margin-bottom:2px}
@@ -121,6 +121,7 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
 
 <div class="cnt">
 
+<!-- MY RECORD -->
 <div class="panel on" id="p-mine">
   <div id="loadStatus" class="ldg" style="display:none">
     <div class="spin spin-b"></div> جارٍ تحميل البيانات...
@@ -135,6 +136,7 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   <div id="r-mine"></div>
 </div>
 
+<!-- CHURCH -->
 <div class="panel" id="p-church">
   <div id="church-lock" class="lock" style="display:none">
     <div class="lock-icon">🔒</div>
@@ -179,6 +181,7 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   </div>
 </div>
 
+<!-- ALL CHURCHES -->
 <div class="panel" id="p-all">
   <div id="all-lock" class="lock" style="display:none">
     <div class="lock-icon">🔒</div>
@@ -200,7 +203,10 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   </div>
 </div>
 
-</div><div class="ov" id="loginOv" style="display:none">
+</div><!-- /cnt -->
+
+<!-- LOGIN OVERLAY -->
+<div class="ov" id="loginOv" style="display:none">
   <div class="ovc">
     <div class="ovh"></div>
     <div style="text-align:center;font-size:30px;margin-bottom:10px">🔑</div>
@@ -221,6 +227,7 @@ select.fld{appearance:none;cursor:pointer;background-image:url("data:image/svg+x
   </div>
 </div>
 
+<!-- DETAIL OVERLAY -->
 <div class="ov" id="detailOv" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="ovc">
     <div class="ovh"></div>
@@ -240,7 +247,7 @@ const MAX_DEF  = 12;
 const TOKEN_TTL = 12*60*60*1000;
 const SPECIAL  = {
   '2025-12-14':'🕯️ أحد كيهك الأول','2025-12-21':'🕯️ أحد كيهك الثاني',
-  '2025-12-28':'🕯️ أحد كيهك الثالث','2026-01-04':'🕯️ أحد كيهك الرابع',
+  '2025-12-28':'🕯️ أحد كيهك الثالث','2026-01-04':'🕯️ أحد كيهك الرابع — وعيد الميلاد',
   '2026-01-18':'🕊️ أحد عيد الغطاس المجيد','2026-04-05':'🌿 أحد الشعانين',
   '2026-04-12':'✝️ أحد القيامة المجيد 🌟','2026-04-19':'🙏 أحد توما'
 };
@@ -260,21 +267,6 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadAllData();
 });
 
-// ══ HELPERS FOR ROBUST COMPARISONS ════════════════════════
-function cleanChurchName(name) {
-  if (!name) return '';
-  return String(name)
-    .replace(/كنيسة/g, '')
-    .replace(/السيدة/g, '')
-    .replace(/الشهيد/g, '')
-    .replace(/العظيم/g, '')
-    .replace(/بالعلام/g, '')
-    .replace(/بحدائق/g, '')
-    .replace(/بدار/g, '')
-    .replace(/\s+/g, '')
-    .trim();
-}
-
 // ══ DATA LOADING ══════════════════════════════════════════
 async function readSheet(name){
   const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
@@ -291,30 +283,24 @@ async function readSheet(name){
 async function loadAllData(){
   document.getElementById('loadStatus').style.display='flex';
   try{
-    // Members (Data)
+    // Members
     const dbRows=await readSheet(SHEET_DB);
-    DB=dbRows.map(r=>{
-      const rawChurch = String(r['الكنيسة']||r['church']||Object.values(r)[1]||'').trim();
-      return {
-        code:    parseInt(r['الكود']||r['code']||Object.values(r)[0]||0),
-        church:  rawChurch,
-        cleanCh: cleanChurchName(rawChurch),
-        name:    String(r['الاسم الكامل']||r['الاسم']||r['name']||Object.values(r)[2]||'').trim(),
-        level:   String(r['المستوى']||r['level']||Object.values(r)[3]||'').trim(),
-        category:normCat(String(r['الفئة']||r['category']||Object.values(r)[4]||'')),
-        gender:  String(r['النوع']||r['gender']||Object.values(r)[5]||'ذكر').trim(),
-      };
-    }).filter(m=>m.code>0&&m.name);
+    DB=dbRows.map(r=>({
+      code:    parseInt(r['الكود']||r['code']||0),
+      church:  String(r['الكنيسة']||r['church']||'').trim(),
+      name:    String(r['الاسم الكامل']||r['الاسم']||r['name']||'').trim(),
+      level:   String(r['المستوى']||r['level']||'').trim(),
+      category:normCat(String(r['الفئة']||r['category']||'')),
+      gender:  String(r['النوع']||r['gender']||'ذكر').trim(),
+    })).filter(m=>m.code>0&&m.name);
 
-    // Attendance (Responses)
+    // Attendance
     const attRows=await readSheet(SHEET_ATT);
     ATT=[];
     attRows.forEach(r=>{
-      const dynamicCodeKey = Object.keys(r).find(k => k.replace(/\s+/g, '').includes('كود') || k.toLowerCase().includes('code'));
-      const code=parseInt(r[dynamicCodeKey] || r['الكود'] || r['code'] || 0);
-      
+      const code=parseInt(r['الكود']||r['code']||0);
       if(!code) return;
-      const ts=parseDate(r['Timestamp']||r['التاريخ']||r['timestamp']||Object.values(r)[0]||'');
+      const ts=parseDate(r['Timestamp']||r['التاريخ']||r['timestamp']||'');
       if(!ts) return;
       const sun=fmtDate(precedingSunday(ts));
       const reg=fmtDate(ts);
@@ -334,18 +320,13 @@ async function loadAllData(){
     // Users
     try{
       const uRows=await readSheet(SHEET_USERS);
-      USERS=uRows.map(r=>{
-        const keys = Object.keys(r);
-        const rawChurch = String(r['church']||r['الكنيسة']||r[keys[2]]||'').trim();
-        return {
-          username:String(r['username']||r['اسم المستخدم']||r[keys[0]]||'').trim(),
-          password:String(r['password']||r['كلمة السر']||r[keys[1]]||'').trim(),
-          church:  rawChurch,
-          cleanCh: cleanChurchName(rawChurch),
-          role:    String(r['role']||r['الدور']||r[keys[3]]||'supervisor').trim(),
-        };
-      }).filter(u=>u.username && u.password);
-    }catch(e){USERS=[];}
+      USERS=uRows.map(r=>({
+        username:String(r['username']||r['اسم المستخدم']||'').trim(),
+        password:String(r['password']||r['كلمة السر']||'').trim(),
+        church:  String(r['church']||r['الكنيسة']||'').trim(),
+        role:    String(r['role']||r['الدور']||'supervisor').trim(),
+      })).filter(u=>u.username);
+    }catch{USERS=[];}
 
     dataLoaded=true;
     populateChurches();
@@ -353,11 +334,11 @@ async function loadAllData(){
     document.getElementById('refreshBtn').title='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
 
   }catch(e){
-    console.error(e);
     document.getElementById('r-mine').innerHTML=`
       <div style="background:var(--lred);border:1.5px solid #FCA5A5;border-radius:var(--r);padding:20px;text-align:center">
         <div style="font-size:28px;margin-bottom:8px">❌</div>
         <div style="font-weight:700;color:var(--red);margin-bottom:6px">تعذّر تحميل البيانات</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:14px">تأكد إن الشيت مفتوح للعموم (Anyone with link)</div>
         <button class="btn bp" onclick="refreshData()" style="max-width:200px;margin:0 auto">🔄 حاول تاني</button>
       </div>`;
   }
@@ -460,11 +441,20 @@ async function doMine(){
   if(!code){toast('⚠️ أدخل كودك');return;}
   const el=document.getElementById('r-mine');
 
+  // Wait for data if not loaded yet
   if(!dataLoaded){
     el.innerHTML='<div class="ldg"><div class="spin spin-b"></div> جارٍ تحميل البيانات... انتظر لحظة</div>';
+    // wait up to 15 seconds
     for(let i=0;i<30;i++){
       await new Promise(r=>setTimeout(r,500));
       if(dataLoaded) break;
+    }
+    if(!dataLoaded){
+      el.innerHTML=`<div style="background:var(--lred);border:1.5px solid #FCA5A5;border-radius:var(--r);padding:16px;text-align:center">
+        <div style="font-weight:700;color:var(--red);margin-bottom:8px">❌ تعذّر تحميل البيانات</div>
+        <button class="btn bp" onclick="refreshData().then(()=>doMine())" style="max-width:200px;margin:0 auto">🔄 حاول تاني</button>
+      </div>`;
+      return;
     }
   }
 
@@ -629,6 +619,27 @@ async function doLogin(){
   if(!dataLoaded){
     err.textContent='البيانات لم تُحمَّل بعد — اضغط زرار تحديث ثم حاول';err.style.display='block';return;
   }
+  if(!USERS.length){
+    // try reload users
+    err.textContent='جارٍ تحميل بيانات المستخدمين...';err.style.display='block';
+    try{
+      const uRows=await readSheet('Users');
+      USERS=uRows.map(r=>({
+        username:String(r['username']||r['اسم المستخدم']||Object.values(r)[0]||'').trim(),
+        password:String(r['password']||r['كلمة السر']||Object.values(r)[1]||'').trim(),
+        church:  String(r['church']||r['الكنيسة']||Object.values(r)[2]||'').trim(),
+        role:    String(r['role']||r['الدور']||Object.values(r)[3]||'supervisor').trim(),
+      })).filter(u=>u.username);
+      console.log('Users loaded:', USERS.length, USERS);
+    }catch(e){
+      err.textContent='تعذّر تحميل المستخدمين: '+e.message;err.style.display='block';
+      btn.innerHTML='🔑 دخول';btn.disabled=false;return;
+    }
+    if(!USERS.length){
+      err.textContent='شيت Users فاضي أو الأعمدة غلط';err.style.display='block';
+      btn.innerHTML='🔑 دخول';btn.disabled=false;return;
+    }
+  }
 
   const found=USERS.find(x=>x.username===u&&x.password===p);
   if(found){
@@ -639,7 +650,7 @@ async function doLogin(){
     if(currentTab==='church')renderChurchPanel();
     if(currentTab==='all')renderAllPanel();
   }else{
-    err.textContent='اسم المستخدم أو كلمة السر غلط، أو الشيت غير مقروء';err.style.display='block';
+    err.textContent='اسم المستخدم أو كلمة السر غلط';err.style.display='block';
   }
 }
 
@@ -682,21 +693,7 @@ function renderChurchPanel(){
     populateChurches();
     if(user.role==='supervisor'&&user.church){
       const sel=document.getElementById('chSel');
-      
-      let matchedValue = "";
-      for (let i = 0; i < sel.options.length; i++) {
-        if (cleanChurchName(sel.options[i].value) === user.cleanCh) {
-          matchedValue = sel.options[i].value;
-          break;
-        }
-      }
-      
-      if (matchedValue) {
-        sel.value = matchedValue;
-      } else {
-        sel.value = sel.options[1] ? sel.options[1].value : "";
-      }
-      sel.disabled=true;
+      sel.value=user.church;sel.disabled=true;
       loadChurch();
     }
   }
