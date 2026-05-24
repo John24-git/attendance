@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#800000">
+<title>سجل الحضور — شماماسة 2026</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  darkMode:"class",
+  theme:{extend:{
+    colors:{
+      "pc":"#800000","pc2":"#570000","opc":"#ffffff","opcc":"#ff8371",
+      "sc":"#fed65b","sc2":"#e9c349","osc":"#745c00",
+      "sf":"#fbf9f5","sfc":"#efeeea","sfcl":"#f5f3ef","sfch":"#eae8e4","sfchh":"#e4e2de",
+      "os":"#1b1c1a","osv":"#5a413d",
+      "ol":"#8e706c","olv":"#e2bfb9"
+    }
+  }}
+}
+</script>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-font-smoothing:antialiased}
+
+.ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:24px;line-height:1;display:inline-block;vertical-align:middle;user-select:none}
+.ms.fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+.glass{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(128,0,0,.1)}
+.sacred{background:linear-gradient(135deg,#800000 0%,#570000 100%)}
+
+.panel{display:none}.panel.on{display:block}
+
+/* Spin */
+.spin{display:inline-block;width:20px;height:20px;border:2.5px solid rgba(87,0,0,.2);border-top-color:#800000;border-radius:50%;animation:sp .7s linear infinite}
+.spin-w{border-color:rgba(255,255,255,.3);border-top-color:#fff}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* Toast */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1b1c1a;color:#fff;padding:10px 22px;border-radius:30px;font-size:12px;font-weight:800;box-shadow:0 4px 20px rgba(0,0,0,.35);z-index:9999;white-space:nowrap;animation:ti .2s}
+@keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(10px)}}
+
+/* Bottom nav active */
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px;border-radius:16px;border:none;background:none;cursor:pointer;color:#5a413d;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:800;transition:.15s}
+.nav-btn.on{background:#fed65b;color:#745c00}
+.nav-btn .ms{font-size:22px}
+
+/* KPI card */
+.kpi-card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border-radius:16px;padding:16px 14px;border:1px solid rgba(128,0,0,.08);box-shadow:0 2px 12px rgba(128,0,0,.06)}
+.kpi-num{font-family:'Literata',serif;font-size:28px;font-weight:700;line-height:1}
+.kpi-lbl{font-size:10px;font-weight:800;color:#5a413d;margin-top:4px;letter-spacing:.05em}
+
+/* Member row */
+.mrow{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid rgba(226,191,185,.4);cursor:pointer;transition:.1s;position:relative}
+.mrow:last-child{border-bottom:none}
+.mrow:active{background:rgba(128,0,0,.04)}
+.mrow.qual{background:linear-gradient(90deg,rgba(254,214,91,.12),transparent)}
+.mrow.qual::after{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:#fed65b;border-radius:0 8px 8px 0}
+.mavatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0}
+.minfo{flex:1;min-width:0}
+.mname{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#1b1c1a}
+.mmeta{font-size:10px;color:#5a413d;margin-top:2px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.mstat{text-align:left;flex-shrink:0;min-width:48px}
+.mnum{font-size:20px;font-weight:900;line-height:1;text-align:center}
+.mof{font-size:9px;color:#8e706c;text-align:center}
+.mbar{height:4px;background:#e2bfb9;border-radius:4px;margin-top:4px;overflow:hidden;width:48px}
+.mfill{height:100%;border-radius:4px;transition:.3s}
+
+/* Badge */
+.bdg{display:inline-block;padding:1px 8px;border-radius:20px;font-size:9px;font-weight:800;line-height:1.7}
+.bdg-gold{background:rgba(254,214,91,.25);color:#745c00}
+.bdg-blue{background:rgba(26,86,219,.12);color:#1E40AF}
+.bdg-red{background:rgba(220,38,38,.12);color:#B91C1C}
+.bdg-gray{background:#e4e2de;color:#5a413d}
+
+/* Church card (all-panel) */
+.ch-card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(128,0,0,.1);border-radius:20px;overflow:hidden;box-shadow:0 2px 16px rgba(128,0,0,.06);margin-bottom:16px}
+.ch-head{background:linear-gradient(135deg,#800000,#570000);padding:14px 18px;display:flex;align-items:center;gap:10px}
+.ch-title{color:#fff;font-size:14px;font-weight:800;flex:1}
+.ch-total{background:rgba(255,255,255,.15);color:#fff;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.ch-body{padding:0 16px}
+.ch-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid rgba(226,191,185,.3)}
+.ch-stat{text-align:center;padding:12px 8px;border-left:1px solid rgba(226,191,185,.3)}
+.ch-stat:last-child{border-left:none}
+.ch-sv{font-size:18px;font-weight:900;line-height:1}
+.ch-sl{font-size:9px;color:#5a413d;font-weight:700;margin-top:2px}
+.ch-gender{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid rgba(226,191,185,.3)}
+.ch-g{text-align:center;padding:10px;border-left:1px solid rgba(226,191,185,.3)}
+.ch-g:last-child{border-left:none}
+.ch-gv{font-size:15px;font-weight:900}
+.ch-gl{font-size:9px;color:#5a413d;font-weight:700;margin-top:1px}
+.ch-prog{padding:12px 16px}
+
+/* Hero card (mine detail) */
+.hero{background:linear-gradient(135deg,#800000 0%,#570000 100%);border-radius:20px;padding:22px;margin-bottom:14px;color:#fff}
+.hero-name{font-size:19px;font-weight:900;margin-bottom:4px}
+.hero-meta{font-size:11px;color:rgba(255,255,255,.65);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.hero-prog{height:12px;background:rgba(255,255,255,.15);border-radius:8px;overflow:hidden;margin-bottom:6px}
+.hero-fill{height:100%;border-radius:8px;transition:.5s}
+.hero-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;margin-top:10px}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:14px}
+.mc{border-radius:10px;padding:8px 4px;text-align:center}
+.mc .mn{font-size:9px;font-weight:700;margin-bottom:3px}
+.mc .mv{font-size:15px;font-weight:900}
+.mz{background:rgba(255,255,255,.07)}.mz .mn,.mz .mv{color:rgba(255,255,255,.3)}
+.ml{background:rgba(254,214,91,.2)}.ml .mn{color:#e9c349}.ml .mv{color:#fed65b}
+.mm{background:rgba(254,214,91,.35)}.mm .mn,.mm .mv{color:#fed65b}
+.mh{background:rgba(34,197,94,.25)}.mh .mn,.mh .mv{color:#86EFAC}
+
+/* Entry list */
+.entry{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(226,191,185,.4)}
+.entry:last-child{border-bottom:none}
+.edot{width:8px;height:8px;border-radius:50%;background:#800000;margin-top:4px;flex-shrink:0}
+.etitle{font-size:12px;font-weight:800;color:#1b1c1a}
+.especial{font-size:10px;color:#800000;font-weight:700;margin-top:2px}
+.edate{font-size:10px;color:#5a413d;margin-top:1px}
+
+/* Lock */
+.lock-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:24px}
+
+/* Shimmer */
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(254,214,91,.25),transparent);animation:shimmer 2s infinite}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#fbf9f5}
+::-webkit-scrollbar-thumb{background:#e2bfb9;border-radius:10px}
+
+/* Print */
+@media print{
+  body *{visibility:hidden}
+  #printArea,#printArea *{visibility:visible}
+  #printArea{position:fixed;inset:0;background:#fff;z-index:99999;direction:rtl;font-family:'Tajawal',sans-serif;padding:20px;overflow:auto}
+  .ph{text-align:center;margin-bottom:20px;border-bottom:2px solid #570000;padding-bottom:14px}
+  .ph h2{font-size:18px;font-weight:900;color:#570000}
+  .ph p{font-size:12px;color:#64748B;margin-top:4px}
+  .pt{width:100%;border-collapse:collapse;font-size:11px}
+  .pt th{background:#570000;color:#fff;padding:8px 10px;text-align:right;font-weight:800}
+  .pt td{padding:7px 10px;border-bottom:1px solid #E2E8F0;font-weight:600}
+  .pt tr:nth-child(even) td{background:#fafafa}
+  .pf{margin-top:16px;font-size:10px;color:#94A3B8;text-align:center}
+}
+</style>
+</head>
+<body class="min-h-screen pb-24">
+
+<!-- ══ TOP APP BAR ══════════════════════════════════════════════ -->
+<header class="sacred sticky top-0 z-40 shadow-lg">
+  <div class="flex flex-row-reverse justify-between items-center px-5 w-full h-16 max-w-[700px] mx-auto">
+    <!-- Left: user + logout -->
+    <div id="ubar" class="flex items-center gap-2">
+      <button onclick="openLogin()" class="flex items-center gap-1.5 text-sc/80 hover:text-sc transition-colors">
+        <span class="ms text-[22px]">account_circle</span>
+      </button>
+    </div>
+    <!-- Center: title -->
+    <div style="font-family:'Literata',serif" class="text-xl font-bold text-sc tracking-tight">
+      سجل الحضور
+    </div>
+    <!-- Right: refresh -->
+    <button onclick="refreshData()" class="w-9 h-9 flex items-center justify-center rounded-full text-sc/80 hover:bg-white/10 transition-colors">
+      <span class="ms text-[22px]" id="refreshIcon">refresh</span>
+    </button>
+  </div>
+</header>
+
+<!-- ══ CONTENT ══════════════════════════════════════════════════ -->
+<main class="max-w-[700px] mx-auto px-5 md:px-8 py-5">
+
+  <!-- Loading -->
+  <div id="loadStatus" style="display:none" class="flex items-center justify-center gap-3 py-10 text-osv font-bold text-sm">
+    <div class="spin"></div> جارٍ تحميل البيانات...
+  </div>
+
+  <!-- ══ MINE ═══════════════════════════════════════════════ -->
+  <div class="panel on" id="p-mine">
+    <div id="mine-lock" class="lock-screen" style="display:none">
+      <span class="ms text-[64px] text-ol mb-3">lock</span>
+      <h2 class="text-xl font-bold text-pc2 mb-2">تسجيل الدخول مطلوب</h2>
+      <p class="text-osv text-sm mb-6 leading-relaxed">سجل دخولك كمشرف للبحث<br>في بيانات كنيستك</p>
+      <button onclick="openLogin()" class="sacred text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity shadow-lg">
+        🔑 تسجيل الدخول
+      </button>
+    </div>
+    <div id="mine-content" style="display:none">
+      <div class="glass rounded-2xl p-6 mb-4 shadow-sm">
+        <div class="text-center mb-5">
+          <span class="ms text-[44px] text-pc mb-1">manage_search</span>
+          <h3 class="text-base font-bold text-pc2">بحث في كنيستك</h3>
+          <p id="mine-church-label" class="text-xs text-osv mt-1"></p>
+        </div>
+        <label class="block text-[10px] font-bold text-osv mb-2 tracking-widest uppercase">كود العضو</label>
+        <input id="myCode" type="number" inputmode="numeric" placeholder="00000"
+          class="w-full bg-sfcl border border-olv rounded-xl px-4 py-3 text-center text-[28px] font-black tracking-widest focus:outline-none focus:ring-2 focus:ring-pc/30 transition"
+          onkeydown="if(event.key==='Enter')doMine()">
+        <button onclick="doMine()" class="w-full mt-4 sacred text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow">
+          <span class="ms text-[18px]">bar_chart</span> عرض السجل
+        </button>
+      </div>
+      <div id="r-mine"></div>
+    </div>
+  </div>
+
+  <!-- ══ CHURCH ══════════════════════════════════════════════ -->
+  <div class="panel" id="p-church">
+    <div id="church-lock" class="lock-screen" style="display:none">
+      <span class="ms text-[64px] text-ol mb-3">lock</span>
+      <h2 class="text-xl font-bold text-pc2 mb-2">تسجيل الدخول مطلوب</h2>
+      <p class="text-osv text-sm mb-6 leading-relaxed">تقارير الكنيسة للمشرفين فقط<br>لحماية خصوصية البيانات</p>
+      <button onclick="openLogin()" class="sacred text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity shadow-lg">
+        🔑 تسجيل الدخول
+      </button>
+    </div>
+    <div id="church-content" style="display:none">
+      <!-- Filters card -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-sm">
+        <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-widest uppercase">الكنيسة</label>
+        <select id="chSel" onchange="loadChurch()"
+          class="w-full bg-sfcl border border-olv rounded-xl px-4 py-2.5 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-pc/30 mb-4 appearance-none cursor-pointer">
+          <option value="">— اختر الكنيسة —</option>
+        </select>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-wider">الفئة</label>
+            <select id="catSel" onchange="filterChurch()"
+              class="w-full bg-sfcl border border-olv rounded-lg px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-pc/30 appearance-none cursor-pointer">
+              <option value="">كل الفئات</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-wider">المستوى</label>
+            <select id="lvlSel" onchange="filterChurch()"
+              class="w-full bg-sfcl border border-olv rounded-lg px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-pc/30 appearance-none cursor-pointer">
+              <option value="">كل المستويات</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-wider">النوع</label>
+            <div class="flex gap-1.5">
+              <button onclick="setGenderFilter('',this)" class="gbtn on flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-colors">الكل</button>
+              <button onclick="setGenderFilter('ذكر',this)" class="gbtn flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-colors">شماس</button>
+              <button onclick="setGenderFilter('أنثى',this)" class="gbtn flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-colors">شماسة</button>
+            </div>
+            <input type="hidden" id="genSel" value="">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-wider">الحضور</label>
+            <select id="attSel" onchange="filterChurch()"
+              class="w-full bg-sfcl border border-olv rounded-lg px-3 py-2 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-pc/30 appearance-none cursor-pointer">
+              <option value="">الكل</option>
+              <option value="qual">🏆 مؤهّلون</option>
+              <option value="near">🔵 قريبون</option>
+              <option value="att">حضروا</option>
+              <option value="zero">لم يحضروا</option>
+            </select>
+          </div>
+        </div>
+        <div id="chSearchWrap" class="relative mt-3" style="display:none">
+          <span class="ms absolute right-3 top-1/2 -translate-y-1/2 text-ol text-[18px]">search</span>
+          <input id="chSearch" type="text" placeholder="بحث بالاسم أو الكود..." oninput="filterChurch()"
+            class="w-full bg-sfcl border border-olv rounded-xl pr-10 pl-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-pc/30" autocomplete="off">
+        </div>
+      </div>
+      <!-- Export -->
+      <div id="church-export-bar" class="flex gap-3 mb-4" style="display:none">
+        <button onclick="exportChurchPDF()" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#DC2626] text-white font-bold text-xs hover:opacity-90 transition-opacity shadow">
+          <span class="ms text-[16px]">picture_as_pdf</span> تصدير PDF
+        </button>
+        <button onclick="exportChurchExcel()" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#16A34A] text-white font-bold text-xs hover:opacity-90 transition-opacity shadow">
+          <span class="ms text-[16px]">table_chart</span> تصدير Excel
+        </button>
+      </div>
+      <!-- KPI -->
+      <div id="chKpi" class="grid grid-cols-2 gap-3 mb-4" style="display:none"></div>
+      <!-- List -->
+      <div class="glass rounded-2xl overflow-hidden shadow-sm" id="chCard" style="display:none">
+        <div id="chList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ALL CHURCHES ═════════════════════════════════════════ -->
+  <div class="panel" id="p-all">
+    <div id="all-lock" class="lock-screen" style="display:none">
+      <span class="ms text-[64px] text-ol mb-3">lock</span>
+      <h2 class="text-xl font-bold text-pc2 mb-2">للأدمن فقط</h2>
+      <button onclick="openLogin()" class="sacred text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity shadow-lg mt-4">
+        🔑 تسجيل الدخول
+      </button>
+    </div>
+    <div id="all-content" style="display:none">
+      <div class="mb-5">
+        <h1 style="font-family:'Literata',serif" class="text-2xl font-bold text-pc2 mb-1">إحصائيات الكنائس العامة</h1>
+        <p class="text-osv text-sm">نظرة شاملة على مستويات الحضور في جميع الكنائس</p>
+      </div>
+      <!-- Filters -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-sm">
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-wider">الفئة</label>
+            <select id="allCat" onchange="renderAll()"
+              class="w-full bg-sfcl border border-olv rounded-lg px-3 py-2 text-sm font-bold focus:outline-none appearance-none cursor-pointer">
+              <option value="">كل الفئات</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-wider">المستوى</label>
+            <select id="allLvl" onchange="renderAll()"
+              class="w-full bg-sfcl border border-olv rounded-lg px-3 py-2 text-sm font-bold focus:outline-none appearance-none cursor-pointer">
+              <option value="">كل المستويات</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-osv mb-1.5 tracking-wider">النوع</label>
+            <select id="allGen" onchange="renderAll()"
+              class="w-full bg-sfcl border border-olv rounded-lg px-3 py-2 text-sm font-bold focus:outline-none appearance-none cursor-pointer">
+              <option value="">الكل</option>
+              <option value="ذكر">شماس</option>
+              <option value="أنثى">شماسة</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- Export -->
+      <div class="flex gap-3 mb-4">
+        <button onclick="exportAllPDF()" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#DC2626] text-white font-bold text-xs hover:opacity-90 transition-opacity shadow">
+          <span class="ms text-[16px]">picture_as_pdf</span> تصدير PDF
+        </button>
+        <button onclick="exportAllExcel()" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#16A34A] text-white font-bold text-xs hover:opacity-90 transition-opacity shadow">
+          <span class="ms text-[16px]">table_chart</span> تصدير Excel
+        </button>
+      </div>
+      <!-- KPI -->
+      <div id="allKpi" class="grid grid-cols-2 gap-3 mb-4" style="display:none"></div>
+      <!-- Gender -->
+      <div id="allGender" class="grid grid-cols-2 gap-3 mb-4" style="display:none"></div>
+      <!-- Church cards -->
+      <div id="allList"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ BOTTOM NAV ═══════════════════════════════════════════════ -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex flex-row-reverse justify-around items-center h-20 px-4"
+  style="background:rgba(251,249,245,.92);backdrop-filter:blur(14px);border-top:1px solid rgba(226,191,185,.35);box-shadow:0 -4px 20px rgba(128,0,0,.07);border-radius:20px 20px 0 0">
+  <button id="nav-mine" onclick="sw('mine','nav-mine')" class="nav-btn on">
+    <span class="ms">person_check</span>
+    <span>سجلّي</span>
+  </button>
+  <button id="nav-church" onclick="swAuth('church','nav-church')" class="nav-btn">
+    <span class="ms">church</span>
+    <span>الكنيسة</span>
+  </button>
+  <button id="nav-all" onclick="swAuth('all','nav-all')" class="nav-btn" style="display:none">
+    <span class="ms">groups</span>
+    <span>كل الكنائس</span>
+  </button>
+</nav>
+
+<!-- ══ LOGIN OVERLAY ═════════════════════════════════════════════ -->
+<div id="loginOv" class="fixed inset-0 z-[999] flex items-end justify-center" style="display:none;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)">
+  <div class="bg-sf w-full max-w-[600px] rounded-t-3xl p-6 pb-10 shadow-2xl">
+    <div class="w-10 h-1 bg-olv rounded-full mx-auto mb-6"></div>
+    <div class="text-center mb-6">
+      <span class="ms text-[52px] text-pc mb-1">key</span>
+      <h2 style="font-family:'Literata',serif" class="text-xl font-bold text-pc2">تسجيل الدخول</h2>
+      <p class="text-xs text-osv mt-1">للمشرفين ومديري الكنائس</p>
+    </div>
+    <div class="mb-4">
+      <label class="block text-[10px] font-bold text-osv mb-2 tracking-widest uppercase">اسم المستخدم</label>
+      <input id="loginUser" type="text" placeholder="username" autocomplete="username" autocapitalize="off"
+        class="w-full bg-sfcl border border-olv rounded-xl px-4 py-3 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-pc/30">
+    </div>
+    <div class="mb-4">
+      <label class="block text-[10px] font-bold text-osv mb-2 tracking-widest uppercase">كلمة السر</label>
+      <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"
+        class="w-full bg-sfcl border border-olv rounded-xl px-4 py-3 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-pc/30"
+        onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div id="loginErr" style="display:none" class="text-xs font-bold text-center mb-3 px-4 py-2.5 rounded-xl text-[#ba1a1a] bg-red-50"></div>
+    <div class="flex gap-3">
+      <button onclick="closeLogin()" class="flex-1 py-3 rounded-xl bg-sfc font-bold text-osv text-sm hover:bg-sfch transition-colors">إلغاء</button>
+      <button id="loginBtn" onclick="doLogin()" class="flex-[2] py-3 rounded-xl sacred text-white font-bold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow">
+        <span class="ms text-[18px]">key</span> دخول
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DETAIL OVERLAY ════════════════════════════════════════════ -->
+<div id="detailOv" class="fixed inset-0 z-[999] flex items-end justify-center" style="display:none;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)"
+  onclick="if(event.target===this)this.style.display='none'">
+  <div class="bg-sf w-full max-w-[600px] rounded-t-3xl p-5 pb-10 max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div class="w-10 h-1 bg-olv rounded-full mx-auto mb-5"></div>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<!-- Print -->
+<div id="printArea" style="display:none"></div>
+
+<style>
+/* Gender filter buttons */
+.gbtn{background:#eae8e4;color:#5a413d}
+.gbtn.on{background:#800000;color:#fff}
+</style>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════════════
+const SHEET_ID    = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const SHEET_DB    = 'Data';
+const SHEET_ATT   = 'Responses';
+const SHEET_USERS = 'Users';
+const CAT_MAX     = {'طالب':12,'ثانوية':6,'موظف':6};
+const MAX_DEF     = 12;
+const TOKEN_TTL   = 12*60*60*1000;
+const SPECIAL = {
+  '2025-12-14':'🕯️ أحد كيهك الأول','2025-12-21':'🕯️ أحد كيهك الثاني',
+  '2025-12-28':'🕯️ أحد كيهك الثالث','2026-01-04':'🕯️ أحد كيهك الرابع',
+  '2026-01-18':'🕊️ أحد عيد الغطاس المجيد','2026-04-05':'🌿 أحد الشعانين',
+  '2026-04-12':'✝️ أحد القيامة المجيد 🌟','2026-04-19':'🙏 أحد توما'
+};
+const MONTHS_AR=['سبتمبر','أكتوبر','نوفمبر','ديسمبر','يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس'];
+const MONTHS_K=[[2025,9],[2025,10],[2025,11],[2025,12],[2026,1],[2026,2],[2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8]];
+
+// ══ STATE ══════════════════════════════════════════════════════
+let user=null,currentTab='mine';
+let DB=[],ATT=[],USERS=[],attMap={};
+let chData=null,dataLoaded=false,allRows=[];
+
+// ══ INIT ═══════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',async()=>{
+  const saved=sessionStorage.getItem('user');
+  if(saved)try{const d=JSON.parse(saved);if(Date.now()<d.exp){user=d;setUserBar();}}catch{}
+  updateTabs();
+  await loadAllData();
+});
+
+// ══ SHEET READERS ══════════════════════════════════════════════
+async function readSheet(name){
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&headers=1&_=${Date.now()}`;
+  const r=await fetch(url);const text=await r.text();
+  const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+  if(!json.table||!json.table.rows)return[];
+  let cols=json.table.cols.map(c=>c.label||'');let rows=json.table.rows;
+  if(cols.every(c=>!c.trim())&&rows.length>0){
+    cols=rows[0].c.map(c=>c?String(c.v!==undefined?c.v:(c.f||'')).trim():'');rows=rows.slice(1);
+  }
+  return rows.map(row=>Object.fromEntries(cols.map((col,i)=>[col,row.c&&row.c[i]?row.c[i].v??'':'']).filter(([k])=>k.trim())));
+}
+async function readSheetCSV(name){
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
+  const r=await fetch(url);const text=await r.text();
+  const lines=text.trim().split('\n').filter(l=>l.trim());if(lines.length<2)return[];
+  const parseRow=row=>{const res=[];let cur='';let inQ=false;
+    for(let i=0;i<row.length;i++){
+      if(row[i]==='"'&&!inQ)inQ=true;
+      else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}
+      else if(row[i]==='"'&&inQ)inQ=false;
+      else if(row[i]===','&&!inQ){res.push(cur.trim());cur='';}
+      else cur+=row[i];
+    }res.push(cur.trim());return res;
+  };
+  const headers=parseRow(lines[0]);
+  return lines.slice(1).map(line=>{const vals=parseRow(line);return Object.fromEntries(headers.map((h,i)=>[h,vals[i]||'']));});
+}
+
+// ══ DATE UTILS ═════════════════════════════════════════════════
+function parseDate(v){
+  if(!v)return null;const s=String(v);
+  const gm=s.match(/^Date\((\d+),(\d+),(\d+)/);if(gm)return new Date(+gm[1],+gm[2],+gm[3]);
+  const um=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(um)return new Date(+um[3],+um[1]-1,+um[2]);
+  const d=new Date(v);return isNaN(d)?null:d;
+}
+function precedingSunday(d){const dd=new Date(d),day=dd.getDay();if(day===0)return dd;dd.setDate(dd.getDate()-day);return dd;}
+function fmtDate(d){const dd=new Date(d);return`${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`;}
+
+// ══ LOAD DATA ══════════════════════════════════════════════════
+async function loadAllData(){
+  document.getElementById('loadStatus').style.display='flex';
+  try{
+    const dbRows=await readSheet(SHEET_DB);
+    DB=dbRows.map(r=>({
+      code:Math.round(parseFloat(r['الكود']||r['code']||0)),
+      church:String(r['الكنيسة']||r['church']||'').trim(),
+      name:String(r['الاسم الكامل']||r['الاسم']||r['name']||'').trim(),
+      level:String(r['المستوى']||r['level']||'').trim(),
+      category:normCat(String(r['الفئة']||r['category']||'')),
+      gender:String(r['النوع']||r['gender']||'ذكر').trim(),
+      maxLimit:Math.round(parseFloat(r['الحد الأقصى']||r['max']||0))||0,
+    })).filter(m=>m.code>0&&m.name);
+
+    attMap={};ATT=[];
+    const attRows=await readSheet(SHEET_ATT);
+    attRows.forEach(r=>{
+      const code=Math.round(parseFloat(r['الكود']||r['code']||0));if(!code)return;
+      const ts=parseDate(r['Timestamp']||r['التاريخ']||r['timestamp']||'');if(!ts)return;
+      const reg=fmtDate(ts);const sun=fmtDate(precedingSunday(ts));
+      if(!attMap[code])attMap[code]={sundays:new Set(),entries:[]};
+      if(!attMap[code].sundays.has(sun)){attMap[code].sundays.add(sun);attMap[code].entries.push({s:sun,r:reg});}
+      ATT.push({code,sunday:sun,reg});
+    });
+
+    try{
+      const uRows=await readSheetCSV(SHEET_USERS);
+      USERS=uRows.map(r=>{const vals=Object.values(r);return{
+        username:String(r['username']||r['اسم المستخدم']||vals[0]||'').trim(),
+        password:String(r['password']||r['كلمة السر']||vals[1]||'').trim(),
+        church:String(r['church']||r['الكنيسة']||vals[2]||'').trim(),
+        role:String(r['role']||r['الدور']||vals[3]||'supervisor').trim(),
+      };}).filter(u=>u.username);
+    }catch(e){USERS=[];}
+
+    dataLoaded=true;
+    populateChurches();populateFilters();
+    if(currentTab==='mine')renderMinePanel();
+  }catch(e){
+    console.error(e);
+    document.getElementById('loadStatus').innerHTML=`<div style="color:#ba1a1a;font-weight:700">❌ خطأ في التحميل: ${e.message}</div>`;
+    document.getElementById('loadStatus').style.display='flex';return;
+  }
+  document.getElementById('loadStatus').style.display='none';
+  if(currentTab==='church')renderChurchPanel();
+  if(currentTab==='all')renderAllPanel();
+}
+
+function normCat(c){
+  c=String(c).trim();
+  if(/طالب|school|مدرس/i.test(c))return'طالب';
+  if(/ثانو|شباب|youth/i.test(c))return'ثانوية';
+  if(/موظف|عمال|worker|adult/i.test(c))return'موظف';
+  return c||'طالب';
+}
+function getMax(m){if(m.maxLimit>0)return m.maxLimit;return CAT_MAX[m.category]||MAX_DEF;}
+
+async function refreshData(){
+  DB=[];ATT=[];USERS=[];attMap={};chData=null;dataLoaded=false;
+  await loadAllData();toast('✅ تم تحديث البيانات');
+}
+
+// ══ POPULATE FILTERS ═══════════════════════════════════════════
+function populateFilters(){
+  const cats=[...new Set(DB.map(m=>m.category).filter(Boolean))].sort();
+  const lvls=[...new Set(DB.map(m=>m.level).filter(Boolean))].sort((a,b)=>{
+    const na=parseFloat(a),nb=parseFloat(b);if(!isNaN(na)&&!isNaN(nb))return na-nb;return a.localeCompare(b,'ar');
+  });
+  const fill=(id,items,all)=>{const s=document.getElementById(id);if(!s)return;s.innerHTML=`<option value="">${all}</option>`+items.map(v=>`<option value="${v}">${v}</option>`).join('');};
+  fill('catSel',cats,'كل الفئات');fill('lvlSel',lvls,'كل المستويات');
+  fill('allCat',cats,'كل الفئات');fill('allLvl',lvls,'كل المستويات');
+}
+function populateChurches(){
+  const sel=document.getElementById('chSel');
+  while(sel.options.length>1)sel.remove(1);
+  const counts={};DB.forEach(m=>{counts[m.church]=(counts[m.church]||0)+1;});
+  Object.entries(counts).sort((a,b)=>b[1]-a[1]).forEach(([ch,cnt])=>{
+    const o=document.createElement('option');o.value=ch;o.textContent=`${ch} (${cnt})`;sel.appendChild(o);
+  });
+}
+
+// ══ GENDER FILTER BUTTONS ══════════════════════════════════════
+function setGenderFilter(val,btn){
+  document.getElementById('genSel').value=val;
+  document.querySelectorAll('.gbtn').forEach(b=>{b.classList.remove('on');});
+  btn.classList.add('on');
+  filterChurch();
+}
+
+// ══ LOAD CHURCH ════════════════════════════════════════════════
+function loadChurch(){
+  const ch=document.getElementById('chSel').value;
+  if(!ch){document.getElementById('church-export-bar').style.display='none';return;}
+  chData=DB.filter(m=>m.church===ch).map(m=>{
+    const rec=attMap[m.code]||{sundays:new Set()};
+    const total=rec.sundays.size;const mx=getMax(m);
+    return{...m,total,maxAtt:mx,qualified:total>=mx,pct:Math.round(total/mx*100)};
+  });
+  document.getElementById('chSearchWrap').style.display='block';
+  document.getElementById('church-export-bar').style.display='flex';
+  filterChurch();
+}
+
+// ══ FILTER CHURCH ══════════════════════════════════════════════
+function filterChurch(){
+  if(!chData)return;
+  const cat=document.getElementById('catSel').value;
+  const lvl=document.getElementById('lvlSel').value;
+  const gen=document.getElementById('genSel').value;
+  const att=document.getElementById('attSel').value;
+  const q=(document.getElementById('chSearch').value||'').trim();
+  let ppl=chData;
+  if(cat)ppl=ppl.filter(p=>p.category===cat);
+  if(lvl)ppl=ppl.filter(p=>p.level===lvl);
+  if(gen)ppl=ppl.filter(p=>p.gender===gen);
+  if(att==='qual')ppl=ppl.filter(p=>p.qualified);
+  else if(att==='near')ppl=ppl.filter(p=>!p.qualified&&p.pct>=60);
+  else if(att==='att')ppl=ppl.filter(p=>p.total>0);
+  else if(att==='zero')ppl=ppl.filter(p=>p.total===0);
+  if(q)ppl=ppl.filter(p=>p.name.includes(q)||String(p.code).includes(q));
+
+  let base=chData;
+  if(cat)base=base.filter(p=>p.category===cat);
+  if(lvl)base=base.filter(p=>p.level===lvl);
+  if(gen)base=base.filter(p=>p.gender===gen);
+  if(att==='qual')base=base.filter(p=>p.qualified);
+  else if(att==='near')base=base.filter(p=>!p.qualified&&p.pct>=60);
+  else if(att==='att')base=base.filter(p=>p.total>0);
+  else if(att==='zero')base=base.filter(p=>p.total===0);
+
+  const qual=base.filter(p=>p.qualified).length;
+  const near=base.filter(p=>!p.qualified&&p.pct>=60).length;
+  const attn=base.filter(p=>p.total>0).length;
+  const avg=base.length?(base.reduce((s,p)=>s+p.total,0)/base.length).toFixed(1):0;
+
+  const kpi=document.getElementById('chKpi');
+  kpi.style.display='grid';
+  kpi.innerHTML=`
+    <div class="kpi-card border-r-4 border-r-[#fed65b]">
+      <div class="flex items-center justify-between mb-1">
+        <span class="ms text-[22px] text-[#800000]">verified</span>
+        <span class="kpi-lbl">مؤهّلون</span>
+      </div>
+      <div class="kpi-num text-pc2">${qual}</div>
+      <div class="w-full bg-olv/30 h-1 rounded-full mt-2"><div class="bg-sc h-1 rounded-full shimmer" style="width:${base.length?Math.round(qual/base.length*100):0}%"></div></div>
+    </div>
+    <div class="kpi-card border-r-4 border-r-[#1A56DB]">
+      <div class="flex items-center justify-between mb-1">
+        <span class="ms text-[22px] text-[#1A56DB]">calendar_today</span>
+        <span class="kpi-lbl">حضروا</span>
+      </div>
+      <div class="kpi-num text-[#1A56DB]">${attn}</div>
+    </div>
+    <div class="kpi-card border-r-4 border-r-[#D97706]">
+      <div class="flex items-center justify-between mb-1">
+        <span class="ms text-[22px] text-[#D97706]">warning</span>
+        <span class="kpi-lbl">قريبون</span>
+      </div>
+      <div class="kpi-num text-[#D97706]">${near}</div>
+    </div>
+    <div class="kpi-card border-r-4 border-r-[#7C3AED]">
+      <div class="flex items-center justify-between mb-1">
+        <span class="ms text-[22px] text-[#7C3AED]">analytics</span>
+        <span class="kpi-lbl">متوسط</span>
+      </div>
+      <div class="kpi-num text-[#7C3AED]">${avg}</div>
+    </div>`;
+
+  document.getElementById('chCard').style.display='block';
+  document.getElementById('chList').innerHTML=[...ppl].sort((a,b)=>b.total-a.total).map((p,i)=>{
+    const bc=bclr(p.total,p.maxAtt);
+    const av=avatarStyle(p.category);
+    const gLabel=p.gender==='ذكر'?'شماس':'شماسة';
+    return `<div class="mrow ${p.qualified?'qual':''}" onclick="showDetail(${p.code})">
+      <div class="prnk" style="font-size:11px;color:#8e706c;min-width:22px;text-align:center;font-weight:700">${i+1}</div>
+      <div class="mavatar" style="${av}">${p.name.charAt(0)}</div>
+      <div class="minfo">
+        <div class="mname">${p.name}</div>
+        <div class="mmeta">
+          <span style="color:#8e706c;font-size:10px">${p.code}</span>
+          ${p.level?`<span class="bdg bdg-blue">${p.level}</span>`:''}
+          <span class="${catBdg(p.category)}">${p.category}</span>
+          <span class="bdg bdg-gray">${gLabel}</span>
+        </div>
+      </div>
+      <div class="mstat">
+        <div class="mnum" style="color:${bc}">${p.total}</div>
+        <div class="mof">/ ${p.maxAtt}</div>
+        <div class="mbar"><div class="mfill" style="width:${Math.min(p.pct,100)}%;background:${bc}"></div></div>
+      </div>
+    </div>`;
+  }).join('')||`<div style="text-align:center;padding:48px 16px;color:#8e706c"><div style="font-size:36px;margin-bottom:8px">😶</div><div style="font-size:13px;font-weight:700">لا يوجد أشخاص بهذه الفلاتر</div></div>`;
+}
+
+function getChurchFiltered(){
+  if(!chData)return[];
+  const cat=document.getElementById('catSel').value,lvl=document.getElementById('lvlSel').value;
+  const gen=document.getElementById('genSel').value,att=document.getElementById('attSel').value;
+  const q=(document.getElementById('chSearch').value||'').trim();
+  let ppl=chData;
+  if(cat)ppl=ppl.filter(p=>p.category===cat);if(lvl)ppl=ppl.filter(p=>p.level===lvl);
+  if(gen)ppl=ppl.filter(p=>p.gender===gen);
+  if(att==='qual')ppl=ppl.filter(p=>p.qualified);
+  else if(att==='near')ppl=ppl.filter(p=>!p.qualified&&p.pct>=60);
+  else if(att==='att')ppl=ppl.filter(p=>p.total>0);
+  else if(att==='zero')ppl=ppl.filter(p=>p.total===0);
+  if(q)ppl=ppl.filter(p=>p.name.includes(q)||String(p.code).includes(q));
+  return[...ppl].sort((a,b)=>b.total-a.total);
+}
+
+function showDetail(code){
+  const member=DB.find(m=>m.code===code);if(!member)return;
+  document.getElementById('detailContent').innerHTML=buildMineHTML(member,getPersonRec(code));
+  document.getElementById('detailOv').style.display='flex';
+}
+
+// ══ ALL CHURCHES ═══════════════════════════════════════════════
+function renderAll(){
+  const cat=document.getElementById('allCat').value;
+  const lvl=document.getElementById('allLvl').value;
+  const gen=document.getElementById('allGen').value;
+  const churches={};
+  DB.forEach(m=>{
+    if(cat&&m.category!==cat)return;if(lvl&&m.level!==lvl)return;if(gen&&m.gender!==gen)return;
+    const ch=m.church;
+    if(!churches[ch])churches[ch]={total:0,males:0,females:0,attended:0,qualified:0,near:0,sumSess:0};
+    const rec=attMap[m.code]||{sundays:new Set()};const t=rec.sundays.size;const mx=getMax(m);
+    churches[ch].total++;
+    const isMale=m.gender==='ذكر';
+    if(isMale)churches[ch].males++;else churches[ch].females++;
+    if(t>0)churches[ch].attended++;
+    if(t>=mx)churches[ch].qualified++;
+    if(t>=mx*.6&&t<mx)churches[ch].near++;
+    churches[ch].sumSess+=t;
+  });
+
+  allRows=Object.entries(churches)
+    .map(([ch,s])=>({ch,...s,avg:s.total?(s.sumSess/s.total).toFixed(1):0,pct:s.total?Math.round(s.attended/s.total*100):0}))
+    .sort((a,b)=>b.qualified-a.qualified);
+
+  const gQ=allRows.reduce((s,r)=>s+r.qualified,0);
+  const gA=allRows.reduce((s,r)=>s+r.attended,0);
+  const gT=allRows.reduce((s,r)=>s+r.total,0);
+  const totalM=allRows.reduce((s,r)=>s+r.males,0);
+  const totalF=allRows.reduce((s,r)=>s+r.females,0);
+
+  const kpi=document.getElementById('allKpi');kpi.style.display='grid';
+  kpi.innerHTML=`
+    <div class="kpi-card border-r-4 border-r-[#fed65b]">
+      <div class="flex items-center justify-between mb-1"><span class="ms text-[22px] text-pc">verified</span><span class="kpi-lbl">مؤهّلون</span></div>
+      <div class="kpi-num text-pc2">${gQ}</div>
+      <div class="w-full bg-olv/30 h-1 rounded-full mt-2"><div class="bg-sc h-1 rounded-full shimmer" style="width:${gT?Math.round(gQ/gT*100):0}%"></div></div>
+    </div>
+    <div class="kpi-card border-r-4 border-r-[#1A56DB]">
+      <div class="flex items-center justify-between mb-1"><span class="ms text-[22px] text-[#1A56DB]">groups</span><span class="kpi-lbl">حضروا</span></div>
+      <div class="kpi-num text-[#1A56DB]">${gA}</div>
+    </div>
+    <div class="kpi-card border-r-4 border-r-[#D97706]">
+      <div class="flex items-center justify-between mb-1"><span class="ms text-[22px] text-[#D97706]">person_add</span><span class="kpi-lbl">إجمالي مسجّل</span></div>
+      <div class="kpi-num text-[#D97706]">${gT}</div>
+    </div>
+    <div class="kpi-card border-r-4 border-r-[#800000]">
+      <div class="flex items-center justify-between mb-1"><span class="ms text-[22px] text-pc">church</span><span class="kpi-lbl">كنائس</span></div>
+      <div class="kpi-num text-pc2">${allRows.length}</div>
+    </div>`;
+
+  const gd=document.getElementById('allGender');gd.style.display='grid';
+  gd.innerHTML=`
+    <div class="kpi-card flex items-center gap-3 border-r-4 border-r-[#1A56DB]">
+      <span style="font-size:28px">👨‍🎓</span>
+      <div><div class="kpi-num text-[#1A56DB]">${totalM}</div><div class="kpi-lbl">شماس (ذكور)</div></div>
+    </div>
+    <div class="kpi-card flex items-center gap-3 border-r-4 border-r-[#E11D48]">
+      <span style="font-size:28px">👩‍🎓</span>
+      <div><div class="kpi-num text-[#E11D48]">${totalF}</div><div class="kpi-lbl">شماسة (إناث)</div></div>
+    </div>`;
+
+  document.getElementById('allList').innerHTML=allRows.map(r=>{
+    const attPct=r.total?Math.round(r.attended/r.total*100):0;
+    const qualPct=r.total?Math.round(r.qualified/r.total*100):0;
+    const barClr=attPct>=80?'#800000':attPct>=50?'#D97706':'#8e706c';
+    return `<div class="ch-card">
+      <div class="ch-head">
+        <span class="ms text-sc text-[20px]">church</span>
+        <span class="ch-title">${r.ch}</span>
+        <span class="ch-total">${r.total} مسجّل</span>
+      </div>
+      <div class="ch-body">
+        <div class="ch-row">
+          <div class="ch-stat"><div class="ch-sv" style="color:#800000">${r.qualified}</div><div class="ch-sl">🏆 مؤهّل<br><span style="color:#800000;font-weight:800">${qualPct}%</span></div></div>
+          <div class="ch-stat"><div class="ch-sv" style="color:#1A56DB">${r.attended}</div><div class="ch-sl">حضروا<br><span style="color:#1A56DB;font-weight:800">${attPct}%</span></div></div>
+          <div class="ch-stat"><div class="ch-sv" style="color:#D97706">${r.near}</div><div class="ch-sl">🔵 قريبون</div></div>
+          <div class="ch-stat"><div class="ch-sv" style="color:#5a413d">${r.avg}</div><div class="ch-sl">⌀ متوسط</div></div>
+        </div>
+        <div class="ch-gender">
+          <div class="ch-g"><div class="ch-gv" style="color:#1A56DB">${r.males}</div><div class="ch-gl">👨‍🎓 شماس</div></div>
+          <div class="ch-g"><div class="ch-gv" style="color:#E11D48">${r.females}</div><div class="ch-gl">👩‍🎓 شماسة</div></div>
+        </div>
+        <div class="ch-prog">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:#5a413d;margin-bottom:5px;font-weight:700">
+            <span>نسبة الحضور</span><span style="color:${barClr};font-weight:900">${attPct}%</span>
+          </div>
+          <div style="height:6px;background:#e4e2de;border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${attPct}%;background:${barClr};border-radius:4px;transition:.4s" class="${attPct>=80?'shimmer':''}"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('')||`<div style="text-align:center;padding:48px;color:#8e706c"><div style="font-size:36px;margin-bottom:8px">📭</div><div style="font-size:13px;font-weight:700">لا يوجد بيانات</div></div>`;
+}
+
+// ══ EXPORT ═════════════════════════════════════════════════════
+function exportChurchPDF(){
+  const data=getChurchFiltered();
+  const chName=document.getElementById('chSel').value||'الكنيسة';
+  const now=new Date().toLocaleDateString('ar-EG');
+  const qual=data.filter(p=>p.qualified).length,att=data.filter(p=>p.total>0).length;
+  const rows=data.map((p,i)=>`<tr>
+    <td>${i+1}</td><td>${p.name}</td><td>${p.code}</td><td>${p.category}</td>
+    <td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td>
+    <td style="text-align:center;font-weight:900;color:${bclr(p.total,p.maxAtt)}">${p.total}</td>
+    <td style="text-align:center">${p.maxAtt}</td>
+    <td style="text-align:center">${p.pct}%</td>
+    <td style="text-align:center">${p.qualified?'✅ مؤهّل':'❌'}</td>
+  </tr>`).join('');
+  document.getElementById('printArea').style.display='block';
+  document.getElementById('printArea').innerHTML=`
+    <div class="ph"><h2>⛪ تقرير حضور — ${chName}</h2>
+    <p>مهرجان شماماسة 2026 · ${now} · إجمالي: ${data.length} | مؤهّل: ${qual} | حضر: ${att}</p></div>
+    <table class="pt"><thead><tr><th>#</th><th>الاسم</th><th>الكود</th><th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr></thead>
+    <tbody>${rows}</tbody></table>
+    <div class="pf">شماماسة 2026 — إيبارشية المعادي — ${now}</div>`;
+  setTimeout(()=>{window.print();document.getElementById('printArea').style.display='none';},200);
+}
+function exportChurchExcel(){
+  const data=getChurchFiltered();const chName=document.getElementById('chSel').value||'الكنيسة';
+  const wsData=[['#','الاسم','الكود','الكنيسة','الفئة','المستوى','النوع','الحضور','الهدف','النسبة %','الحالة'],
+    ...data.map((p,i)=>[i+1,p.name,p.code,p.church,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهّل':'غير مؤهّل'])];
+  const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(wsData);
+  ws['!cols']=[{wch:4},{wch:22},{wch:8},{wch:16},{wch:8},{wch:10},{wch:8},{wch:10},{wch:8},{wch:10},{wch:12}];
+  XLSX.utils.book_append_sheet(wb,ws,chName.slice(0,31));
+  XLSX.writeFile(wb,`تقرير_${chName}_${new Date().toISOString().slice(0,10)}.xlsx`);
+  toast('✅ تم تصدير Excel');
+}
+function exportAllPDF(){
+  const now=new Date().toLocaleDateString('ar-EG');
+  const gT=allRows.reduce((s,r)=>s+r.total,0),gA=allRows.reduce((s,r)=>s+r.attended,0);
+  const gQ=allRows.reduce((s,r)=>s+r.qualified,0);
+  const gM=allRows.reduce((s,r)=>s+r.males,0),gF=allRows.reduce((s,r)=>s+r.females,0);
+  const rows=allRows.map((r,i)=>{
+    const ap=r.total?Math.round(r.attended/r.total*100):0,qp=r.total?Math.round(r.qualified/r.total*100):0;
+    return`<tr><td>${i+1}</td><td>${r.ch}</td><td style="text-align:center">${r.males}</td><td style="text-align:center">${r.females}</td>
+    <td style="text-align:center;font-weight:900">${r.total}</td><td style="text-align:center">${r.attended}</td>
+    <td style="text-align:center">${ap}%</td><td style="text-align:center;color:#570000;font-weight:900">${r.qualified}</td>
+    <td style="text-align:center">${qp}%</td><td style="text-align:center">${r.avg}</td></tr>`;
+  }).join('');
+  document.getElementById('printArea').style.display='block';
+  document.getElementById('printArea').innerHTML=`
+    <div class="ph"><h2>📋 التقرير العام — كل الكنائس</h2>
+    <p>مهرجان شماماسة 2026 · ${now} · إجمالي: ${gT} (شماس: ${gM} | شماسة: ${gF}) | حضر: ${gA} | مؤهّل: ${gQ}</p></div>
+    <table class="pt"><thead><tr><th>#</th><th>الكنيسة</th><th>شماس</th><th>شماسة</th><th>إجمالي</th><th>الحضور</th><th>نسبة الحضور</th><th>مؤهّلون</th><th>نسبة التأهّل</th><th>متوسط</th></tr></thead>
+    <tbody>${rows}</tbody></table>
+    <div class="pf">شماماسة 2026 — إيبارشية المعادي — ${now}</div>`;
+  setTimeout(()=>{window.print();document.getElementById('printArea').style.display='none';},200);
+}
+function exportAllExcel(){
+  const wsData=[['#','الكنيسة','شماس (ذكور)','شماسة (إناث)','إجمالي مسجّل','عدد الحضور','نسبة الحضور %','مؤهّلون','نسبة التأهّل %','متوسط الحضور'],
+    ...allRows.map((r,i)=>{const ap=r.total?Math.round(r.attended/r.total*100):0,qp=r.total?Math.round(r.qualified/r.total*100):0;
+      return[i+1,r.ch,r.males,r.females,r.total,r.attended,ap+'%',r.qualified,qp+'%',parseFloat(r.avg)];})];
+  const gT=allRows.reduce((s,r)=>s+r.total,0),gA=allRows.reduce((s,r)=>s+r.attended,0);
+  const gQ=allRows.reduce((s,r)=>s+r.qualified,0),gM=allRows.reduce((s,r)=>s+r.males,0),gF=allRows.reduce((s,r)=>s+r.females,0);
+  wsData.push(['','الإجمالي',gM,gF,gT,gA,gT?Math.round(gA/gT*100)+'%':'-',gQ,gT?Math.round(gQ/gT*100)+'%':'-','']);
+  const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(wsData);
+  ws['!cols']=[{wch:4},{wch:20},{wch:10},{wch:10},{wch:12},{wch:12},{wch:12},{wch:10},{wch:12},{wch:12}];
+  XLSX.utils.book_append_sheet(wb,ws,'كل الكنائس');
+  XLSX.writeFile(wb,`تقرير_كل_الكنائس_${new Date().toISOString().slice(0,10)}.xlsx`);
+  toast('✅ تم تصدير Excel');
+}
+
+// ══ MY RECORD ══════════════════════════════════════════════════
+function getPersonRec(code){
+  const rec=attMap[code]||{sundays:new Set(),entries:[]};
+  const entries=[...rec.entries].sort((a,b)=>a.s.localeCompare(b.s));
+  const mc={};entries.forEach(e=>{const d=new Date(e.s);const k=d.getFullYear()+'-'+(d.getMonth()+1);mc[k]=(mc[k]||0)+1;});
+  const months=MONTHS_K.map(([y,m])=>mc[`${y}-${m}`]||0);
+  return{months,total:months.reduce((a,b)=>a+b,0),entries};
+}
+function buildMineHTML(member,rec){
+  const mx=getMax(member);const t=rec.total,pct=Math.min(Math.round(t/mx*100),100);
+  const bc=bclr(t,mx);
+  const icon=t>=mx?'🏆':t>=mx*.6?'🔵':t>=mx*.3?'🟡':'🔴';
+  const pillStyle=t>=mx?'background:rgba(34,197,94,.2);color:#86EFAC':
+    t>=mx*.6?'background:rgba(254,214,91,.2);color:#fed65b':
+    t>=mx*.3?'background:rgba(217,119,6,.2);color:#FCD34D':
+    'background:rgba(220,38,38,.2);color:#FCA5A5';
+  const mcHtml=rec.months.map((v,i)=>{
+    const cl=v===0?'mz':v>=4?'mh':v>=2?'mm':'ml';
+    return`<div class="mc ${cl}"><div class="mn">${MONTHS_AR[i]}</div><div class="mv">${v||'—'}</div></div>`;
+  }).join('');
+  const entries=rec.entries.map(e=>{
+    const sun=new Date(e.s+'T00:00:00');
+    const sStr=sun.toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    const sp=SPECIAL[e.s]||'';
+    return`<div class="entry"><div class="edot"></div><div style="flex:1">
+      <div class="etitle">${sStr}</div>
+      ${sp?`<div class="especial">✨ ${sp}</div>`:''}
+      ${e.s!==e.r?`<div class="edate">📝 تاريخ التسجيل: ${new Date(e.r+'T00:00:00').toLocaleDateString('ar-EG',{day:'numeric',month:'long'})}</div>`:''}
+    </div></div>`;
+  }).join('');
+  const gLabel=member.gender==='ذكر'?'شماس':'شماسة';
+  return`
+  <div class="hero">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <div style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;flex-shrink:0">${member.name.charAt(0)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="hero-name">${member.name}</div>
+        <div class="hero-meta">
+          <span>🔑 ${member.code}</span>
+          ${member.level?`<span>📚 ${member.level}</span>`:''}
+          <span>⛪ ${member.church}</span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="${catBdg(member.category)}">${member.category}</span>
+          <span class="bdg bdg-gray" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.8)">${gLabel}</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-prog"><div class="hero-fill" style="width:${pct}%;background:${bc}"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-top:4px">
+      <span style="color:rgba(255,255,255,.6)">${slbl(t,mx)}</span>
+      <span style="color:${bc};font-size:15px;font-weight:900">${t} / ${mx}</span>
+    </div>
+    <div style="text-align:center;margin-top:10px">
+      <span class="hero-pill" style="${pillStyle}">${icon} ${pct}% من الهدف</span>
+    </div>
+    <div class="mgrid">${mcHtml}</div>
+  </div>
+  <div class="glass rounded-2xl p-5 mb-4" style="border:1px solid rgba(128,0,0,.1)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span style="font-size:13px;font-weight:800;color:#1b1c1a">🗓️ تواريخ الحضور</span>
+      <span class="bdg bdg-gold" style="font-size:11px;padding:3px 10px">${t} قداس</span>
+    </div>
+    ${entries||`<div style="text-align:center;padding:24px;color:#8e706c"><div style="font-size:32px;margin-bottom:6px">📭</div><div style="font-size:12px;font-weight:700">لا يوجد حضور مسجّل</div></div>`}
+  </div>`;
+}
+
+function renderMinePanel(){
+  const ok=!!user;
+  document.getElementById('mine-lock').style.display=ok?'none':'flex';
+  document.getElementById('mine-content').style.display=ok?'block':'none';
+  if(ok){
+    const lbl=document.getElementById('mine-church-label');
+    if(user.role==='supervisor'&&user.church){lbl.textContent=`🏛️ ${user.church}`;}
+    else{lbl.textContent='كل الكنائس (أدمن)';lbl.style.color='#fed65b';}
+    document.getElementById('r-mine').innerHTML='';
+    document.getElementById('myCode').value='';
+  }
+}
+async function doMine(){
+  if(!user){openLogin();return;}
+  const code=parseInt(document.getElementById('myCode').value);
+  if(!code){toast('⚠️ أدخل الكود');return;}
+  const el=document.getElementById('r-mine');
+  if(!dataLoaded){
+    el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:32px;color:#5a413d;font-weight:700"><div class="spin"></div> جارٍ تحميل البيانات...</div>';
+    for(let i=0;i<30;i++){await new Promise(r=>setTimeout(r,500));if(dataLoaded)break;}
+    if(!dataLoaded){el.innerHTML=`<div class="glass rounded-2xl p-5 text-center" style="color:#ba1a1a">❌ تعذّر التحميل</div>`;return;}
+  }
+  const member=DB.find(m=>m.code===code);
+  if(!member){
+    el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)">
+      <div style="font-size:32px;margin-bottom:8px">❌</div>
+      <div style="color:#ba1a1a;font-weight:800">الكود <b>${code}</b> غير موجود</div></div>`;return;
+  }
+  if(user.role==='supervisor'&&user.church){
+    const norm=s=>String(s).trim().replace(/\s+/g,' ');
+    if(norm(member.church)!==norm(user.church)){
+      el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)">
+        <div style="font-size:32px;margin-bottom:8px">🚫</div>
+        <div style="color:#ba1a1a;font-weight:800;font-size:13px">هذا الكود لكنيسة أخرى</div>
+        <div style="color:#5a413d;font-size:11px;margin-top:6px">مسموح فقط بالبحث في كنيسة <b>${user.church}</b></div>
+      </div>`;return;
+    }
+  }
+  el.innerHTML=buildMineHTML(member,getPersonRec(code));
+}
+
+// ══ AUTH ═══════════════════════════════════════════════════════
+function openLogin(){document.getElementById('loginOv').style.display='flex';setTimeout(()=>document.getElementById('loginUser').focus(),100);}
+function closeLogin(){document.getElementById('loginOv').style.display='none';document.getElementById('loginErr').style.display='none';}
+
+async function doLogin(){
+  const btn=document.getElementById('loginBtn'),err=document.getElementById('loginErr');
+  const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value.trim();
+  if(!u||!p){err.textContent='أدخل اسم المستخدم وكلمة السر';err.style.display='block';return;}
+  btn.innerHTML='<div class="spin spin-w"></div>';btn.disabled=true;err.style.display='none';
+  if(!dataLoaded){err.textContent='البيانات لم تُحمَّل بعد';err.style.display='block';btn.innerHTML='<span class="ms text-[18px]">key</span> دخول';btn.disabled=false;return;}
+  if(!USERS.length){
+    err.textContent='جارٍ تحميل بيانات المستخدمين...';err.style.display='block';
+    try{
+      const uRows=await readSheetCSV(SHEET_USERS);
+      USERS=uRows.map(r=>{const vals=Object.values(r);return{
+        username:String(r['username']||r['اسم المستخدم']||vals[0]||'').trim(),
+        password:String(r['password']||r['كلمة السر']||vals[1]||'').trim(),
+        church:String(r['church']||r['الكنيسة']||vals[2]||'').trim(),
+        role:String(r['role']||r['الدور']||vals[3]||'supervisor').trim(),
+      };}).filter(u=>u.username);
+    }catch(e){err.textContent='تعذّر تحميل المستخدمين: '+e.message;err.style.display='block';btn.innerHTML='<span class="ms text-[18px]">key</span> دخول';btn.disabled=false;return;}
+    if(!USERS.length){err.textContent='شيت Users فاضي أو الأعمدة غلط';err.style.display='block';btn.innerHTML='<span class="ms text-[18px]">key</span> دخول';btn.disabled=false;return;}
+  }
+  const found=USERS.find(x=>x.username===u&&x.password===p);
+  if(found){
+    user={...found,exp:Date.now()+TOKEN_TTL};
+    sessionStorage.setItem('user',JSON.stringify(user));
+    setUserBar();updateTabs();closeLogin();
+    toast('✅ أهلاً '+found.username);
+    if(currentTab==='mine')renderMinePanel();
+    if(currentTab==='church')renderChurchPanel();
+    if(currentTab==='all')renderAllPanel();
+  }else{err.textContent='اسم المستخدم أو كلمة السر غلط';err.style.display='block';}
+  btn.innerHTML='<span class="ms text-[18px]">key</span> دخول';btn.disabled=false;
+}
+
+function setUserBar(){
+  const rl={super_admin:'أدمن عام',admin:'أدمن',supervisor:'مشرف'};
+  const rc={super_admin:'background:#fed65b;color:#745c00',admin:'background:rgba(254,214,91,.25);color:#fed65b',supervisor:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)'};
+  document.getElementById('ubar').innerHTML=`
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:12px;font-weight:800;color:rgba(255,255,255,.7)">👤 ${user.username}</span>
+      <span style="padding:2px 8px;border-radius:20px;font-size:10px;font-weight:800;${rc[user.role]||rc.supervisor}">${rl[user.role]||user.role}</span>
+      <button onclick="logout()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:3px 10px;border-radius:8px;font-family:Tajawal,sans-serif;font-size:11px;font-weight:700;cursor:pointer">خروج</button>
+    </div>`;
+}
+
+function logout(){
+  user=null;chData=null;sessionStorage.removeItem('user');
+  document.getElementById('ubar').innerHTML=`<button onclick="openLogin()" class="flex items-center gap-1.5 text-sc/80 hover:text-sc transition-colors"><span class="ms text-[22px]">account_circle</span></button>`;
+  updateTabs();toast('تم تسجيل الخروج');
+  sw('mine','nav-mine');
+  renderMinePanel();
+}
+
+// ══ TABS / NAV ══════════════════════════════════════════════════
+function updateTabs(){
+  const isAdmin=user&&['admin','super_admin'].includes(user.role);
+  document.getElementById('nav-all').style.display=isAdmin?'flex':'none';
+}
+
+function sw(id,navId){
+  currentTab=id;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  const btn=typeof navId==='string'?document.getElementById(navId):navId;
+  if(btn)btn.classList.add('on');
+  if(id==='mine')renderMinePanel();
+  if(id==='church')renderChurchPanel();
+  if(id==='all')renderAllPanel();
+}
+function swAuth(id,navId){if(!user){sw(id,navId);openLogin();}else sw(id,navId);}
+
+// ══ RENDER PANELS ══════════════════════════════════════════════
+function renderChurchPanel(){
+  const ok=!!user;
+  document.getElementById('church-lock').style.display=ok?'none':'flex';
+  document.getElementById('church-content').style.display=ok?'block':'none';
+  if(ok){
+    populateChurches();
+    const sel=document.getElementById('chSel');
+    if(user.role==='supervisor'&&user.church){
+      const norm=s=>String(s).trim().replace(/\s+/g,' ');
+      const target=norm(user.church);sel.value=user.church;
+      if(norm(sel.value)!==target){for(let i=0;i<sel.options.length;i++){if(norm(sel.options[i].value)===target){sel.selectedIndex=i;break;}}}
+      sel.disabled=true;
+      if(sel.value){loadChurch();}
+      else{chData=null;document.getElementById('chCard').style.display='none';document.getElementById('church-export-bar').style.display='none';}
+    }else{
+      sel.disabled=false;sel.value='';chData=null;
+      document.getElementById('chSearchWrap').style.display='none';
+      document.getElementById('chKpi').style.display='none';
+      document.getElementById('church-export-bar').style.display='none';
+      document.getElementById('chCard').style.display='none';
+    }
+  }
+}
+function renderAllPanel(){
+  const ok=user&&['admin','super_admin'].includes(user.role);
+  document.getElementById('all-lock').style.display=ok?'none':'flex';
+  document.getElementById('all-content').style.display=ok?'block':'none';
+  if(ok)renderAll();
+}
+
+// ══ HELPERS ════════════════════════════════════════════════════
+function bclr(t,mx){mx=mx||MAX_DEF;if(t>=mx)return'#16A34A';if(t>=mx*.6)return'#800000';if(t>=mx*.3)return'#D97706';if(t>=1)return'#DC2626';return'#CBD5E1';}
+function slbl(t,mx){mx=mx||MAX_DEF;if(t>=mx)return'🏆 مؤهّل للمسابقة';if(t>=mx*.6)return'🔵 قريب من الهدف';if(t>=mx*.3)return'🟡 متوسط';return'🔴 يحتاج مزيداً';}
+function catBdg(c){return c==='طالب'?'bdg bdg-blue':c==='ثانوية'?'bdg' +' '+'bdg-red':'bdg bdg-gold';}
+function avatarStyle(cat){
+  if(cat==='طالب')return'background:rgba(26,86,219,.12);color:#1E40AF';
+  if(cat==='ثانوية')return'background:rgba(220,38,38,.1);color:#B91C1C';
+  return'background:rgba(254,214,91,.25);color:#745c00';
+}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
+</script>
+</body></html>
