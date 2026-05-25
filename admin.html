@@ -814,10 +814,10 @@ function exportChurchPDF(){
   document.getElementById('printArea').style.display='block';
   document.getElementById('printArea').innerHTML=`
     <div class="ph"><h2>⛪ تقرير حضور — ${chName}</h2>
-    <p>مهرجان شماماسة 2026 · ${now} · إجمالي: ${data.length} | مؤهّل: ${qual} | حضر: ${att}</p></div>
+    <p>مهرجان شمامسة 2026 · ${now} · إجمالي: ${data.length} | مؤهّل: ${qual} | حضر: ${att}</p></div>
     <table class="pt"><thead><tr><th>#</th><th>الاسم</th><th>الكود</th><th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr></thead>
     <tbody>${rows}</tbody></table>
-    <div class="pf">شماماسة 2026 — إيبارشية المعادي — ${now}</div>`;
+    <div class="pf">شمامسة 2026 — مطرانية المعادي — ${now}</div>`;
   setTimeout(()=>{window.print();document.getElementById('printArea').style.display='none';},200);
 }
 function exportChurchExcel(){
@@ -845,10 +845,10 @@ function exportAllPDF(){
   document.getElementById('printArea').style.display='block';
   document.getElementById('printArea').innerHTML=`
     <div class="ph"><h2>📋 التقرير العام — كل الكنائس</h2>
-    <p>مهرجان شماماسة 2026 · ${now} · إجمالي: ${gT} (شماس: ${gM} | شماسة: ${gF}) | حضر: ${gA} | مؤهّل: ${gQ}</p></div>
+    <p>مهرجان شمامسة 2026 · ${now} · إجمالي: ${gT} (شماس: ${gM} | شماسة: ${gF}) | حضر: ${gA} | مؤهّل: ${gQ}</p></div>
     <table class="pt"><thead><tr><th>#</th><th>الكنيسة</th><th>شماس</th><th>شماسة</th><th>إجمالي</th><th>الحضور</th><th>نسبة الحضور</th><th>مؤهّلون</th><th>نسبة التأهّل</th><th>متوسط</th></tr></thead>
     <tbody>${rows}</tbody></table>
-    <div class="pf">شماماسة 2026 — إيبارشية المعادي — ${now}</div>`;
+    <div class="pf">شمامسة 2026 — مطرانية المعادي — ${now}</div>`;
   setTimeout(()=>{window.print();document.getElementById('printArea').style.display='none';},200);
 }
 function exportAllExcel(){
