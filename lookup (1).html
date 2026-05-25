@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#800000">
+<title>سجل حضوري — شماماسة 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-font-smoothing:antialiased}
+
+.ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:24px;line-height:1;display:inline-block;vertical-align:middle;user-select:none}
+
+/* ── Header ── */
+.hdr{background:linear-gradient(135deg,#800000 0%,#570000 100%);padding:0 20px;height:64px;display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:40;box-shadow:0 2px 16px rgba(128,0,0,.25)}
+.hdr-title{font-family:'Literata',serif;font-size:20px;font-weight:700;color:#fed65b;letter-spacing:-.01em}
+
+/* ── Hero search area ── */
+.hero-wrap{background:linear-gradient(160deg,#800000 0%,#570000 55%,#3d0000 100%);padding:40px 20px 60px;text-align:center;position:relative;overflow:hidden}
+.hero-wrap::before{content:'✝';position:absolute;font-size:200px;font-weight:900;color:rgba(255,255,255,.03);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;line-height:1}
+.hero-eyebrow{font-size:11px;font-weight:800;letter-spacing:.15em;color:rgba(254,214,91,.7);margin-bottom:10px;text-transform:uppercase}
+.hero-title{font-family:'Literata',serif;font-size:26px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:6px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:32px}
+
+/* ── Search card (floating) ── */
+.search-card{background:#fff;border-radius:20px;padding:24px 20px;box-shadow:0 8px 32px rgba(128,0,0,.18);margin:0 20px;position:relative;z-index:2;margin-top:-32px;border:1px solid rgba(226,191,185,.3)}
+
+.code-input{width:100%;border:2px solid #e2bfb9;border-radius:14px;padding:14px;text-align:center;font-family:'Tajawal',sans-serif;font-size:32px;font-weight:900;color:#570000;background:#faf8f6;letter-spacing:.15em;outline:none;transition:.2s;-webkit-appearance:none}
+.code-input:focus{border-color:#800000;background:#fff;box-shadow:0 0 0 4px rgba(128,0,0,.08)}
+.code-input::placeholder{color:#e2bfb9;font-size:28px;letter-spacing:.1em}
+
+.search-btn{width:100%;margin-top:14px;padding:14px;background:linear-gradient(135deg,#800000,#570000);color:#fff;border:none;border-radius:14px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(128,0,0,.3)}
+.search-btn:active{transform:scale(.97);opacity:.9}
+
+.spin{display:inline-block;width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ── Result area ── */
+.result-wrap{padding:20px;max-width:520px;margin:0 auto}
+
+/* ── Error card ── */
+.err-card{background:#fff;border-radius:18px;padding:28px 20px;text-align:center;border:1.5px solid #fca5a5;box-shadow:0 2px 12px rgba(220,38,38,.08)}
+.err-icon{font-size:44px;margin-bottom:10px}
+.err-title{font-size:15px;font-weight:800;color:#b91c1c;margin-bottom:4px}
+.err-sub{font-size:12px;color:#5a413d}
+
+/* ── Hero result card ── */
+.rec-hero{background:linear-gradient(135deg,#800000 0%,#570000 100%);border-radius:20px;padding:22px 20px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden}
+.rec-hero::after{content:'✝';position:absolute;font-size:120px;font-weight:900;color:rgba(255,255,255,.04);bottom:-20px;left:10px;line-height:1;pointer-events:none}
+.rec-avatar{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;flex-shrink:0;border:2px solid rgba(254,214,91,.4)}
+.rec-name{font-size:19px;font-weight:900;margin-bottom:3px}
+.rec-meta{font-size:11px;color:rgba(255,255,255,.6);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.rec-prog-wrap{height:12px;background:rgba(255,255,255,.15);border-radius:8px;overflow:hidden;margin-bottom:6px}
+.rec-prog{height:100%;border-radius:8px;transition:.6s}
+.rec-labels{display:flex;justify-content:space-between;font-size:11px;font-weight:700}
+.rec-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;margin-top:10px}
+
+/* ── Month grid ── */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:14px}
+.mc{border-radius:10px;padding:8px 4px;text-align:center}
+.mc-lbl{font-size:8px;font-weight:700;margin-bottom:3px}
+.mc-val{font-size:15px;font-weight:900}
+.mc-0{background:rgba(255,255,255,.07)}.mc-0 .mc-lbl,.mc-0 .mc-val{color:rgba(255,255,255,.28)}
+.mc-l{background:rgba(254,214,91,.18)}.mc-l .mc-lbl{color:#e9c349}.mc-l .mc-val{color:#fed65b}
+.mc-m{background:rgba(254,214,91,.32)}.mc-m .mc-lbl,.mc-m .mc-val{color:#fed65b}
+.mc-h{background:rgba(34,197,94,.22)}.mc-h .mc-lbl,.mc-h .mc-val{color:#86EFAC}
+
+/* ── Attendance list card ── */
+.att-card{background:#fff;border-radius:18px;border:1px solid rgba(226,191,185,.4);overflow:hidden;box-shadow:0 2px 12px rgba(128,0,0,.06)}
+.att-head{padding:14px 18px;border-bottom:1px solid rgba(226,191,185,.3);display:flex;justify-content:space-between;align-items:center;background:#fdf9f6}
+.att-head-title{font-size:13px;font-weight:800;color:#570000}
+.att-count{background:rgba(254,214,91,.25);color:#745c00;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:800}
+.att-entry{display:flex;align-items:flex-start;gap:10px;padding:11px 18px;border-bottom:1px solid rgba(226,191,185,.2)}
+.att-entry:last-child{border-bottom:none}
+.att-dot{width:8px;height:8px;border-radius:50%;background:#800000;margin-top:4px;flex-shrink:0}
+.att-date{font-size:12px;font-weight:800;color:#1b1c1a}
+.att-special{font-size:10px;color:#800000;font-weight:700;margin-top:2px}
+.att-reg{font-size:10px;color:#5a413d;margin-top:1px}
+.att-empty{text-align:center;padding:32px;color:#8e706c}
+.att-empty-icon{font-size:36px;margin-bottom:8px}
+.att-empty-txt{font-size:12px;font-weight:700}
+
+/* ── Status chips ── */
+.chip{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:800;line-height:1.7}
+
+/* ── Footer ── */
+.footer{text-align:center;padding:24px 16px 40px;color:#8e706c;font-size:11px;font-weight:600}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1b1c1a;color:#fff;padding:10px 22px;border-radius:30px;font-size:12px;font-weight:800;box-shadow:0 4px 20px rgba(0,0,0,.35);z-index:9999;white-space:nowrap;animation:ti .2s}
+@keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(10px)}}
+
+/* ── Loading overlay ── */
+.ldg-bar{display:flex;align-items:center;justify-content:center;gap:10px;padding:20px;font-size:12px;font-weight:700;color:#5a413d}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="hdr">
+  <div class="hdr-title">سجل حضور الشماماسة ٢٠٢٦</div>
+</header>
+
+<!-- Hero search -->
+<div class="hero-wrap">
+  <div class="hero-eyebrow">مهرجان شماماسة — إيبارشية المعادي</div>
+  <h1 class="hero-title">تابع سجل حضورك</h1>
+  <p class="hero-sub">أدخل كودك لتشوف عدد قداساتك ومستواك</p>
+</div>
+
+<!-- Floating search card -->
+<div style="padding:0 16px;max-width:520px;margin:0 auto;position:relative;z-index:2;margin-top:-32px">
+  <div class="search-card">
+    <label style="display:block;font-size:10px;font-weight:800;color:#5a413d;margin-bottom:10px;letter-spacing:.12em;text-transform:uppercase">كود العضو</label>
+    <input id="codeInput" class="code-input" type="number" inputmode="numeric" placeholder="00000"
+      onkeydown="if(event.key==='Enter')doLookup()">
+    <button class="search-btn" onclick="doLookup()" id="searchBtn">
+      <span class="ms" style="font-size:20px">search</span>
+      عرض سجل الحضور
+    </button>
+    <div id="loadMsg" class="ldg-bar" style="display:none">
+      <div class="spin"></div> جارٍ تحميل البيانات...
+    </div>
+  </div>
+</div>
+
+<!-- Result -->
+<div class="result-wrap" id="resultWrap" style="margin-top:24px"></div>
+
+<!-- Footer -->
+<div class="footer">
+  ✝️ مهرجان شماماسة ٢٠٢٦ — إيبارشية المعادي<br>
+  <span style="font-size:10px;opacity:.6">هذه الصفحة للاطلاع الشخصي فقط</span>
+</div>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════════════
+const SHEET_ID  = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const SHEET_DB  = 'Data';
+const SHEET_ATT = 'Responses';
+const CAT_MAX   = {'طالب':12,'ثانوية':6,'موظف':6};
+const MAX_DEF   = 12;
+const SPECIAL   = {
+  '2025-12-14':'🕯️ أحد كيهك الأول','2025-12-21':'🕯️ أحد كيهك الثاني',
+  '2025-12-28':'🕯️ أحد كيهك الثالث','2026-01-04':'🕯️ أحد كيهك الرابع',
+  '2026-01-18':'🕊️ أحد عيد الغطاس المجيد','2026-04-05':'🌿 أحد الشعانين',
+  '2026-04-12':'✝️ أحد القيامة المجيد 🌟','2026-04-19':'🙏 أحد توما'
+};
+const MONTHS_AR = ['سبتمبر','أكتوبر','نوفمبر','ديسمبر','يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس'];
+const MONTHS_K  = [[2025,9],[2025,10],[2025,11],[2025,12],[2026,1],[2026,2],[2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8]];
+
+// ══ STATE ═════════════════════════════════════════════════════
+let DB=[], attMap={}, dataLoaded=false;
+
+// ══ INIT ══════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadData();
+  document.getElementById('codeInput').focus();
+});
+
+// ══ SHEET READERS ═════════════════════════════════════════════
+async function readSheet(name) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&headers=1&_=${Date.now()}`;
+  const r = await fetch(url);
+  const text = await r.text();
+  const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+  if (!json.table || !json.table.rows) return [];
+  let cols = json.table.cols.map(c => c.label || '');
+  let rows = json.table.rows;
+  if (cols.every(c => !c.trim()) && rows.length > 0) {
+    cols = rows[0].c.map(c => c ? String(c.v !== undefined ? c.v : (c.f || '')).trim() : '');
+    rows = rows.slice(1);
+  }
+  return rows.map(row =>
+    Object.fromEntries(cols.map((col, i) => [col, row.c && row.c[i] ? row.c[i].v ?? '' : '']).filter(([k]) => k.trim()))
+  );
+}
+
+// ══ DATE UTILS ════════════════════════════════════════════════
+function parseDate(v) {
+  if (!v) return null;
+  const s = String(v);
+  const gm = s.match(/^Date\((\d+),(\d+),(\d+)/);
+  if (gm) return new Date(+gm[1], +gm[2], +gm[3]);
+  const um = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (um) return new Date(+um[3], +um[1] - 1, +um[2]);
+  const d = new Date(v);
+  return isNaN(d) ? null : d;
+}
+function precedingSunday(d) {
+  const dd = new Date(d), day = dd.getDay();
+  if (day === 0) return dd;
+  dd.setDate(dd.getDate() - day); return dd;
+}
+function fmtDate(d) {
+  const dd = new Date(d);
+  return `${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`;
+}
+
+// ══ LOAD DATA ═════════════════════════════════════════════════
+async function loadData() {
+  document.getElementById('loadMsg').style.display = 'flex';
+  document.getElementById('searchBtn').disabled = true;
+  try {
+    // Members
+    const dbRows = await readSheet(SHEET_DB);
+    DB = dbRows.map(r => ({
+      code:     Math.round(parseFloat(r['الكود'] || r['code'] || 0)),
+      church:   String(r['الكنيسة'] || r['church'] || '').trim(),
+      name:     String(r['الاسم الكامل'] || r['الاسم'] || r['name'] || '').trim(),
+      level:    String(r['المستوى'] || r['level'] || '').trim(),
+      category: normCat(String(r['الفئة'] || r['category'] || '')),
+      gender:   String(r['النوع'] || r['gender'] || 'ذكر').trim(),
+      maxLimit: Math.round(parseFloat(r['الحد الأقصى'] || r['max'] || 0)) || 0,
+    })).filter(m => m.code > 0 && m.name);
+
+    // Attendance
+    attMap = {};
+    const attRows = await readSheet(SHEET_ATT);
+    attRows.forEach(r => {
+      const code = Math.round(parseFloat(r['الكود'] || r['code'] || 0));
+      if (!code) return;
+      const ts = parseDate(r['Timestamp'] || r['التاريخ'] || r['timestamp'] || '');
+      if (!ts) return;
+      const reg = fmtDate(ts);
+      const sun = fmtDate(precedingSunday(ts));
+      if (!attMap[code]) attMap[code] = { sundays: new Set(), entries: [] };
+      if (!attMap[code].sundays.has(sun)) {
+        attMap[code].sundays.add(sun);
+        attMap[code].entries.push({ s: sun, r: reg });
+      }
+    });
+
+    dataLoaded = true;
+  } catch(e) {
+    document.getElementById('resultWrap').innerHTML = errCard('❌', 'تعذّر تحميل البيانات', 'تحقق من اتصالك بالإنترنت وحاول مرة أخرى');
+    console.error(e);
+  }
+  document.getElementById('loadMsg').style.display = 'none';
+  document.getElementById('searchBtn').disabled = false;
+}
+
+function normCat(c) {
+  c = String(c).trim();
+  if (/طالب|school|مدرس/i.test(c)) return 'طالب';
+  if (/ثانو|شباب|youth/i.test(c)) return 'ثانوية';
+  if (/موظف|عمال|worker|adult/i.test(c)) return 'موظف';
+  return c || 'طالب';
+}
+function getMax(m) {
+  if (m.maxLimit > 0) return m.maxLimit;
+  return CAT_MAX[m.category] || MAX_DEF;
+}
+
+// ══ LOOKUP ════════════════════════════════════════════════════
+async function doLookup() {
+  const val = document.getElementById('codeInput').value.trim();
+  const code = parseInt(val);
+  const wrap = document.getElementById('resultWrap');
+
+  if (!val || !code) {
+    shake(); return;
+  }
+
+  if (!dataLoaded) {
+    wrap.innerHTML = errCard('⏳', 'البيانات لم تُحمَّل بعد', 'انتظر لحظة وحاول مرة أخرى');
+    return;
+  }
+
+  const member = DB.find(m => m.code === code);
+  if (!member) {
+    wrap.innerHTML = errCard('🔍', `الكود ${code} غير موجود`, 'تأكد من الكود وحاول مرة أخرى');
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+
+  wrap.innerHTML = buildRecord(member);
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ══ BUILD RECORD HTML ══════════════════════════════════════════
+function buildRecord(member) {
+  const rec  = attMap[member.code] || { sundays: new Set(), entries: [] };
+  const entries = [...rec.entries].sort((a, b) => a.s.localeCompare(b.s));
+
+  // Monthly breakdown
+  const mc = {};
+  entries.forEach(e => {
+    const d = new Date(e.s);
+    const k = d.getFullYear() + '-' + (d.getMonth() + 1);
+    mc[k] = (mc[k] || 0) + 1;
+  });
+  const months = MONTHS_K.map(([y, m]) => mc[`${y}-${m}`] || 0);
+  const total  = months.reduce((a, b) => a + b, 0);
+
+  const mx  = getMax(member);
+  const pct = Math.min(Math.round(total / mx * 100), 100);
+  const bc  = pct >= 100 ? '#4ade80' : pct >= 60 ? '#fed65b' : pct >= 30 ? '#fb923c' : '#f87171';
+  const icon = total >= mx ? '🏆' : total >= mx * .6 ? '🔵' : total >= mx * .3 ? '🟡' : '🔴';
+  const statusTxt = total >= mx ? 'مؤهّل للمسابقة 🎉' : total >= mx * .6 ? 'قريب من الهدف' : total >= mx * .3 ? 'في المنتصف' : 'يحتاج مزيداً من الحضور';
+  const pillStyle = total >= mx
+    ? 'background:rgba(74,222,128,.2);color:#4ade80'
+    : total >= mx * .6 ? 'background:rgba(254,214,91,.2);color:#fed65b'
+    : total >= mx * .3 ? 'background:rgba(251,146,60,.2);color:#fb923c'
+    : 'background:rgba(248,113,113,.2);color:#f87171';
+
+  const gLabel = member.gender === 'ذكر' ? 'شماس' : 'شماسة';
+  const catColor = member.category === 'طالب'
+    ? 'background:rgba(26,86,219,.12);color:#1E40AF'
+    : member.category === 'ثانوية'
+    ? 'background:rgba(220,38,38,.1);color:#B91C1C'
+    : 'background:rgba(254,214,91,.2);color:#745c00';
+
+  // Month grid
+  const mcHtml = months.map((v, i) => {
+    const cl = v === 0 ? 'mc-0' : v >= 4 ? 'mc-h' : v >= 2 ? 'mc-m' : 'mc-l';
+    return `<div class="mc ${cl}">
+      <div class="mc-lbl">${MONTHS_AR[i]}</div>
+      <div class="mc-val">${v || '—'}</div>
+    </div>`;
+  }).join('');
+
+  // Entries list
+  const entriesHtml = entries.length
+    ? entries.map(e => {
+        const sun = new Date(e.s + 'T00:00:00');
+        const sStr = sun.toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        const sp = SPECIAL[e.s] || '';
+        return `<div class="att-entry">
+          <div class="att-dot"></div>
+          <div style="flex:1">
+            <div class="att-date">${sStr}</div>
+            ${sp ? `<div class="att-special">✨ ${sp}</div>` : ''}
+            ${e.s !== e.r ? `<div class="att-reg">📝 تاريخ التسجيل: ${new Date(e.r + 'T00:00:00').toLocaleDateString('ar-EG', { day: 'numeric', month: 'long' })}</div>` : ''}
+          </div>
+        </div>`;
+      }).join('')
+    : `<div class="att-empty">
+        <div class="att-empty-icon">📭</div>
+        <div class="att-empty-txt">لا يوجد حضور مسجّل بعد</div>
+       </div>`;
+
+  // Remaining sessions message
+  const remaining = mx - total;
+  const remainMsg = total >= mx
+    ? `<div style="background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);border-radius:12px;padding:12px 16px;margin-bottom:14px;text-align:center">
+        <div style="font-size:24px;margin-bottom:4px">🏆</div>
+        <div style="font-size:13px;font-weight:800;color:#16A34A">مبروك! أنت مؤهّل للمسابقة</div>
+        <div style="font-size:11px;color:#5a413d;margin-top:2px">حضرت ${total} قداس من أصل ${mx}</div>
+       </div>`
+    : `<div style="background:rgba(254,214,91,.12);border:1px solid rgba(254,214,91,.4);border-radius:12px;padding:12px 16px;margin-bottom:14px;text-align:center">
+        <div style="font-size:13px;font-weight:800;color:#745c00">باقي ${remaining} قداس للتأهّل</div>
+        <div style="font-size:11px;color:#5a413d;margin-top:2px">حضرت ${total} من أصل ${mx} المطلوبين</div>
+       </div>`;
+
+  return `
+    <!-- Hero card -->
+    <div class="rec-hero">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div class="rec-avatar">${member.name.charAt(0)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="rec-name">${member.name}</div>
+          <div class="rec-meta">
+            <span>🔑 ${member.code}</span>
+            ${member.level ? `<span>📚 ${member.level}</span>` : ''}
+            <span>⛪ ${member.church}</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="chip" style="${catColor}">${member.category}</span>
+            <span class="chip" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75)">${gLabel}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="rec-prog-wrap">
+        <div class="rec-prog" style="width:${pct}%;background:${bc}"></div>
+      </div>
+      <div class="rec-labels">
+        <span style="color:rgba(255,255,255,.55);font-size:11px;font-weight:700">${statusTxt}</span>
+        <span style="color:${bc};font-size:16px;font-weight:900">${total} / ${mx}</span>
+      </div>
+      <div style="text-align:center;margin-top:10px">
+        <span class="rec-pill" style="${pillStyle}">${icon} ${pct}% من الهدف</span>
+      </div>
+
+      <!-- Monthly grid -->
+      <div class="mgrid">${mcHtml}</div>
+    </div>
+
+    <!-- Remaining message -->
+    ${remainMsg}
+
+    <!-- Attendance list -->
+    <div class="att-card">
+      <div class="att-head">
+        <span class="att-head-title">🗓️ تواريخ الحضور</span>
+        <span class="att-count">${total} قداس</span>
+      </div>
+      ${entriesHtml}
+    </div>`;
+}
+
+// ══ HELPERS ═══════════════════════════════════════════════════
+function errCard(icon, title, sub) {
+  return `<div class="err-card">
+    <div class="err-icon">${icon}</div>
+    <div class="err-title">${title}</div>
+    <div class="err-sub">${sub}</div>
+  </div>`;
+}
+
+function shake() {
+  const inp = document.getElementById('codeInput');
+  inp.style.animation = 'none';
+  inp.style.borderColor = '#DC2626';
+  setTimeout(() => { inp.style.borderColor = ''; }, 800);
+}
+
+function toast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+</script>
+</body>
+</html>
