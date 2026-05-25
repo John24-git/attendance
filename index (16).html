@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#800000">
+<title>شماماسة ٢٠٢٦ — إيبارشية المعادي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:'Tajawal',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:#fbf9f5;min-height:100vh;display:flex;flex-direction:column}
+.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(160deg,#800000 0%,#570000 45%,#3d0000 100%)}
+.bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 80%,rgba(254,214,91,.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(255,255,255,.04) 0%,transparent 40%)}
+.cross-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:420px;font-weight:900;color:rgba(255,255,255,.025);line-height:1;pointer-events:none;user-select:none}
+.wrap{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px 48px;min-height:100vh}
+.emblem{width:72px;height:72px;background:rgba(254,214,91,.15);border:2px solid rgba(254,214,91,.3);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:20px;backdrop-filter:blur(8px)}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.2em;color:rgba(254,214,91,.6);margin-bottom:10px;text-align:center;text-transform:uppercase}
+.title{font-family:'Literata',serif;font-size:32px;font-weight:700;color:#fff;text-align:center;line-height:1.2;margin-bottom:8px}
+.sub{font-size:13px;color:rgba(255,255,255,.5);text-align:center;margin-bottom:40px;line-height:1.6}
+.cards{width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px}
+.entry-card{background:rgba(255,255,255,.08);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:22px 20px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:16px;transition:.2s;position:relative;overflow:hidden}
+.entry-card::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:.2s}
+.entry-card:hover::before{background:rgba(255,255,255,.05)}
+.entry-card:active{transform:scale(.97)}
+.entry-card.gold{background:rgba(254,214,91,.15);border-color:rgba(254,214,91,.3)}
+.entry-card.gold:hover::before{background:rgba(254,214,91,.08)}
+.card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.card-icon.gi{background:rgba(254,214,91,.2);border:1.5px solid rgba(254,214,91,.35)}
+.card-icon.wi{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15)}
+.card-text{flex:1}
+.card-title{font-size:16px;font-weight:900;color:#fff;margin-bottom:3px}
+.card-sub{font-size:11px;color:rgba(255,255,255,.5);line-height:1.5}
+.entry-card.gold .card-sub{color:rgba(254,214,91,.6)}
+.card-arrow{font-size:20px;color:rgba(255,255,255,.3);flex-shrink:0;transition:.2s}
+.entry-card:hover .card-arrow{color:rgba(255,255,255,.6);transform:translateX(-4px)}
+.divider{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.2);font-size:11px;font-weight:700;margin:4px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.footer{position:relative;z-index:1;text-align:center;padding:0 16px 32px;color:rgba(255,255,255,.25);font-size:10px;font-weight:600;letter-spacing:.05em}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.emblem{animation:fadeUp .5s ease both}
+.eyebrow{animation:fadeUp .5s .1s ease both}
+.title{animation:fadeUp .5s .15s ease both}
+.sub{animation:fadeUp .5s .2s ease both}
+.cards{animation:fadeUp .5s .28s ease both}
+</style>
+</head>
+<body>
+<div class="bg"><div class="cross-bg">✝</div></div>
+<div class="wrap">
+  <div class="emblem">⛪</div>
+  <div class="eyebrow">مهرجان شماماسة ٢٠٢٦</div>
+  <h1 class="title">إيبارشية المعادي</h1>
+  <p class="sub">تابع سجل حضورك أو ادخل<br>على لوحة المشرفين</p>
+  <div class="cards">
+    <a href="lookup.html" class="entry-card gold">
+      <div class="card-icon gi">📊</div>
+      <div class="card-text">
+        <div class="card-title">سجل حضوري</div>
+        <div class="card-sub">للشماماسة — تابع حضورك بكودك الخاص</div>
+      </div>
+      <div class="card-arrow">←</div>
+    </a>
+    <div class="divider">أو</div>
+    <a href="admin.html" class="entry-card">
+      <div class="card-icon wi">🔐</div>
+      <div class="card-text">
+        <div class="card-title">لوحة المشرفين</div>
+        <div class="card-sub">للمشرفين والأدمن فقط — يتطلب تسجيل دخول</div>
+      </div>
+      <div class="card-arrow">←</div>
+    </a>
+  </div>
+</div>
+<div class="footer">✝ شماماسة ٢٠٢٦ — إيبارشية المعادي</div>
+</body>
+</html>
