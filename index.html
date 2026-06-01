@@ -186,7 +186,7 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
     <div id="mine-lock" class="lock-screen" style="display:none">
       <span class="ms text-[64px] text-ol mb-3">lock</span>
       <h2 class="text-xl font-bold text-pc2 mb-2">تسجيل الدخول مطلوب</h2>
-      <p class="text-osv text-sm mb-6 leading-relaxed">سجل دخولك كمشرف للبحث<br>في بيانات كنيستك</p>
+      <p class="text-osv text-sm mb-6 leading-relaxed">سجل دخولك كامين الشمامسة للبحث<br>في بيانات كنيستك</p>
       <button onclick="openLogin()" class="sacred text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity shadow-lg">
         🔑 تسجيل الدخول
       </button>
@@ -215,7 +215,7 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
     <div id="church-lock" class="lock-screen" style="display:none">
       <span class="ms text-[64px] text-ol mb-3">lock</span>
       <h2 class="text-xl font-bold text-pc2 mb-2">تسجيل الدخول مطلوب</h2>
-      <p class="text-osv text-sm mb-6 leading-relaxed">تقارير الكنيسة للمشرفين فقط<br>لحماية خصوصية البيانات</p>
+      <p class="text-osv text-sm mb-6 leading-relaxed">تقارير الكنيسة لللامناء الشمامسة والاباء الكهنة ين فقط<br>لحماية خصوصية البيانات</p>
       <button onclick="openLogin()" class="sacred text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity shadow-lg">
         🔑 تسجيل الدخول
       </button>
@@ -374,7 +374,7 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
     <div class="text-center mb-6">
       <span class="ms text-[52px] text-pc mb-1">key</span>
       <h2 style="font-family:'Literata',serif" class="text-xl font-bold text-pc2">تسجيل الدخول</h2>
-      <p class="text-xs text-osv mt-1">للمشرفين ومديري الكنائس</p>
+      <p class="text-xs text-osv mt-1">لامناء الشمامسة والاباء الكهنة </p>
     </div>
     <div class="mb-4">
       <label class="block text-[10px] font-bold text-osv mb-2 tracking-widest uppercase">اسم المستخدم</label>
@@ -1010,7 +1010,7 @@ async function doLogin(){
 }
 
 function setUserBar(){
-  const rl={super_admin:'أدمن عام',admin:'أدمن',supervisor:'مشرف'};
+  const rl={super_admin:'s_admin',admin:'الاب الكاهن',supervisor:'امين الشمامسة'};
   const rc={super_admin:'background:#fed65b;color:#745c00',admin:'background:rgba(254,214,91,.25);color:#fed65b',supervisor:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)'};
   document.getElementById('ubar').innerHTML=`
     <div style="display:flex;align-items:center;gap:8px">
