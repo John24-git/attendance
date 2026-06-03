@@ -370,8 +370,10 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 // ══ CONFIG ════════════════════════════════════════════════════
 const SHEET_ID    = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
 const SHEET_DB    = 'Data';
-const SHEET_ATT   = 'Form Responses 1';   // ← شيت الفورم مباشرةً
 const SHEET_USERS = 'Users';
+// شيت الردود — Spreadsheet منفصل بتاع الفورم
+const SHEET_ATT_ID = '12Eq2wViycVa0wE2zwGKDXGJAcCVrRX5WIR8VZosJDso';
+const SHEET_ATT    = 'Form Responses 1';
 const CAT_MAX     = {'طالب':12,'ثانوية':6,'موظف':6};
 const MAX_DEF     = 12;
 const TOKEN_TTL   = 12*60*60*1000;
@@ -424,8 +426,8 @@ function getUserLevels(){
 }
 
 // ══ SHEET READERS ══════════════════════════════════════════════
-async function readSheet(name){
-  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&headers=1&_=${Date.now()}`;
+async function readSheet(name, id=SHEET_ID){
+  const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&headers=1&_=${Date.now()}`;
   const r=await fetch(url);const text=await r.text();
   const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
   if(!json.table||!json.table.rows)return[];
@@ -479,7 +481,7 @@ async function loadAllData(){
     })).filter(m=>m.code>0&&m.name);
 
     attMap={};ATT=[];
-    const attRows=await readSheet(SHEET_ATT);
+    const attRows=await readSheet(SHEET_ATT, SHEET_ATT_ID);
     attRows.forEach(r=>{
       const code=Math.round(parseFloat(r['الكود']||r['code']||0));if(!code)return;
       const ts=parseDate(r['Timestamp']||r['التاريخ']||r['timestamp']||'');if(!ts)return;
