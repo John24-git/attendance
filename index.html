@@ -796,7 +796,7 @@ function renderMinePanel(){
   if(ok){
     const lbl=document.getElementById('mine-church-label');
     const llbl=document.getElementById('mine-levels-label');
-    if((user.role==='supervisor'||user.role==='deacon')&&user.church){lbl.textContent=`🏛️ ${user.church}`;}
+    if(user.role==='supervisor'&&user.church){lbl.textContent=`🏛️ ${user.church}`;}
     else{lbl.textContent='كل الكنائس (أدمن)';lbl.style.color='#fed65b';}
     // Show levels restriction if any
     const allowedLevels=getUserLevels();
