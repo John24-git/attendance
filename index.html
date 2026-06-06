@@ -124,14 +124,14 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 
 <!-- ══ HOME PANEL ════════════════════════════════════════════════ -->
 <div class="panel on" id="p-home" style="position:relative;min-height:100vh;overflow:hidden">
-  <div class="home-bg"><div class="home-cross"></div></div>
+  <div class="home-bg"><div class="home-cross">✝</div></div>
   <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;text-align:center">
     <!-- Emblem -->
     <div style="width:84px;height:84px;background:rgba(254,214,91,.15);border:2px solid rgba(254,214,91,.3);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:42px;margin-bottom:22px;backdrop-filter:blur(8px)">⛪</div>
     <!-- Text -->
     <div style="font-size:10px;font-weight:800;letter-spacing:.2em;color:rgba(254,214,91,.65);margin-bottom:10px">مهرجان شمامسة ٢٠٢٦</div>
     <h1 style="font-family:'Literata',serif;font-size:30px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:8px">مطرانية المعادي</h1>
-    <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:44px;line-height:1.7">سجل حضور القداسات الأسبوعية<br>للشمامسة والشماسات</p>
+    <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:44px;line-height:1.7">سجل حضور قداسات الأحد<br>للشمامسة والشماسات</p>
     <!-- Login button -->
     <button onclick="openLogin()" style="display:flex;align-items:center;gap:10px;background:rgba(254,214,91,.9);color:#570000;border:none;padding:16px 36px;border-radius:16px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 8px 24px rgba(254,214,91,.25);transition:.15s" onmouseenter="this.style.background='#fed65b'" onmouseleave="this.style.background='rgba(254,214,91,.9)'" ontouchstart="this.style.transform='scale(.97)'" ontouchend="this.style.transform=''">
       <span class="ms" style="font-size:20px">key</span>
@@ -796,7 +796,7 @@ function renderMinePanel(){
   if(ok){
     const lbl=document.getElementById('mine-church-label');
     const llbl=document.getElementById('mine-levels-label');
-    if((user.role==='supervisor'||user.role==='deacon')&&user.church){lbl.textContent=`🏛️ ${user.church}`;}
+    if(user.role==='supervisor'&&user.church){lbl.textContent=`🏛️ ${user.church}`;}
     else{lbl.textContent='كل الكنائس (أدمن)';lbl.style.color='#fed65b';}
     // Show levels restriction if any
     const allowedLevels=getUserLevels();
@@ -822,7 +822,7 @@ async function doMine(){
     el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">❌</div><div style="color:#ba1a1a;font-weight:800">الكود <b>${code}</b> غير موجود</div></div>`;return;
   }
   // Church restriction
-  if((user.role==='supervisor'||user.role==='deacon')&&user.church){
+  if(user.role==='supervisor'&&user.church){
     const norm=s=>String(s).trim().replace(/\s+/g,' ');
     if(norm(member.church)!==norm(user.church)){
       el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">🚫</div><div style="color:#ba1a1a;font-weight:800;font-size:13px">هذا الكود لكنيسة أخرى</div><div style="color:#5a413d;font-size:11px;margin-top:6px">مسموح فقط بالبحث في كنيسة <b>${user.church}</b></div></div>`;return;
@@ -863,27 +863,15 @@ async function doLogin(){
     sessionStorage.setItem('user',JSON.stringify(user));
     closeLogin();toast('✅ أهلاً '+found.username);
     showApp();
+    // Reload filters with level awareness
     if(dataLoaded){populateFilters();populateChurches();}
-  }else{
-    // رسالة خطأ تفصيلية لمساعدة التشخيص
-    if(!USERS.length){
-      err.textContent='❌ لم يتم تحميل بيانات المستخدمين من الشيت';
-    } else {
-      const userExists=USERS.find(x=>x.username===u);
-      if(!userExists){
-        err.textContent=`❌ اسم المستخدم غير موجود — تم تحميل ${USERS.length} مستخدم`;
-      } else {
-        err.textContent='❌ كلمة السر غلط';
-      }
-    }
-    err.style.display='block';
-  }
+  }else{err.textContent='اسم المستخدم أو كلمة السر غلط';err.style.display='block';}
   btn.innerHTML='<span class="ms text-[18px]">key</span> دخول';btn.disabled=false;
 }
 
 function setUserBar(){
-  const rl={super_admin:'أدمن عام',admin:'الأب الكاهن',supervisor:'أمين الشمامسة',deacon:'خادم'};
-  const rc={super_admin:'background:#fed65b;color:#745c00',admin:'background:rgba(254,214,91,.25);color:#fed65b',supervisor:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)',deacon:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)'};
+  const rl={super_admin:'أدمن عام',admin:'الأب الكاهن',supervisor:'أمين الشمامسة'};
+  const rc={super_admin:'background:#fed65b;color:#745c00',admin:'background:rgba(254,214,91,.25);color:#fed65b',supervisor:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)'};
   const allowedLevels=getUserLevels();
   document.getElementById('ubar').innerHTML=`
     <div style="display:flex;align-items:center;gap:8px">
@@ -922,40 +910,31 @@ function renderChurchPanel(){
   const ok=!!user;
   document.getElementById('church-lock').style.display=ok?'none':'flex';
   document.getElementById('church-content').style.display=ok?'block':'none';
-  if(!ok)return;
-
-  const allowedLevels=getUserLevels();
-  const notice=document.getElementById('levelsNotice');
-  if(allowedLevels){notice.style.display='block';document.getElementById('levelsNoticeText').textContent=allowedLevels.join(' · ');}
-  else notice.style.display='none';
-
-  const sel=document.getElementById('chSel');
-  const isRestricted=(user.role==='supervisor'||user.role==='deacon');
-
-  if(isRestricted && user.church && user.church.trim()){
-    // بنبني الـ dropdown بكنيسة واحدة بس — مفيش مشكلة matching
-    sel.innerHTML='';
-    const o=document.createElement('option');
-    o.value=user.church.trim();
-    o.textContent=user.church.trim();
-    sel.appendChild(o);
-    sel.selectedIndex=0;
-    sel.disabled=true;
-    loadChurch();
-  }else if(isRestricted){
-    sel.innerHTML='<option value="">⚠️ لم يتم تحديد كنيسة لهذا الحساب</option>';
-    sel.disabled=true;chData=null;
-    document.getElementById('chSearchWrap').style.display='none';
-    document.getElementById('chKpi').style.display='none';
-    document.getElementById('church-export-bar').style.display='none';
-    document.getElementById('chCard').style.display='none';
-  }else{
+  if(ok){
     populateChurches();
-    sel.disabled=false;sel.value='';chData=null;
-    document.getElementById('chSearchWrap').style.display='none';
-    document.getElementById('chKpi').style.display='none';
-    document.getElementById('church-export-bar').style.display='none';
-    document.getElementById('chCard').style.display='none';
+    // Show levels notice
+    const allowedLevels=getUserLevels();
+    const notice=document.getElementById('levelsNotice');
+    if(allowedLevels){
+      notice.style.display='block';
+      document.getElementById('levelsNoticeText').textContent=allowedLevels.join(' · ');
+    }else notice.style.display='none';
+
+    const sel=document.getElementById('chSel');
+    if(user.role==='supervisor'&&user.church){
+      const norm=s=>String(s).trim().replace(/\s+/g,' ');
+      const target=norm(user.church);sel.value=user.church;
+      if(norm(sel.value)!==target){for(let i=0;i<sel.options.length;i++){if(norm(sel.options[i].value)===target){sel.selectedIndex=i;break;}}}
+      sel.disabled=true;
+      if(sel.value)loadChurch();
+      else{chData=null;document.getElementById('chCard').style.display='none';document.getElementById('church-export-bar').style.display='none';}
+    }else{
+      sel.disabled=false;sel.value='';chData=null;
+      document.getElementById('chSearchWrap').style.display='none';
+      document.getElementById('chKpi').style.display='none';
+      document.getElementById('church-export-bar').style.display='none';
+      document.getElementById('chCard').style.display='none';
+    }
   }
 }
 function renderAllPanel(){
