@@ -131,7 +131,7 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
     <!-- Text -->
     <div style="font-size:10px;font-weight:800;letter-spacing:.2em;color:rgba(254,214,91,.65);margin-bottom:10px">مهرجان شمامسة ٢٠٢٦</div>
     <h1 style="font-family:'Literata',serif;font-size:30px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:8px">مطرانية المعادي</h1>
-    <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:44px;line-height:1.7">سجل حضور قداسات الأحد<br>للشمامسة والشماسات</p>
+    <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:44px;line-height:1.7">سجل حضور القداسات الأسبوعية<br>للشمامسة والشماسات</p>
     <!-- Login button -->
     <button onclick="openLogin()" style="display:flex;align-items:center;gap:10px;background:rgba(254,214,91,.9);color:#570000;border:none;padding:16px 36px;border-radius:16px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 8px 24px rgba(254,214,91,.25);transition:.15s" onmouseenter="this.style.background='#fed65b'" onmouseleave="this.style.background='rgba(254,214,91,.9)'" ontouchstart="this.style.transform='scale(.97)'" ontouchend="this.style.transform=''">
       <span class="ms" style="font-size:20px">key</span>
@@ -910,31 +910,40 @@ function renderChurchPanel(){
   const ok=!!user;
   document.getElementById('church-lock').style.display=ok?'none':'flex';
   document.getElementById('church-content').style.display=ok?'block':'none';
-  if(ok){
-    populateChurches();
-    // Show levels notice
-    const allowedLevels=getUserLevels();
-    const notice=document.getElementById('levelsNotice');
-    if(allowedLevels){
-      notice.style.display='block';
-      document.getElementById('levelsNoticeText').textContent=allowedLevels.join(' · ');
-    }else notice.style.display='none';
+  if(!ok)return;
 
-    const sel=document.getElementById('chSel');
-    if((user.role==='supervisor'||user.role==='deacon')&&user.church){
-      const norm=s=>String(s).trim().replace(/\s+/g,' ');
-      const target=norm(user.church);sel.value=user.church;
-      if(norm(sel.value)!==target){for(let i=0;i<sel.options.length;i++){if(norm(sel.options[i].value)===target){sel.selectedIndex=i;break;}}}
-      sel.disabled=true;
-      if(sel.value)loadChurch();
-      else{chData=null;document.getElementById('chCard').style.display='none';document.getElementById('church-export-bar').style.display='none';}
-    }else{
-      sel.disabled=false;sel.value='';chData=null;
-      document.getElementById('chSearchWrap').style.display='none';
-      document.getElementById('chKpi').style.display='none';
-      document.getElementById('church-export-bar').style.display='none';
-      document.getElementById('chCard').style.display='none';
-    }
+  const allowedLevels=getUserLevels();
+  const notice=document.getElementById('levelsNotice');
+  if(allowedLevels){notice.style.display='block';document.getElementById('levelsNoticeText').textContent=allowedLevels.join(' · ');}
+  else notice.style.display='none';
+
+  const sel=document.getElementById('chSel');
+  const isRestricted=(user.role==='supervisor'||user.role==='deacon');
+
+  if(isRestricted && user.church && user.church.trim()){
+    // بنبني الـ dropdown بكنيسة واحدة بس — مفيش مشكلة matching
+    sel.innerHTML='';
+    const o=document.createElement('option');
+    o.value=user.church.trim();
+    o.textContent=user.church.trim();
+    sel.appendChild(o);
+    sel.selectedIndex=0;
+    sel.disabled=true;
+    loadChurch();
+  }else if(isRestricted){
+    sel.innerHTML='<option value="">⚠️ لم يتم تحديد كنيسة لهذا الحساب</option>';
+    sel.disabled=true;chData=null;
+    document.getElementById('chSearchWrap').style.display='none';
+    document.getElementById('chKpi').style.display='none';
+    document.getElementById('church-export-bar').style.display='none';
+    document.getElementById('chCard').style.display='none';
+  }else{
+    populateChurches();
+    sel.disabled=false;sel.value='';chData=null;
+    document.getElementById('chSearchWrap').style.display='none';
+    document.getElementById('chKpi').style.display='none';
+    document.getElementById('church-export-bar').style.display='none';
+    document.getElementById('chCard').style.display='none';
   }
 }
 function renderAllPanel(){
