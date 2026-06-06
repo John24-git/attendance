@@ -796,7 +796,7 @@ function renderMinePanel(){
   if(ok){
     const lbl=document.getElementById('mine-church-label');
     const llbl=document.getElementById('mine-levels-label');
-    if(user.role==='supervisor'&&user.church){lbl.textContent=`🏛️ ${user.church}`;}
+    if((user.role==='supervisor'||user.role==='deacon')&&user.church){lbl.textContent=`🏛️ ${user.church}`;}
     else{lbl.textContent='كل الكنائس (أدمن)';lbl.style.color='#fed65b';}
     // Show levels restriction if any
     const allowedLevels=getUserLevels();
@@ -822,7 +822,7 @@ async function doMine(){
     el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">❌</div><div style="color:#ba1a1a;font-weight:800">الكود <b>${code}</b> غير موجود</div></div>`;return;
   }
   // Church restriction
-  if(user.role==='supervisor'&&user.church){
+  if((user.role==='supervisor'||user.role==='deacon')&&user.church){
     const norm=s=>String(s).trim().replace(/\s+/g,' ');
     if(norm(member.church)!==norm(user.church)){
       el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">🚫</div><div style="color:#ba1a1a;font-weight:800;font-size:13px">هذا الكود لكنيسة أخرى</div><div style="color:#5a413d;font-size:11px;margin-top:6px">مسموح فقط بالبحث في كنيسة <b>${user.church}</b></div></div>`;return;
@@ -871,7 +871,7 @@ async function doLogin(){
 
 function setUserBar(){
   const rl={super_admin:'أدمن عام',admin:'الأب الكاهن',supervisor:'أمين الشمامسة',deacon:'خادم المستوى'};
-  const rc={super_admin:'background:#fed65b;color:#745c00',admin:'background:rgba(254,214,91,.25);color:#fed65b',supervisor:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)'};
+  const rc={super_admin:'background:#fed65b;color:#745c00',admin:'background:rgba(254,214,91,.25);color:#fed65b',supervisor:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)',deacon:'background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)'};
   const allowedLevels=getUserLevels();
   document.getElementById('ubar').innerHTML=`
     <div style="display:flex;align-items:center;gap:8px">
@@ -921,7 +921,7 @@ function renderChurchPanel(){
     }else notice.style.display='none';
 
     const sel=document.getElementById('chSel');
-    if(user.role==='supervisor'&&user.church){
+    if((user.role==='supervisor'||user.role==='deacon')&&user.church){
       const norm=s=>String(s).trim().replace(/\s+/g,' ');
       const target=norm(user.church);sel.value=user.church;
       if(norm(sel.value)!==target){for(let i=0;i<sel.options.length;i++){if(norm(sel.options[i].value)===target){sel.selectedIndex=i;break;}}}
