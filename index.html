@@ -573,6 +573,7 @@ function loadChurch(){
     const total=rec.sundays.size;const mx=getMax(m);
     return{...m,total,maxAtt:mx,qualified:total>=mx,pct:Math.round(total/mx*100)};
   });
+  if(user.gender && m.gender !== user.gender) return false;
   document.getElementById('chSearchWrap').style.display='block';
   document.getElementById('church-export-bar').style.display='flex';
   filterChurch();
@@ -833,6 +834,10 @@ async function doMine(){
   if(allowedLevels&&!allowedLevels.includes(member.level)){
     el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">🚫</div><div style="color:#ba1a1a;font-weight:800;font-size:13px">هذا الكود لمستوى خارج صلاحياتك</div><div style="color:#5a413d;font-size:11px;margin-top:6px">مستوياتك: <b>${allowedLevels.join(' · ')}</b></div></div>`;return;
   }
+  if(user.gender && member.gender !== user.gender){
+  el.innerHTML=`... شماس/شماسة فقط ...`;
+  return;
+}
   el.innerHTML=buildMineHTML(member,getPersonRec(code));
 }
 
@@ -845,6 +850,7 @@ async function doLogin(){
   const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value.trim();
   if(!u||!p){err.textContent='أدخل اسم المستخدم وكلمة السر';err.style.display='block';return;}
   btn.innerHTML='<div class="spin spin-w"></div>';btn.disabled=true;err.style.display='none';
+  gender: String(r['gender']||r['النوع']||vals[5]||'').trim(),
   if(!USERS.length){
     try{
       const uRows=await readSheetCSV(SHEET_USERS);
