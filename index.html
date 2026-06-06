@@ -863,9 +863,21 @@ async function doLogin(){
     sessionStorage.setItem('user',JSON.stringify(user));
     closeLogin();toast('✅ أهلاً '+found.username);
     showApp();
-    // Reload filters with level awareness
     if(dataLoaded){populateFilters();populateChurches();}
-  }else{err.textContent='اسم المستخدم أو كلمة السر غلط';err.style.display='block';}
+  }else{
+    // رسالة خطأ تفصيلية لمساعدة التشخيص
+    if(!USERS.length){
+      err.textContent='❌ لم يتم تحميل بيانات المستخدمين من الشيت';
+    } else {
+      const userExists=USERS.find(x=>x.username===u);
+      if(!userExists){
+        err.textContent=`❌ اسم المستخدم غير موجود — تم تحميل ${USERS.length} مستخدم`;
+      } else {
+        err.textContent='❌ كلمة السر غلط';
+      }
+    }
+    err.style.display='block';
+  }
   btn.innerHTML='<span class="ms text-[18px]">key</span> دخول';btn.disabled=false;
 }
 
