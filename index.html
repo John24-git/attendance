@@ -567,13 +567,13 @@ function loadChurch(){
     if(m.church!==ch)return false;
     // ← فلتر المستويات المسموح بيها
     if(allowedLevels&&!allowedLevels.includes(m.level))return false;
+    if(user.gender && m.gender !== user.gender) return false;
     return true;
   }).map(m=>{
     const rec=attMap[m.code]||{sundays:new Set()};
     const total=rec.sundays.size;const mx=getMax(m);
     return{...m,total,maxAtt:mx,qualified:total>=mx,pct:Math.round(total/mx*100)};
   });
-  if(user.gender && m.gender !== user.gender) return false;
   document.getElementById('chSearchWrap').style.display='block';
   document.getElementById('church-export-bar').style.display='flex';
   filterChurch();
