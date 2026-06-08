@@ -105,8 +105,11 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 
 @media print{
   body *{visibility:hidden}
-  #printArea,#printArea *{visibility:visible}
-  #printArea{position:absolute;inset:0;background:#fff;z-index:99999;direction:rtl;font-family:'Tajawal',sans-serif;padding:20px;overflow:auto}
+  /* جديد */
+#printArea{position:static;width:100%;background:#fff;direction:rtl;font-family:'Tajawal',sans-serif;padding:20px;}
+.pt{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto;}
+.pt tr{page-break-inside:avoid;page-break-after:auto;}
+.pt thead{display:table-header-group;}
   .ph{text-align:center;margin-bottom:20px;border-bottom:2px solid #570000;padding-bottom:14px}
   .ph h2{font-size:18px;font-weight:900;color:#570000}
   .ph p{font-size:12px;color:#64748B;margin-top:4px}
