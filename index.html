@@ -574,7 +574,24 @@ function setGenderFilter(val,btn){
 function loadChurch(){
   const ch=document.getElementById('chSel').value;
   if(!ch){document.getElementById('church-export-bar').style.display='none';return;}
+  // ← فلاتر ديناميكية حسب الكنيسة
   const allowedLevels=getUserLevels();
+  const churchMembers=DB.filter(m=>m.church===ch);
+
+  const churchLvls=[...new Set(churchMembers.map(m=>m.level).filter(Boolean))]
+    .filter(l=>!allowedLevels||allowedLevels.includes(l))
+    .sort((a,b)=>{const na=parseFloat(a),nb=parseFloat(b);return(!isNaN(na)&&!isNaN(nb))?na-nb:a.localeCompare(b,'ar');});
+
+  const churchCats=[...new Set(churchMembers.map(m=>m.category).filter(Boolean))].sort();
+
+  document.getElementById('lvlSel').innerHTML=
+    '<option value="">كل المستويات</option>'+
+    churchLvls.map(v=>`<option value="${v}">${v}</option>`).join('');
+
+  document.getElementById('catSel').innerHTML=
+    '<option value="">كل الفئات</option>'+
+    churchCats.map(v=>`<option value="${v}">${v}</option>`).join('');
+  
   chData=DB.filter(m=>{
     if(m.church!==ch)return false;
     // ← فلتر المستويات المسموح بيها
