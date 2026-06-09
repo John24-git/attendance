@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#800000">
+<title>قرعة المجموعات — شمامسة ٢٠٢٦</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;font-family:'Tajawal',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── BG ─────────────────────────────────────────────── */
+body{background:#0e0408;color:#fff}
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-glow::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(128,0,0,.35) 0%,transparent 70%);top:-100px;left:50%;transform:translateX(-50%)}
+.bg-glow::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(254,214,91,.06) 0%,transparent 70%);bottom:0;right:0}
+
+/* ── HEADER ──────────────────────────────────────────── */
+header{position:relative;z-index:10;text-align:center;padding:48px 20px 32px}
+.header-eyebrow{font-size:10px;font-weight:800;letter-spacing:.25em;color:rgba(254,214,91,.55);margin-bottom:12px;text-transform:uppercase}
+.header-title{font-family:'Literata',serif;font-size:clamp(28px,6vw,48px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:8px}
+.header-title span{color:#fed65b}
+.header-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:6px}
+
+/* ── MAIN ────────────────────────────────────────────── */
+main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* ── LOADING ─────────────────────────────────────────── */
+.loading-state{
+  text-align:center;padding:60px 20px;
+  font-size:14px;font-weight:700;color:rgba(255,255,255,.4);
+}
+.loading-spinner{
+  width:36px;height:36px;border:3px solid rgba(255,255,255,.1);
+  border-top-color:#fed65b;border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 16px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-state{
+  text-align:center;padding:40px 20px;
+  background:rgba(128,0,0,.15);border:1px solid rgba(128,0,0,.3);
+  border-radius:16px;margin-bottom:24px;
+}
+.error-state p{font-size:13px;color:rgba(255,100,100,.9);margin-bottom:8px}
+.error-state small{font-size:11px;color:rgba(255,255,255,.3)}
+
+/* ── POOL ────────────────────────────────────────────── */
+.pool-section{margin-bottom:32px}
+.section-label{font-size:11px;font-weight:800;letter-spacing:.15em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+
+.pool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+
+.church-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:14px 16px;
+  display:flex;align-items:center;gap:10px;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  cursor:default;position:relative;overflow:hidden;
+}
+.church-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(254,214,91,.08),transparent);opacity:0;transition:.3s}
+.church-card.active::before{opacity:1}
+.church-card.active{border-color:rgba(254,214,91,.5);box-shadow:0 0 20px rgba(254,214,91,.15);transform:scale(1.02)}
+.church-card.drawn{opacity:.3;transform:scale(.95)}
+.church-card.drawing{animation:pulse-gold .6s ease infinite alternate}
+@keyframes pulse-gold{
+  from{box-shadow:0 0 10px rgba(254,214,91,.2);border-color:rgba(254,214,91,.4)}
+  to{box-shadow:0 0 30px rgba(254,214,91,.5);border-color:rgba(254,214,91,.9)}
+}
+
+.church-icon{width:34px;height:34px;background:rgba(128,0,0,.4);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.church-name{font-size:12px;font-weight:700;color:#fff;line-height:1.4}
+
+/* ── GROUPS ──────────────────────────────────────────── */
+.groups-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:32px}
+@media(min-width:600px){.groups-grid{grid-template-columns:repeat(4,1fr)}}
+
+.group-col{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
+.group-head{padding:12px 14px;text-align:center;font-weight:900;font-size:14px;letter-spacing:.05em}
+.group-a .group-head{background:linear-gradient(135deg,#800000,#570000);color:#fff}
+.group-b .group-head{background:linear-gradient(135deg,#1a3a6b,#0d1e3a);color:#fff}
+.group-c .group-head{background:linear-gradient(135deg,#1a5c2a,#0d3318);color:#fff}
+.group-d .group-head{background:linear-gradient(135deg,#4a1a6b,#280d3a);color:#fff}
+.group-label{font-size:9px;opacity:.7;font-weight:700;letter-spacing:.1em;display:block;margin-top:2px}
+
+.group-slots{padding:10px;min-height:160px;display:flex;flex-direction:column;gap:6px}
+.group-slot{
+  background:rgba(255,255,255,.04);
+  border:1px dashed rgba(255,255,255,.1);
+  border-radius:10px;padding:10px 12px;
+  font-size:11px;font-weight:700;color:rgba(255,255,255,.3);
+  text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;
+  transition:all .4s cubic-bezier(.4,0,.2,1);
+}
+.group-slot.filled{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;
+  animation:slot-fill .4s cubic-bezier(.4,0,.2,1);
+}
+.group-a .group-slot.filled{border-color:rgba(128,0,0,.5);background:rgba(128,0,0,.15)}
+.group-b .group-slot.filled{border-color:rgba(26,58,107,.8);background:rgba(26,58,107,.2)}
+.group-c .group-slot.filled{border-color:rgba(22,100,46,.8);background:rgba(22,100,46,.2)}
+.group-d .group-slot.filled{border-color:rgba(74,26,107,.8);background:rgba(74,26,107,.2)}
+
+@keyframes slot-fill{
+  0%{transform:scale(.8) translateY(-8px);opacity:0}
+  60%{transform:scale(1.05)}
+  100%{transform:scale(1);opacity:1}
+}
+
+/* ── STATUS ──────────────────────────────────────────── */
+.status-bar{
+  text-align:center;margin-bottom:28px;
+  font-size:13px;font-weight:700;color:rgba(255,255,255,.5);
+  min-height:20px;transition:.3s;
+}
+.status-bar.active{color:#fed65b}
+.status-bar .group-name{font-size:16px;font-weight:900;color:#fff}
+
+/* ── CONTROLS ────────────────────────────────────────── */
+.controls{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+
+.btn-draw{
+  background:linear-gradient(135deg,#800000,#570000);
+  color:#fff;border:none;padding:16px 40px;
+  border-radius:16px;font-family:'Tajawal',sans-serif;
+  font-size:15px;font-weight:900;cursor:pointer;
+  transition:.2s;box-shadow:0 8px 24px rgba(128,0,0,.4);
+  display:flex;align-items:center;gap:8px;
+}
+.btn-draw:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(128,0,0,.5)}
+.btn-draw:active{transform:scale(.97)}
+.btn-draw:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+.btn-reset{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);padding:16px 28px;border-radius:16px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:.2s;
+  display:flex;align-items:center;gap:8px;
+}
+.btn-reset:hover{background:rgba(255,255,255,.12)}
+
+.btn-export{
+  background:rgba(254,214,91,.15);border:1px solid rgba(254,214,91,.3);
+  color:#fed65b;padding:16px 28px;border-radius:16px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:.2s;
+  align-items:center;gap:8px;
+  display:none;
+}
+.btn-export.show{display:flex}
+.btn-export:hover{background:rgba(254,214,91,.25)}
+
+/* ── RESULT BANNER ───────────────────────────────────── */
+.result-banner{
+  background:linear-gradient(135deg,rgba(254,214,91,.12),rgba(128,0,0,.12));
+  border:1px solid rgba(254,214,91,.2);
+  border-radius:20px;padding:20px 24px;
+  text-align:center;margin-bottom:24px;
+  display:none;
+  animation:fadeUp .5s ease;
+}
+.result-banner.show{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.result-banner h2{font-family:'Literata',serif;font-size:22px;color:#fed65b;margin-bottom:4px}
+.result-banner p{font-size:12px;color:rgba(255,255,255,.5)}
+
+/* ── SPINNING ANIMATION ──────────────────────────────── */
+.spinning .church-card:not(.drawn){
+  animation:shake .15s ease infinite alternate;
+}
+@keyframes shake{
+  from{transform:translateX(-1px) rotate(-.5deg)}
+  to{transform:translateX(1px) rotate(.5deg)}
+}
+
+/* ── PRINT ───────────────────────────────────────────── */
+@media print{
+  body{background:#fff;color:#000}
+  .bg-glow,.controls,header .header-sub{display:none}
+  .group-col{border:2px solid #ccc;break-inside:avoid}
+  .group-slot.filled{color:#000;border:1px solid #999}
+  .group-a .group-head{background:#800000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .group-b .group-head{background:#1a3a6b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .group-c .group-head{background:#1a5c2a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .group-d .group-head{background:#4a1a6b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<header>
+  <div class="header-eyebrow">مهرجان شمامسة ٢٠٢٦ — إيبارشية المعادي</div>
+  <h1 class="header-title">قرعة <span>المجموعات</span></h1>
+  <p class="header-sub" id="headerSub">جارٍ تحميل الكنائس...</p>
+</header>
+
+<main>
+
+  <!-- Loading -->
+  <div class="loading-state" id="loadingState">
+    <div class="loading-spinner"></div>
+    جارٍ تحميل الكنائس من الشيت...
+  </div>
+
+  <!-- Error -->
+  <div class="error-state" id="errorState" style="display:none">
+    <p>⚠️ تعذّر تحميل الكنائس من الشيت</p>
+    <small id="errorMsg"></small>
+  </div>
+
+  <!-- App (hidden until loaded) -->
+  <div id="appContent" style="display:none">
+
+    <!-- Status -->
+    <div class="status-bar" id="statusBar">اضغط "بدء القرعة" لتوزيع الكنائس</div>
+
+    <!-- Result banner -->
+    <div class="result-banner" id="resultBanner">
+      <h2>🎉 اكتملت القرعة!</h2>
+      <p id="bannerSub">تم توزيع الكنائس على ٤ مجموعات بنجاح</p>
+    </div>
+
+    <!-- Groups -->
+    <div class="groups-grid">
+      <div class="group-col group-a">
+        <div class="group-head">المجموعة A<span class="group-label">GROUP A</span></div>
+        <div class="group-slots" id="group-a"></div>
+      </div>
+      <div class="group-col group-b">
+        <div class="group-head">المجموعة B<span class="group-label">GROUP B</span></div>
+        <div class="group-slots" id="group-b"></div>
+      </div>
+      <div class="group-col group-c">
+        <div class="group-head">المجموعة C<span class="group-label">GROUP C</span></div>
+        <div class="group-slots" id="group-c"></div>
+      </div>
+      <div class="group-col group-d">
+        <div class="group-head">المجموعة D<span class="group-label">GROUP D</span></div>
+        <div class="group-slots" id="group-d"></div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn-draw" id="btnDraw" onclick="startDraw()">
+        🎲 بدء القرعة
+      </button>
+      <button class="btn-reset" id="btnReset" onclick="resetDraw()" style="display:none">
+        🔄 إعادة القرعة
+      </button>
+      <button class="btn-export" id="btnExport" onclick="exportCSV()">
+        📥 تحميل Excel
+      </button>
+    </div>
+
+    <!-- Pool -->
+    <div class="pool-section">
+      <div class="section-label">الكنائس المشتركة</div>
+      <div class="pool-grid" id="poolGrid"></div>
+    </div>
+
+  </div><!-- /appContent -->
+
+</main>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════
+const SHEET_ID  = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const SHEET_GID = '2144900869'; // شيت church
+
+// الكنائس المستبعدة من القرعة
+const EXCLUDED = [
+  'كنيسة البابا كيرلس السادس بالمعادي الجديدة',
+  'كنيسة الشهيد استفانوس',
+];
+
+// ══ STATE ════════════════════════════════════════════
+const GROUP_NAMES  = ['a','b','c','d'];
+const GROUP_LABELS = {a:'A', b:'B', c:'C', d:'D'};
+let CHURCHES   = [];
+let drawResult = {a:[],b:[],c:[],d:[]};
+let isDrawing  = false;
+
+// ══ LOAD CHURCHES FROM SHEET ══════════════════════════
+async function loadChurches(){
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+  try {
+    const res = await fetch(url);
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+
+    const rows = text.trim().split('\n').map(r =>
+      r.split(',').map(c => c.replace(/^"|"$/g,'').trim())
+    );
+
+    // العمود الأول (church) — نتخطى السطر الأول (header)
+    const allChurches = rows
+      .slice(1)
+      .map(r => r[0])
+      .filter(c => c && c.length > 2);
+
+    // نستبعد الكنيستين
+    CHURCHES = allChurches.filter(c => !EXCLUDED.includes(c));
+
+    if(CHURCHES.length === 0) throw new Error('لم يتم العثور على كنائس في الشيت');
+
+    // إظهار التطبيق
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('appContent').style.display  = 'block';
+    document.getElementById('headerSub').textContent =
+      `${CHURCHES.length} كنيسة · ٤ مجموعات · ${Math.floor(CHURCHES.length/4)} كنائس لكل مجموعة`;
+
+    init();
+
+  } catch(err){
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display   = 'block';
+    document.getElementById('errorMsg').textContent       = err.message;
+  }
+}
+
+// ══ INIT ══════════════════════════════════════════════
+function init(){
+  const grid = document.getElementById('poolGrid');
+  grid.innerHTML = '';
+  CHURCHES.forEach((ch,i) => {
+    const card = document.createElement('div');
+    card.className = 'church-card';
+    card.id = `church-${i}`;
+    card.innerHTML = `<div class="church-icon">⛪</div><div class="church-name">${ch}</div>`;
+    grid.appendChild(card);
+  });
+  initGroups();
+}
+
+function initGroups(){
+  const perGroup = Math.floor(CHURCHES.length / 4);
+  GROUP_NAMES.forEach(g => {
+    const el = document.getElementById(`group-${g}`);
+    el.innerHTML = '';
+    for(let i=0;i<perGroup;i++){
+      const slot = document.createElement('div');
+      slot.className = 'group-slot';
+      slot.id = `slot-${g}-${i}`;
+      slot.textContent = `— موقع ${i+1} —`;
+      el.appendChild(slot);
+    }
+  });
+}
+
+// ══ SHUFFLE ═══════════════════════════════════════════
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+// ══ DRAW ══════════════════════════════════════════════
+async function startDraw(){
+  if(isDrawing) return;
+  isDrawing = true;
+
+  const perGroup = Math.floor(CHURCHES.length / 4);
+
+  document.getElementById('btnDraw').disabled = true;
+  document.getElementById('statusBar').className = 'status-bar active';
+
+  document.getElementById('statusBar').textContent = '🎲 جارٍ خلط الكنائس...';
+  document.getElementById('poolGrid').classList.add('spinning');
+  await sleep(1800);
+  document.getElementById('poolGrid').classList.remove('spinning');
+
+  const shuffled = shuffle([...Array(CHURCHES.length).keys()]);
+  drawResult = {a:[],b:[],c:[],d:[]};
+
+  const assignments = [
+    {group:'a', indices: shuffled.slice(0, perGroup)},
+    {group:'b', indices: shuffled.slice(perGroup, perGroup*2)},
+    {group:'c', indices: shuffled.slice(perGroup*2, perGroup*3)},
+    {group:'d', indices: shuffled.slice(perGroup*3, perGroup*4)},
+  ];
+
+  for(const {group, indices} of assignments){
+    const gLabel = GROUP_LABELS[group];
+    document.getElementById('statusBar').innerHTML =
+      `يتم السحب للمجموعة <span class="group-name">${gLabel}</span>`;
+
+    for(let i=0;i<indices.length;i++){
+      const churchIdx  = indices[i];
+      const churchName = CHURCHES[churchIdx];
+
+      const card = document.getElementById(`church-${churchIdx}`);
+      card.classList.add('drawing');
+      await sleep(700);
+      card.classList.remove('drawing');
+      card.classList.add('drawn');
+
+      const slot = document.getElementById(`slot-${group}-${i}`);
+      slot.textContent = churchName;
+      slot.className = 'group-slot filled';
+
+      drawResult[group].push(churchName);
+      await sleep(400);
+    }
+    await sleep(300);
+  }
+
+  document.getElementById('statusBar').innerHTML = '✅ اكتملت القرعة بنجاح!';
+  document.getElementById('resultBanner').classList.add('show');
+  document.getElementById('bannerSub').textContent =
+    `تم توزيع الـ ${CHURCHES.length} كنيسة على ٤ مجموعات بنجاح`;
+  document.getElementById('btnDraw').style.display   = 'none';
+  document.getElementById('btnReset').style.display  = 'flex';
+  document.getElementById('btnExport').style.display = 'flex';
+  isDrawing = false;
+}
+
+function resetDraw(){
+  isDrawing  = false;
+  drawResult = {a:[],b:[],c:[],d:[]};
+  document.getElementById('statusBar').className   = 'status-bar';
+  document.getElementById('statusBar').textContent = 'اضغط "بدء القرعة" لتوزيع الكنائس';
+  document.getElementById('resultBanner').classList.remove('show');
+  document.getElementById('btnDraw').disabled      = false;
+  document.getElementById('btnDraw').style.display = 'flex';
+  document.getElementById('btnReset').style.display  = 'none';
+  document.getElementById('btnExport').style.display = 'none';
+  document.querySelectorAll('.church-card').forEach(c => { c.className = 'church-card'; });
+  initGroups();
+}
+
+// ══ EXPORT CSV (يفتح في Excel) ════════════════════════
+function exportCSV(){
+  const perGroup = Math.floor(CHURCHES.length / 4);
+  const rows = [['church','A','B','C','D']];
+
+  // الكنائس المستبعدة في أول صفوف بدون مجموعة
+  EXCLUDED.forEach(ch => rows.push([ch,'','','','']));
+
+  for(let i=0; i<perGroup; i++){
+    rows.push([
+      '',
+      drawResult.a[i] || '',
+      drawResult.b[i] || '',
+      drawResult.c[i] || '',
+      drawResult.d[i] || '',
+    ]);
+  }
+
+  const csv  = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const bom  = '\uFEFF';
+  const blob = new Blob([bom + csv], {type:'text/csv;charset=utf-8'});
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'draw_result.csv';
+  a.click();
+}
+
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+// ══ START ══════════════════════════════════════════════
+loadChurches();
+</script>
+</body>
+</html>
