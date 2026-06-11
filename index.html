@@ -156,6 +156,11 @@ select{background-image:none!important}
 .hist-row.near-row .hist-lbl{color:#800000}
 .hist-row.near-row .hist-bar{background:linear-gradient(90deg,#800000,#b91c1c)}
 .hist-row.low-row .hist-bar{background:linear-gradient(90deg,#e2bfb9,#d4a99f)}
+.hist-row{cursor:pointer;border-radius:6px;padding:2px 4px;transition:.15s}
+.hist-row:hover{background:rgba(128,0,0,.05)}
+.hist-row.selected{background:rgba(128,0,0,.1);border-radius:8px}
+.hist-row.selected .hist-lbl{color:#800000;font-weight:900}
+.hist-row.selected .hist-bar-wrap{box-shadow:0 0 0 1.5px rgba(128,0,0,.3);border-radius:4px}
 </style>
 </head>
 <body class="min-h-screen" style="padding-bottom:88px">
@@ -451,6 +456,7 @@ let user=null,currentTab='mine';
 let DB=[],ATT=[],USERS=[],attMap={};
 let chData=null,dataLoaded=false,allRows=[];
 let selectedSunday=null;
+let selectedCount=null;
 
 // ══ INIT ═══════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',async()=>{
@@ -660,6 +666,7 @@ function loadChurch(){
   document.getElementById('church-export-bar').style.display='flex';
   document.getElementById('calSection').style.display='block';
   selectedSunday=null;
+  selectedCount=null;
   document.getElementById('calActiveBar').style.display='none';
   document.getElementById('calWrap').classList.remove('open');
   document.getElementById('calToggleBtn').classList.remove('active');
@@ -732,6 +739,7 @@ function selectSunday(date){
 
 function clearSunday(){
   selectedSunday=null;
+  selectedCount=null;
   document.getElementById('calActiveBar').style.display='none';
   const ch=document.getElementById('chSel').value;
   if(ch)buildCalendar(ch);
@@ -772,22 +780,34 @@ function renderHistogram(ppl){
   counts.forEach((cnt,i)=>{
     if(cnt===0)return;
     const pct=Math.round(cnt/maxCount*100);
-    const rowCls=i>=maxTarget?'hist-row qual-row':i>=Math.round(maxTarget*.6)?'hist-row near-row':'hist-row low-row';
-    rows.innerHTML+=`<div class="${rowCls}">
-      <div class="hist-lbl">${i}</div>
-      <div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div>
-      <div class="hist-cnt">${cnt}</div>
-    </div>`;
+    const base=i>=maxTarget?'hist-row qual-row':i>=Math.round(maxTarget*.6)?'hist-row near-row':'hist-row low-row';
+    const sel=selectedCount===i?'selected':'';
+    const div=document.createElement('div');
+    div.className=base+' '+sel;
+    div.dataset.count=i;
+    div.innerHTML=`<div class="hist-lbl">${i}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${cnt}</div>`;
+    div.onclick=()=>selectCount(i);
+    rows.appendChild(div);
   });
 
   if(overMax>0){
     const pct=Math.round(overMax/maxCount*100);
-    rows.innerHTML+=`<div class="hist-row qual-row">
-      <div class="hist-lbl">+${maxTarget}</div>
-      <div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div>
-      <div class="hist-cnt">${overMax}</div>
-    </div>`;
+    const sel=selectedCount==='over'?'selected':'';
+    const div=document.createElement('div');
+    div.className='hist-row qual-row '+sel;
+    div.innerHTML=`<div class="hist-lbl">+${maxTarget}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${overMax}</div>`;
+    div.onclick=()=>selectCount('over',maxTarget);
+    rows.appendChild(div);
   }
+}
+
+function selectCount(val,maxTarget){
+  if(selectedCount===val){
+    selectedCount=null;
+  }else{
+    selectedCount=val;
+  }
+  filterChurch();
 }
 
 // ══ FILTER CHURCH ══════════════════════════════════════════════
@@ -802,6 +822,15 @@ function filterChurch(){
   // فلتر التاريخ
   if(selectedSunday){
     ppl=ppl.filter(p=>{const rec=attMap[p.code];return rec&&rec.sundays.has(selectedSunday);});
+  }
+  // فلتر الـ histogram
+  if(selectedCount!==null){
+    if(selectedCount==='over'){
+      const mt=chData.length?Math.max(...chData.map(p=>p.maxAtt),1):12;
+      ppl=ppl.filter(p=>p.total>mt);
+    }else{
+      ppl=ppl.filter(p=>p.total===selectedCount);
+    }
   }
   if(cat)ppl=ppl.filter(p=>p.category===cat);
   if(lvl)ppl=ppl.filter(p=>p.level===lvl);
