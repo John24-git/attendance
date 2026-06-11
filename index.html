@@ -138,6 +138,9 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 .cal-active-lbl{font-size:12px;font-weight:800;color:#800000}
 .cal-clear{background:none;border:none;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:800;color:#8e706c;cursor:pointer;padding:4px 8px;border-radius:6px}
 .cal-clear:hover{background:rgba(0,0,0,.05)}
+
+/* ── FIX: select arrows RTL ─────────────────────── */
+select{background-image:none!important}
 </style>
 </head>
 <body class="min-h-screen" style="padding-bottom:88px">
@@ -691,6 +694,15 @@ function clearSunday(){
   filterChurch();
 }
 
+// ── mstat helper ──────────────────────────────────────────────
+function mstatHtml(p,bc){
+  if(selectedSunday){
+    const att=attMap[p.code]&&attMap[p.code].sundays.has(selectedSunday);
+    return'<div style="font-size:26px;text-align:center;line-height:38px">'+(att?'✅':'❌')+'</div>';
+  }
+  return'<div class="mnum" style="color:'+bc+'">'+p.total+'</div><div class="mof">/ '+p.maxAtt+'</div><div class="mbar"><div class="mfill" style="width:'+Math.min(p.pct,100)+'%;background:'+bc+'"></div></div>';
+}
+
 // ══ FILTER CHURCH ══════════════════════════════════════════════
 function filterChurch(){
   if(!chData)return;
@@ -763,12 +775,7 @@ function filterChurch(){
           <span class="bdg bdg-gray">${gLabel}</span>
         </div>
       </div>
-      <div class="mstat">
-        ${selectedSunday
-          ? `<div style="font-size:24px;text-align:center;line-height:36px">${attMap[p.code]&&attMap[p.code].sundays.has(selectedSunday)?'✅':'❌'}</div>`
-          : `<div class="mnum" style="color:${bc}">${p.total}</div><div class="mof">/ ${p.maxAtt}</div><div class="mbar"><div class="mfill" style="width:${Math.min(p.pct,100)}%;background:${bc}"></div></div>`
-        }
-      </div>
+      <div class="mstat">${mstatHtml(p,bc)}</div>
     </div>`;
   }).join('')||`<div style="text-align:center;padding:48px 16px;color:#8e706c"><div style="font-size:36px;margin-bottom:8px">😶</div><div style="font-size:13px;font-weight:700">لا يوجد أشخاص بهذه الفلاتر</div></div>`;
 }
