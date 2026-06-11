@@ -141,6 +141,21 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 
 /* ── FIX: select arrows RTL ─────────────────────── */
 select{background-image:none!important}
+
+/* ── HISTOGRAM ──────────────────────────────────────── */
+.hist-card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(128,0,0,.08);border-radius:16px;padding:16px 14px;margin-bottom:12px;box-shadow:0 2px 12px rgba(128,0,0,.06)}
+.hist-title{font-size:11px;font-weight:800;color:#5a413d;letter-spacing:.05em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.hist-rows{display:flex;flex-direction:column;gap:5px}
+.hist-row{display:flex;align-items:center;gap:8px}
+.hist-lbl{font-size:10px;font-weight:800;color:#5a413d;min-width:28px;text-align:left}
+.hist-bar-wrap{flex:1;height:16px;background:#f1f5f9;border-radius:4px;overflow:hidden}
+.hist-bar{height:100%;border-radius:4px;transition:.4s;min-width:2px}
+.hist-cnt{font-size:10px;font-weight:800;color:#5a413d;min-width:24px;text-align:right}
+.hist-row.qual-row .hist-lbl{color:#16A34A}
+.hist-row.qual-row .hist-bar{background:linear-gradient(90deg,#16A34A,#22c55e)}
+.hist-row.near-row .hist-lbl{color:#800000}
+.hist-row.near-row .hist-bar{background:linear-gradient(90deg,#800000,#b91c1c)}
+.hist-row.low-row .hist-bar{background:linear-gradient(90deg,#e2bfb9,#d4a99f)}
 </style>
 </head>
 <body class="min-h-screen" style="padding-bottom:88px">
@@ -292,6 +307,14 @@ select{background-image:none!important}
         </button>
       </div>
       <div id="chKpi" class="grid grid-cols-2 gap-3 mb-4" style="display:none"></div>
+
+      <div id="chHist" class="hist-card" style="display:none">
+        <div class="hist-title">
+          <span>📊 توزيع الحضور</span>
+          <span id="histTotal" style="font-size:10px;color:#8e706c"></span>
+        </div>
+        <div class="hist-rows" id="histRows"></div>
+      </div>
       <div class="glass rounded-2xl overflow-hidden shadow-sm" id="chCard" style="display:none">
         <div id="chList"></div>
       </div>
@@ -612,6 +635,27 @@ function loadChurch(){
     const total=rec.sundays.size;const mx=getMax(m);
     return{...m,total,maxAtt:mx,qualified:total>=mx,pct:Math.round(total/mx*100)};
   });
+  // ← فلاتر ديناميكية حسب بيانات الكنيسة الفعلية
+  const churchMembers=chData;
+  const churchLvls=[...new Set(churchMembers.map(m=>m.level).filter(Boolean))]
+    .sort((a,b)=>{const na=parseFloat(a),nb=parseFloat(b);return(!isNaN(na)&&!isNaN(nb))?na-nb:a.localeCompare(b,'ar');});
+  const churchCats=[...new Set(churchMembers.map(m=>m.category).filter(Boolean))].sort();
+  const churchGenders=[...new Set(churchMembers.map(m=>m.gender).filter(Boolean))];
+
+  document.getElementById('lvlSel').innerHTML='<option value="">كل المستويات</option>'+
+    churchLvls.map(v=>`<option value="${v}">${v}</option>`).join('');
+  document.getElementById('catSel').innerHTML='<option value="">كل الفئات</option>'+
+    churchCats.map(v=>`<option value="${v}">${v}</option>`).join('');
+
+  // إظهار/إخفاء أزرار الجنس حسب ما هو موجود في الكنيسة
+  const gbtns=document.querySelectorAll('.gbtn');
+  if(gbtns[1])gbtns[1].style.display=churchGenders.includes('ذكر')?'':'none';
+  if(gbtns[2])gbtns[2].style.display=churchGenders.includes('أنثى')?'':'none';
+  // reset gender filter
+  document.getElementById('genSel').value='';
+  gbtns.forEach(b=>b.classList.remove('on'));
+  if(gbtns[0])gbtns[0].classList.add('on');
+
   document.getElementById('chSearchWrap').style.display='block';
   document.getElementById('church-export-bar').style.display='flex';
   document.getElementById('calSection').style.display='block';
@@ -703,6 +747,49 @@ function mstatHtml(p,bc){
   return'<div class="mnum" style="color:'+bc+'">'+p.total+'</div><div class="mof">/ '+p.maxAtt+'</div><div class="mbar"><div class="mfill" style="width:'+Math.min(p.pct,100)+'%;background:'+bc+'"></div></div>';
 }
 
+// ══ HISTOGRAM ═════════════════════════════════════════════════
+function renderHistogram(ppl){
+  const hist=document.getElementById('chHist');
+  if(!ppl||!ppl.length){hist.style.display='none';return;}
+  hist.style.display='block';
+
+  // الحد الأقصى ديناميكي حسب الأشخاص الموجودين في الفلتر
+  const maxTarget=Math.max(...ppl.map(p=>p.maxAtt),1);
+  const counts=new Array(maxTarget+1).fill(0);
+  let overMax=0;
+  ppl.forEach(p=>{
+    if(p.total>maxTarget)overMax++;
+    else counts[p.total]++;
+  });
+
+  const maxCount=Math.max(...counts,overMax,1);
+  const total=ppl.length;
+  document.getElementById('histTotal').textContent=total+' شخص · الهدف: '+maxTarget;
+
+  const rows=document.getElementById('histRows');
+  rows.innerHTML='';
+
+  counts.forEach((cnt,i)=>{
+    if(cnt===0)return;
+    const pct=Math.round(cnt/maxCount*100);
+    const rowCls=i>=maxTarget?'hist-row qual-row':i>=Math.round(maxTarget*.6)?'hist-row near-row':'hist-row low-row';
+    rows.innerHTML+=`<div class="${rowCls}">
+      <div class="hist-lbl">${i}</div>
+      <div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div>
+      <div class="hist-cnt">${cnt}</div>
+    </div>`;
+  });
+
+  if(overMax>0){
+    const pct=Math.round(overMax/maxCount*100);
+    rows.innerHTML+=`<div class="hist-row qual-row">
+      <div class="hist-lbl">+${maxTarget}</div>
+      <div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div>
+      <div class="hist-cnt">${overMax}</div>
+    </div>`;
+  }
+}
+
 // ══ FILTER CHURCH ══════════════════════════════════════════════
 function filterChurch(){
   if(!chData)return;
@@ -760,6 +847,7 @@ function filterChurch(){
     </div>`;
 
   document.getElementById('chCard').style.display='block';
+  renderHistogram(ppl);
   document.getElementById('chList').innerHTML=[...ppl].sort((a,b)=>b.total-a.total).map((p,i)=>{
     const bc=bclr(p.total,p.maxAtt);const av=avatarStyle(p.category);
     const gLabel=p.gender==='ذكر'?'شماس':'شماسة';
