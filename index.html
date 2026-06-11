@@ -711,10 +711,10 @@ function filterChurch(){
   const gen=document.getElementById('genSel').value;
   const att=document.getElementById('attSel').value;
   const q=(document.getElementById('chSearch').value||'').trim();
+  let ppl=chData;
   // فلتر التاريخ
   if(selectedSunday){
     ppl=ppl.filter(p=>{const rec=attMap[p.code];return rec&&rec.sundays.has(selectedSunday);});
-    ppl=[...ppl].sort((a,b)=>a.name.localeCompare(b.name,'ar'));
   }
   if(cat)ppl=ppl.filter(p=>p.category===cat);
   if(lvl)ppl=ppl.filter(p=>p.level===lvl);
