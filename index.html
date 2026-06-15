@@ -6,10 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#800000">
 <title>سجل الحضور — شمامسة 2026</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script>
 tailwind.config={darkMode:"class",theme:{extend:{colors:{
@@ -108,13 +106,11 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 @media print{
   body *{visibility:hidden}
   #printArea,#printArea *{visibility:visible}
-  #printArea{position:absolute;top:0;left:0;width:100%;background:#fff;direction:rtl;font-family:'Tajawal',sans-serif;padding:20px}
+  #printArea{position:fixed;inset:0;background:#fff;z-index:99999;direction:rtl;font-family:'Tajawal',sans-serif;padding:20px;overflow:auto}
   .ph{text-align:center;margin-bottom:20px;border-bottom:2px solid #570000;padding-bottom:14px}
   .ph h2{font-size:18px;font-weight:900;color:#570000}
   .ph p{font-size:12px;color:#64748B;margin-top:4px}
-  .pt{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}
-  .pt thead{display:table-header-group}
-  .pt tr{page-break-inside:avoid;page-break-after:auto}
+  .pt{width:100%;border-collapse:collapse;font-size:11px}
   .pt th{background:#570000;color:#fff;padding:8px 10px;text-align:right;font-weight:800}
   .pt td{padding:7px 10px;border-bottom:1px solid #E2E8F0;font-weight:600}
   .pt tr:nth-child(even) td{background:#fafafa}
@@ -122,45 +118,6 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 }
 .gbtn{background:#eae8e4;color:#5a413d}
 .gbtn.on{background:#800000;color:#fff}
-
-/* ── CALENDAR ─────────────────────────────────────────── */
-.cal-btn{width:100%;margin-top:10px;padding:10px 14px;background:rgba(128,0,0,.08);border:1px solid rgba(128,0,0,.15);border-radius:12px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;color:#800000;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
-.cal-btn:hover{background:rgba(128,0,0,.12)}
-.cal-btn.active{background:rgba(128,0,0,.15);border-color:rgba(128,0,0,.3)}
-.cal-wrap{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(128,0,0,.1);border-radius:16px;padding:14px;margin-top:8px;display:none}
-.cal-wrap.open{display:block}
-.cal-month{margin-bottom:14px}.cal-month:last-child{margin-bottom:0}
-.cal-month-title{font-size:10px;font-weight:800;color:#5a413d;letter-spacing:.1em;margin-bottom:8px}
-.cal-days{display:flex;flex-wrap:wrap;gap:6px}
-.cal-day{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;transition:.15s;border:1.5px solid transparent;flex-shrink:0}
-.cal-day.has{background:rgba(22,163,74,.12);color:#16A34A;border-color:rgba(22,163,74,.25);cursor:pointer}
-.cal-day.has:hover{background:rgba(22,163,74,.22);transform:scale(1.08)}
-.cal-day.none{background:#f1f5f9;color:#cbd5e1;cursor:default}
-.cal-day.sel{background:#800000!important;color:#fff!important;border-color:#800000!important;box-shadow:0 2px 8px rgba(128,0,0,.3)}
-.cal-active-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(128,0,0,.08);border-radius:10px;margin-top:8px}
-.cal-active-lbl{font-size:12px;font-weight:800;color:#800000}
-.cal-clear{background:none;border:none;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:800;color:#8e706c;cursor:pointer;padding:4px 8px;border-radius:6px}
-.cal-clear:hover{background:rgba(0,0,0,.05)}
-/* ── HISTOGRAM ──────────────────────────────────────── */
-.hist-card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(128,0,0,.08);border-radius:16px;padding:16px 14px;margin-bottom:12px;box-shadow:0 2px 12px rgba(128,0,0,.06)}
-.hist-title{font-size:11px;font-weight:800;color:#5a413d;letter-spacing:.05em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.hist-rows{display:flex;flex-direction:column;gap:5px}
-.hist-row{display:flex;align-items:center;gap:8px;cursor:pointer;border-radius:6px;padding:2px 4px;transition:.15s}
-.hist-row:hover{background:rgba(128,0,0,.05)}
-.hist-row.selected{background:rgba(128,0,0,.1);border-radius:8px}
-.hist-row.selected .hist-lbl{color:#800000;font-weight:900}
-.hist-row.selected .hist-bar-wrap{box-shadow:0 0 0 1.5px rgba(128,0,0,.3);border-radius:4px}
-.hist-lbl{font-size:10px;font-weight:800;color:#5a413d;min-width:28px;text-align:left}
-.hist-bar-wrap{flex:1;height:16px;background:#f1f5f9;border-radius:4px;overflow:hidden}
-.hist-bar{height:100%;border-radius:4px;transition:.4s;min-width:2px}
-.hist-cnt{font-size:10px;font-weight:800;color:#5a413d;min-width:24px;text-align:right}
-.hist-row.qual-row .hist-lbl{color:#16A34A}
-.hist-row.qual-row .hist-bar{background:linear-gradient(90deg,#16A34A,#22c55e)}
-.hist-row.near-row .hist-lbl{color:#800000}
-.hist-row.near-row .hist-bar{background:linear-gradient(90deg,#800000,#b91c1c)}
-.hist-row.low-row .hist-bar{background:linear-gradient(90deg,#e2bfb9,#d4a99f)}
-/* ── select arrows fix ──────────────────────────────── */
-select{background-image:none!important}
 </style>
 </head>
 <body class="min-h-screen">
@@ -288,6 +245,20 @@ select{background-image:none!important}
           <input id="chSearch" type="text" placeholder="بحث بالاسم أو الكود..." oninput="filterChurch()"
             class="w-full bg-sfcl border border-olv rounded-xl pr-10 pl-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-pc/30" autocomplete="off">
         </div>
+      </div>
+
+      <!-- Calendar Filter -->
+      <div id="calSection" style="display:none;margin-bottom:12px">
+        <button class="cal-btn" id="calToggleBtn" onclick="toggleCal()">📅 فلتر بتاريخ أحد معين</button>
+        <div class="cal-wrap" id="calWrap"><div id="calMonths"></div></div>
+        <div id="calActiveBar" class="cal-active-bar" style="display:none">
+          <span class="cal-active-lbl" id="calActiveLabel"></span>
+          <button class="cal-clear" onclick="clearSunday()">× إلغاء</button>
+        </div>
+      </div>
+      <div id="chHist" class="hist-card" style="display:none">
+        <div class="hist-title"><span>📊 توزيع الحضور</span><span id="histTotal" style="font-size:10px;color:#8e706c"></span></div>
+        <div class="hist-rows" id="histRows"></div>
       </div>
       <div id="church-export-bar" class="flex gap-3 mb-4" style="display:none">
         <button onclick="exportChurchPDF()" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#DC2626] text-white font-bold text-xs hover:opacity-90 shadow">
@@ -433,6 +404,7 @@ const MONTHS_K=[[2025,9],[2025,10],[2025,11],[2025,12],[2026,1],[2026,2],[2026,3
 let user=null,currentTab='mine';
 let DB=[],ATT=[],USERS=[],attMap={};
 let chData=null,dataLoaded=false,allRows=[];
+let selectedSunday=null,selectedCount=null;
 
 // ══ INIT ═══════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',async()=>{
@@ -543,7 +515,6 @@ async function loadAllData(){
         role:String(r['role']||r['الدور']||vals[3]||'supervisor').trim(),
         // ← العمود الجديد للمستويات
         levels:String(r['levels']||r['المستويات']||vals[4]||'').trim(),
-        gender:String(r['gender']||r['النوع']||vals[5]||'').trim(),
       };}).filter(u=>u.username);
     }catch(e){USERS=[];}
 
@@ -620,117 +591,36 @@ function loadChurch(){
   });
   document.getElementById('chSearchWrap').style.display='block';
   document.getElementById('church-export-bar').style.display='flex';
-  document.getElementById('calSection').style.display='block';
-  selectedSunday=null;selectedCount=null;
-  document.getElementById('calActiveBar').style.display='none';
-  document.getElementById('calWrap').classList.remove('open');
-  document.getElementById('calToggleBtn').classList.remove('active');
-  document.getElementById('calToggleBtn').textContent='📅 فلتر بتاريخ أحد معين';
-  buildCalendar(ch);
   filterChurch();
 }
 
 
 // ══ CALENDAR ══════════════════════════════════════════════════
 const MONTHS_AR_CAL=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-
 function buildCalendar(ch){
   const codes=DB.filter(m=>m.church===ch).map(m=>m.code);
   const churchSundays=new Set();
   codes.forEach(code=>{const rec=attMap[code];if(rec)rec.sundays.forEach(s=>churchSundays.add(s));});
-  const allSundays=[];
-  const d=new Date(2025,8,1);
+  const allSundays=[],d=new Date(2025,8,1);
   while(d.getDay()!==0)d.setDate(d.getDate()+1);
   const end=new Date(2026,7,31);
   while(d<=end){allSundays.push(fmtDate(new Date(d)));d.setDate(d.getDate()+7);}
   const byMonth={};
-  allSundays.forEach(s=>{
-    const dt=new Date(s+'T00:00:00');
-    const k=dt.getFullYear()+'-'+(dt.getMonth()+1);
-    if(!byMonth[k])byMonth[k]={year:dt.getFullYear(),month:dt.getMonth(),days:[]};
-    byMonth[k].days.push(s);
-  });
-  const container=document.getElementById('calMonths');
-  container.innerHTML='';
+  allSundays.forEach(s=>{const dt=new Date(s+'T00:00:00'),k=dt.getFullYear()+'-'+(dt.getMonth()+1);if(!byMonth[k])byMonth[k]={year:dt.getFullYear(),month:dt.getMonth(),days:[]};byMonth[k].days.push(s);});
+  const container=document.getElementById('calMonths');container.innerHTML='';
   Object.values(byMonth).forEach(({year,month,days})=>{
-    const hasSome=days.some(s=>churchSundays.has(s));
-    if(!hasSome&&!selectedSunday)return;
+    if(!days.some(s=>churchSundays.has(s))&&!selectedSunday)return;
     const div=document.createElement('div');div.className='cal-month';
-    const daysHtml=days.map(s=>{
-      const dt=new Date(s+'T00:00:00');
-      const has=churchSundays.has(s),sel=selectedSunday===s;
-      const cls='cal-day'+(sel?' sel':has?' has':' none');
-      const onclick=has&&!sel?`onclick="selectSunday('${s}')"`:sel?`onclick="clearSunday()"`:'' ;
-      const title=SPECIAL[s]?`title="${SPECIAL[s]}"`:'' ;
-      return`<div class="${cls}" ${onclick} ${title}>${dt.getDate()}</div>`;
-    }).join('');
-    div.innerHTML=`<div class="cal-month-title">${MONTHS_AR_CAL[month]} ${year}</div><div class="cal-days">${daysHtml}</div>`;
+    div.innerHTML=`<div class="cal-month-title">${MONTHS_AR_CAL[month]} ${year}</div><div class="cal-days">${days.map(s=>{const dt=new Date(s+'T00:00:00'),has=churchSundays.has(s),sel=selectedSunday===s;return`<div class="cal-day${sel?' sel':has?' has':' none'}" ${has&&!sel?`onclick="selectSunday('${s}')"`:sel?'onclick="clearSunday()"':''} ${SPECIAL[s]?`title="${SPECIAL[s]}"`:''} >${dt.getDate()}</div>`;}).join('')}</div>`;
     container.appendChild(div);
   });
 }
-function toggleCal(){
-  const wrap=document.getElementById('calWrap'),btn=document.getElementById('calToggleBtn');
-  const open=wrap.classList.contains('open');
-  wrap.classList.toggle('open',!open);btn.classList.toggle('active',!open);
-  btn.textContent=open?'📅 فلتر بتاريخ أحد معين':'📅 إغلاق التقويم';
-}
-function selectSunday(date){
-  selectedSunday=date;
-  const dt=new Date(date+'T00:00:00');
-  const label=dt.toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('calActiveLabel').textContent='📅 '+label+(SPECIAL[date]?' — '+SPECIAL[date]:'');
-  document.getElementById('calActiveBar').style.display='flex';
-  const ch=document.getElementById('chSel').value;if(ch)buildCalendar(ch);
-  filterChurch();
-}
-function clearSunday(){
-  selectedSunday=null;selectedCount=null;
-  document.getElementById('calActiveBar').style.display='none';
-  const ch=document.getElementById('chSel').value;if(ch)buildCalendar(ch);
-  filterChurch();
-}
-
-// ── mstat helper ──────────────────────────────────────────────
-function mstatHtml(p,bc){
-  if(selectedSunday){
-    const att=attMap[p.code]&&attMap[p.code].sundays.has(selectedSunday);
-    return'<div style="font-size:26px;text-align:center;line-height:38px">'+(att?'✅':'❌')+'</div>';
-  }
-  return'<div class="mnum" style="color:'+bc+'">'+p.total+'</div><div class="mof">/ '+p.maxAtt+'</div><div class="mbar"><div class="mfill" style="width:'+Math.min(p.pct,100)+'%;background:'+bc+'"></div></div>';
-}
-
-// ══ HISTOGRAM ═════════════════════════════════════════════════
-function renderHistogram(ppl){
-  const hist=document.getElementById('chHist');
-  if(!ppl||!ppl.length){hist.style.display='none';return;}
-  hist.style.display='block';
-  const maxTarget=Math.max(...ppl.map(p=>p.maxAtt),1);
-  const counts=new Array(maxTarget+1).fill(0);let overMax=0;
-  ppl.forEach(p=>{if(p.total>maxTarget)overMax++;else counts[p.total]++;});
-  const maxCount=Math.max(...counts,overMax,1);
-  document.getElementById('histTotal').textContent=ppl.length+' شخص · الهدف: '+maxTarget;
-  const rows=document.getElementById('histRows');rows.innerHTML='';
-  counts.forEach((cnt,i)=>{
-    if(cnt===0)return;
-    const pct=Math.round(cnt/maxCount*100);
-    const base=i>=maxTarget?'hist-row qual-row':i>=Math.round(maxTarget*.6)?'hist-row near-row':'hist-row low-row';
-    const div=document.createElement('div');
-    div.className=base+(selectedCount===i?' selected':'');
-    div.innerHTML=`<div class="hist-lbl">${i}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${cnt}</div>`;
-    div.onclick=()=>selectCount(i);rows.appendChild(div);
-  });
-  if(overMax>0){
-    const pct=Math.round(overMax/maxCount*100);
-    const div=document.createElement('div');
-    div.className='hist-row qual-row'+(selectedCount==='over'?' selected':'');
-    div.innerHTML=`<div class="hist-lbl">+${maxTarget}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${overMax}</div>`;
-    div.onclick=()=>selectCount('over');rows.appendChild(div);
-  }
-}
-function selectCount(val){
-  selectedCount=selectedCount===val?null:val;
-  filterChurch();
-}
+function toggleCal(){const wrap=document.getElementById('calWrap'),btn=document.getElementById('calToggleBtn'),open=wrap.classList.contains('open');wrap.classList.toggle('open',!open);btn.classList.toggle('active',!open);btn.textContent=open?'📅 فلتر بتاريخ أحد معين':'📅 إغلاق التقويم';}
+function selectSunday(date){selectedSunday=date;const dt=new Date(date+'T00:00:00');document.getElementById('calActiveLabel').textContent='📅 '+dt.toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+(SPECIAL[date]?' — '+SPECIAL[date]:'');document.getElementById('calActiveBar').style.display='flex';const ch=document.getElementById('chSel').value;if(ch)buildCalendar(ch);filterChurch();}
+function clearSunday(){selectedSunday=null;selectedCount=null;document.getElementById('calActiveBar').style.display='none';const ch=document.getElementById('chSel').value;if(ch)buildCalendar(ch);filterChurch();}
+function mstatHtml(p,bc){if(selectedSunday){const att=attMap[p.code]&&attMap[p.code].sundays.has(selectedSunday);return'<div style="font-size:26px;text-align:center;line-height:38px">'+(att?'✅':'❌')+'</div>';}return'<div class="mnum" style="color:'+bc+'">'+p.total+'</div><div class="mof">/ '+p.maxAtt+'</div><div class="mbar"><div class="mfill" style="width:'+Math.min(p.pct,100)+'%;background:'+bc+'"></div></div>';}
+function renderHistogram(ppl){const hist=document.getElementById('chHist');if(!ppl||!ppl.length){hist.style.display='none';return;}hist.style.display='block';const maxTarget=Math.max(...ppl.map(p=>p.maxAtt),1),counts=new Array(maxTarget+1).fill(0);let overMax=0;ppl.forEach(p=>{if(p.total>maxTarget)overMax++;else counts[p.total]++;});const maxCount=Math.max(...counts,overMax,1);document.getElementById('histTotal').textContent=ppl.length+' شخص · الهدف: '+maxTarget;const rows=document.getElementById('histRows');rows.innerHTML='';counts.forEach((cnt,i)=>{if(!cnt)return;const pct=Math.round(cnt/maxCount*100),base=i>=maxTarget?'hist-row qual-row':i>=Math.round(maxTarget*.6)?'hist-row near-row':'hist-row low-row',div=document.createElement('div');div.className=base+(selectedCount===i?' selected':'');div.innerHTML=`<div class="hist-lbl">${i}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${cnt}</div>`;div.onclick=()=>selectCount(i);rows.appendChild(div);});if(overMax>0){const pct=Math.round(overMax/maxCount*100),div=document.createElement('div');div.className='hist-row qual-row'+(selectedCount==='over'?' selected':'');div.innerHTML=`<div class="hist-lbl">+${maxTarget}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${overMax}</div>`;div.onclick=()=>selectCount('over');rows.appendChild(div);}}
+function selectCount(val){selectedCount=selectedCount===val?null:val;filterChurch();}
 
 // ══ FILTER CHURCH ══════════════════════════════════════════════
 function filterChurch(){
@@ -742,10 +632,7 @@ function filterChurch(){
   const q=(document.getElementById('chSearch').value||'').trim();
   let ppl=chData;
   if(selectedSunday){ppl=ppl.filter(p=>{const rec=attMap[p.code];return rec&&rec.sundays.has(selectedSunday);});}
-  if(selectedCount!==null){
-    if(selectedCount==='over'){const mt=Math.max(...chData.map(p=>p.maxAtt),1);ppl=ppl.filter(p=>p.total>mt);}
-    else ppl=ppl.filter(p=>p.total===selectedCount);
-  }
+  if(selectedCount!==null){if(selectedCount==='over'){const mt=Math.max(...chData.map(p=>p.maxAtt),1);ppl=ppl.filter(p=>p.total>mt);}else ppl=ppl.filter(p=>p.total===selectedCount);}
   if(cat)ppl=ppl.filter(p=>p.category===cat);
   if(lvl)ppl=ppl.filter(p=>p.level===lvl);
   if(gen)ppl=ppl.filter(p=>p.gender===gen);
@@ -817,6 +704,8 @@ function getChurchFiltered(){
   const gen=document.getElementById('genSel').value,att=document.getElementById('attSel').value;
   const q=(document.getElementById('chSearch').value||'').trim();
   let ppl=chData;
+  if(selectedSunday){ppl=ppl.filter(p=>{const rec=attMap[p.code];return rec&&rec.sundays.has(selectedSunday);});}
+  if(selectedCount!==null){if(selectedCount==='over'){const mt=Math.max(...chData.map(p=>p.maxAtt),1);ppl=ppl.filter(p=>p.total>mt);}else ppl=ppl.filter(p=>p.total===selectedCount);}
   if(cat)ppl=ppl.filter(p=>p.category===cat);if(lvl)ppl=ppl.filter(p=>p.level===lvl);
   if(gen)ppl=ppl.filter(p=>p.gender===gen);
   if(att==='qual')ppl=ppl.filter(p=>p.qualified);
@@ -887,43 +776,13 @@ function renderAll(){
 
 // ══ EXPORT ═════════════════════════════════════════════════════
 function exportChurchPDF(){
-  const data=getChurchFiltered();
-  const chName=document.getElementById('chSel').value||'الكنيسة';
+  const data=getChurchFiltered();const chName=document.getElementById('chSel').value||'الكنيسة';
   const now=new Date().toLocaleDateString('ar-EG');
   const qual=data.filter(p=>p.qualified).length,att=data.filter(p=>p.total>0).length;
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  // Header
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(14);doc.setTextColor(87,0,0);
-  doc.text('تقرير حضور - '+chName,doc.internal.pageSize.width/2,14,{align:'center'});
-  doc.setFontSize(9);doc.setTextColor(100,116,139);
-  doc.text('مهرجان شمامسة 2026  |  '+now+'  |  إجمالي: '+data.length+'  |  مؤهّل: '+qual+'  |  حضر: '+att,doc.internal.pageSize.width/2,21,{align:'center'});
-  // Table
-  doc.autoTable({
-    startY:26,
-    head:[['#','الاسم','الكود','الفئة','المستوى','النوع','الحضور','الهدف','النسبة','الحالة']],
-    body:data.map((p,i)=>[i+1,p.name,p.code,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهل':'غير مؤهل']),
-    styles:{font:'helvetica',fontSize:8,cellPadding:2,halign:'right'},
-    headStyles:{fillColor:[87,0,0],textColor:255,fontStyle:'bold',halign:'center'},
-    columnStyles:{0:{halign:'center',cellWidth:8},2:{halign:'center'},6:{halign:'center'},7:{halign:'center'},8:{halign:'center'},9:{halign:'center'}},
-    alternateRowStyles:{fillColor:[250,250,250]},
-    didDrawCell:(d)=>{
-      if(d.section==='body'&&d.column.index===9){
-        const val=data[d.row.index]?.qualified;
-        doc.setTextColor(val?22:220,val?163:38,val?74:38);
-      }
-    },
-    willDrawCell:(d)=>{if(d.section==='body')doc.setTextColor(27,28,26);}
-  });
-  // Footer
-  const pageCount=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pageCount;i++){
-    doc.setPage(i);doc.setFontSize(8);doc.setTextColor(148,163,184);
-    doc.text('شمامسة 2026 — مطرانية المعادي — صفحة '+i+' من '+pageCount,doc.internal.pageSize.width/2,doc.internal.pageSize.height-5,{align:'center'});
-  }
-  doc.save('تقرير_'+chName+'_'+new Date().toISOString().slice(0,10)+'.pdf');
-  toast('✅ تم تصدير PDF');
+  const rows=data.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td style="text-align:center;font-weight:900;color:${bclr(p.total,p.maxAtt)}">${p.total}</td><td style="text-align:center">${p.maxAtt}</td><td style="text-align:center">${p.pct}%</td><td style="text-align:center">${p.qualified?'✅ مؤهّل':'❌'}</td></tr>`).join('');
+  document.getElementById('printArea').style.display='block';
+  document.getElementById('printArea').innerHTML=`<div class="ph"><h2>⛪ تقرير حضور — ${chName}</h2><p>مهرجان شمامسة 2026 · ${now} · إجمالي: ${data.length} | مؤهّل: ${qual} | حضر: ${att}</p></div><table class="pt"><thead><tr><th>#</th><th>الاسم</th><th>الكود</th><th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table><div class="pf">شمامسة 2026 — مطرانية المعادي — ${now}</div>`;
+  setTimeout(()=>{window.print();document.getElementById('printArea').style.display='none';},200);
 }
 function exportChurchExcel(){
   const data=getChurchFiltered();const chName=document.getElementById('chSel').value||'الكنيسة';
@@ -937,32 +796,10 @@ function exportAllPDF(){
   const now=new Date().toLocaleDateString('ar-EG');
   const gT=allRows.reduce((s,r)=>s+r.total,0),gA=allRows.reduce((s,r)=>s+r.attended,0),gQ=allRows.reduce((s,r)=>s+r.qualified,0);
   const gM=allRows.reduce((s,r)=>s+r.males,0),gF=allRows.reduce((s,r)=>s+r.females,0);
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(14);doc.setTextColor(87,0,0);
-  doc.text('التقرير العام - كل الكنائس',doc.internal.pageSize.width/2,14,{align:'center'});
-  doc.setFontSize(9);doc.setTextColor(100,116,139);
-  doc.text('مهرجان شمامسة 2026  |  '+now+'  |  إجمالي: '+gT+' (شماس: '+gM+' | شماسة: '+gF+')  |  حضر: '+gA+'  |  مؤهّل: '+gQ,doc.internal.pageSize.width/2,21,{align:'center'});
-  doc.autoTable({
-    startY:26,
-    head:[['#','الكنيسة','شماس','شماسة','إجمالي','حضروا','نسبة الحضور','مؤهّلون','نسبة التأهّل','متوسط']],
-    body:allRows.map((r,i)=>{
-      const ap=r.total?Math.round(r.attended/r.total*100):0,qp=r.total?Math.round(r.qualified/r.total*100):0;
-      return[i+1,r.ch,r.males,r.females,r.total,r.attended,ap+'%',r.qualified,qp+'%',r.avg];
-    }),
-    styles:{font:'helvetica',fontSize:8,cellPadding:2,halign:'right'},
-    headStyles:{fillColor:[87,0,0],textColor:255,fontStyle:'bold',halign:'center'},
-    columnStyles:{0:{halign:'center',cellWidth:8},2:{halign:'center'},3:{halign:'center'},4:{halign:'center'},5:{halign:'center'},6:{halign:'center'},7:{halign:'center'},8:{halign:'center'},9:{halign:'center'}},
-    alternateRowStyles:{fillColor:[250,250,250]},
-  });
-  const pageCount=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pageCount;i++){
-    doc.setPage(i);doc.setFontSize(8);doc.setTextColor(148,163,184);
-    doc.text('شمامسة 2026 — مطرانية المعادي — صفحة '+i+' من '+pageCount,doc.internal.pageSize.width/2,doc.internal.pageSize.height-5,{align:'center'});
-  }
-  doc.save('تقرير_كل_الكنائس_'+new Date().toISOString().slice(0,10)+'.pdf');
-  toast('✅ تم تصدير PDF');
+  const rows=allRows.map((r,i)=>{const ap=r.total?Math.round(r.attended/r.total*100):0,qp=r.total?Math.round(r.qualified/r.total*100):0;return`<tr><td>${i+1}</td><td>${r.ch}</td><td style="text-align:center">${r.males}</td><td style="text-align:center">${r.females}</td><td style="text-align:center;font-weight:900">${r.total}</td><td style="text-align:center">${r.attended}</td><td style="text-align:center">${ap}%</td><td style="text-align:center;color:#570000;font-weight:900">${r.qualified}</td><td style="text-align:center">${qp}%</td><td style="text-align:center">${r.avg}</td></tr>`;}).join('');
+  document.getElementById('printArea').style.display='block';
+  document.getElementById('printArea').innerHTML=`<div class="ph"><h2>📋 التقرير العام — كل الكنائس</h2><p>مهرجان شمامسة 2026 · ${now} · إجمالي: ${gT} (شماس: ${gM} | شماسة: ${gF}) | حضر: ${gA} | مؤهّل: ${gQ}</p></div><table class="pt"><thead><tr><th>#</th><th>الكنيسة</th><th>شماس</th><th>شماسة</th><th>إجمالي</th><th>الحضور</th><th>نسبة الحضور</th><th>مؤهّلون</th><th>نسبة التأهّل</th><th>متوسط</th></tr></thead><tbody>${rows}</tbody></table><div class="pf">شمامسة 2026 — مطرانية المعادي — ${now}</div>`;
+  setTimeout(()=>{window.print();document.getElementById('printArea').style.display='none';},200);
 }
 function exportAllExcel(){
   const wsData=[['#','الكنيسة','شماس (ذكور)','شماسة (إناث)','إجمالي مسجّل','عدد الحضور','نسبة الحضور %','مؤهّلون','نسبة التأهّل %','متوسط الحضور'],...allRows.map((r,i)=>{const ap=r.total?Math.round(r.attended/r.total*100):0,qp=r.total?Math.round(r.qualified/r.total*100):0;return[i+1,r.ch,r.males,r.females,r.total,r.attended,ap+'%',r.qualified,qp+'%',parseFloat(r.avg)];})];
@@ -1042,7 +879,7 @@ async function doMine(){
     el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">🚫</div><div style="color:#ba1a1a;font-weight:800;font-size:13px">هذا الكود لمستوى خارج صلاحياتك</div><div style="color:#5a413d;font-size:11px;margin-top:6px">مستوياتك: <b>${allowedLevels.join(' · ')}</b></div></div>`;return;
   }
   if(user.gender && member.gender !== user.gender){
-  el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">🚫</div><div style="color:#ba1a1a;font-weight:800;font-size:13px">غير مسموح بعرض هذا السجل</div><div style="color:#5a413d;font-size:11px;margin-top:6px">صلاحياتك: <b>${user.gender==='ذكر'?'شماس فقط':'شماسة فقط'}</b></div></div>`;
+  el.innerHTML=`... شماس/شماسة فقط ...`;
   return;
 }
   el.innerHTML=buildMineHTML(member,getPersonRec(code));
@@ -1142,13 +979,11 @@ function renderChurchPanel(){
       if(sel.value)loadChurch();
       else{chData=null;document.getElementById('chCard').style.display='none';document.getElementById('church-export-bar').style.display='none';}
     }else{
-      sel.disabled=false;sel.value='';chData=null;selectedSunday=null;selectedCount=null;
+      sel.disabled=false;sel.value='';chData=null;
       document.getElementById('chSearchWrap').style.display='none';
       document.getElementById('chKpi').style.display='none';
       document.getElementById('church-export-bar').style.display='none';
       document.getElementById('chCard').style.display='none';
-      document.getElementById('calSection').style.display='none';
-      document.getElementById('chHist').style.display='none';
     }
   }
 }
