@@ -617,6 +617,10 @@ function populateChurches(){
   const sel=document.getElementById('chSel');
   while(sel.options.length>1)sel.remove(1);
   const counts={};DB.forEach(m=>{counts[m.church]=(counts[m.church]||0)+1;});
+  // خيار "كل الكنائس" — للأدمن فقط — يحمّل كل الأعضاء من كل الكنائس للبحث فيهم سوا
+  if(user&&['admin','super_admin'].includes(user.role)){
+    const o=document.createElement('option');o.value='__ALL__';o.textContent=`🌍 كل الكنائس (${DB.length})`;sel.appendChild(o);
+  }
   Object.entries(counts).sort((a,b)=>b[1]-a[1]).forEach(([ch,cnt])=>{
     const o=document.createElement('option');o.value=ch;o.textContent=`${ch} (${cnt})`;sel.appendChild(o);
   });
@@ -635,7 +639,7 @@ function loadChurch(){
   if(!ch){document.getElementById('church-export-bar').style.display='none';return;}
   const allowedLevels=getUserLevels();
   chData=DB.filter(m=>{
-    if(m.church!==ch)return false;
+    if(ch!=='__ALL__' && m.church!==ch)return false;
     // ← فلتر المستويات المسموح بيها
     if(allowedLevels&&!allowedLevels.includes(m.level))return false;
     if(user.gender && m.gender !== user.gender) return false;
@@ -684,7 +688,7 @@ function loadChurch(){
 const MONTHS_AR_CAL=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
 function buildCalendar(ch){
-  const codes=DB.filter(m=>m.church===ch).map(m=>m.code);
+  const codes=(ch==='__ALL__'?DB:DB.filter(m=>m.church===ch)).map(m=>m.code);
   const churchSundays=new Set();
   codes.forEach(code=>{const rec=attMap[code];if(rec)rec.sundays.forEach(s=>churchSundays.add(s));});
   const allSundays=[];
@@ -881,6 +885,7 @@ function filterChurch(){
 
   document.getElementById('chCard').style.display='block';
   renderHistogram(ppl);
+  const allCh=document.getElementById('chSel').value==='__ALL__';
   document.getElementById('chList').innerHTML=[...ppl].sort((a,b)=>b.total-a.total).map((p,i)=>{
     const bc=bclr(p.total,p.maxAtt);const av=avatarStyle(p.category);
     const gLabel=p.gender==='ذكر'?'شماس':'شماسة';
@@ -894,6 +899,7 @@ function filterChurch(){
           ${p.level?`<span class="bdg bdg-blue">${p.level}</span>`:''}
           <span class="${catBdg(p.category)}">${p.category}</span>
           <span class="bdg bdg-gray">${gLabel}</span>
+          ${allCh?`<span class="bdg bdg-gold">⛪ ${p.church}</span>`:''}
         </div>
       </div>
       <div class="mstat">${mstatHtml(p,bc)}</div>
@@ -903,6 +909,7 @@ function filterChurch(){
 
 function getChurchFiltered(){
   if(!chData)return[];
+  let ppl=chData;
   const cat=document.getElementById('catSel').value,lvl=document.getElementById('lvlSel').value;
   const gen=document.getElementById('genSel').value,att=document.getElementById('attSel').value;
   const q=(document.getElementById('chSearch').value||'').trim();
@@ -1008,17 +1015,18 @@ function saveXlsx(wb,filename){
     toast('⚠️ التصدير مش مدعوم هنا — افتح الصفحة من متصفح عادي (Chrome/Safari)');
   }
 }
+function chSelName(){const v=document.getElementById('chSel').value;return v==='__ALL__'?'كل الكنائس':(v||'الكنيسة');}
 function exportChurchPDF(){
-  const data=getChurchFiltered();const chName=document.getElementById('chSel').value||'الكنيسة';
+  const data=getChurchFiltered();const allCh=document.getElementById('chSel').value==='__ALL__';const chName=chSelName();
   const now=new Date().toLocaleDateString('ar-EG');
   const qual=data.filter(p=>p.qualified).length,att=data.filter(p=>p.total>0).length;
-  const rows=data.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td style="text-align:center;font-weight:900;color:${bclr(p.total,p.maxAtt)}">${p.total}</td><td style="text-align:center">${p.maxAtt}</td><td style="text-align:center">${p.pct}%</td><td style="text-align:center">${p.qualified?'✅ مؤهّل':'❌'}</td></tr>`).join('');
+  const rows=data.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.code}</td>${allCh?`<td>${p.church}</td>`:''}<td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td style="text-align:center;font-weight:900;color:${bclr(p.total,p.maxAtt)}">${p.total}</td><td style="text-align:center">${p.maxAtt}</td><td style="text-align:center">${p.pct}%</td><td style="text-align:center">${p.qualified?'✅ مؤهّل':'❌'}</td></tr>`).join('');
   document.getElementById('printArea').style.display='block';
-  document.getElementById('printArea').innerHTML=`<div class="ph"><h2>⛪ تقرير حضور — ${chName}</h2><p>مهرجان شمامسة 2026 · ${now} · إجمالي: ${data.length} | مؤهّل: ${qual} | حضر: ${att}</p></div><table class="pt"><thead><tr><th>#</th><th>الاسم</th><th>الكود</th><th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table><div class="pf">شمامسة 2026 — مطرانية المعادي — ${now}</div>`;
+  document.getElementById('printArea').innerHTML=`<div class="ph"><h2>⛪ تقرير حضور — ${chName}</h2><p>مهرجان شمامسة 2026 · ${now} · إجمالي: ${data.length} | مؤهّل: ${qual} | حضر: ${att}</p></div><table class="pt"><thead><tr><th>#</th><th>الاسم</th><th>الكود</th>${allCh?'<th>الكنيسة</th>':''}<th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table><div class="pf">شمامسة 2026 — مطرانية المعادي — ${now}</div>`;
   triggerPrint();
 }
 function exportChurchExcel(){
-  const data=getChurchFiltered();const chName=document.getElementById('chSel').value||'الكنيسة';
+  const data=getChurchFiltered();const chName=chSelName();
   const wsData=[['#','الاسم','الكود','الكنيسة','الفئة','المستوى','النوع','الحضور','الهدف','النسبة %','الحالة'],...data.map((p,i)=>[i+1,p.name,p.code,p.church,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهّل':'غير مؤهّل'])];
   const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(wsData);
   ws['!cols']=[{wch:4},{wch:22},{wch:8},{wch:16},{wch:8},{wch:10},{wch:8},{wch:10},{wch:8},{wch:10},{wch:12}];
