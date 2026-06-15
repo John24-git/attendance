@@ -547,7 +547,7 @@ async function loadAllData(){
       name:String(r['الاسم الكامل']||r['الاسم']||r['name']||'').trim(),
       level:String(r['المستوى']||r['level']||'').trim(),
       category:normCat(String(r['الفئة']||r['category']||'')),
-      gender:String(r['النوع']||r['gender']||'ذكر').trim(),
+      gender:normGender(r['النوع']||r['gender'])||'ذكر',
       maxLimit:Math.round(parseFloat(r['الحد الأقصى']||r['max']||0))||0,
     })).filter(m=>m.code>0&&m.name);
 
@@ -571,6 +571,7 @@ async function loadAllData(){
         role:String(r['role']||r['الدور']||vals[3]||'supervisor').trim(),
         // ← العمود الجديد للمستويات
         levels:String(r['levels']||r['المستويات']||vals[4]||'').trim(),
+        gender:normGender(r['gender']||r['النوع']||vals[5]||''),
       };}).filter(u=>u.username);
     }catch(e){USERS=[];}
 
@@ -592,6 +593,14 @@ function normCat(c){
   if(/ثانو|شباب|youth/i.test(c))return'ثانوية';
   if(/موظف|عمال|worker|adult/i.test(c))return'موظف';
   return c||'طالب';
+}
+// توحيد قيم النوع: أي صيغة (أولاد/ولد/بنين/شماس/male...) تتحوّل لـ ذكر، و(بنات/بنت/أنثى/شماسة/female...) لـ أنثى
+function normGender(v){
+  const s=String(v||'').trim();
+  if(!s)return'';
+  if(/أنث|انث|إناث|اناث|بنت|بنات|شماسة|female|girl|^f$/i.test(s))return'أنثى';
+  if(/ذكر|ذكور|ولد|اولاد|أولاد|بنين|شماس|male|boy|^m$/i.test(s))return'ذكر';
+  return s;
 }
 function getMax(m){if(m.maxLimit>0)return m.maxLimit;return CAT_MAX[m.category]||MAX_DEF;}
 
@@ -1146,7 +1155,7 @@ async function doLogin(){
         church:String(r['church']||r['الكنيسة']||vals[2]||'').trim(),
         role:String(r['role']||r['الدور']||vals[3]||'supervisor').trim(),
         levels:String(r['levels']||r['المستويات']||vals[4]||'').trim(),
-          gender: String(r['gender']||r['النوع']||vals[5]||'').trim(),
+          gender: normGender(r['gender']||r['النوع']||vals[5]||''),
       };}).filter(u=>u.username);
     }catch(e){err.textContent='تعذّر تحميل المستخدمين';err.style.display='block';btn.innerHTML='<span class="ms text-[18px]">key</span> دخول';btn.disabled=false;return;}
   }
