@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#800000">
 <title>سجل الحضور — شمامسة 2026</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script>
@@ -32,7 +32,7 @@ body{font-family:'Tajawal',sans-serif;background-color:#fbf9f5;-webkit-tap-highl
 
 <header class="bg-[#800000] text-white shadow-md sticky top-0 z-40 px-4 py-3 flex items-center justify-between">
   <div class="flex items-center gap-2">
-    <span class="material-symbols-outlined text-2xl text-[#fed65b]">cremenation</span>
+    <span class="material-symbols-outlined text-2xl text-[#fed65b]">church</span>
     <h1 class="text-lg font-black tracking-tight">سجل حضور الشمامسة ٢٠٢٦</h1>
   </div>
   <div id="userInfo" class="text-xs bg-[#570000] px-3 py-1.5 rounded-lg font-bold hidden flex items-center gap-2">
@@ -184,7 +184,7 @@ const SSID_DATA = "1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI";
 const SSID_RESP = "12Eq2wViycVa0wE2zwGKDXGJAcCVrRX5WIR8VZosJDso"; 
 const MAX_DEF = 22; 
 
-let users = [], deacons = [], responses = [], churches = [];
+let deacons = [], responses = [], churches = [];
 let user = null, activeTab = 'church';
 let chData = null; 
 
@@ -219,9 +219,21 @@ function doLogin(){
   const url = `https://docs.google.com/spreadsheets/d/${SSID_DATA}/gviz/tq?tqx=out:json&sheet=Users`;
   fetch(url).then(r=>r.text()).then(txt => {
     const data = parseGviz(txt);
-    const found = data.find(r => String(r['اسم المستخدم']||'').trim().toLowerCase() === u && String(r['كلمة السر']||'').trim() === p);
+    
+    // البحث ومطابقة الأعمدة بشكل آمن مع التعامل مع اختلاف المسميات المحتملة
+    const found = data.find(r => {
+      let sheetUser = String(r['اسم المستخدم'] || '').trim().toLowerCase();
+      let sheetPass = String(r['كلمة المرور'] || r['كلمة السر'] || '').trim();
+      return sheetUser === u && sheetPass === p;
+    });
+
     if(found){
-      user = { username: u, name: found['الاسم بالكامل'], role: found['الرتبة'], church: found['الكنيسة الموكل لها'] };
+      user = { 
+        username: u, 
+        name: found['الاسم بالكامل'] || found['الاسم'] || u, 
+        role: found['الرتبة'] || 'user', 
+        church: found['الكنيسة الموكل لها'] || found['الكنيسة'] || '' 
+      };
       localStorage.setItem('sh_user', JSON.stringify(user));
       showApp();
     } else {
@@ -257,7 +269,6 @@ function showApp(){
     document.getElementById('navAll').classList.remove('hidden');
   }
 
-  // جلب مجمع البيانات بالتوازي
   Promise.all([
     fetch(`https://docs.google.com/spreadsheets/d/${SSID_DATA}/gviz/tq?tqx=out:json&sheet=Deacons`).then(r=>r.text()),
     fetch(`https://docs.google.com/spreadsheets/d/${SSID_RESP}/gviz/tq?tqx=out:json&sheet=FormResponses`).then(r=>r.text())
@@ -337,7 +348,6 @@ function filterChurch(){
   const sel = document.getElementById('churchSelector');
   const val = sel.value;
   
-  // تنظيف حقل البحث عند تغيير أو إعادة تعيين الكنيسة
   const searchInput = document.getElementById('chSearchInput');
   if (searchInput) searchInput.value = '';
 
@@ -356,7 +366,6 @@ function filterChurch(){
       return { ...d, _count: uniqueDates.length, _dates: uniqueDates };
     });
     
-    // ترتيب تنازلي حسب الحضور
     chData.sort((a,b) => b._count - a._count);
     
     document.getElementById('chSearchWrap').classList.remove('hidden');
@@ -387,7 +396,6 @@ function renderChurch(){
     return name.includes(query) || rth.includes(query);
   });
   
-  // تحديث الـ KPI
   document.getElementById('chTotalCount').innerText = chData.length;
   let sum = 0; chData.forEach(x=>sum+=x._count);
   document.getElementById('chAvgCount').innerText = chData.length ? (sum/chData.length).toFixed(1) : 0;
@@ -640,11 +648,11 @@ function exportAllExcel(){
 // ══ HELPERS ════════════════════════════════════════════════════
 function bclr(t, mx) {
   mx = mx || MAX_DEF;
-  if (t >= mx) return '#16A34A';       // أخضر: مؤهل للمسابقة
-  if (t >= mx * 0.6) return '#0284C7';  // أزرق: قريب من الهدف
-  if (t >= mx * 0.3) return '#D97706';  // برتقالي: حضور متوسط
-  if (t >= 1) return '#DC2626';         // أحمر: يحتاج التزام أكثر
-  return '#94A3B8';                     // رمادي: غياب كلي
+  if (t >= mx) return '#16A34A';       
+  if (t >= mx * 0.6) return '#0284C7';  
+  if (t >= mx * 0.3) return '#D97706';  
+  if (t >= 1) return '#DC2626';         
+  return '#94A3B8';                     
 }
 
 function slbl(t, mx) {
