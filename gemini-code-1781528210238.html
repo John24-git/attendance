@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#800000">
+<title>سجل الحضور — شمامسة 2026</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{\
+  "pc":"#800000","pc2":"#570000","opc":"#ffffff","opcc":"#ff8371",
+  "sc":"#fed65b","sc2":"#e9c349","osc":"#745c00",
+  "sf":"#fbf9f5","sfc":"#efeeea","sfcl":"#f5f3ef"
+}}}}
+</script>
+<style>
+body{font-family:'Tajawal',sans-serif;background-color:#fbf9f5;-webkit-tap-highlight-color:transparent;}
+.no-scrollbar::-webkit-scrollbar{display:none;}
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+.loader{border:3px solid #efeeea;border-top:3px solid #800000;border-radius:50%;width:24px;height:24px;animation:spin 1s linear infinite;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.bdg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:700;}
+.bdg-blue{background-color:#dbeafe;color:#1e40af;}
+.bdg-purple{background-color:#f3e8ff;color:#6b21a8;}
+.bdg-orange{background-color:#ffedd5;color:#9a3412;}
+</style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col pb-20">
+
+<header class="bg-[#800000] text-white shadow-md sticky top-0 z-40 px-4 py-3 flex items-center justify-between">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-2xl text-[#fed65b]">cremenation</span>
+    <h1 class="text-lg font-black tracking-tight">سجل حضور الشمامسة ٢٠٢٦</h1>
+  </div>
+  <div id="userInfo" class="text-xs bg-[#570000] px-3 py-1.5 rounded-lg font-bold hidden flex items-center gap-2">
+    <span id="userBadge" class="w-2 h-2 rounded-full bg-green-400"></span>
+    <span id="uName">..</span>
+    <button onclick="logout()" class="text-[#fed65b] hover:text-white font-medium mr-2 border-r border-white/20 pr-2">خروج</button>
+  </div>
+</header>
+
+<div id="loginPage" class="flex-1 flex items-center justify-center p-4">
+  <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-[#fbf9f5] rounded-full flex items-center justify-center mx-auto mb-3 text-[#800000]">
+        <span class="material-symbols-outlined text-4xl">account_circle</span>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800">تسجيل الدخول للنظام</h2>
+      <p class="text-xs text-gray-500 mt-1">الرجاء إدخال بيانات الاعتماد الخاصة بك</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-gray-600 mb-1">اسم المستخدم</label>
+        <input type="text" id="username" class="w-full rounded-xl border-gray-200 text-sm focus:border-[#800000] focus:ring-[#800000]" placeholder="username">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-gray-600 mb-1">كلمة المرور</label>
+        <input type="password" id="password" class="w-full rounded-xl border-gray-200 text-sm focus:border-[#800000] focus:ring-[#800000]" placeholder="••••••••">
+      </div>
+      <button onclick="doLogin()" id="loginBtn" class="w-full bg-[#800000] text-white py-3 rounded-xl font-bold hover:bg-[#570000] transition flex items-center justify-center gap-2 shadow-lg shadow-[#800000]/10">
+        <span>دخول</span>
+      </button>
+      <p id="loginErr" class="text-xs text-red-600 font-bold text-center hidden"></p>
+    </div>
+  </div>
+</div>
+
+<div id="loaderPage" class="flex-1 hidden flex flex-col items-center justify-center gap-3 p-4">
+  <div class="loader"></div>
+  <p class="text-xs font-bold text-gray-500 animate-pulse">جاري جلب وتحديث البيانات الفورية من السيرفر...</p>
+</div>
+
+<main id="mainApp" class="flex-1 p-4 max-w-5xl w-full mx-auto hidden space-y-4">
+  
+  <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex items-center gap-2 overflow-x-auto no-scrollbar">
+    <button id="btnChurchTab" onclick="switchTab('church')" class="px-4 py-2 text-xs font-bold rounded-lg bg-[#800000] text-white whitespace-nowrap transition">لوحة الكنيسة</button>
+    <button id="btnAllTab" onclick="switchTab('all')" class="px-4 py-2 text-xs font-bold rounded-lg bg-gray-100 text-gray-600 whitespace-nowrap transition hidden">التقرير الشامل للمطرانية</button>
+  </div>
+
+  <section id="churchPanel" class="space-y-4 hidden">
+    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-3">
+      <label class="block text-xs font-black text-gray-700">اختر الكنيسة التابع لها قطاعك:</label>
+      <select id="churchSelector" onchange="filterChurch()" class="w-full rounded-xl border-gray-200 text-sm focus:border-[#800000] focus:ring-[#800000]"></select>
+    </div>
+
+    <div id="church-export-bar" class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 hidden flex items-center justify-end gap-2">
+      <button onclick="exportChurchExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs flex items-center gap-1 transition shadow-sm">
+        <span class="material-symbols-outlined text-base">table_view</span> تصدير Excel
+      </button>
+      <button onclick="exportChurchPDF()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs flex items-center gap-1 transition shadow-sm">
+        <span class="material-symbols-outlined text-base">picture_as_pdf</span> طباعة / PDF
+      </button>
+    </div>
+
+    <div id="chKpi" class="grid grid-cols-2 md:grid-cols-4 gap-3 hidden">
+      <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><span class="material-symbols-outlined">groups</span></div>
+        <div><p class="text-[10px] text-gray-400 font-bold">إجمالي الشمامسة</p><p id="chTotalCount" class="text-lg font-black text-gray-800">0</p></div>
+      </div>
+      <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><span class="material-symbols-outlined">how_to_reg</span></div>
+        <div><p class="text-[10px] text-gray-400 font-bold">متوسط الحضور اليومي</p><p id="chAvgCount" class="text-lg font-black text-gray-800">0</p></div>
+      </div>
+    </div>
+
+    <div id="chSearchWrap" class="bg-white p-2 rounded-xl shadow-sm border border-gray-100 hidden">
+      <div class="relative">
+        <span class="material-symbols-outlined absolute right-3 top-2.5 text-gray-400 text-xl">search</span>
+        <input type="text" id="chSearchInput" oninput="renderChurch()" class="w-full pr-10 rounded-xl border-none bg-gray-50 text-xs focus:ring-1 focus:ring-[#800000]" placeholder="ابحث عن شماس بالاسم أو المرحلة...">
+      </div>
+    </div>
+
+    <div id="chCard" class="grid grid-cols-1 md:grid-cols-2 gap-3 hidden"></div>
+  </section>
+
+  <section id="allPanel" class="space-y-4 hidden">
+    <div id="all-lock" class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center font-bold text-xs flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-lg">lock</span> عذراً، لا تمتلك صلاحية الإشراف لرؤية كشف المطرانية المجمع.
+    </div>
+    <div id="all-content" class="space-y-4 hidden">
+      <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between gap-2">
+         <p class="text-xs font-black text-gray-700">كشف الإحصاء الشامل لجميع قطاعات الإيبارشية:</p>
+         <button onclick="exportAllExcel()" class="bg-[#800000] text-white font-bold py-1.5 px-3 rounded-lg text-xs flex items-center gap-1 transition">
+           <span class="material-symbols-outlined text-base">grid_on</span> تصدير كشف المطرانية
+         </button>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-gray-50 border-b border-gray-100 font-bold text-gray-600">
+              <tr>
+                <th class="p-3">الشماس</th>
+                <th class="p-3">الكنيسة</th>
+                <th class="p-3">المرحلة</th>
+                <th class="p-3 text-center">إجمالي الحضور</th>
+                <th class="p-3 text-center">الحالة المسجلة</th>
+              </tr>
+            </thead>
+            <tbody id="allTbody" class="divide-y divide-gray-50"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<nav id="bottomNav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-2 flex justify-around items-center z-40 shadow-xl hidden">
+  <button onclick="switchTab('church')" id="navChurch" class="flex flex-col items-center gap-0.5 text-[#800000]">
+    <span class="material-symbols-outlined text-2xl">church</span>
+    <span class="text-[10px] font-bold">كنيستي</span>
+  </button>
+  <button onclick="switchTab('all')" id="navAll" class="flex flex-col items-center gap-0.5 text-gray-400 hidden">
+    <span class="material-symbols-outlined text-2xl">analytics</span>
+    <span class="text-[10px] font-bold">المطرانية</span>
+  </button>
+</nav>
+
+<div id="historyModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+  <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl flex flex-col max-h-[85vh] animate-in fade-in zoom-in-95 duration-150">
+    <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50 rounded-t-2xl">
+      <div>
+        <h3 id="mdName" class="font-black text-sm text-gray-800">..</h3>
+        <p id="mdSub" class="text-[11px] text-gray-400 font-bold mt-0.5">..</p>
+      </div>
+      <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-200/70 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+    </div>
+    <div class="p-4 overflow-y-auto flex-1 space-y-4">
+      <div>
+        <h4 class="text-xs font-black text-gray-500 mb-2 flex items-center gap-1"><span class="material-symbols-outlined text-base text-amber-500">calendar_month</span> تواريخ الحضور المسجلة لعام ٢٠٢٦</h4>
+        <div id="mdDates" class="grid grid-cols-2 gap-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ CONFIG & STATE ═════════════════════════════════════════════
+const SSID_DATA = "1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI"; 
+const SSID_RESP = "12Eq2wViycVa0wE2zwGKDXGJAcCVrRX5WIR8VZosJDso"; 
+const MAX_DEF = 22; 
+
+let users = [], deacons = [], responses = [], churches = [];
+let user = null, activeTab = 'church';
+let chData = null; 
+
+// ══ INIT APP ═══════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  autoLogin();
+});
+
+function autoLogin(){
+  const stored = localStorage.getItem('sh_user');
+  if(stored){
+    try{
+      user = JSON.parse(stored);
+      showApp();
+    }catch(e){ logout(); }
+  } else {
+    document.getElementById('loginPage').style.display = 'flex';
+  }
+}
+
+function doLogin(){
+  const u = document.getElementById('username').value.trim().toLowerCase();
+  const p = document.getElementById('password').value.trim();
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginErr');
+  
+  if(!u || !p){ alert('من فضلك املأ الحقول المعنية'); return; }
+  
+  btn.disabled = true; btn.innerText = "جاري التحقق...";
+  err.classList.add('hidden');
+
+  const url = `https://docs.google.com/spreadsheets/d/${SSID_DATA}/gviz/tq?tqx=out:json&sheet=Users`;
+  fetch(url).then(r=>r.text()).then(txt => {
+    const data = parseGviz(txt);
+    const found = data.find(r => String(r['اسم المستخدم']||'').trim().toLowerCase() === u && String(r['كلمة السر']||'').trim() === p);
+    if(found){
+      user = { username: u, name: found['الاسم بالكامل'], role: found['الرتبة'], church: found['الكنيسة الموكل لها'] };
+      localStorage.setItem('sh_user', JSON.stringify(user));
+      showApp();
+    } else {
+      err.innerText = "اسم المستخدم أو كلمة المرور غير صحيحة!";
+      err.classList.remove('hidden');
+      btn.disabled = false; btn.innerText = "دخول";
+    }
+  }).catch(err => {
+    console.error(err);
+    alert('فشل الاتصال بقاعدة البيانات الخارجية.');
+    btn.disabled = false; btn.innerText = "دخول";
+  });
+}
+
+function logout(){
+  localStorage.removeItem('sh_user');
+  user = null;
+  document.getElementById('userInfo').classList.add('hidden');
+  document.getElementById('bottomNav').classList.add('hidden');
+  document.getElementById('mainApp').classList.add('hidden');
+  document.getElementById('loginPage').style.display = 'flex';
+}
+
+function showApp(){
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('loaderPage').style.display = 'flex';
+  
+  document.getElementById('uName').innerText = user.name;
+  document.getElementById('userInfo').classList.remove('hidden');
+  
+  if(['admin','super_admin'].includes(user.role)){
+    document.getElementById('btnAllTab').classList.remove('hidden');
+    document.getElementById('navAll').classList.remove('hidden');
+  }
+
+  // جلب مجمع البيانات بالتوازي
+  Promise.all([
+    fetch(`https://docs.google.com/spreadsheets/d/${SSID_DATA}/gviz/tq?tqx=out:json&sheet=Deacons`).then(r=>r.text()),
+    fetch(`https://docs.google.com/spreadsheets/d/${SSID_RESP}/gviz/tq?tqx=out:json&sheet=FormResponses`).then(r=>r.text())
+  ]).then(([txtDeacons, txtResp]) => {
+    deacons = parseGviz(txtDeacons);
+    responses = parseGviz(txtResp);
+    
+    buildChurchesList();
+    initSelectors();
+    
+    document.getElementById('loaderPage').style.display = 'none';
+    document.getElementById('mainApp').classList.remove('hidden');
+    document.getElementById('bottomNav').classList.remove('hidden');
+    
+    switchTab('church');
+  }).catch(e => {
+    console.error(e);
+    alert('حدث خطأ أثناء تحميل كشف البيانات من جوجل شيت.');
+  });
+}
+
+function buildChurchesList(){
+  let set = new Set();
+  deacons.forEach(d => { if(d['الكنيسة']) set.add(d['الكنيسة'].trim()); });
+  churches = Array.from(set);
+}
+
+function initSelectors(){
+  const sel = document.getElementById('churchSelector');
+  sel.innerHTML = '';
+  
+  let allowed = [];
+  if(['admin','super_admin'].includes(user.role)){
+    allowed = [...churches];
+    let opt = document.createElement('option'); opt.value = ''; opt.innerText = '-- اختر الكنيسة المستهدفة --';
+    sel.appendChild(opt);
+  } else {
+    if(user.church && churches.includes(user.church.trim())){
+      allowed.push(user.church.trim());
+    }
+  }
+  
+  allowed.forEach(c => {
+    let opt = document.createElement('option'); opt.value = c; opt.innerText = c;
+    sel.appendChild(opt);
+  });
+  
+  if(allowed.length === 1){
+    sel.value = allowed[0];
+    sel.disabled = true;
+    filterChurch();
+  }
+}
+
+function switchTab(t){
+  activeTab = t;
+  document.getElementById('churchPanel').style.display = t==='church'?'block':'none';
+  document.getElementById('allPanel').style.display = t==='all'?'block':'none';
+  
+  if(t==='church'){
+    document.getElementById('navChurch').classList.remove('text-gray-400');
+    document.getElementById('navChurch').classList.add('text-[#800000]');
+    document.getElementById('navAll').classList.remove('text-[#800000]');
+    document.getElementById('navAll').classList.add('text-gray-400');
+    filterChurch();
+  } else {
+    document.getElementById('navAll').classList.remove('text-gray-400');
+    document.getElementById('navAll').classList.add('text-[#800000]');
+    document.getElementById('navChurch').classList.remove('text-[#800000]');
+    document.getElementById('navChurch').classList.add('text-gray-400');
+    renderAllPanel();
+  }
+}
+
+// ══ LOGIC CHURCH ═══════════════════════════════════════════════
+function filterChurch(){
+  const sel = document.getElementById('churchSelector');
+  const val = sel.value;
+  
+  // تنظيف حقل البحث عند تغيير أو إعادة تعيين الكنيسة
+  const searchInput = document.getElementById('chSearchInput');
+  if (searchInput) searchInput.value = '';
+
+  if(val && val.trim() !== ""){
+    let raw = deacons.filter(d => d['الكنيسة'] && d['الكنيسة'].trim() === val.trim());
+    chData = raw.map(d => {
+      let code = String(d['الكود']||'').trim();
+      let match = responses.filter(r => String(r['كود الشماس']||'').trim() === code);
+      let dates = match.map(m => precedingSunday(m['Timestamp']));
+      let uniqueDates = [];
+      let seen = {};
+      dates.forEach(dt => {
+        let s = fmtDate(dt);
+        if(!seen[s] && s){ seen[s]=true; uniqueDates.push(dt); }
+      });
+      return { ...d, _count: uniqueDates.length, _dates: uniqueDates };
+    });
+    
+    // ترتيب تنازلي حسب الحضور
+    chData.sort((a,b) => b._count - a._count);
+    
+    document.getElementById('chSearchWrap').classList.remove('hidden');
+    document.getElementById('chKpi').classList.remove('hidden');
+    document.getElementById('church-export-bar').classList.remove('hidden');
+    document.getElementById('chCard').classList.remove('hidden');
+    
+    renderChurch();
+  } else {
+    chData = null;
+    document.getElementById('chSearchWrap').classList.add('hidden');
+    document.getElementById('chKpi').classList.add('hidden');
+    document.getElementById('church-export-bar').classList.add('hidden');
+    document.getElementById('chCard').classList.add('hidden');
+    document.getElementById('chCard').innerHTML = '';
+  }
+}
+
+function renderChurch(){
+  const grid = document.getElementById('chCard');
+  grid.innerHTML = '';
+  if(!chData) return;
+  
+  const query = document.getElementById('chSearchInput').value.trim().toLowerCase();
+  let filtered = chData.filter(d => {
+    let name = String(d['الاسم بالكامل']||'').toLowerCase();
+    let rth = String(d['المرحلة الدراسية']||'').toLowerCase();
+    return name.includes(query) || rth.includes(query);
+  });
+  
+  // تحديث الـ KPI
+  document.getElementById('chTotalCount').innerText = chData.length;
+  let sum = 0; chData.forEach(x=>sum+=x._count);
+  document.getElementById('chAvgCount').innerText = chData.length ? (sum/chData.length).toFixed(1) : 0;
+  
+  if(filtered.length === 0){
+    grid.innerHTML = `<p class="col-span-full text-center py-6 text-xs text-gray-400 font-bold">لا يوجد نتائج تطابق بحثك الحالي...</p>`;
+    return;
+  }
+  
+  filtered.forEach((d, idx) => {
+    let card = document.createElement('div');
+    card.className = "bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between gap-2";
+    
+    let pct = Math.min(100, Math.round((d._count/MAX_DEF)*100));
+    
+    card.innerHTML = `
+      <div class="space-y-1.5 flex-1 min-w-0">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xs font-bold text-gray-400">#${idx+1}</span>
+          <h4 class="font-black text-sm text-gray-800 truncate">${d['الاسم بالكامل']}</h4>
+          <span class="${catBdg(d['المرحلة الدراسية'])}">${d['المرحلة الدراسية']||'غير محدد'}</span>
+        </div>
+        <p class="text-[11px] font-bold text-gray-400 flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">badge</span> الكود: ${d['الكود']}
+        </p>
+        <div class="flex items-center gap-3 pt-1">
+          <span class="text-xs font-black" style="color:${bclr(d._count, MAX_DEF)}">${slbl(d._count, MAX_DEF)}</span>
+          <span class="text-[11px] font-bold text-gray-400">(${d._count} حضور)</span>
+        </div>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <div class="relative w-12 h-12 flex items-center justify-center">
+          <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+            <path class="text-gray-100" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path stroke-width="3" stroke-dasharray="${pct}, 100" style="color:${bclr(d._count, MAX_DEF)}" stroke="currentColor" fill="none" stroke-linecap="round" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          </svg>
+          <span class="text-[10px] font-black text-gray-700">${pct}%</span>
+        </div>
+        <button onclick="openHistory(${idx})" class="bg-gray-50 border border-gray-100 text-gray-600 hover:bg-gray-100 font-bold px-2.5 py-1 rounded-lg text-[10px] flex items-center gap-0.5 transition">
+          <span class="material-symbols-outlined text-xs">visibility</span> التواريخ
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ══ MODAL DETAILS ══════════════════════════════════════════════
+function openHistory(idx) {
+  if(!chData || !chData[idx]) return;
+  const d = chData[idx];
+  document.getElementById('mdName').innerText = d['الاسم بالكامل'];
+  document.getElementById('mdSub').innerText = `${d['الكنيسة']} • ${d['المرحلة الدراسية']||''}`;
+  
+  const box = document.getElementById('mdDates');
+  box.innerHTML = '';
+  
+  if(d._dates && d._dates.length > 0){
+    let sdates = [...d._dates].sort((a,b)=>b-a);
+    sdates.forEach(dt => {
+      let div = document.createElement('div');
+      div.className = "bg-emerald-50 text-emerald-800 border border-emerald-100 rounded-lg p-2 font-bold text-center text-xs flex items-center justify-center gap-1";
+      div.innerHTML = `<span class="material-symbols-outlined text-sm">check_circle</span> ${fmtDate(dt)}`;
+      box.appendChild(div);
+    });
+  } else {
+    box.innerHTML = `<p class="col-span-full text-center py-4 text-xs text-gray-400 font-medium">لم يتم تسجيل أي حضور مسبق لهذا الشماس.</p>`;
+  }
+  
+  document.getElementById('historyModal').classList.remove('hidden');
+}
+
+function closeModal(){
+  document.getElementById('historyModal').classList.add('hidden');
+}
+
+// ══ LOGIC ALL PANEL ════════════════════════════════════════════
+function renderAllPanel(){
+  const ok = user && ['admin','super_admin'].includes(user.role);
+  document.getElementById('all-lock').style.display = ok ? 'none' : 'flex';
+  document.getElementById('all-content').style.display = ok ? 'block' : 'none';
+  if(ok) renderAll();
+}
+
+function renderAll(){
+  const tbody = document.getElementById('allTbody');
+  tbody.innerHTML = '';
+  
+  let rows = deacons.map(d => {
+    let code = String(d['الكود']||'').trim();
+    let match = responses.filter(r => String(r['كود الشماس']||'').trim() === code);
+    let dates = match.map(m => precedingSunday(m['Timestamp']));
+    let uniqueDates = [];
+    let seen = {};
+    dates.forEach(dt => {
+      let s = fmtDate(dt);
+      if(!seen[s] && s){ seen[s]=true; uniqueDates.push(dt); }
+    });
+    return { ...d, _count: uniqueDates.length };
+  });
+  
+  rows.sort((a,b) => b._count - a._count);
+  
+  rows.forEach(r => {
+    let tr = document.createElement('tr');
+    tr.className = "hover:bg-gray-50/80 transition";
+    tr.innerHTML = `
+      <td class="p-3 font-bold text-gray-800">${r['الاسم بالكامل']}</td>
+      <td class="p-3 text-gray-500 font-medium">${r['الكنيسة']}</td>
+      <td class="p-3 text-gray-400 font-medium">${r['المرحلة الدراسية']||'--'}</td>
+      <td class="p-3 text-center font-black text-sm" style="color:${bclr(r._count, MAX_DEF)}">${r._count}</td>
+      <td class="p-3 text-center"><span class="font-bold text-[10px]" style="color:${bclr(r._count, MAX_DEF)}">${slbl(r._count, MAX_DEF)}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ══ EXPORTING FUNCTIONS ════════════════════════════════════════
+function exportChurchExcel(){
+  if(!chData || chData.length === 0){ alert('لا توجد بيانات متاحة للتصدير حالياً'); return; }
+  
+  let dateSet = new Set();
+  chData.forEach(d => {
+    if(d._dates) d._dates.forEach(dt => dateSet.add(fmtDate(dt)));
+  });
+  let sortedDates = Array.from(dateSet).sort((a,b) => new Date(a) - new Date(b));
+
+  let sheetRows = [];
+  chData.forEach((d, idx) => {
+    let rowObj = {
+      "م": idx + 1,
+      "كود الشماس": d['الكود'],
+      "الاسم بالكامل": d['الاسم بالكامل'],
+      "المرحلة الدراسية": d['المرحلة الدراسية'] || 'غير محدد',
+      "الكنيسة": d['الكنيسة'],
+      "إجمالي الحضور": d._count,
+      "حالة التقييم": slbl(d._count, MAX_DEF)
+    };
+    
+    sortedDates.forEach(dtStr => {
+      let attended = d._dates.some(dt => fmtDate(dt) === dtStr);
+      rowObj[dtStr] = attended ? "حاضر" : "غائب";
+    });
+    
+    sheetRows.push(rowObj);
+  });
+  
+  const ws = XLSX.utils.json_to_sheet(sheetRows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "تقرير الحضور");
+  XLSX.writeFile(wb, `سجل_حضور_${document.getElementById('churchSelector').value || 'الكنيسة'}_2026.xlsx`);
+}
+
+function exportChurchPDF(){
+  if(!chData || chData.length === 0){ alert('لا توجد بيانات متاحة للطباعة'); return; }
+  const chName = document.getElementById('churchSelector').value;
+  
+  let pWin = window.open('', '_blank');
+  let tableContent = '';
+  
+  chData.forEach((d, idx) => {
+    let pct = Math.min(100, Math.round((d._count/MAX_DEF)*100));
+    tableContent += `
+      <tr style="border-bottom: 1px solid #e2e8f0;">
+        <td style="padding: 10px; font-weight: bold; text-align: center;">${idx+1}</td>
+        <td style="padding: 10px; font-weight: bold;">${d['الاسم بالكامل']}</td>
+        <td style="padding: 10px; text-align: center;">${d['المرحلة الدراسية']||'--'}</td>
+        <td style="padding: 10px; text-align: center; font-weight: 900; color: #800000;">${d._count}</td>
+        <td style="padding: 10px; text-align: center; font-weight: bold;">${pct}%</td>
+        <td style="padding: 10px; text-align: center; font-size: 11px;">${slbl(d._count, MAX_DEF)}</td>
+      </tr>
+    `;
+  });
+
+  pWin.document.write(`
+    <html lang="ar" dir="rtl">
+    <head>
+      <title>طباعة تقرير الحضور</title>
+      <style>
+        body { font-family: 'Tajawal', sans-serif; padding: 30px; direction: rtl; text-align: right; background-color: #fff; color: #333; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 3px double #800000; padding-bottom: 15px; }
+        .header h1 { margin: 0; color: #800000; font-size: 24px; }
+        .header p { margin: 5px 0 0 0; font-weight: bold; color: #666; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+        th { background-color: #800000; color: #fff; padding: 12px; text-align: center; }
+        .footer { margin-top: 40px; text-align: left; font-size: 12px; font-weight: bold; color: #800000; }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h1>مطرانية المعادي وتوابعها للأقباط الأرثوذكس</h1>
+        <p>تقرير حضور قداسات الأحد لشمامسة قطاع: ${chName} - لعام ٢٠٢٦</p>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 6%;">م</th>
+            <th>الاسم بالكامل</th>
+            <th style="width: 18%;">المرحلة الدراسية</th>
+            <th style="width: 14%;">أيام الحضور</th>
+            <th style="width: 12%;">النسبة</th>
+            <th style="width: 20%;">التقييم المسجل</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableContent}
+        </tbody>
+      </table>
+      <div class="footer">تاريخ استخراج التقرير الفوري: ${new Date().toLocaleDateString('ar-EG')}</div>
+      <script>window.onload = function() { window.print(); window.close(); }</script>
+    </body>
+    </html>
+  `);
+  pWin.document.close();
+}
+
+function exportAllExcel(){
+  if(deacons.length === 0){ alert('لا توجد بيانات مجمعة'); return; }
+  
+  let sheetRows = deacons.map((d, idx) => {
+    let code = String(d['الكود']||'').trim();
+    let match = responses.filter(r => String(r['كود الشماس']||'').trim() === code);
+    let dates = match.map(m => precedingSunday(m['Timestamp']));
+    let uniqueDates = [];
+    let seen = {};
+    dates.forEach(dt => {
+      let s = fmtDate(dt);
+      if(!seen[s] && s){ seen[s]=true; uniqueDates.push(dt); }
+    });
+    
+    return {
+      "م": idx + 1,
+      "الكود": d['الكود'],
+      "الاسم بالكامل": d['الاسم بالكامل'],
+      "الكنيسة": d['الكنيسة'],
+      "المرحلة الدراسية": d['المرحلة الدراسية'] || 'غير محدد',
+      "عدد مرات الحضور": uniqueDates.length,
+      "حالة الجاهزية للمسابقة": slbl(uniqueDates.length, MAX_DEF)
+    };
+  });
+  
+  sheetRows.sort((a,b) => b["عدد مرات الحضور"] - a["عدد مرات الحضور"]);
+  
+  const ws = XLSX.utils.json_to_sheet(sheetRows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "الكشف المجمع للمطرانية");
+  XLSX.writeFile(wb, "المطرانية_المجمع_حضور_الشمامسة_2026.xlsx");
+}
+
+// ══ HELPERS ════════════════════════════════════════════════════
+function bclr(t, mx) {
+  mx = mx || MAX_DEF;
+  if (t >= mx) return '#16A34A';       // أخضر: مؤهل للمسابقة
+  if (t >= mx * 0.6) return '#0284C7';  // أزرق: قريب من الهدف
+  if (t >= mx * 0.3) return '#D97706';  // برتقالي: حضور متوسط
+  if (t >= 1) return '#DC2626';         // أحمر: يحتاج التزام أكثر
+  return '#94A3B8';                     // رمادي: غياب كلي
+}
+
+function slbl(t, mx) {
+  mx = mx || MAX_DEF;
+  if (t >= mx) return '🏆 مؤهّل للمسابقة';
+  if (t >= mx * 0.6) return '🔵 قريب من الهدف';
+  if (t >= mx * 0.3) return '🟡 حضور متوسط';
+  if (t >= 1) return '🔴 يحتاج التزام أكثر';
+  return '⚪ غياب كلي';
+}
+
+function catBdg(c){
+  let t = String(c||'').trim();
+  if(t.includes('طالب') || t.includes('ابتدائي')) return 'bdg bdg-blue';
+  if(t.includes('إعدادي') || t.includes('ثانوي')) return 'bdg bdg-purple';
+  return 'bdg bdg-orange';
+}
+
+function precedingSunday(d){
+  if(!d) return null;
+  const dd = new Date(d);
+  if(isNaN(dd.getTime())) return null;
+  const day = dd.getDay();
+  if(day === 0) return dd;
+  dd.setDate(dd.getDate() - day);
+  return dd;
+}
+
+function fmtDate(d){
+  if(!d) return "";
+  const dd = new Date(d);
+  if(isNaN(dd.getTime())) return "";
+  const y = dd.getFullYear();
+  const m = String(dd.getMonth()+1).padStart(2,'0');
+  const w = String(dd.getDate()).padStart(2,'0');
+  return `${y}-${m}-${w}`;
+}
+
+function parseGviz(txt){
+  try{
+    const raw = txt.substring(txt.indexOf('{'), txt.lastIndexOf('}')+1);
+    const json = JSON.parse(raw);
+    const cols = json.table.cols.map(c => c.label ? c.label.trim() : '');
+    return json.table.rows.map(r => {
+      let obj = {};
+      r.c.forEach((cell, i) => {
+        if(cols[i]){
+          if(cell && cell.v !== null && cell.v !== undefined){
+            if(typeof cell.v === 'string' && cell.v.startsWith('Date(')){
+              obj[cols[i]] = parseGvizDate(cell.v);
+            } else {
+              obj[cols[i]] = cell.v;
+            }
+          } else {
+            obj[cols[i]] = '';
+          }
+        }
+      });
+      return obj;
+    });
+  }catch(e){ console.error("Error parsing gviz", e); return []; }
+}
+
+function parseGvizDate(s){
+  let p = s.replace('Date(','').replace(')','').split(',');
+  if(p.length >= 3){
+    return new Date(parseInt(p[0]), parseInt(p[1]), parseInt(p[2]), parseInt(p[3]||0), parseInt(p[4]||0));
+  }
+  return s;
+}
+</script>
+</body>
+</html>
