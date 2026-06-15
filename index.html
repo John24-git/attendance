@@ -106,11 +106,13 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 @media print{
   body *{visibility:hidden}
   #printArea,#printArea *{visibility:visible}
-  #printArea{position:fixed;inset:0;background:#fff;z-index:99999;direction:rtl;font-family:'Tajawal',sans-serif;padding:20px;overflow:auto}
+  #printArea{position:absolute;top:0;left:0;width:100%;background:#fff;direction:rtl;font-family:'Tajawal',sans-serif;padding:20px}
   .ph{text-align:center;margin-bottom:20px;border-bottom:2px solid #570000;padding-bottom:14px}
   .ph h2{font-size:18px;font-weight:900;color:#570000}
   .ph p{font-size:12px;color:#64748B;margin-top:4px}
-  .pt{width:100%;border-collapse:collapse;font-size:11px}
+  .pt{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}
+  .pt thead{display:table-header-group}
+  .pt tr{page-break-inside:avoid;page-break-after:auto}
   .pt th{background:#570000;color:#fff;padding:8px 10px;text-align:right;font-weight:800}
   .pt td{padding:7px 10px;border-bottom:1px solid #E2E8F0;font-weight:600}
   .pt tr:nth-child(even) td{background:#fafafa}
@@ -118,52 +120,9 @@ body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;-webkit-f
 }
 .gbtn{background:#eae8e4;color:#5a413d}
 .gbtn.on{background:#800000;color:#fff}
-
-/* ── CALENDAR ─────────────────────────────────────────── */
-.cal-btn{width:100%;margin-top:10px;padding:10px 14px;background:rgba(128,0,0,.08);border:1px solid rgba(128,0,0,.15);border-radius:12px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;color:#800000;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
-.cal-btn:hover{background:rgba(128,0,0,.12)}
-.cal-btn.active{background:rgba(128,0,0,.15);border-color:rgba(128,0,0,.3)}
-.cal-wrap{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(128,0,0,.1);border-radius:16px;padding:14px;margin-top:8px;display:none}
-.cal-wrap.open{display:block}
-.cal-month{margin-bottom:14px}
-.cal-month:last-child{margin-bottom:0}
-.cal-month-title{font-size:10px;font-weight:800;color:#5a413d;letter-spacing:.1em;margin-bottom:8px}
-.cal-days{display:flex;flex-wrap:wrap;gap:6px}
-.cal-day{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;transition:.15s;border:1.5px solid transparent;flex-shrink:0}
-.cal-day.has{background:rgba(22,163,74,.12);color:#16A34A;border-color:rgba(22,163,74,.25);cursor:pointer}
-.cal-day.has:hover{background:rgba(22,163,74,.22);transform:scale(1.08)}
-.cal-day.none{background:#f1f5f9;color:#cbd5e1;cursor:default}
-.cal-day.sel{background:#800000!important;color:#fff!important;border-color:#800000!important;box-shadow:0 2px 8px rgba(128,0,0,.3)}
-.cal-active-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(128,0,0,.08);border-radius:10px;margin-top:8px}
-.cal-active-lbl{font-size:12px;font-weight:800;color:#800000}
-.cal-clear{background:none;border:none;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:800;color:#8e706c;cursor:pointer;padding:4px 8px;border-radius:6px}
-.cal-clear:hover{background:rgba(0,0,0,.05)}
-
-/* ── FIX: select arrows RTL ─────────────────────── */
-select{background-image:none!important}
-
-/* ── HISTOGRAM ──────────────────────────────────────── */
-.hist-card{background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid rgba(128,0,0,.08);border-radius:16px;padding:16px 14px;margin-bottom:12px;box-shadow:0 2px 12px rgba(128,0,0,.06)}
-.hist-title{font-size:11px;font-weight:800;color:#5a413d;letter-spacing:.05em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.hist-rows{display:flex;flex-direction:column;gap:5px}
-.hist-row{display:flex;align-items:center;gap:8px}
-.hist-lbl{font-size:10px;font-weight:800;color:#5a413d;min-width:28px;text-align:left}
-.hist-bar-wrap{flex:1;height:16px;background:#f1f5f9;border-radius:4px;overflow:hidden}
-.hist-bar{height:100%;border-radius:4px;transition:.4s;min-width:2px}
-.hist-cnt{font-size:10px;font-weight:800;color:#5a413d;min-width:24px;text-align:right}
-.hist-row.qual-row .hist-lbl{color:#16A34A}
-.hist-row.qual-row .hist-bar{background:linear-gradient(90deg,#16A34A,#22c55e)}
-.hist-row.near-row .hist-lbl{color:#800000}
-.hist-row.near-row .hist-bar{background:linear-gradient(90deg,#800000,#b91c1c)}
-.hist-row.low-row .hist-bar{background:linear-gradient(90deg,#e2bfb9,#d4a99f)}
-.hist-row{cursor:pointer;border-radius:6px;padding:2px 4px;transition:.15s}
-.hist-row:hover{background:rgba(128,0,0,.05)}
-.hist-row.selected{background:rgba(128,0,0,.1);border-radius:8px}
-.hist-row.selected .hist-lbl{color:#800000;font-weight:900}
-.hist-row.selected .hist-bar-wrap{box-shadow:0 0 0 1.5px rgba(128,0,0,.3);border-radius:4px}
 </style>
 </head>
-<body class="min-h-screen" style="padding-bottom:88px">
+<body class="min-h-screen">
 
 <!-- ══ HOME PANEL ════════════════════════════════════════════════ -->
 <div class="panel on" id="p-home" style="position:relative;min-height:100vh;overflow:hidden">
@@ -289,20 +248,6 @@ select{background-image:none!important}
             class="w-full bg-sfcl border border-olv rounded-xl pr-10 pl-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-pc/30" autocomplete="off">
         </div>
       </div>
-
-      <!-- Calendar Filter -->
-      <div id="calSection" style="display:none;margin-bottom:12px">
-        <button class="cal-btn" id="calToggleBtn" onclick="toggleCal()">
-          📅 فلتر بتاريخ أحد معين
-        </button>
-        <div class="cal-wrap" id="calWrap">
-          <div id="calMonths"></div>
-        </div>
-        <div id="calActiveBar" class="cal-active-bar" style="display:none">
-          <span class="cal-active-lbl" id="calActiveLabel"></span>
-          <button class="cal-clear" onclick="clearSunday()">× إلغاء</button>
-        </div>
-      </div>
       <div id="church-export-bar" class="flex gap-3 mb-4" style="display:none">
         <button onclick="exportChurchPDF()" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#DC2626] text-white font-bold text-xs hover:opacity-90 shadow">
           <span class="ms text-[16px]">picture_as_pdf</span> تصدير PDF
@@ -312,14 +257,6 @@ select{background-image:none!important}
         </button>
       </div>
       <div id="chKpi" class="grid grid-cols-2 gap-3 mb-4" style="display:none"></div>
-
-      <div id="chHist" class="hist-card" style="display:none">
-        <div class="hist-title">
-          <span>📊 توزيع الحضور</span>
-          <span id="histTotal" style="font-size:10px;color:#8e706c"></span>
-        </div>
-        <div class="hist-rows" id="histRows"></div>
-      </div>
       <div class="glass rounded-2xl overflow-hidden shadow-sm" id="chCard" style="display:none">
         <div id="chList"></div>
       </div>
@@ -455,8 +392,6 @@ const MONTHS_K=[[2025,9],[2025,10],[2025,11],[2025,12],[2026,1],[2026,2],[2026,3
 let user=null,currentTab='mine';
 let DB=[],ATT=[],USERS=[],attMap={};
 let chData=null,dataLoaded=false,allRows=[];
-let selectedSunday=null;
-let selectedCount=null;
 
 // ══ INIT ═══════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',async()=>{
@@ -567,6 +502,7 @@ async function loadAllData(){
         role:String(r['role']||r['الدور']||vals[3]||'supervisor').trim(),
         // ← العمود الجديد للمستويات
         levels:String(r['levels']||r['المستويات']||vals[4]||'').trim(),
+        gender:String(r['gender']||r['النوع']||vals[5]||'').trim(),
       };}).filter(u=>u.username);
     }catch(e){USERS=[];}
 
@@ -641,172 +577,8 @@ function loadChurch(){
     const total=rec.sundays.size;const mx=getMax(m);
     return{...m,total,maxAtt:mx,qualified:total>=mx,pct:Math.round(total/mx*100)};
   });
-  // ← فلاتر ديناميكية حسب بيانات الكنيسة الفعلية
-  const churchMembers=chData;
-  const churchLvls=[...new Set(churchMembers.map(m=>m.level).filter(Boolean))]
-    .sort((a,b)=>{const na=parseFloat(a),nb=parseFloat(b);return(!isNaN(na)&&!isNaN(nb))?na-nb:a.localeCompare(b,'ar');});
-  const churchCats=[...new Set(churchMembers.map(m=>m.category).filter(Boolean))].sort();
-  const churchGenders=[...new Set(churchMembers.map(m=>m.gender).filter(Boolean))];
-
-  document.getElementById('lvlSel').innerHTML='<option value="">كل المستويات</option>'+
-    churchLvls.map(v=>`<option value="${v}">${v}</option>`).join('');
-  document.getElementById('catSel').innerHTML='<option value="">كل الفئات</option>'+
-    churchCats.map(v=>`<option value="${v}">${v}</option>`).join('');
-
-  // إظهار/إخفاء أزرار الجنس حسب ما هو موجود في الكنيسة
-  const gbtns=document.querySelectorAll('.gbtn');
-  if(gbtns[1])gbtns[1].style.display=churchGenders.includes('ذكر')?'':'none';
-  if(gbtns[2])gbtns[2].style.display=churchGenders.includes('أنثى')?'':'none';
-  // reset gender filter
-  document.getElementById('genSel').value='';
-  gbtns.forEach(b=>b.classList.remove('on'));
-  if(gbtns[0])gbtns[0].classList.add('on');
-
   document.getElementById('chSearchWrap').style.display='block';
   document.getElementById('church-export-bar').style.display='flex';
-  document.getElementById('calSection').style.display='block';
-  selectedSunday=null;
-  selectedCount=null;
-  document.getElementById('calActiveBar').style.display='none';
-  document.getElementById('calWrap').classList.remove('open');
-  document.getElementById('calToggleBtn').classList.remove('active');
-  document.getElementById('calToggleBtn').textContent='📅 فلتر بتاريخ أحد معين';
-  buildCalendar(ch);
-  filterChurch();
-}
-
-
-// ══ CALENDAR ══════════════════════════════════════════════════
-const MONTHS_AR_CAL=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-
-function buildCalendar(ch){
-  const codes=DB.filter(m=>m.church===ch).map(m=>m.code);
-  const churchSundays=new Set();
-  codes.forEach(code=>{const rec=attMap[code];if(rec)rec.sundays.forEach(s=>churchSundays.add(s));});
-  const allSundays=[];
-  const d=new Date(2025,8,1);
-  while(d.getDay()!==0)d.setDate(d.getDate()+1);
-  const end=new Date(2026,7,31);
-  while(d<=end){allSundays.push(fmtDate(new Date(d)));d.setDate(d.getDate()+7);}
-  const byMonth={};
-  allSundays.forEach(s=>{
-    const dt=new Date(s+'T00:00:00');
-    const k=dt.getFullYear()+'-'+(dt.getMonth()+1);
-    if(!byMonth[k])byMonth[k]={year:dt.getFullYear(),month:dt.getMonth(),days:[]};
-    byMonth[k].days.push(s);
-  });
-  const container=document.getElementById('calMonths');
-  container.innerHTML='';
-  Object.values(byMonth).forEach(({year,month,days})=>{
-    const hasSome=days.some(s=>churchSundays.has(s));
-    if(!hasSome&&!selectedSunday)return;
-    const div=document.createElement('div');
-    div.className='cal-month';
-    const daysHtml=days.map(s=>{
-      const dt=new Date(s+'T00:00:00');
-      const has=churchSundays.has(s);
-      const sel=selectedSunday===s;
-      const cls='cal-day'+(sel?' sel':has?' has':' none');
-      const onclick=has&&!sel?`onclick="selectSunday('${s}')"`:sel?`onclick="clearSunday()"`:'' ;
-      const title=SPECIAL[s]?`title="${SPECIAL[s]}"`:'' ;
-      return`<div class="${cls}" ${onclick} ${title}>${dt.getDate()}</div>`;
-    }).join('');
-    div.innerHTML=`<div class="cal-month-title">${MONTHS_AR_CAL[month]} ${year}</div><div class="cal-days">${daysHtml}</div>`;
-    container.appendChild(div);
-  });
-}
-
-function toggleCal(){
-  const wrap=document.getElementById('calWrap');
-  const btn=document.getElementById('calToggleBtn');
-  const open=wrap.classList.contains('open');
-  wrap.classList.toggle('open',!open);
-  btn.classList.toggle('active',!open);
-  btn.textContent=open?'📅 فلتر بتاريخ أحد معين':'📅 إغلاق التقويم';
-}
-
-function selectSunday(date){
-  selectedSunday=date;
-  const dt=new Date(date+'T00:00:00');
-  const label=dt.toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const special=SPECIAL[date]?` — ${SPECIAL[date]}`:'';
-  document.getElementById('calActiveLabel').textContent='📅 '+label+special;
-  document.getElementById('calActiveBar').style.display='flex';
-  const ch=document.getElementById('chSel').value;
-  if(ch)buildCalendar(ch);
-  filterChurch();
-}
-
-function clearSunday(){
-  selectedSunday=null;
-  selectedCount=null;
-  document.getElementById('calActiveBar').style.display='none';
-  const ch=document.getElementById('chSel').value;
-  if(ch)buildCalendar(ch);
-  filterChurch();
-}
-
-// ── mstat helper ──────────────────────────────────────────────
-function mstatHtml(p,bc){
-  if(selectedSunday){
-    const att=attMap[p.code]&&attMap[p.code].sundays.has(selectedSunday);
-    return'<div style="font-size:26px;text-align:center;line-height:38px">'+(att?'✅':'❌')+'</div>';
-  }
-  return'<div class="mnum" style="color:'+bc+'">'+p.total+'</div><div class="mof">/ '+p.maxAtt+'</div><div class="mbar"><div class="mfill" style="width:'+Math.min(p.pct,100)+'%;background:'+bc+'"></div></div>';
-}
-
-// ══ HISTOGRAM ═════════════════════════════════════════════════
-function renderHistogram(ppl){
-  const hist=document.getElementById('chHist');
-  if(!ppl||!ppl.length){hist.style.display='none';return;}
-  hist.style.display='block';
-
-  // الحد الأقصى ديناميكي حسب الأشخاص الموجودين في الفلتر
-  const maxTarget=Math.max(...ppl.map(p=>p.maxAtt),1);
-  const counts=new Array(maxTarget+1).fill(0);
-  let overMax=0;
-  ppl.forEach(p=>{
-    if(p.total>maxTarget)overMax++;
-    else counts[p.total]++;
-  });
-
-  const maxCount=Math.max(...counts,overMax,1);
-  const total=ppl.length;
-  document.getElementById('histTotal').textContent=total+' شخص · الهدف: '+maxTarget;
-
-  const rows=document.getElementById('histRows');
-  rows.innerHTML='';
-
-  counts.forEach((cnt,i)=>{
-    if(cnt===0)return;
-    const pct=Math.round(cnt/maxCount*100);
-    const base=i>=maxTarget?'hist-row qual-row':i>=Math.round(maxTarget*.6)?'hist-row near-row':'hist-row low-row';
-    const sel=selectedCount===i?'selected':'';
-    const div=document.createElement('div');
-    div.className=base+' '+sel;
-    div.dataset.count=i;
-    div.innerHTML=`<div class="hist-lbl">${i}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${cnt}</div>`;
-    div.onclick=()=>selectCount(i);
-    rows.appendChild(div);
-  });
-
-  if(overMax>0){
-    const pct=Math.round(overMax/maxCount*100);
-    const sel=selectedCount==='over'?'selected':'';
-    const div=document.createElement('div');
-    div.className='hist-row qual-row '+sel;
-    div.innerHTML=`<div class="hist-lbl">+${maxTarget}</div><div class="hist-bar-wrap"><div class="hist-bar" style="width:${pct}%"></div></div><div class="hist-cnt">${overMax}</div>`;
-    div.onclick=()=>selectCount('over',maxTarget);
-    rows.appendChild(div);
-  }
-}
-
-function selectCount(val,maxTarget){
-  if(selectedCount===val){
-    selectedCount=null;
-  }else{
-    selectedCount=val;
-  }
   filterChurch();
 }
 
@@ -819,19 +591,6 @@ function filterChurch(){
   const att=document.getElementById('attSel').value;
   const q=(document.getElementById('chSearch').value||'').trim();
   let ppl=chData;
-  // فلتر التاريخ
-  if(selectedSunday){
-    ppl=ppl.filter(p=>{const rec=attMap[p.code];return rec&&rec.sundays.has(selectedSunday);});
-  }
-  // فلتر الـ histogram
-  if(selectedCount!==null){
-    if(selectedCount==='over'){
-      const mt=chData.length?Math.max(...chData.map(p=>p.maxAtt),1):12;
-      ppl=ppl.filter(p=>p.total>mt);
-    }else{
-      ppl=ppl.filter(p=>p.total===selectedCount);
-    }
-  }
   if(cat)ppl=ppl.filter(p=>p.category===cat);
   if(lvl)ppl=ppl.filter(p=>p.level===lvl);
   if(gen)ppl=ppl.filter(p=>p.gender===gen);
@@ -876,7 +635,6 @@ function filterChurch(){
     </div>`;
 
   document.getElementById('chCard').style.display='block';
-  renderHistogram(ppl);
   document.getElementById('chList').innerHTML=[...ppl].sort((a,b)=>b.total-a.total).map((p,i)=>{
     const bc=bclr(p.total,p.maxAtt);const av=avatarStyle(p.category);
     const gLabel=p.gender==='ذكر'?'شماس':'شماسة';
@@ -892,7 +650,11 @@ function filterChurch(){
           <span class="bdg bdg-gray">${gLabel}</span>
         </div>
       </div>
-      <div class="mstat">${mstatHtml(p,bc)}</div>
+      <div class="mstat">
+        <div class="mnum" style="color:${bc}">${p.total}</div>
+        <div class="mof">/ ${p.maxAtt}</div>
+        <div class="mbar"><div class="mfill" style="width:${Math.min(p.pct,100)}%;background:${bc}"></div></div>
+      </div>
     </div>`;
   }).join('')||`<div style="text-align:center;padding:48px 16px;color:#8e706c"><div style="font-size:36px;margin-bottom:8px">😶</div><div style="font-size:13px;font-weight:700">لا يوجد أشخاص بهذه الفلاتر</div></div>`;
 }
@@ -902,11 +664,7 @@ function getChurchFiltered(){
   const cat=document.getElementById('catSel').value,lvl=document.getElementById('lvlSel').value;
   const gen=document.getElementById('genSel').value,att=document.getElementById('attSel').value;
   const q=(document.getElementById('chSearch').value||'').trim();
-  // فلتر التاريخ
-  if(selectedSunday){
-    ppl=ppl.filter(p=>{const rec=attMap[p.code];return rec&&rec.sundays.has(selectedSunday);});
-    ppl=[...ppl].sort((a,b)=>a.name.localeCompare(b.name,'ar'));
-  }
+  let ppl=chData;
   if(cat)ppl=ppl.filter(p=>p.category===cat);if(lvl)ppl=ppl.filter(p=>p.level===lvl);
   if(gen)ppl=ppl.filter(p=>p.gender===gen);
   if(att==='qual')ppl=ppl.filter(p=>p.qualified);
@@ -1080,7 +838,7 @@ async function doMine(){
     el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">🚫</div><div style="color:#ba1a1a;font-weight:800;font-size:13px">هذا الكود لمستوى خارج صلاحياتك</div><div style="color:#5a413d;font-size:11px;margin-top:6px">مستوياتك: <b>${allowedLevels.join(' · ')}</b></div></div>`;return;
   }
   if(user.gender && member.gender !== user.gender){
-  el.innerHTML=`... شماس/شماسة فقط ...`;
+  el.innerHTML=`<div class="glass rounded-2xl p-6 text-center" style="border:1px solid rgba(128,0,0,.1)"><div style="font-size:32px;margin-bottom:8px">🚫</div><div style="color:#ba1a1a;font-weight:800;font-size:13px">غير مسموح بعرض هذا السجل</div><div style="color:#5a413d;font-size:11px;margin-top:6px">صلاحياتك: <b>${user.gender==='ذكر'?'شماس فقط':'شماسة فقط'}</b></div></div>`;
   return;
 }
   el.innerHTML=buildMineHTML(member,getPersonRec(code));
@@ -1180,11 +938,13 @@ function renderChurchPanel(){
       if(sel.value)loadChurch();
       else{chData=null;document.getElementById('chCard').style.display='none';document.getElementById('church-export-bar').style.display='none';}
     }else{
-      sel.disabled=false;sel.value='';chData=null;
+      sel.disabled=false;sel.value='';chData=null;selectedSunday=null;selectedCount=null;
       document.getElementById('chSearchWrap').style.display='none';
       document.getElementById('chKpi').style.display='none';
       document.getElementById('church-export-bar').style.display='none';
       document.getElementById('chCard').style.display='none';
+      document.getElementById('calSection').style.display='none';
+      document.getElementById('chHist').style.display='none';
     }
   }
 }
