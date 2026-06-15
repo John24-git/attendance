@@ -867,6 +867,13 @@ function filterChurch(){
   else if(att==='att')base=base.filter(p=>p.total>0);
   else if(att==='zero')base=base.filter(p=>p.total===0);
 
+  let scope=chData;
+  if(cat)scope=scope.filter(p=>p.category===cat);
+  if(lvl)scope=scope.filter(p=>p.level===lvl);
+  if(gen)scope=scope.filter(p=>p.gender===gen);
+  const totalReg=scope.length;
+  const attendedReg=scope.filter(p=>p.total>0).length;
+  const regPct=totalReg?Math.round(attendedReg/totalReg*100):0;
   const qual=base.filter(p=>p.qualified).length;
   const near=base.filter(p=>!p.qualified&&p.pct>=60).length;
   const attn=base.filter(p=>p.total>0).length;
@@ -874,6 +881,11 @@ function filterChurch(){
 
   const kpi=document.getElementById('chKpi');kpi.style.display='grid';
   kpi.innerHTML=`
+    <div class="kpi-card border-r-4 border-r-[#800000]" style="grid-column:1 / -1">
+      <div class="flex items-center justify-between mb-1"><span class="ms text-[22px] text-pc">groups</span><span class="kpi-lbl">إجمالي المسجّلين</span></div>
+      <div style="display:flex;align-items:baseline;gap:8px"><div class="kpi-num text-pc2">${totalReg}</div><div style="font-size:11px;color:#5a413d;font-weight:800">حضر منهم ${attendedReg} (${regPct}%)</div></div>
+      <div class="w-full bg-olv/30 h-1.5 rounded-full mt-2"><div class="h-1.5 rounded-full" style="width:${regPct}%;background:linear-gradient(90deg,#800000,#b91c1c)"></div></div>
+    </div>
     <div class="kpi-card border-r-4 border-r-[#fed65b]">
       <div class="flex items-center justify-between mb-1"><span class="ms text-[22px] text-[#800000]">verified</span><span class="kpi-lbl">مؤهّلون</span></div>
       <div class="kpi-num text-pc2">${qual}</div>
