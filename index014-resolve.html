@@ -374,9 +374,10 @@ select{background-image:none!important}
           <span class="ms text-[16px]">table_chart</span> تصدير Excel
         </button>
       </div>
-      <button onclick="exportFestivalJSON()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl sacred text-white font-bold text-xs hover:opacity-90 shadow mb-4">
+      <button onclick="festivalExportMenu()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl sacred text-white font-bold text-xs hover:opacity-90 shadow mb-3">
         <span class="ms text-[16px]">workspace_premium</span> تصدير مؤهّلي المهرجان (JSON للبوابة)
       </button>
+      <div id="festMenu" style="display:none;margin-bottom:16px"></div>
       <div id="allKpi" class="grid grid-cols-2 gap-3 mb-4" style="display:none"></div>
       <div id="allGender" class="grid grid-cols-2 gap-3 mb-4" style="display:none"></div>
       <div id="allList"></div>
@@ -1040,11 +1041,27 @@ function saveXlsx(wb,filename){
   }
 }
 function chSelName(){const v=document.getElementById('chSel').value;return v==='__ALL__'?'كل الكنائس':(v||'الكنيسة');}
-// ══ تصدير مؤهّلي المهرجان (snapshot ثابت للبوابة) ══════════════
-function exportFestivalJSON(){
+// ══ تصدير مؤهّلي المهرجان (snapshot ثابت للبوابة) — لكل مستوى ═══
+function festivalExportMenu(){
   if(!DB||!DB.length){toast('البيانات لسه بتحمّل، استنى شوية');return;}
+  const lvls=new Set();
+  DB.forEach(m=>{const rec=attMap[m.code]||{sundays:new Set()};if(rec.sundays.size>=getMax(m))lvls.add(m.level||'—');});
+  const arr=[...lvls].sort((a,b)=>{const na=parseFloat(a),nb=parseFloat(b);return(!isNaN(na)&&!isNaN(nb))?na-nb:String(a).localeCompare(String(b),'ar');});
+  const menu=document.getElementById('festMenu');menu.style.display='block';
+  menu.innerHTML=`<div style="background:rgba(255,255,255,.72);border:1px solid rgba(128,0,0,.12);border-radius:14px;padding:14px">
+    <div style="font-size:11px;font-weight:800;color:#5a413d;margin-bottom:10px;text-align:center">اختر المستوى للتصدير — كل الكنائس داخل هذا المستوى في ملف واحد</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+      ${arr.map(l=>`<button onclick="exportFestivalJSON('${String(l).replace(/["'\\]/g,'')}')" class="px-4 py-2 rounded-xl bg-[#800000] text-white font-bold text-xs hover:opacity-90 shadow">مستوى ${l}</button>`).join('')}
+      <button onclick="exportFestivalJSON('')" class="px-4 py-2 rounded-xl bg-sfch text-osv font-bold text-xs hover:bg-sfchh">كل المستويات</button>
+    </div>
+  </div>`;
+}
+function exportFestivalJSON(level){
+  if(!DB||!DB.length){toast('البيانات لسه بتحمّل، استنى شوية');return;}
+  level=(level===undefined||level===null)?'':String(level);
   const byChurch={};let count=0;
   DB.forEach(m=>{
+    if(level && String(m.level||'—')!==level) return;
     const rec=attMap[m.code]||{sundays:new Set()};
     const total=rec.sundays.size, req=getMax(m);
     if(total>=req){
@@ -1055,11 +1072,13 @@ function exportFestivalJSON(){
   Object.values(byChurch).forEach(a=>a.sort((x,y)=>String(x.name).localeCompare(String(y.name),'ar')));
   const churchesSorted={};
   Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar')).forEach(k=>churchesSorted[k]=byChurch[k]);
-  const out={generated:new Date().toISOString(),totalQualified:count,churchCount:Object.keys(byChurch).length,churches:churchesSorted};
+  const out={generated:new Date().toISOString(),level:level||'كل المستويات',totalQualified:count,churchCount:Object.keys(byChurch).length,churches:churchesSorted};
   try{
     const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
-    downloadBlob(blob,`qualified.json`);
-    toast(`✅ تم تصدير ${count} مؤهّل من ${out.churchCount} كنيسة`);
+    const fn=level?`qualified-L${level.replace(/[^0-9A-Za-z\u0600-\u06FF_-]/g,'')}.json`:'qualified.json';
+    downloadBlob(blob,fn);
+    toast(`✅ ${level?('مستوى '+level):'كل المستويات'}: ${count} مؤهّل من ${out.churchCount} كنيسة`);
+    const fm=document.getElementById('festMenu');if(fm)fm.style.display='none';
   }catch(e){toast('⚠️ تعذّر التصدير — افتح من متصفح عادي');}
 }
 function exportChurchPDF(){
