@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار حِمل البوابة — المهرجان</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Literata:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Tajawal',sans-serif;background:#fbf9f5;color:#1b1c1a;padding:0 0 60px}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px}
+.hero{background:linear-gradient(160deg,#800000,#570000 60%,#3d0000);color:#fff;padding:34px 24px;text-align:center;border-radius:0 0 26px 26px;margin-bottom:20px}
+.hero h1{font-family:'Literata',serif;font-size:22px;font-weight:700}
+.hero p{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px}
+.card{background:#fff;border:1px solid rgba(128,0,0,.1);border-radius:18px;padding:20px;box-shadow:0 3px 14px rgba(128,0,0,.05);margin-bottom:16px}
+.card h2{font-size:14px;font-weight:900;color:#570000;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+label{display:block;font-size:11px;font-weight:800;color:#5a413d;margin-bottom:6px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1;min-width:120px}
+input,select{width:100%;background:#f5f3ef;border:1px solid #e2bfb9;border-radius:12px;padding:12px 14px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;outline:none}
+input:focus,select:focus{border-color:#800000}
+.btn{width:100%;margin-top:16px;background:linear-gradient(135deg,#800000,#570000);color:#fff;border:none;border-radius:14px;padding:15px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(128,0,0,.2)}
+.btn:active{transform:scale(.99)}
+.btn.sec{background:#eae8e4;color:#5a413d;box-shadow:none}
+.res{display:none}
+.verdict{border-radius:16px;padding:18px;text-align:center;margin-bottom:16px;font-weight:900}
+.verdict.pass{background:rgba(22,163,74,.1);color:#16A34A;border:1.5px solid rgba(22,163,74,.3)}
+.verdict.warn{background:rgba(217,119,6,.1);color:#B45309;border:1.5px solid rgba(217,119,6,.3)}
+.verdict.fail{background:rgba(220,38,38,.1);color:#B91C1C;border:1.5px solid rgba(220,38,38,.3)}
+.verdict .big{font-size:28px;margin-bottom:4px}
+.metric{display:flex;justify-content:space-between;align-items:center;padding:12px 4px;border-bottom:1px solid #f0ece6}
+.metric:last-child{border-bottom:none}
+.m-name{font-size:13px;font-weight:700;color:#1b1c1a}
+.m-sub{font-size:10px;color:#8e706c;font-weight:600}
+.m-val{font-size:15px;font-weight:900;text-align:left}
+.m-val small{font-size:10px;color:#8e706c;font-weight:700}
+.tag{font-size:10px;font-weight:900;padding:2px 9px;border-radius:20px;margin-right:6px}
+.tag.ok{background:rgba(22,163,74,.12);color:#16A34A}
+.tag.mid{background:rgba(217,119,6,.12);color:#B45309}
+.tag.bad{background:rgba(220,38,38,.12);color:#B91C1C}
+.note{font-size:11px;color:#5a413d;line-height:1.8;background:#faf7f2;border-radius:12px;padding:14px;margin-top:8px}
+.live{background:#f5f3ef;border:1px solid #e2bfb9;border-radius:12px;padding:10px 14px;font-size:13px;font-weight:800;min-height:44px;display:flex;align-items:center}
+.bar{height:6px;background:#eee;border-radius:4px;overflow:hidden;margin-top:6px}
+.bar>div{height:100%;border-radius:4px}
+.spin{width:22px;height:22px;border:3px solid rgba(87,0,0,.2);border-top-color:#800000;border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="hero"><h1>🧪 اختبار حِمل البوابة</h1><p>يحاكي بوابة مستوى واحد بعدد كبير من المؤهّلين — بنفس منطق البوابة الحقيقي</p></div>
+
+<div class="wrap">
+  <div class="card">
+    <h2>⚙️ إعداد الاختبار</h2>
+    <div class="row">
+      <div>
+        <label>عدد المؤهّلين (المستوى)</label>
+        <input id="count" type="number" value="2000" min="100" max="5000">
+      </div>
+      <div>
+        <label>عدد الكنائس</label>
+        <input id="churches" type="number" value="30" min="1" max="200">
+      </div>
+    </div>
+    <button class="btn" onclick="runTest()">▶️ ابدأ الاختبار</button>
+    <div class="note">جرّب أرقامًا أكبر من المتوقع (مثلاً 3000) لضمان هامش أمان. الاختبار كله يتم على جهازك — نفس ما سيحدث لكل مخدوم.</div>
+  </div>
+
+  <div id="running" class="card" style="display:none;text-align:center;padding:40px">
+    <div class="spin"></div>
+    <div id="runMsg" style="margin-top:14px;font-weight:800;color:#5a413d">جارٍ التوليد…</div>
+  </div>
+
+  <div id="results" class="res">
+    <div id="verdict" class="verdict"></div>
+
+    <div class="card">
+      <h2>📊 النتائج</h2>
+      <div class="metric"><div><div class="m-name">حجم ملف qualified.json</div><div class="m-sub">اللي هيتحمّل من النت مرة واحدة</div></div><div class="m-val" id="mSize"></div></div>
+      <div class="metric"><div><div class="m-name">زمن بناء الفهرس</div><div class="m-sub">قراءة الملف + تجهيز البحث</div></div><div class="m-val" id="mIndex"></div></div>
+      <div class="metric"><div><div class="m-name">زمن اختيار الكنيسة + عرض القائمة</div><div class="m-sub">أبطأ كنيسة (أكبر عدد)</div></div><div class="m-val" id="mChurch"></div></div>
+      <div class="metric"><div><div class="m-name">زمن البحث لكل ضغطة كتابة</div><div class="m-sub">متوسط 200 عملية بحث · الهدف &lt; 16ms</div></div><div class="m-val" id="mSearch"></div></div>
+      <div class="metric"><div><div class="m-name">بناء 1000 رابط فورم متعبّأ</div><div class="m-sub">لو ضغط 1000 "ابدأ الامتحان" معًا</div></div><div class="m-val" id="mUrls"></div></div>
+      <div class="metric"><div><div class="m-name">زمن أول رسم للصفحة (تقديري)</div><div class="m-sub">من الفتح لأول تفاعل</div></div><div class="m-val" id="mPaint"></div></div>
+    </div>
+
+    <div class="card">
+      <h2>🔎 جرّب البحث الحيّ (على نفس البيانات)</h2>
+      <label>اكتب اسمًا أو كودًا (بيانات وهمية: ش١، ش٢… أو الأكواد)</label>
+      <input id="liveSearch" type="text" placeholder="اكتب للتجربة…" oninput="liveSearch()" autocomplete="off">
+      <div class="live" id="liveOut" style="margin-top:8px">—</div>
+      <div class="m-sub" id="liveTime" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card">
+      <h2>📝 الخلاصة</h2>
+      <div id="summary" class="note"></div>
+    </div>
+
+    <button class="btn sec" onclick="location.reload()">↻ إعادة الاختبار برقم آخر</button>
+  </div>
+</div>
+
+<script>
+// ══ نفس منطق البوابة الحقيقي (norm + بحث + بناء رابط) ══
+function norm(s){ return String(s).replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,' ').trim(); }
+const ENTRY={church:'entry.111',name:'entry.222',code:'entry.333'};
+const FORM='https://docs.google.com/forms/d/e/1FAIpQLSample/viewform';
+function buildUrl(ch,p){
+  const parts=['usp=pp_url'];
+  parts.push(ENTRY.church+'='+encodeURIComponent(ch));
+  parts.push(ENTRY.name+'='+encodeURIComponent(p.name));
+  parts.push(ENTRY.code+'='+encodeURIComponent(p.code));
+  return FORM+'?'+parts.join('&');
+}
+
+let DATA=null, curIndex=[];
+
+const FIRST=['مينا','كيرلس','بيشوي','مرقس','يوسف','عبده','فادي','رامي','بولا','أنطون','مايكل','جرجس','تادرس','صموئيل','داود','بطرس','لوقا','متى','يوحنا','فيلبس','ملاك','مريم','مارينا','فيرينا','دميانة','فيبي','كاترين','مونيكا','سارة','ماجي'];
+const MID=['سمير','عادل','هاني','رأفت','ماجد','نبيل','عماد','وديع','فوزي','صبحي','لبيب','نصحي','فهيم','رزق','بشرى','عطية','غالي','زكي'];
+const LAST=['فؤاد','لبيب','حنا','شنودة','بشارة','عوض','خليل','سليمان','بخيت','مرقس','يعقوب','إبراهيم','رزق','فرج','بطرس','دانيال'];
+const CH_BASE=['الشهيد مارجرجس','العذراء مريم','مارمرقس','الأنبا أنطونيوس','الملاك ميخائيل','مارمينا','الأنبا بيشوي','رئيس الملائكة','الشهيد أبانوب','مارجرجس الروماني','العذراء والأنبا رويس','الشهيدة دميانة'];
+
+function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+
+function genData(count,nCh){
+  const churches={};
+  const chNames=[];
+  for(let i=0;i<nCh;i++)chNames.push('كنيسة '+rnd(CH_BASE)+' — '+(i+1));
+  let code=1000;
+  for(let i=0;i<count;i++){
+    const ch=chNames[i%nCh];
+    (churches[ch]=churches[ch]||[]).push({
+      code:code++,
+      name:rnd(FIRST)+' '+rnd(MID)+' '+rnd(LAST),
+      cat:rnd(['طالب','ثانوية','موظف']),
+      level:'3',total:12,req:12
+    });
+  }
+  return {generated:new Date().toISOString(),level:'3',totalQualified:count,churchCount:nCh,churches};
+}
+
+function ms(x){return x<1?(x*1000).toFixed(0)+'µs':x.toFixed(1)+'ms';}
+function tag(good,mid){return good?'<span class="tag ok">ممتاز</span>':mid?'<span class="tag mid">مقبول</span>':'<span class="tag bad">بطيء</span>';}
+
+async function runTest(){
+  const count=Math.min(5000,Math.max(50,parseInt(document.getElementById('count').value)||2000));
+  const nCh=Math.min(200,Math.max(1,parseInt(document.getElementById('churches').value)||30));
+  document.querySelector('.card').style.display='none';
+  document.getElementById('running').style.display='block';
+  document.getElementById('results').style.display='none';
+  await new Promise(r=>setTimeout(r,50));
+
+  // 1) توليد + قياس الحجم (كأنه ملف JSON بيتحمّل)
+  document.getElementById('runMsg').textContent='توليد '+count+' مؤهّل…';
+  await new Promise(r=>setTimeout(r,30));
+  DATA=genData(count,nCh);
+  const jsonStr=JSON.stringify(DATA);
+  const bytes=new Blob([jsonStr]).size;
+
+  // 2) بناء الفهرس (parse + تجهيز)
+  document.getElementById('runMsg').textContent='بناء الفهرس…';
+  await new Promise(r=>setTimeout(r,20));
+  let t=performance.now();
+  const parsed=JSON.parse(jsonStr);
+  const allChurchNames=Object.keys(parsed.churches);
+  const tIndex=performance.now()-t;
+
+  // 3) اختيار أكبر كنيسة + بناء صفوف القائمة (أبطأ حالة)
+  let biggest=allChurchNames[0],maxLen=0;
+  allChurchNames.forEach(c=>{if(parsed.churches[c].length>maxLen){maxLen=parsed.churches[c].length;biggest=c;}});
+  curIndex=parsed.churches[biggest];
+  t=performance.now();
+  const rowsHtml=curIndex.slice(0,300).map(p=>`<div><div>${p.name}</div><div>${p.code} ${p.level} ${p.cat}</div></div>`).join('');
+  const tChurch=performance.now()-t;
+
+  // 4) قياس البحث: 200 عملية بحث على أكبر كنيسة
+  const queries=['م','مي','مينا','كير','يوسف','1234','عادل','بيشوي','مار','ملاك'];
+  t=performance.now();
+  const N=200;
+  for(let i=0;i<N;i++){
+    const q=queries[i%queries.length];const nq=norm(q);
+    // نفس فلتر البوابة
+    const r=curIndex.filter(p=>norm(String(p.name)).includes(nq)||String(p.code).includes(q)).slice(0,40);
+    if(r.length<-1)console.log(r); // منع الـ optimizer من حذف اللوب
+  }
+  const tSearch=(performance.now()-t)/N;
+
+  // 5) بناء 1000 رابط فورم متعبّأ
+  const sample=[];
+  allChurchNames.forEach(c=>parsed.churches[c].forEach(p=>{if(sample.length<1000)sample.push([c,p]);}));
+  t=performance.now();
+  sample.forEach(([c,p])=>buildUrl(c,p));
+  const tUrls=performance.now()-t;
+
+  // تقدير أول رسم: الفهرس + رسم أول قائمة
+  const tPaint=tIndex+tChurch;
+
+  render({count,nCh,bytes,tIndex,tChurch,tSearch,tUrls,tPaint,biggest,maxLen});
+}
+
+function render(m){
+  document.getElementById('running').style.display='none';
+  document.getElementById('results').style.display='block';
+
+  const kb=m.bytes/1024, sizeStr=kb<1024?kb.toFixed(0)+' KB':(kb/1024).toFixed(2)+' MB';
+  const sizeOk=kb<1500, sizeMid=kb<4000;
+  document.getElementById('mSize').innerHTML=`${tag(sizeOk,sizeMid)}<br>${sizeStr}`;
+  document.getElementById('mIndex').innerHTML=`${tag(m.tIndex<50,m.tIndex<150)}<br>${ms(m.tIndex)}`;
+  document.getElementById('mChurch').innerHTML=`${tag(m.tChurch<50,m.tChurch<120)}<br>${ms(m.tChurch)} <small>(${m.maxLen} اسم)</small>`;
+  document.getElementById('mSearch').innerHTML=`${tag(m.tSearch<16,m.tSearch<40)}<br>${ms(m.tSearch)}`;
+  document.getElementById('mUrls').innerHTML=`${tag(m.tUrls<50,m.tUrls<200)}<br>${ms(m.tUrls)}`;
+  document.getElementById('mPaint').innerHTML=`${tag(m.tPaint<80,m.tPaint<200)}<br>${ms(m.tPaint)}`;
+
+  // الحكم العام
+  const pass=sizeMid&&m.tSearch<40&&m.tIndex<200&&m.tChurch<150;
+  const perfect=sizeOk&&m.tSearch<16&&m.tIndex<80&&m.tChurch<60;
+  const v=document.getElementById('verdict');
+  if(perfect){v.className='verdict pass';v.innerHTML=`<div class="big">✅</div>البوابة تستحمل ${m.count} مؤهّل بسهولة تامّة<div style="font-size:11px;font-weight:700;margin-top:6px;opacity:.8">كل المقاييس ممتازة — حتى على موبايل ضعيف</div>`;}
+  else if(pass){v.className='verdict warn';v.innerHTML=`<div class="big">👍</div>البوابة تستحمل ${m.count} — مع ملاحظات بسيطة<div style="font-size:11px;font-weight:700;margin-top:6px;opacity:.8">راجع الملاحظات بالأسفل</div>`;}
+  else{v.className='verdict fail';v.innerHTML=`<div class="big">⚠️</div>يُنصح بتحسين قبل ${m.count}<div style="font-size:11px;font-weight:700;margin-top:6px;opacity:.8">راجع الملاحظات</div>`;}
+
+  // الخلاصة
+  let s=[];
+  s.push(`<b>الوضع:</b> ${m.count} مؤهّل موزّعين على ${m.nCh} كنيسة (أكبر كنيسة ${m.maxLen} اسم).`);
+  s.push(`<b>التحميل من النت:</b> ملف بحجم ${sizeStr} — ${sizeOk?'خفيف جدًا، يتحمّل في لحظة حتى على النت الضعيف.':sizeMid?'مقبول، قد يأخذ ثانية على النت الضعيف.':'كبير — يُفضّل تقليله (انظر أدناه).'}`);
+  s.push(`<b>الأهم:</b> كل مخدوم مستقل تمامًا عن الباقي. عدد الداخلين في نفس اللحظة (1000/2000) <u>لا يؤثر</u> على أداء أي مخدوم — لأن لا يوجد سيرفر يحسب لكل واحد؛ البوابة ملف ثابت + بحث محلي على الجهاز.`);
+  s.push(`<b>الاستضافة:</b> على GitHub Pages / أي CDN، تقديم ملف ثابت لآلاف متزامنين أمر روتيني ومضمون.`);
+  if(!sizeOk)s.push(`<b>💡 لتخفيف الحجم:</b> قصّر أسماء الحقول في التصدير (code/name بدل الأطول)، أو قسّم لو أردت. لكن حتى ${sizeStr} مقبول عمليًا.`);
+  if(m.tSearch>=16)s.push(`<b>💡 البحث:</b> ${ms(m.tSearch)} لكل ضغطة — ${m.tSearch<40?'سلس لكن ليس مثاليًا على أضعف الأجهزة. يمكن إضافة تأخير بسيط (debounce) لو لزم.':'يُفضّل إضافة debounce للبحث.'}`);
+  document.getElementById('summary').innerHTML=s.map(x=>'• '+x).join('<br><br>');
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function liveSearch(){
+  if(!curIndex.length)return;
+  const q=(document.getElementById('liveSearch').value||'').trim();
+  const t=performance.now();
+  let r;
+  if(!q)r=curIndex.slice(0,20);
+  else{const nq=norm(q);r=curIndex.filter(p=>norm(String(p.name)).includes(nq)||String(p.code).includes(q)).slice(0,20);}
+  const dt=performance.now()-t;
+  document.getElementById('liveOut').innerHTML = r.length?('وُجد '+r.length+'+ — أول نتيجة: <b>'+r[0].name+'</b> ('+r[0].code+')'):'لا نتائج';
+  document.getElementById('liveTime').textContent='زمن البحث: '+ms(dt)+' على '+curIndex.length+' اسم';
+}
+</script>
+</body>
+</html>
