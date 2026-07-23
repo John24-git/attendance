@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>قرعة مهرجان المعادي ٢٠٢٦ — شاشة العرض</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#c9a227; --gold-lt:#fed65b; --ink:#f5ede0; --bg:#080000;
+  --font-body:'Tajawal','Segoe UI',Tahoma,Arial,sans-serif;
+  --font-disp:'Amiri','Traditional Arabic','Times New Roman',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font-body);background:radial-gradient(ellipse at 50% 0%,#140000,#080000 70%);color:var(--ink);display:flex;flex-direction:column}
+
+/* ── COPTIC BACKGROUND ART (crosses + hymn instruments) ── */
+.bg-art{position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%}
+
+/* ── HEADER ── */
+.hdr{position:relative;z-index:2;text-align:center;padding:12px 20px 8px;flex-shrink:0}
+.hdr-eye{font-size:12px;letter-spacing:.14em;color:rgba(201,162,39,.6);font-weight:800;margin-bottom:4px}
+.hdr-title{font-family:var(--font-disp);font-size:32px;color:var(--gold);font-weight:700;line-height:1.05}
+.hdr-orn{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px;color:rgba(201,162,39,.55)}
+.hdr-orn .line{height:1px;width:90px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.5),transparent)}
+.hdr-orn svg{width:18px;height:18px;fill:currentColor}
+.fs-btn{position:absolute;top:10px;left:16px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);color:var(--gold);border-radius:8px;padding:5px 12px;font-family:var(--font-body);font-size:11px;font-weight:800;cursor:pointer;opacity:.22;transition:.3s}
+.fs-btn:hover{opacity:1}
+
+/* ── NEXT DRAW ── */
+.next-wrap{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:16px;padding:7px 20px;background:rgba(201,162,39,.06);border-top:1px solid rgba(201,162,39,.12);border-bottom:1px solid rgba(201,162,39,.12);flex-shrink:0}
+.next-lbl{font-size:13px;color:rgba(245,237,224,.5);font-weight:800}
+.next-grp{font-family:var(--font-disp);font-size:26px;font-weight:700;color:var(--gold-lt)}
+.next-round{font-size:11px;font-weight:800;background:rgba(201,162,39,.12);color:var(--gold);padding:3px 14px;border-radius:20px}
+.done-lbl{font-family:var(--font-disp);font-size:24px;color:#4ade80;display:none}
+
+/* ── GROUPS ── */
+.groups-area{position:relative;z-index:2;flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:10px 14px;min-height:0}
+.g-col{background:rgba(50,0,0,.35);backdrop-filter:blur(1px);border:1px solid rgba(201,162,39,.12);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;transition:.4s}
+.g-col.active{border-color:rgba(201,162,39,.55);box-shadow:0 0 30px rgba(201,162,39,.12)}
+.g-col.complete{border-color:rgba(22,163,74,.4);box-shadow:0 0 30px rgba(22,163,74,.1)}
+.g-head{background:rgba(80,0,0,.55);padding:9px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.g-name{font-family:var(--font-disp);font-size:24px;color:var(--gold);font-weight:700}
+.g-cnt{font-size:13px;font-weight:900;background:rgba(201,162,39,.12);color:var(--gold);padding:3px 10px;border-radius:20px}
+.g-col.complete .g-cnt{background:rgba(22,163,74,.15);color:#4ade80}
+.g-slots{flex:1;padding:8px;display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}
+
+/* ── SLOT ── */
+.slot{flex:1;border-radius:10px;min-height:0;position:relative;transition:.2s}
+.slot.empty{border:1.5px dashed rgba(201,162,39,.15);display:flex;align-items:center;justify-content:center}
+.slot.empty::after{content:'✝';font-size:22px;color:rgba(201,162,39,.08)}
+.slot.empty.nxt{border-color:rgba(201,162,39,.5);animation:slotPulse 2s ease-in-out infinite}
+@keyframes slotPulse{0%,100%{box-shadow:0 0 0 rgba(201,162,39,0)}50%{box-shadow:0 0 18px rgba(201,162,39,.3)}}
+.slot.filled{background:linear-gradient(135deg,rgba(80,0,0,.9),rgba(30,0,0,.95));border:1.5px solid rgba(201,162,39,.25);display:flex;align-items:center;gap:10px;padding:8px 12px}
+.slot.filled.anim{animation:popIn .6s cubic-bezier(.17,.89,.32,1.28)}
+.slot.filled.host{border-color:rgba(254,214,91,.5);background:linear-gradient(135deg,rgba(120,60,0,.7),rgba(45,12,0,.95))}
+.slot.filled.latest{border-color:var(--gold);box-shadow:0 0 20px rgba(201,162,39,.35);animation:popIn .6s cubic-bezier(.17,.89,.32,1.28),latestGlow 3s ease forwards .6s}
+@keyframes latestGlow{0%{box-shadow:0 0 20px rgba(201,162,39,.35)}100%{box-shadow:0 0 4px rgba(201,162,39,.15);border-color:rgba(201,162,39,.25)}}
+@keyframes popIn{0%{transform:scale(.2) rotate(-6deg);opacity:0}65%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.s-icon{width:44px;height:44px;min-width:44px;border-radius:8px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.22);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold);overflow:hidden}
+.s-icon img{width:100%;height:100%;object-fit:contain;border-radius:7px}
+.s-info{flex:1;min-width:0}
+.s-name{font-size:13px;font-weight:800;color:var(--ink);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.s-badge{display:inline-block;font-size:9px;font-weight:900;color:#3a1d00;background:var(--gold-lt);padding:1px 8px;border-radius:10px;margin-top:3px}
+.s-saint{margin-top:3px}
+.s-saint img{width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,162,39,.3);object-fit:cover}
+
+/* ── PROGRESS ── */
+.prog-bar{position:relative;z-index:2;height:4px;background:rgba(201,162,39,.08);flex-shrink:0}
+.prog-fill{height:100%;background:linear-gradient(90deg,#800000,var(--gold));transition:width .6s ease}
+
+/* ── WAITING ── */
+.waiting{position:fixed;inset:0;z-index:10;background:radial-gradient(ellipse at 50% 40%,#140000,#080000 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .8s}
+.waiting.hidden{opacity:0;pointer-events:none}
+.w-cross{width:96px;height:96px;fill:var(--gold);animation:wPulse 2.5s ease-in-out infinite}
+@keyframes wPulse{0%,100%{opacity:.45;transform:scale(.95)}50%{opacity:1;transform:scale(1)}}
+.w-eye{font-size:13px;letter-spacing:.14em;color:rgba(201,162,39,.55);font-weight:800}
+.w-title{font-family:var(--font-disp);font-size:34px;color:var(--gold);text-align:center;line-height:1.2;padding:0 20px}
+.w-sub{font-size:14px;color:rgba(245,237,224,.4);font-weight:700}
+
+/* ── PARTICLES ── */
+.pt{position:fixed;pointer-events:none;font-size:18px;z-index:9999;animation:ptFly 1.2s ease forwards}
+@keyframes ptFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+
+<!-- ══ COPTIC BACKGROUND: crosses + hymn instruments (دف / صنوج / مثلث) ══ -->
+<svg class="bg-art" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <!-- Coptic pattée cross -->
+    <g id="coptcross">
+      <path d="M-18,-18 L18,-18 L40,-92 L-40,-92 Z
+               M-18,18 L18,18 L40,92 L-40,92 Z
+               M-18,-18 L-18,18 L-92,40 L-92,-40 Z
+               M18,-18 L18,18 L92,40 L92,-40 Z"/>
+      <rect x="-19" y="-19" width="38" height="38"/>
+    </g>
+    <!-- frame drum / دف -->
+    <g id="drum" stroke-width="5" fill="none" stroke="currentColor">
+      <circle cx="0" cy="0" r="70"/>
+      <circle cx="0" cy="0" r="58"/>
+      <circle cx="0" cy="-64" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="55" cy="-33" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="55" cy="33" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="64" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="-55" cy="33" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="-55" cy="-33" r="7" fill="currentColor" stroke="none"/>
+    </g>
+    <!-- triangle / مثلث -->
+    <g id="tri" stroke-width="5" fill="none" stroke="currentColor" stroke-linecap="round">
+      <path d="M0,-60 L58,58 L-38,58"/>
+      <line x1="8" y1="-44" x2="70" y2="-70"/>
+    </g>
+    <!-- hand cymbals / صنوج -->
+    <g id="cym" stroke-width="5" fill="none" stroke="currentColor">
+      <circle cx="-22" cy="0" r="30"/><circle cx="-22" cy="0" r="5" fill="currentColor" stroke="none"/>
+      <circle cx="22" cy="0" r="30"/><circle cx="22" cy="0" r="5" fill="currentColor" stroke="none"/>
+    </g>
+  </defs>
+
+  <!-- big faint center cross -->
+  <use href="#coptcross" x="640" y="360" transform="scale(2.4)" transform-origin="640 360" fill="rgba(201,162,39,0.055)"/>
+  <!-- instruments in the corners -->
+  <g color="rgba(201,162,39,0.11)">
+    <use href="#drum" transform="translate(130 590) rotate(-12)"/>
+    <use href="#tri"  transform="translate(1150 600) rotate(10)"/>
+    <use href="#cym"  transform="translate(160 140) rotate(-8)"/>
+    <use href="#drum" transform="translate(1130 130) scale(.7) rotate(14)"/>
+  </g>
+</svg>
+
+<!-- Waiting screen -->
+<div class="waiting" id="waiting">
+  <svg class="w-cross" viewBox="-100 -100 200 200" aria-hidden="true"><use href="#coptcross"/></svg>
+  <div class="w-eye">✝ &nbsp; مهرجان المعادي للألحان والطقس واللغة القبطية &nbsp; ✝</div>
+  <div class="w-title">قرعة المجموعات ٢٠٢٦</div>
+  <div class="w-sub">في انتظار بدء القرعة...</div>
+</div>
+
+<!-- Header -->
+<div class="hdr">
+  <button class="fs-btn" onclick="toggleFS()">⛶ ملء الشاشة</button>
+  <div class="hdr-eye">مهرجان المعادي للألحان والطقس واللغة القبطية</div>
+  <div class="hdr-title">قرعة المجموعات ٢٠٢٦</div>
+  <div class="hdr-orn">
+    <span class="line"></span>
+    <svg viewBox="-100 -100 200 200"><use href="#coptcross"/></svg>
+    <span class="line"></span>
+  </div>
+</div>
+
+<!-- Next draw -->
+<div class="next-wrap">
+  <div class="next-lbl" id="nextLbl">الرسمة التالية تذهب إلى</div>
+  <div class="next-grp" id="nextGrp">مجموعة أ</div>
+  <div class="next-round" id="nextRound">الجولة الأولى</div>
+  <div class="done-lbl" id="doneLbl">✝ &nbsp; اكتملت القرعة</div>
+</div>
+
+<!-- Groups -->
+<div class="groups-area" id="grpsArea"></div>
+
+<!-- Progress -->
+<div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+
+<script>
+const GROUPS={A:{name:'مجموعة أ',slots:6},B:{name:'مجموعة ب',slots:6},C:{name:'مجموعة ج',slots:6}};
+const GK=Object.keys(GROUPS);
+const TOTAL=GK.reduce((s,k)=>s+GROUPS[k].slots,0);
+const ROUND_WORDS=['الأولى','الثانية','الثالثة','الرابعة','الخامسة','السادسة','السابعة','الثامنة'];
+const AR_NUM=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function nextGroup(gc){
+  const cand=GK.filter(k=>(gc[k]||0)<GROUPS[k].slots);
+  if(!cand.length)return null;
+  const min=Math.min(...cand.map(k=>gc[k]||0));
+  return cand.find(k=>(gc[k]||0)===min);
+}
+
+let shown=[], lastRaw='';
+let state={placed:0,gCount:{A:0,B:0,C:0},history:[],hostCount:0,phase:'setup'};
+
+// ══ RECEIVE (٣ قنوات) ═════════════════════════════════════════
+try{new BroadcastChannel('draw2026').onmessage=e=>applyState(e.data);}catch(e){}
+window.addEventListener('message',e=>{if(e.data&&e.data.draw2026)applyState(e.data.draw2026);});
+window.addEventListener('storage',e=>{if(e.key==='draw2026_state'&&e.newValue){try{applyState(JSON.parse(e.newValue));}catch(x){}}});
+setInterval(()=>{try{const s=localStorage.getItem('draw2026_state');if(s&&s!==lastRaw)applyState(JSON.parse(s));}catch(e){}},600);
+
+window.addEventListener('DOMContentLoaded',()=>{
+  buildGroups();render();
+  try{const s=localStorage.getItem('draw2026_state');if(s)applyState(JSON.parse(s));}catch(e){}
+  try{if(window.opener)window.opener.postMessage({draw2026req:true},'*');}catch(e){}
+});
+
+function buildGroups(){
+  const area=document.getElementById('grpsArea');area.innerHTML='';
+  GK.forEach(k=>{const g=GROUPS[k];
+    const col=document.createElement('div');col.className='g-col';col.id='gc-'+k;
+    col.innerHTML=`<div class="g-head"><div class="g-name">${g.name}</div><div class="g-cnt" id="gcnt-${k}">٠/${AR_NUM(g.slots)}</div></div>
+      <div class="g-slots" id="gs-${k}">${Array.from({length:g.slots},(_,i)=>`<div class="slot empty" id="sl-${k}-${i}"></div>`).join('')}</div>`;
+    area.appendChild(col);});
+}
+
+const same=(a,b)=>a.grp===b.grp&&a.slotIdx===b.slotIdx&&a.name===b.name;
+const slotEl=e=>document.getElementById(`sl-${e.grp}-${e.slotIdx}`);
+function clearSlot(e){const el=slotEl(e);if(el){el.className='slot empty';el.innerHTML='';}}
+function fillSlot(e,isLatest,animate){
+  const el=slotEl(e);if(!el)return;
+  const logo=e.logo?`<img src="${esc(e.logo)}" alt="">`:'✝';
+  const saint=e.saint?`<div class="s-saint"><img src="${esc(e.saint)}" alt=""></div>`:'';
+  const badge=e.host?`<span class="s-badge">مضيفة</span>`:'';
+  el.className='slot filled'+(e.host?' host':'');
+  if(isLatest)el.classList.add('latest');else if(animate)el.classList.add('anim');
+  el.innerHTML=`<div class="s-icon">${logo}</div><div class="s-info"><div class="s-name">${esc(e.name)}</div>${badge}${saint}</div>`;
+}
+
+// ══ APPLY (تحديث تفاضلى) ══════════════════════════════════════
+function applyState(s){
+  if(!s||!Array.isArray(s.history))return;
+  const raw=JSON.stringify(s);if(raw===lastRaw)return;lastRaw=raw;
+  const nh=s.history,grew=nh.length>shown.length;
+  let common=0;while(common<shown.length&&common<nh.length&&same(shown[common],nh[common]))common++;
+  for(let i=shown.length-1;i>=common;i--)clearSlot(shown[i]);
+  document.querySelectorAll('.slot.latest').forEach(el=>el.classList.remove('latest'));
+  for(let i=common;i<nh.length;i++){
+    const e=nh[i],isLast=(i===nh.length-1)&&grew&&!e.host;
+    fillSlot(e,isLast,grew&&!e.host);
+  }
+  shown=nh.map(e=>({...e}));state=s;
+  const lastE=nh[nh.length-1];
+  if(grew&&lastE&&!lastE.host){const el=slotEl(lastE);if(el)setTimeout(()=>particles(el),100);}
+  render();
+}
+
+// ══ RENDER ════════════════════════════════════════════════════
+function render(){
+  const placed=state.placed||0,hostCount=state.hostCount||0,started=(state.phase==='draw');
+  document.getElementById('waiting').classList.toggle('hidden',placed>0&&started);
+
+  GK.forEach(k=>{const g=GROUPS[k],n=(state.gCount&&state.gCount[k])||0;
+    document.getElementById(`gcnt-${k}`).textContent=`${AR_NUM(n)}/${AR_NUM(g.slots)}`;
+    const col=document.getElementById('gc-'+k);col.classList.remove('active','complete');
+    if(n>=g.slots)col.classList.add('complete');
+    for(let i=0;i<g.slots;i++)document.getElementById(`sl-${k}-${i}`)?.classList.remove('nxt');
+  });
+
+  const done=placed>=TOTAL;
+  ['nextLbl','nextGrp','nextRound'].forEach(id=>document.getElementById(id).style.display=(done||!started)?'none':'');
+  document.getElementById('doneLbl').style.display=done?'block':'none';
+
+  if(started&&!done){
+    const g=nextGroup(state.gCount||{});
+    if(g){
+      document.getElementById('gc-'+g).classList.add('active');
+      document.getElementById(`sl-${g}-${(state.gCount&&state.gCount[g])||0}`)?.classList.add('nxt');
+      document.getElementById('nextGrp').textContent=GROUPS[g].name;
+      const r=Math.floor(Math.max(0,placed-hostCount)/GK.length);
+      document.getElementById('nextRound').textContent=`الجولة ${ROUND_WORDS[r]||'الأخيرة'}`;
+    }
+  }
+  document.getElementById('progFill').style.width=(placed/TOTAL*100)+'%';
+}
+
+function toggleFS(){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.();}
+document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f')toggleFS();});
+
+function particles(el){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,em=['✝','✦','⭐','✨','★'];
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div');p.className='pt';p.textContent=em[i%em.length];
+    p.style.left=cx+'px';p.style.top=cy+'px';
+    const a=(i/12)*Math.PI*2,d=70+Math.random()*70;
+    p.style.setProperty('--dx',Math.cos(a)*d+'px');p.style.setProperty('--dy',Math.sin(a)*d+'px');
+    p.style.color=i%2===0?'#c9a227':'#fed65b';p.style.fontSize=(14+Math.random()*10)+'px';
+    document.body.appendChild(p);setTimeout(()=>p.remove(),1200);
+  }
+}
+</script>
+</body>
+</html>
