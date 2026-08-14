@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تشخيص الدخول — Users</title>
+<style>
+body{font-family:system-ui,'Segoe UI',Tahoma,sans-serif;background:#fbf9f5;color:#1b1c1a;max-width:680px;margin:0 auto;padding:18px;line-height:1.7}
+h2{color:#570000;font-size:17px;margin:18px 0 8px}
+.box{background:#fff;border:1px solid #e2bfb9;border-radius:12px;padding:14px;margin-bottom:14px}
+code,pre{background:#f5f3ef;border-radius:6px;padding:2px 6px;font-family:monospace;font-size:13px;direction:ltr;display:inline-block}
+pre{display:block;padding:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{border:1px solid #eee;padding:6px 8px;text-align:right}
+th{background:#570000;color:#fff}
+input{width:100%;background:#f5f3ef;border:1px solid #e2bfb9;border-radius:10px;padding:10px;font-size:15px;font-weight:700;margin-top:6px}
+button{margin-top:12px;background:#800000;color:#fff;border:none;border-radius:10px;padding:12px 20px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+.ok{color:#16A34A;font-weight:800}.bad{color:#B91C1C;font-weight:800}
+.sp{color:#B91C1C;font-weight:900}
+label{font-weight:800;font-size:13px}
+</style>
+</head>
+<body>
+<h2>🔍 تشخيص دخول تطبيق الحضور</h2>
+<div class="box" id="status">جارٍ قراءة شيت Users…</div>
+
+<div id="results" style="display:none">
+  <h2>1) الأعمدة (ترتيبها مهم جدًا)</h2>
+  <div class="box" id="cols"></div>
+
+  <h2>2) أول سطرين خام من الشيت</h2>
+  <div class="box"><pre id="raw"></pre></div>
+
+  <h2>3) المستخدمون اللي التطبيق فهمهم</h2>
+  <div class="box"><div id="users"></div></div>
+
+  <h2>4) جرّب الدخول</h2>
+  <div class="box">
+    <label>اسم المستخدم</label>
+    <input id="tu" autocomplete="off">
+    <label>كلمة السر</label>
+    <input id="tp" autocomplete="off">
+    <button onclick="testLogin()">اختبار</button>
+    <div id="testOut" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID='1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const SHEET_USERS='Users';
+let RAWTEXT='', HEADERS=[], USERS=[];
+
+// نفس محلّل الـ CSV بتاع التطبيق
+function parseRow(row){const res=[];let cur='';let inQ=false;
+  for(let i=0;i<row.length;i++){
+    if(row[i]==='"'&&!inQ)inQ=true;
+    else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}
+    else if(row[i]==='"'&&inQ)inQ=false;
+    else if(row[i]===','&&!inQ){res.push(cur.trim());cur='';}
+    else cur+=row[i];
+  }res.push(cur.trim());return res;
+}
+// يُظهر المسافات المخفية كنقطة حمراء
+function showSpaces(s){return String(s).replace(/ /g,'<span class="sp">·</span>').replace(/\t/g,'<span class="sp">→</span>');}
+
+(async function(){
+  try{
+    const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_USERS)}&_=${Date.now()}`;
+    const r=await fetch(url);
+    RAWTEXT=await r.text();
+
+    if(/<html|<!DOCTYPE|accounts\.google/i.test(RAWTEXT.slice(0,200))){
+      document.getElementById('status').innerHTML='<span class="bad">❌ الشيت مش متاح للقراءة العامة.</span><br>افتح الملف على جوجل → Share → General access → <b>Anyone with the link = Viewer</b>. ده على الأرجح سبب المشكلة.';
+      return;
+    }
+
+    const lines=RAWTEXT.trim().split('\n').filter(l=>l.trim());
+    if(lines.length<2){ document.getElementById('status').innerHTML='<span class="bad">❌ الشيت فاضي أو فيه سطر واحد بس.</span>'; return; }
+
+    HEADERS=parseRow(lines[0]);
+    USERS=lines.slice(1).map(line=>{
+      const v=parseRow(line);
+      const o=Object.fromEntries(HEADERS.map((h,i)=>[h,v[i]||'']));
+      return {
+        username:String(o['username']||o['اسم المستخدم']||v[0]||'').trim(),
+        password:String(o['password']||o['كلمة السر']||v[1]||'').trim(),
+        church  :String(o['church']||o['الكنيسة']||v[2]||'').trim(),
+        role    :String(o['role']||o['الدور']||v[3]||'').trim(),
+        levels  :String(o['levels']||o['المستويات']||v[4]||'').trim(),
+        _all:v
+      };
+    }).filter(u=>u.username);
+
+    document.getElementById('status').innerHTML='<span class="ok">✅ تم قراءة الشيت.</span> عدد المستخدمين: <b>'+USERS.length+'</b>';
+    document.getElementById('results').style.display='block';
+
+    // الأعمدة
+    document.getElementById('cols').innerHTML='الترتيب اللي التطبيق شافه:<br>'+
+      HEADERS.map((h,i)=>`<code>${i}: ${h||'(فاضي)'}</code>`).join(' ')+
+      '<br><br>التطبيق بيتوقع الترتيب: <code>0=username 1=password 2=church 3=role 4=levels 5=gender</code>';
+
+    // خام
+    document.getElementById('raw').textContent=lines.slice(0,2).join('\n');
+
+    // المستخدمون
+    document.getElementById('users').innerHTML='<table><tr><th>اسم المستخدم</th><th>الدور</th><th>الكنيسة</th><th>طول الباسورد</th></tr>'+
+      USERS.map(u=>`<tr><td>${showSpaces(u.username)}</td><td>${showSpaces(u.role)||'<span class="bad">فاضي</span>'}</td><td>${showSpaces(u.church)}</td><td>${u.password.length}</td></tr>`).join('')+
+      '</table><div style="font-size:12px;color:#8e706c;margin-top:8px">النقطة الحمراء · = مسافة مخفية. لو ظهرت في اسم أو دور، دي مشكلة.</div>';
+  }catch(e){
+    document.getElementById('status').innerHTML='<span class="bad">❌ خطأ في القراءة: '+e.message+'</span><br>لو الملف مفتوح محليًا، جرّب من على الاستضافة.';
+  }
+})();
+
+function testLogin(){
+  const u=document.getElementById('tu').value.trim();
+  const p=document.getElementById('tp').value.trim();
+  const out=document.getElementById('testOut');
+  const byName=USERS.find(x=>x.username===u);
+  if(!byName){
+    // نبحث بتجاهل حالة الأحرف عشان نعرف لو الفرق في الحالة
+    const ci=USERS.find(x=>x.username.toLowerCase()===u.toLowerCase());
+    out.innerHTML='<span class="bad">✗ مفيش مستخدم بالاسم ده.</span>'+
+      (ci?'<br>بس فيه مستخدم اسمه <code>'+showSpaces(ci.username)+'</code> — الفرق غالبًا حالة الأحرف أو مسافة.':'<br>راجع إن الاسم مكتوب صح في عمود username.');
+    return;
+  }
+  if(byName.password===p){
+    out.innerHTML='<span class="ok">✓ تمام — الاسم والباسورد متطابقين. المفروض الدخول يشتغل.</span>'+
+      (byName.role?'':'<br><span class="bad">لكن عمود الدور (role) فاضي — ممكن يعمل مشاكل صلاحيات.</span>');
+  }else{
+    out.innerHTML='<span class="bad">✗ الاسم صح بس الباسورد مختلف.</span>'+
+      '<br>اللي في الشيت طوله '+byName.password.length+' حرف: <code>'+showSpaces(byName.password)+'</code>'+
+      '<br>اللي كتبته طوله '+p.length+' حرف: <code>'+showSpaces(p)+'</code>'+
+      '<br><span style="font-size:12px;color:#8e706c">قارن الاتنين — غالبًا مسافة زيادة أو حرف مختلف.</span>';
+  }
+}
+</script>
+</body>
+</html>
