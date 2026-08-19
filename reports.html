@@ -7,7 +7,7 @@
 <title>تقارير المهرجان — شمامسة ٢٠٢٦</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Literata:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -52,7 +52,11 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
 
 /* KPIs */
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.kpi{background:#fff;border-radius:12px;padding:12px 10px;border:1px solid rgba(128,0,0,.08);text-align:center}
+
+.kpi{background:#fff;border-radius:12px;padding:12px 10px;border:1.5px solid rgba(128,0,0,.08);text-align:center;cursor:pointer;transition:.2s;user-select:none}
+.kpi:hover{border-color:rgba(128,0,0,.25);transform:translateY(-1px);box-shadow:0 4px 12px rgba(128,0,0,.1)}
+.kpi.active-kpi{border-color:#800000;background:rgba(128,0,0,.05);box-shadow:0 0 0 2px rgba(128,0,0,.15)}
+
 .kpi-n{font-family:'Literata',serif;font-size:24px;font-weight:700;line-height:1}
 .kpi-l{font-size:9px;font-weight:800;color:#5a413d;margin-top:3px;letter-spacing:.04em}
 
@@ -285,9 +289,9 @@ function buildT1(){
   const total=getFiltered().length;
 
   document.getElementById('t1kpi').innerHTML=`
-    <div class="kpi"><div class="kpi-n" style="color:#16A34A">${qual.length}</div><div class="kpi-l">مؤهّل تماماً</div></div>
-    <div class="kpi"><div class="kpi-n" style="color:#800000">${near.length}</div><div class="kpi-l">يحتاج قداس واحد</div></div>
-    <div class="kpi"><div class="kpi-n" style="color:#5a413d">${total}</div><div class="kpi-l">إجمالي مسجّل</div></div>`;
+    <div class="kpi ${statusFilter==='qual'?'active-kpi':''}" onclick="setStatus('qual')"><div class="kpi-n" style="color:#16A34A">${qual.length}</div><div class="kpi-l">مؤهّل تماماً</div></div>
+    <div class="kpi ${statusFilter==='near'?'active-kpi':''}" onclick="setStatus('near')"><div class="kpi-n" style="color:#800000">${near.length}</div><div class="kpi-l">يحتاج قداس واحد</div></div>
+    <div class="kpi ${statusFilter===''?'active-kpi':''}" onclick="setStatus('')"><div class="kpi-n" style="color:#5a413d">${total}</div><div class="kpi-l">إجمالي مسجّل</div></div>`;
 
   const renderTbl=(tblId,data)=>{
     const el=document.getElementById(tblId);
@@ -411,6 +415,7 @@ function exportAllChurches(){
 
 // ══ FILTERS ═══════════════════════════════════════════════════
 let filtered=[];
+let statusFilter='';
 
 function populateLevels(){
   const lvls=[...new Set(DB.map(m=>m.level).filter(Boolean))].sort((a,b)=>{
@@ -439,31 +444,61 @@ function applyFilters(){
 }
 
 function getFiltered(){return filtered.length?filtered:members;}
+function setStatus(s){
+  statusFilter=s;
+  buildT1();
+  // Scroll to tables
+  document.getElementById('t1qual').closest('.rcard').style.display=(!s||s==='qual')?'':'none';
+  document.getElementById('t1near').closest('.rcard').style.display=(!s||s==='near')?'':'none';
+}
 
 // ══ PDF HELPER ════════════════════════════════════════════════
-function makePDF(title,subtitle,data,filename){
+async function makePDF(title,subtitle,data,filename){
+  // Build hidden print div
+  let pDiv=document.getElementById('_pdfDiv');
+  if(!pDiv){pDiv=document.createElement('div');pDiv.id='_pdfDiv';document.body.appendChild(pDiv);}
+  const now=new Date().toLocaleDateString('ar-EG');
+  const rows=data.map((p,i)=>{
+    const g=p.gender==='ذكر'?'شماس':'شماسة';
+    const stLbl=p.qualified?'✅ مؤهّل':p.near?'🔵 قداس واحد':'🟡 متوسط';
+    const bg=i%2===0?'#fff':'#faf5ec';
+    return`<tr style="background:${bg}">
+      <td>${i+1}</td><td style="font-weight:800;text-align:right">${p.name}</td><td>${p.code}</td>
+      <td style="font-size:10px;text-align:right">${p.church}</td><td>${p.category}</td>
+      <td>${p.level||'—'}</td><td>${g}</td>
+      <td style="font-weight:900;color:${p.qualified?'#16A34A':p.near?'#800000':'#D97706'}">${p.total}</td>
+      <td style="color:#888">${p.maxAtt}</td><td>${p.pct}%</td><td style="font-size:10px">${stLbl}</td>
+    </tr>`;
+  }).join('');
+  pDiv.style.cssText='position:fixed;top:-9999px;left:0;width:1100px;background:#fff;padding:20px;direction:rtl;font-family:Tajawal,sans-serif';
+  pDiv.innerHTML=`
+    <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid #800000;padding-bottom:10px">
+      <div style="font-size:11px;font-weight:800;color:#800000;letter-spacing:.1em;margin-bottom:4px">✝ مطرانية المعادي الأرثوذكسية ✝</div>
+      <div style="font-size:20px;font-weight:900;color:#1a0000">${title}</div>
+      <div style="font-size:11px;color:#888;margin-top:3px">${subtitle} — ${now}</div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:11px;text-align:center">
+      <thead><tr style="background:#570000;color:#fff">
+        <th style="padding:7px 6px">#</th><th style="text-align:right;padding:7px 10px">الاسم</th><th>الكود</th>
+        <th style="text-align:right;padding:7px 10px">الكنيسة</th><th>الفئة</th><th>المستوى</th>
+        <th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="margin-top:10px;text-align:center;font-size:9px;color:#aaa">شمامسة ٢٠٢٦ — مطرانية المعادي — إجمالي: ${data.length}</div>`;
+
+  const canvas=await html2canvas(pDiv,{scale:2,backgroundColor:'#fff',useCORS:true});
   const {jsPDF}=window.jspdf;
+  const imgW=297,imgH=canvas.height*(297/canvas.width);
   const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(13);doc.setTextColor(87,0,0);
-  doc.text(title,doc.internal.pageSize.width/2,13,{align:'center'});
-  doc.setFontSize(9);doc.setTextColor(100,116,139);
-  doc.text(subtitle,doc.internal.pageSize.width/2,20,{align:'center'});
-  doc.autoTable({
-    startY:25,
-    head:[['#','الاسم','الكود','الكنيسة','الفئة','المستوى','النوع','الحضور','الهدف','النسبة','الحالة']],
-    body:data.map((p,i)=>[i+1,p.name,p.code,p.church,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهّل':p.near?'يحتاج قداس':'متوسط']),
-    styles:{font:'helvetica',fontSize:7.5,cellPadding:2,halign:'right'},
-    headStyles:{fillColor:[87,0,0],textColor:255,fontStyle:'bold',halign:'center'},
-    columnStyles:{0:{halign:'center',cellWidth:7},2:{halign:'center'},7:{halign:'center'},8:{halign:'center'},9:{halign:'center'},10:{halign:'center'}},
-    alternateRowStyles:{fillColor:[250,250,250]},
-  });
-  const pages=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pages;i++){
-    doc.setPage(i);doc.setFontSize(7.5);doc.setTextColor(148,163,184);
-    doc.text('شمامسة ٢٠٢٦ — مطرانية المعادي — صفحة '+i+' من '+pages,doc.internal.pageSize.width/2,doc.internal.pageSize.height-4,{align:'center'});
+  let y=0,pageH=210;
+  while(y<imgH){
+    if(y>0)doc.addPage();
+    doc.addImage(canvas.toDataURL('image/jpeg',0.92),'JPEG',0,-y,imgW,imgH);
+    y+=pageH;
   }
   doc.save(filename+'_'+new Date().toISOString().slice(0,10)+'.pdf');
+  pDiv.style.top='-9999px';
 }
 
 function exportQualPDF(){
