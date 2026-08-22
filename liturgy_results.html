@@ -172,6 +172,54 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
       </div>
     </div>
 
+
+    <!-- Method 4: Tiered -->
+    <div class="method-card">
+      <div class="method-head">
+        <div class="method-title">🎯 الطريقة المتدرجة — ٣ مجاميع</div>
+        <div class="method-badge" id="tierBadge">٣ × <span id="tierSize">5</span></div>
+      </div>
+      <div class="explain" id="tierExplain">
+        أقل كنيسة عندها <strong id="tierMin">—</strong> مشارك ÷ 3 = مجموعة <strong id="tierG">—</strong> أشخاص.
+        كل كنيسة بتتقسم: أعلى <span id="t1n">—</span> + وسط <span id="t2n">—</span> + أدنى <span id="t3n">—</span>.
+        الدرجة النهائية = متوسط المجموعات الـ ٣ مع بعض.
+      </div>
+
+      <!-- Per-tier comparison -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
+        <div style="background:#e8f5e9;border-radius:10px;padding:8px;text-align:center">
+          <div style="font-size:10px;font-weight:900;color:#1b5e20;margin-bottom:4px">🏆 الأقوياء</div>
+          <div style="font-size:10px;font-weight:700;color:#2d7a2d" id="tierTop1">—</div>
+        </div>
+        <div style="background:#fff3e0;border-radius:10px;padding:8px;text-align:center">
+          <div style="font-size:10px;font-weight:900;color:#7c4700;margin-bottom:4px">⚖️ المتوسطون</div>
+          <div style="font-size:10px;font-weight:700;color:#7c4700" id="tierTop2">—</div>
+        </div>
+        <div style="background:#fce4ec;border-radius:10px;padding:8px;text-align:center">
+          <div style="font-size:10px;font-weight:900;color:#880e4f;margin-bottom:4px">📈 الأدنى</div>
+          <div style="font-size:10px;font-weight:700;color:#880e4f" id="tierTop3">—</div>
+        </div>
+      </div>
+
+      <!-- Full table -->
+      <div style="overflow-x:auto">
+        <table class="tbl" id="tblTier">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th style="text-align:right">الكنيسة</th>
+              <th>العدد</th>
+              <th style="background:#2e7d32;color:#fff">أعلى N متوسط</th>
+              <th style="background:#e65100;color:#fff">وسط N متوسط</th>
+              <th style="background:#880e4f;color:#fff">أدنى N متوسط</th>
+              <th style="background:#5a0000;color:#fff">الدرجة الكلية</th>
+            </tr>
+          </thead>
+          <tbody id="bodyTier"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div><!-- /tChurch -->
 
   <!-- TAB: TOP INDIVIDUALS -->
@@ -334,6 +382,49 @@ function render(){
      <td style="color:#888">${s.avg.toFixed(2)}</td></tr>`
   ).join('');
 
+
+  // ── Method 4: Tiered ─────────────────────────────────────────
+  const minN=Math.min(...churches.map(ch=>byChurch[ch].length));
+  const gs=Math.floor(minN/3); // group size
+  document.getElementById('tierMin').textContent=minN;
+  document.getElementById('tierG').textContent=gs;
+  document.getElementById('tierSize').textContent=gs;
+  document.getElementById('t1n').textContent=gs;
+  document.getElementById('t2n').textContent=gs;
+  document.getElementById('t3n').textContent=gs;
+  document.getElementById('tierBadge').textContent='٣ × '+gs;
+
+  const tierStats=churches.map(ch=>{
+    const sorted=[...byChurch[ch]].sort((a,b)=>b.score-a.score);
+    const top=sorted.slice(0,gs);
+    const mid=sorted.slice(gs,gs*2);
+    const bot=sorted.slice(gs*2,gs*3);
+    const avgT=t=>t.length?t.reduce((s,p)=>s+p.score,0)/t.length:0;
+    const tAvg=avgT(top), mAvg=avgT(mid), bAvg=avgT(bot);
+    const total=(tAvg+mAvg+bAvg)/3;
+    return{ch,count:byChurch[ch].length,tAvg,mAvg,bAvg,total,gs};
+  });
+
+  const byTier=[...tierStats].sort((a,b)=>b.total-a.total);
+
+  // Winners per tier
+  const winTop=[...tierStats].sort((a,b)=>b.tAvg-a.tAvg)[0];
+  const winMid=[...tierStats].sort((a,b)=>b.mAvg-a.mAvg)[0];
+  const winBot=[...tierStats].sort((a,b)=>b.bAvg-a.bAvg)[0];
+  document.getElementById('tierTop1').textContent=winTop?'🥇 '+winTop.ch.slice(0,12):'—';
+  document.getElementById('tierTop2').textContent=winMid?'🥇 '+winMid.ch.slice(0,12):'—';
+  document.getElementById('tierTop3').textContent=winBot?'🥇 '+winBot.ch.slice(0,12):'—';
+
+  document.getElementById('bodyTier').innerHTML=byTier.map((s,i)=>`
+    <tr>
+      <td>${rankIcon(i)}</td>
+      <td class="nm">⛪ ${s.ch}</td>
+      <td>${s.count}</td>
+      <td style="font-weight:800;color:#2e7d32">${s.tAvg.toFixed(1)}</td>
+      <td style="font-weight:800;color:#e65100">${s.mAvg.toFixed(1)}</td>
+      <td style="font-weight:800;color:#880e4f">${s.bAvg.toFixed(1)}</td>
+      <td style="font-weight:900;color:${i<3?'#800000':'#1a0000'};font-size:13px">${s.total.toFixed(2)}</td>
+    </tr>`).join('');
   // Render Individuals
   const topInd=[...RAW].sort((a,b)=>b.score-a.score).slice(0,20);
   const medals=['🥇','🥈','🥉'];
