@@ -183,7 +183,7 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
         كل كنيسة بتتقسم على ٣ حسب <strong>عددها هي</strong> (أقوياء + متوسطين + أدنى).
         أقل كنيسة عندها <strong id="tierMin">—</strong> مشارك ÷ 3 = <strong id="tierG">—</strong> أشخاص من كل tier.
         من <strong>كل</strong> tier في <strong>كل</strong> كنيسة بناخد أعلى <strong><span id="t1n">—</span></strong> بس — كده كل الكنائس على نفس الأرضية.
-        الدرجة = متوسط الـ <strong><span id="t2n">—</span></strong> المختارين من كل مجموعة.
+        الدرجة = متوسط الـ <strong><span id="gsPicked">—</span></strong> المختارين من كل مجموعة.
       </div>
 
       <!-- Per-tier comparison -->
@@ -385,62 +385,70 @@ function render(){
 
 
   // ── Method 4: Tiered ─────────────────────────────────────────
-  // Step 1: split each church into 3 tiers by its own count
-  // Step 2: minTierSize = floor(minChurchCount / 3)
-  // Step 3: from each tier of each church, take top minTierSize people
-  const minChurch=Math.min(...churches.map(ch=>byChurch[ch].length));
-  const gs=Math.floor(minChurch/3); // how many to pick from each tier
-  document.getElementById('tierMin').textContent=minChurch;
-  document.getElementById('tierG').textContent=gs;
-  document.getElementById('tierSize').textContent=gs;
-  document.getElementById('t1n').textContent=gs;
-  document.getElementById('t2n').textContent=gs;
-  document.getElementById('t3n').textContent=gs;
-  document.getElementById('tierBadge').textContent='٣ × '+gs;
+  try{
+    // كل كنيسة بتتقسم على 3 حسب عددها هي
+    // أقل كنيسة ÷ 3 = gs → بناخد gs من كل tier في كل كنيسة
+    const minChurch4=Math.min(...churches.map(ch=>byChurch[ch].length));
+    const gs4=Math.floor(minChurch4/3);
 
-  const tierStats=churches.map(ch=>{
-    const sorted=[...byChurch[ch]].sort((a,b)=>b.score-a.score);
-    const cnt=sorted.length;
-    const t1=Math.floor(cnt/3);          // top tier size
-    const t2=Math.floor(cnt/3);          // mid tier size
-    // t3 = rest
-    const topTier=sorted.slice(0,t1);           // أقوياء الكنيسة
-    const midTier=sorted.slice(t1,t1+t2);       // متوسطو الكنيسة
-    const botTier=sorted.slice(t1+t2);          // أدنى الكنيسة
+    document.getElementById('tierMin').textContent=minChurch4;
+    document.getElementById('tierG').textContent=gs4;
+    document.getElementById('tierSize').textContent=gs4;
+    document.getElementById('t1n').textContent=gs4;
+    document.getElementById('t2n').textContent=gs4;
+    document.getElementById('t3n').textContent=gs4;
+    document.getElementById('gsPicked').textContent=gs4;
+    document.getElementById('tierBadge').textContent='٣ × '+gs4;
 
-    // من كل tier ناخد أعلى gs بس (sorted descending already)
-    const picked_top=topTier.slice(0,gs);
-    const picked_mid=midTier.slice(0,gs);
-    const picked_bot=botTier.slice(0,gs);
+    if(gs4<1){
+      document.getElementById('bodyTier').innerHTML=
+        '<tr><td colspan="7" class="empty">البيانات أقل من ٣ مشاركين في كنيسة — مش ممكن نقسم</td></tr>';
+    } else {
+      const avgArr=arr=>arr.length?arr.reduce((s,p)=>s+p.score,0)/arr.length:0;
 
-    const avgT=t=>t.length?t.reduce((s,p)=>s+p.score,0)/t.length:0;
-    const tAvg=avgT(picked_top);
-    const mAvg=avgT(picked_mid);
-    const bAvg=avgT(picked_bot);
-    const total=(tAvg+mAvg+bAvg)/3;
-    return{ch,count:cnt,tierSizes:[t1,t2,cnt-t1-t2],gs,tAvg,mAvg,bAvg,total};
-  });
+      const tierStats4=churches.map(ch=>{
+        const srt=[...byChurch[ch]].sort((a,b)=>b.score-a.score);
+        const cnt=srt.length;
+        const t1=Math.floor(cnt/3);
+        const t2=Math.floor(cnt/3);
+        // split into 3 tiers by church's own size
+        const topTier=srt.slice(0,t1);
+        const midTier=srt.slice(t1,t1+t2);
+        const botTier=srt.slice(t1+t2);
+        // pick top gs4 from each tier
+        const pTop=topTier.slice(0,gs4);
+        const pMid=midTier.slice(0,gs4);
+        const pBot=botTier.slice(0,gs4);
+        const tA=avgArr(pTop), mA=avgArr(pMid), bA=avgArr(pBot);
+        const total=(tA+mA+bA)/3;
+        return{ch,count:cnt,tA,mA,bA,total};
+      });
 
-  const byTier=[...tierStats].sort((a,b)=>b.total-a.total);
+      const byTier4=[...tierStats4].sort((a,b)=>b.total-a.total);
+      const winT=[...tierStats4].sort((a,b)=>b.tA-a.tA)[0];
+      const winM=[...tierStats4].sort((a,b)=>b.mA-a.mA)[0];
+      const winB=[...tierStats4].sort((a,b)=>b.bA-a.bA)[0];
 
-  // Winners per tier
-  const winTop=[...tierStats].sort((a,b)=>b.tAvg-a.tAvg)[0];
-  const winMid=[...tierStats].sort((a,b)=>b.mAvg-a.mAvg)[0];
-  const winBot=[...tierStats].sort((a,b)=>b.bAvg-a.bAvg)[0];
-  document.getElementById('tierTop1').textContent=winTop?'🥇 '+winTop.ch.slice(0,12):'—';
-  document.getElementById('tierTop2').textContent=winMid?'🥇 '+winMid.ch.slice(0,12):'—';
-  document.getElementById('tierTop3').textContent=winBot?'🥇 '+winBot.ch.slice(0,12):'—';
+      document.getElementById('tierTop1').textContent=winT?'🥇 '+winT.ch.slice(0,14):'—';
+      document.getElementById('tierTop2').textContent=winM?'🥇 '+winM.ch.slice(0,14):'—';
+      document.getElementById('tierTop3').textContent=winB?'🥇 '+winB.ch.slice(0,14):'—';
 
-  document.getElementById('bodyTier').innerHTML=byTier.map((s,i)=>`
-    <tr>
-      <td>${rankIcon(i)}</td>
-      <td class="nm">⛪ ${s.ch}</td>
-      <td>${s.count}</td>
-      <td style="font-weight:800;color:#2e7d32">${s.tAvg.toFixed(1)}</td>
-      <td style="font-weight:800;color:#e65100">${s.mAvg.toFixed(1)}</td>
-      <td style="font-weight:800;color:#880e4f">${s.bAvg.toFixed(1)}</td>
-      <td style="font-weight:900;color:${i<3?'#800000':'#1a0000'};font-size:13px">${s.total.toFixed(2)}</td>
-    </tr>`).join('');
+      document.getElementById('bodyTier').innerHTML=byTier4.map((s,i)=>`
+        <tr>
+          <td>${rankIcon(i)}</td>
+          <td class="nm">⛪ ${s.ch}</td>
+          <td>${s.count}</td>
+          <td style="font-weight:800;color:#2e7d32">${s.tA.toFixed(2)}</td>
+          <td style="font-weight:800;color:#e65100">${s.mA.toFixed(2)}</td>
+          <td style="font-weight:800;color:#880e4f">${s.bA.toFixed(2)}</td>
+          <td style="font-weight:900;font-size:13px;color:${i<3?'#800000':'#1a0000'}">${s.total.toFixed(2)}</td>
+        </tr>`).join('');
+    }
+  }catch(err){
+    document.getElementById('bodyTier').innerHTML=
+      '<tr><td colspan="7" class="empty">خطأ: '+err.message+'</td></tr>';
+    console.error('Method 4 error:',err);
+  }
   // Render Individuals
   const topInd=[...RAW].sort((a,b)=>b.score-a.score).slice(0,20);
   const medals=['🥇','🥈','🥉'];
