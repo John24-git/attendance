@@ -180,9 +180,10 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
         <div class="method-badge" id="tierBadge">٣ × <span id="tierSize">5</span></div>
       </div>
       <div class="explain" id="tierExplain">
-        أقل كنيسة عندها <strong id="tierMin">—</strong> مشارك ÷ 3 = مجموعة <strong id="tierG">—</strong> أشخاص.
-        كل كنيسة بتتقسم: أعلى <span id="t1n">—</span> + وسط <span id="t2n">—</span> + أدنى <span id="t3n">—</span>.
-        الدرجة النهائية = متوسط المجموعات الـ ٣ مع بعض.
+        كل كنيسة بتتقسم على ٣ حسب <strong>عددها هي</strong> (أقوياء + متوسطين + أدنى).
+        أقل كنيسة عندها <strong id="tierMin">—</strong> مشارك ÷ 3 = <strong id="tierG">—</strong> أشخاص من كل tier.
+        من <strong>كل</strong> tier في <strong>كل</strong> كنيسة بناخد أعلى <strong><span id="t1n">—</span></strong> بس — كده كل الكنائس على نفس الأرضية.
+        الدرجة = متوسط الـ <strong><span id="t2n">—</span></strong> المختارين من كل مجموعة.
       </div>
 
       <!-- Per-tier comparison -->
@@ -384,9 +385,12 @@ function render(){
 
 
   // ── Method 4: Tiered ─────────────────────────────────────────
-  const minN=Math.min(...churches.map(ch=>byChurch[ch].length));
-  const gs=Math.floor(minN/3); // group size
-  document.getElementById('tierMin').textContent=minN;
+  // Step 1: split each church into 3 tiers by its own count
+  // Step 2: minTierSize = floor(minChurchCount / 3)
+  // Step 3: from each tier of each church, take top minTierSize people
+  const minChurch=Math.min(...churches.map(ch=>byChurch[ch].length));
+  const gs=Math.floor(minChurch/3); // how many to pick from each tier
+  document.getElementById('tierMin').textContent=minChurch;
   document.getElementById('tierG').textContent=gs;
   document.getElementById('tierSize').textContent=gs;
   document.getElementById('t1n').textContent=gs;
@@ -396,13 +400,25 @@ function render(){
 
   const tierStats=churches.map(ch=>{
     const sorted=[...byChurch[ch]].sort((a,b)=>b.score-a.score);
-    const top=sorted.slice(0,gs);
-    const mid=sorted.slice(gs,gs*2);
-    const bot=sorted.slice(gs*2,gs*3);
+    const cnt=sorted.length;
+    const t1=Math.floor(cnt/3);          // top tier size
+    const t2=Math.floor(cnt/3);          // mid tier size
+    // t3 = rest
+    const topTier=sorted.slice(0,t1);           // أقوياء الكنيسة
+    const midTier=sorted.slice(t1,t1+t2);       // متوسطو الكنيسة
+    const botTier=sorted.slice(t1+t2);          // أدنى الكنيسة
+
+    // من كل tier ناخد أعلى gs بس (sorted descending already)
+    const picked_top=topTier.slice(0,gs);
+    const picked_mid=midTier.slice(0,gs);
+    const picked_bot=botTier.slice(0,gs);
+
     const avgT=t=>t.length?t.reduce((s,p)=>s+p.score,0)/t.length:0;
-    const tAvg=avgT(top), mAvg=avgT(mid), bAvg=avgT(bot);
+    const tAvg=avgT(picked_top);
+    const mAvg=avgT(picked_mid);
+    const bAvg=avgT(picked_bot);
     const total=(tAvg+mAvg+bAvg)/3;
-    return{ch,count:byChurch[ch].length,tAvg,mAvg,bAvg,total,gs};
+    return{ch,count:cnt,tierSizes:[t1,t2,cnt-t1-t2],gs,tAvg,mAvg,bAvg,total};
   });
 
   const byTier=[...tierStats].sort((a,b)=>b.total-a.total);
