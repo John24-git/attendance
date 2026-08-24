@@ -197,7 +197,7 @@ function
   }catch{window.location.href='home.html';}
 })();
 
-buildLevelRows(containerId, prefix, placeholder){
+function buildLevelRows(containerId, prefix, placeholder){
   const wrap = document.getElementById(containerId);
   wrap.innerHTML = '';
   LEVELS.forEach(l=>{
