@@ -79,18 +79,6 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
 </style>
 </head>
 <body>
-<script>
-(function(){
-  const __s=localStorage.getItem('user');
-  if(!__s){window.location.href='home.html';return;}
-  try{
-    const __d=JSON.parse(__s);
-    if(Date.now()>=__d.exp){localStorage.removeItem('user');window.location.href='home.html';return;}
-    // role check: portal controls access — just verify logged in
-  }catch{window.location.href='home.html';}
-})();
-</script>
-
 <header>
   <div class="h-title">📊 تقارير شمامسة ٢٠٢٦</div>
   <button class="h-btn" onclick="loadData()">🔄 تحديث</button>
