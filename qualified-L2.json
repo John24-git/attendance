@@ -1535,6 +1535,24 @@
         "status": "qualified"
       },
       {
+        "code": 89588,
+        "name": "باتريك عماد منير",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 26125,
+        "name": "مريم صموئيل عبد الجيد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
         "code": 50994,
         "name": "بارثينيا سامح فتحي",
         "cat": "طالب",
