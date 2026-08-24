@@ -91,31 +91,22 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
   <div class="hdr-sub">مهرجان شمامسة ٢٠٢٦</div>
 </div>
 
-<!-- LOAD -->
-<div class="load-card">
-  <div class="load-title">📋 رابط جوجل شيت النتائج</div>
-  <div class="load-row">
-    <input class="load-inp" id="sheetUrl" placeholder="الصق الرابط أو الـ Sheet ID هنا" />
-    <button class="load-btn" id="loadBtn" onclick="loadSheet()">تحميل</button>
-  </div>
-  <div class="load-hint">
-    ⚠️ تأكد إن الشيت مفتوح للعموم (Anyone with the link → Viewer)<br>
-    الأعمدة المطلوبة: <strong>اسم · كود · كنيسة · سكور</strong> (بأي ترتيب)
-  </div>
-  <div class="status" id="status"></div>
-</div>
-
-<!-- N SLIDER -->
-<div class="n-card" id="nCard">
-  <div class="n-row">
-    <span class="n-lbl">أعلى N لكل كنيسة:</span>
-    <span class="n-val" id="nVal">10</span>
-    <input class="n-slider" type="range" id="nSlider" min="3" max="30" value="10" oninput="onNChange(this.value)">
-  </div>
-  <div class="n-info" id="nInfo">أقل كنيسة عندها <strong id="minCount">—</strong> مشارك — N لازم أقل منهم</div>
+<!-- LEVELS_AND_TABS -->
+<div style="padding:12px 16px 4px">
+  <div style="font-size:10px;font-weight:800;color:#5a413d;letter-spacing:.08em;margin-bottom:8px">اختر المستوى</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="lvlTabsBar"></div>
+  <div id="lvlStatus" style="font-size:12px;font-weight:700;color:#800000;min-height:18px"></div>
 </div>
 
 <!-- TABS -->
+<div class="wrap" style="padding:0 16px 8px">
+  <div style="display:flex;gap:6px">
+    <button class="tab on" onclick="showTab('tChurch',this)">🏆 ترتيب الكنائس</button>
+    <button class="tab" onclick="showTab('tInd',this)">👤 الأوائل الأفراد</button>
+  </div>
+</div>
+
+
 <div class="tabs" id="tabs" style="display:none">
   <button class="tab on" onclick="showTab('tChurch',this)">🏆 ترتيب الكنائس</button>
   <button class="tab" onclick="showTab('tInd',this)">👤 الأوائل الأفراد</button>
@@ -237,42 +228,52 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 </div><!-- /content -->
 
 <script>
+// ══ CONFIG ════════════════════════════════════════════════════
+const DEFAULT_SHEET_ID='1PB8C2-2a5XfKwMicJs0SxhTdrDMZODKh2n_JYNNKbC4';
+const LEVELS=[
+  {k:'1-a',label:'المستوى الأول ألفا'},
+  {k:'1-b',label:'المستوى الأول بيتا'},
+  {k:'2',  label:'المستوى الثاني'},
+  {k:'3',  label:'المستوى الثالث'},
+  {k:'4',  label:'المستوى الرابع'},
+];
+
 // ══ STATE ══════════════════════════════════════════════════════
-let RAW=[], N=10;
+let RAW=[], N=10, curLevel='1-a';
 
-// ══ LOAD ═══════════════════════════════════════════════════════
-function extractId(val){
-  val=val.trim();
-  const m=val.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  return m?m[1]:val;
+// ══ LEVEL TABS ════════════════════════════════════════════════
+function buildLevelTabs(){
+  const bar=document.getElementById('lvlTabsBar');
+  if(!bar)return;
+  bar.innerHTML='';
+  LEVELS.forEach(l=>{
+    const btn=document.createElement('button');
+    btn.className='tab'+(l.k===curLevel?' on':'');
+    btn.textContent=l.label;
+    btn.onclick=()=>{curLevel=l.k;buildLevelTabs();loadLevel(l.k);};
+    bar.appendChild(btn);
+  });
 }
 
-function setStatus(msg,color='#800000'){
-  const el=document.getElementById('status');
-  el.style.display='block';
-  el.style.color=color;
-  el.textContent=msg;
-}
-
-async function loadSheet(){
-  const raw=document.getElementById('sheetUrl').value.trim();
-  if(!raw){setStatus('⚠️ ادخل الرابط أو الـ Sheet ID');return;}
-  const id=extractId(raw);
-  document.getElementById('loadBtn').disabled=true;
-  setStatus('⏳ جاري التحميل...');
+async function loadLevel(lvl){
+  const st=document.getElementById('lvlStatus');
+  if(st){st.textContent='⏳ جاري تحميل '+lvl+'...';}
+  document.getElementById('content').style.display='none';
+  // Read from control panel localStorage, fall back to default
+  const sheetId=localStorage.getItem('ctrl_scores_'+lvl)||DEFAULT_SHEET_ID;
   try{
-    const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json`;
+    const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(lvl)}&_=${Date.now()}`;
     const res=await fetch(url);
     const txt=await res.text();
     const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-    parseGviz(json);
+    parseGviz(json,lvl);
   }catch(e){
-    setStatus('❌ خطأ: '+e.message+' — تأكد إن الشيت مفتوح للعموم');
-    document.getElementById('loadBtn').disabled=false;
+    if(st)st.textContent='❌ خطأ: '+e.message;
+    console.error(e);
   }
 }
 
-function parseGviz(json){
+function parseGviz(json,lvl){
   const cols=json.table.cols.map(c=>c.label.trim().toLowerCase());
   const rows=json.table.rows;
 
@@ -301,7 +302,9 @@ function parseGviz(json){
   nSlider.value=N;
   document.getElementById('nVal').textContent=N;
 
-  setStatus(`✅ تم تحميل ${RAW.length} مشارك من ${Object.keys(groupBy(RAW,'church')).length} كنيسة`,'#16A34A');
+  const _st=document.getElementById('lvlStatus');
+  if(_st)_st.textContent=`✅ ${RAW.length} مشارك من ${Object.keys(groupBy(RAW,'church')).length} كنيسة — المستوى ${lvl||curLevel}`;
+  document.getElementById('loadBtn') && (document.getElementById('loadBtn').disabled=false);
   document.getElementById('loadBtn').disabled=false;
   document.getElementById('nCard').style.display='block';
   document.getElementById('tabs').style.display='flex';
@@ -447,21 +450,28 @@ function render(){
       '<tr><td colspan="7" class="empty">خطأ: '+err.message+'</td></tr>';
     console.error('Method 4 error:',err);
   }
-  // Render Individuals
-  const topInd=[...RAW].sort((a,b)=>b.score-a.score).slice(0,20);
+  // Render Individuals — 20 و19 فقط
+  const sorted=[...RAW].sort((a,b)=>b.score-a.score);
+  const s20=sorted.filter(p=>p.score===20);
+  const s19=sorted.filter(p=>p.score===19);
   const medals=['🥇','🥈','🥉'];
-  document.getElementById('indGrid').innerHTML=topInd.map((p,i)=>`
-    <div class="ind-row">
-      <div class="ind-rank">${i<3?medals[i]:'<span style="font-size:12px;color:#9c7c78;font-weight:900">'+(i+1)+'</span>'}</div>
+  const mkRow=(p,badge,clr)=>`
+    <div class="ind-row" style="border-right:3px solid ${clr}">
+      <div class="ind-rank">${badge}</div>
       <div class="ind-info">
         <div class="ind-name">${p.name}</div>
         <div class="ind-meta">${p.church}${p.code?' · '+p.code:''}</div>
       </div>
-      <div>
-        <div class="ind-score">${p.score}</div>
-        <div class="ind-of">من ٢٠</div>
-      </div>
-    </div>`).join('');
+      <div><div class="ind-score" style="color:${clr}">${p.score}</div><div class="ind-of">من ٢٠</div></div>
+    </div>`;
+  let html='';
+  if(s20.length) html+=`<div style="font-size:10px;font-weight:800;color:#c9a227;padding:4px 0 6px;margin-bottom:6px;border-bottom:1px solid rgba(201,162,39,.2)">🌟 درجة كاملة 20/20 — ${s20.length} شماس/شماسة</div>`+s20.map(p=>mkRow(p,'🌟','#c9a227')).join('');
+  if(s19.length) html+=`<div style="font-size:10px;font-weight:800;color:#800000;padding:8px 0 6px;margin-bottom:6px;border-bottom:1px solid rgba(128,0,0,.1)">🥈 درجة 19/20 — ${s19.length} شماس/شماسة</div>`+s19.map(p=>mkRow(p,'🥈','#800000')).join('');
+  if(!html){
+    const top5=sorted.slice(0,5);
+    html=top5.map((p,i)=>mkRow(p,i<3?medals[i]:(i+1),'#5a413d')).join('');
+  }
+  document.getElementById('indGrid').innerHTML=html||'<div style="text-align:center;color:#bbb;padding:20px">لا يوجد</div>';
 }
 
 function rankIcon(i){

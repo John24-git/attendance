@@ -116,6 +116,16 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
     <div class="sec-body" id="hymnBody"></div>
   </div>
 
+  <!-- ══ SCORES ══ -->
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-icon">🏆</div>
+      <div class="sec-title">شيتات الدرجات (نتائج الامتحان)</div>
+      <div class="sec-badge">liturgy_results</div>
+    </div>
+    <div class="sec-body" id="scoresBody"></div>
+  </div>
+
   <!-- ══ GATE ══ -->
   <div class="sec">
     <div class="sec-head">
@@ -176,11 +186,16 @@ const LEVELS = [
 
 // ══ BUILD LEVEL ROWS ══════════════════════════════════════════
 function 
-  // ── Auth check (super_admin only) ───────────────────────────
-  const __s=sessionStorage.getItem('user');
+(function(){
+  const __s=localStorage.getItem('user');
   if(!__s){window.location.href='home.html';return;}
-  try{const __d=JSON.parse(__s);if(Date.now()>=__d.exp||__d.role!=='super_admin'){sessionStorage.removeItem('user');window.location.href='home.html';return;}}
-  catch{window.location.href='home.html';return;}
+  try{
+    const __d=JSON.parse(__s);
+    const role=(__d.role||'').trim().toLowerCase();
+    if(Date.now()>=__d.exp){localStorage.removeItem('user');window.location.href='home.html';return;}
+    if(role!=='super_admin'){window.location.href='home.html';return;}
+  }catch{window.location.href='home.html';}
+})();
 
 buildLevelRows(containerId, prefix, placeholder){
   const wrap = document.getElementById(containerId);
@@ -245,6 +260,7 @@ function saveAll(){
   saveSection('users');
   saveSection('exam');
   saveSection('hymn');
+  saveSection('scores');
   toast('✅ تم حفظ كل الإعدادات');
 }
 
@@ -258,6 +274,7 @@ function toast(msg){
 
 // ══ INIT ══════════════════════════════════════════════════════
 buildLevelRows('examBody','exam','Sheet ID ردود الطقس');
+buildLevelRows('scoresBody','scores','Sheet ID الدرجات (مثال: '+`1PB8C2-...`+')');
 buildLevelRows('hymnBody','hymn','Sheet ID ردود الألحان');
 loadSaved();
 </script>
