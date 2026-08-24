@@ -1,145 +1,18 @@
 {
-  "generated": "2026-08-23T14:44:58.126Z",
+  "generated": "2026-08-24T14:16:19.770Z",
   "level": "2",
-  "totalQualified": 394,
+  "totalAllowed": 462,
   "churchCount": 14,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
-      {
-        "code": 29005,
-        "name": "ألفينا ألفي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 49226,
-        "name": "انسطاسيا اشرف",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 24677,
-        "name": "بنيامين عريان",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 55765,
-        "name": "توماس صابر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 39226,
-        "name": "توماس وجيه",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 65341,
-        "name": "جاسي جورج",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
-      },
-      {
-        "code": 80014,
-        "name": "چوليا صبري",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
       {
         "code": 15551,
         "name": "دانيال سعيد",
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 35534,
-        "name": "ديفيد خميس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 38583,
-        "name": "رحمه صليب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 20750,
-        "name": "كيرلس روماني سعد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 88957,
-        "name": "كيرلس شنودة",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 84685,
-        "name": "كيرلس عماد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 89968,
-        "name": "كيرلس نصر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 69134,
-        "name": "مادونا ميلاد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 55994,
-        "name": "ماريا امجد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 42068,
-        "name": "مايفن حسام",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 81563,
@@ -147,23 +20,44 @@
         "cat": "طالب",
         "level": "2",
         "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 46725,
-        "name": "ملك بيشوي",
+        "code": 39226,
+        "name": "توماس وجيه",
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 90599,
-        "name": "مينا عماد",
+        "code": 69134,
+        "name": "مادونا ميلاد",
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 29005,
+        "name": "ألفينا ألفي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 42068,
+        "name": "مايفن حسام",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 76596,
@@ -171,7 +65,35 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 24677,
+        "name": "بنيامين عريان",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 89968,
+        "name": "كيرلس نصر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 20750,
+        "name": "كيرلس روماني سعد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 45316,
@@ -179,97 +101,127 @@
         "cat": "طالب",
         "level": "2",
         "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 88957,
+        "name": "كيرلس شنودة",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 38583,
+        "name": "رحمه صليب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 49226,
+        "name": "انسطاسيا اشرف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 55765,
+        "name": "توماس صابر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 35534,
+        "name": "ديفيد خميس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 90599,
+        "name": "مينا عماد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 80014,
+        "name": "چوليا صبري",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 46725,
+        "name": "ملك بيشوي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 30773,
+        "name": "فردوس فرنسيس",
+        "cat": "ثانوية",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 84685,
+        "name": "كيرلس عماد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 65341,
+        "name": "جاسي جورج",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 55994,
+        "name": "ماريا امجد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       }
     ],
     "كنيسة الانبا انطونيوس بزهراء المعادي": [
-      {
-        "code": 49589,
-        "name": "آندى فادى أديب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 47743,
-        "name": "ايلاريا سمسم طلعت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 18484,
-        "name": "بارثينيا اندرو مجدى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 16775,
-        "name": "بافلي سامح شحاته",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 53649,
-        "name": "باڤلى مايكل بطرس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 28810,
-        "name": "براين ماجد أرنست",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 85382,
-        "name": "ترينيتى انطوان مسعود عبد الملك",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
       {
         "code": 96272,
         "name": "توني اسكندر نجيب اسكندر",
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      },
-      {
-        "code": 95140,
-        "name": "جلوريا صموئيل عجيب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 35524,
-        "name": "جورج مينا عزت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 61441,
-        "name": "جوفاني بيتر نان",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 77417,
@@ -277,7 +229,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 66919,
@@ -285,15 +238,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      },
-      {
-        "code": 37225,
-        "name": "سيلينا هانى زكريا",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 97112,
@@ -301,7 +247,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 48425,
@@ -309,15 +256,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 72765,
-        "name": "كاراس مينا بشري عبد الشهيد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 23,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 52713,
@@ -325,23 +265,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      },
-      {
-        "code": 66093,
-        "name": "كيفين ماجد اسحق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 45654,
-        "name": "كيفين مايكل عزت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 85857,
@@ -349,7 +274,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 42141,
@@ -357,15 +283,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 22168,
-        "name": "ماثيو ماجد عادل لطفى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 46780,
@@ -373,15 +292,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 95409,
-        "name": "مارفن شادى راضى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 12327,
@@ -389,23 +301,116 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 20015,
-        "name": "ماريتا ايهاب انسى",
+        "code": 49589,
+        "name": "آندى فادى أديب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 18484,
+        "name": "بارثينيا اندرو مجدى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 16775,
+        "name": "بافلي سامح شحاته",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 53649,
+        "name": "باڤلى مايكل بطرس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 85382,
+        "name": "ترينيتى انطوان مسعود عبد الملك",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 95140,
+        "name": "جلوريا صموئيل عجيب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 35524,
+        "name": "جورج مينا عزت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 61441,
+        "name": "جوفاني بيتر نان",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 72765,
+        "name": "كاراس مينا بشري عبد الشهيد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 23,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 37378,
+        "name": "كريم يوسف ميخائيل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 45654,
+        "name": "كيفين مايكل عزت",
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 24648,
-        "name": "مريم سامح",
+        "code": 22168,
+        "name": "ماثيو ماجد عادل لطفى",
         "cat": "طالب",
         "level": "2",
-        "total": 15,
-        "req": 12
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 63490,
@@ -413,7 +418,71 @@
         "cat": "طالب",
         "level": "2",
         "total": 17,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 37225,
+        "name": "سيلينا هانى زكريا",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 66093,
+        "name": "كيفين ماجد اسحق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 47743,
+        "name": "ايلاريا سمسم طلعت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 95409,
+        "name": "مارفن شادى راضى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 20015,
+        "name": "ماريتا ايهاب انسى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 28810,
+        "name": "براين ماجد أرنست",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 24648,
+        "name": "مريم سامح",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 11207,
@@ -421,7 +490,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 38202,
@@ -429,57 +499,28 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       }
     ],
     "كنيسة الانبا بيشوي بزهراء المعادي": [
       {
-        "code": 40066,
-        "name": "ابانوب شفيق عوض",
+        "code": 82342,
+        "name": "مينا ابراهيم سيدهم",
         "cat": "موظف",
         "level": "2",
-        "total": 6,
-        "req": 6
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
-        "code": 98697,
-        "name": "ادم وجيه",
-        "cat": "موظف",
-        "level": "2",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 31788,
-        "name": "اندراوس ناجح",
-        "cat": "موظف",
-        "level": "2",
-        "total": 10,
-        "req": 6
-      },
-      {
-        "code": 80156,
-        "name": "بافلي حكيم",
-        "cat": "موظف",
-        "level": "2",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 43467,
-        "name": "بسنت بهاء",
+        "code": 82971,
+        "name": "بتول نزهية",
         "cat": "طالب",
         "level": "2",
-        "total": 21,
-        "req": 12
-      },
-      {
-        "code": 38390,
-        "name": "جرجس جميل",
-        "cat": "موظف",
-        "level": "2",
-        "total": 7,
-        "req": 6
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 86203,
@@ -487,23 +528,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      },
-      {
-        "code": 38822,
-        "name": "جوليا سمسم رمزى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 23330,
-        "name": "دميانه زكى اسحق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 84143,
@@ -511,23 +537,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 20,
-        "req": 12
-      },
-      {
-        "code": 70840,
-        "name": "ساندى جرجس صالح",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 74472,
-        "name": "شنوده ابراهيم",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 86588,
@@ -535,23 +546,8 @@
         "cat": "موظف",
         "level": "2",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 93716,
-        "name": "كاراس ايمن عويضه",
-        "cat": "موظف",
-        "level": "2",
-        "total": 20,
-        "req": 6
-      },
-      {
-        "code": 48265,
-        "name": "كاراس بطرس إيليا",
-        "cat": "موظف",
-        "level": "2",
-        "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 99261,
@@ -559,71 +555,8 @@
         "cat": "موظف",
         "level": "2",
         "total": 7,
-        "req": 6
-      },
-      {
-        "code": 34699,
-        "name": "كاراس شكري",
-        "cat": "موظف",
-        "level": "2",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 47683,
-        "name": "كاراس مدحت",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 33102,
-        "name": "كاراس نسيم",
-        "cat": "موظف",
-        "level": "2",
-        "total": 11,
-        "req": 6
-      },
-      {
-        "code": 34083,
-        "name": "كرستين إيهاب مجدى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 65397,
-        "name": "كريستين ملاك",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 53304,
-        "name": "كيرلس ايمن عويضه",
-        "cat": "موظف",
-        "level": "2",
-        "total": 14,
-        "req": 6
-      },
-      {
-        "code": 42763,
-        "name": "كيرلس ميلاد فرنسيس",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 89268,
-        "name": "مادونا سامي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 33947,
@@ -631,47 +564,8 @@
         "cat": "موظف",
         "level": "2",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 88600,
-        "name": "مارو ميخائيل",
-        "cat": "موظف",
-        "level": "2",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 57007,
-        "name": "ماريو جرجس",
-        "cat": "موظف",
-        "level": "2",
-        "total": 28,
-        "req": 6
-      },
-      {
-        "code": 45504,
-        "name": "مريم تامر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 42,
-        "req": 12
-      },
-      {
-        "code": 15167,
-        "name": "مريم عطا",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 89666,
-        "name": "ملك شنوده",
-        "cat": "طالب",
-        "level": "2",
-        "total": 31,
-        "req": 12
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 17185,
@@ -679,23 +573,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 64735,
-        "name": "مهرائيل اشرف",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 26096,
-        "name": "ميخائيل وجدي",
-        "cat": "موظف",
-        "level": "2",
-        "total": 27,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 15958,
@@ -703,17 +582,325 @@
         "cat": "موظف",
         "level": "2",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 98697,
+        "name": "ادم وجيه",
+        "cat": "موظف",
+        "level": "2",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 31788,
+        "name": "اندراوس ناجح",
+        "cat": "موظف",
+        "level": "2",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 71659,
+        "name": "ايلاريا طلعت",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 80156,
+        "name": "بافلي حكيم",
+        "cat": "موظف",
+        "level": "2",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 43467,
+        "name": "بسنت بهاء",
+        "cat": "طالب",
+        "level": "2",
+        "total": 21,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 38390,
+        "name": "جرجس جميل",
+        "cat": "موظف",
+        "level": "2",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 74472,
+        "name": "شنوده ابراهيم",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 93716,
+        "name": "كاراس ايمن عويضه",
+        "cat": "موظف",
+        "level": "2",
+        "total": 20,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 34699,
+        "name": "كاراس شكري",
+        "cat": "موظف",
+        "level": "2",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 47683,
+        "name": "كاراس مدحت",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 33102,
+        "name": "كاراس نسيم",
+        "cat": "موظف",
+        "level": "2",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 65397,
+        "name": "كريستين ملاك",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 53304,
+        "name": "كيرلس ايمن عويضه",
+        "cat": "موظف",
+        "level": "2",
+        "total": 14,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 64735,
+        "name": "مهرائيل اشرف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 89268,
+        "name": "مادونا سامي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 93281,
+        "name": "مادونا عزت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 90842,
+        "name": "مارك وائل",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 57007,
+        "name": "ماريو جرجس",
+        "cat": "موظف",
+        "level": "2",
+        "total": 28,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 45504,
+        "name": "مريم تامر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 42,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 15167,
+        "name": "مريم عطا",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 89666,
+        "name": "ملك شنوده",
+        "cat": "طالب",
+        "level": "2",
+        "total": 31,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 26096,
+        "name": "ميخائيل وجدي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 27,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 52802,
+        "name": "نيفين كرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 62042,
+        "name": "يوسف جمال عدلي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 88600,
+        "name": "مارو ميخائيل",
+        "cat": "موظف",
+        "level": "2",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 34083,
+        "name": "كرستين إيهاب مجدى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 70840,
+        "name": "ساندى جرجس صالح",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 38822,
+        "name": "جوليا سمسم رمزى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 23330,
+        "name": "دميانه زكى اسحق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 95912,
+        "name": "بيشوى ايمن عويضة",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 40066,
+        "name": "ابانوب شفيق عوض",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 48265,
+        "name": "كاراس بطرس إيليا",
+        "cat": "موظف",
+        "level": "2",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 42763,
+        "name": "كيرلس ميلاد فرنسيس",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة السيدة العذراء مريم بالمعادي": [
+      {
+        "code": 89862,
+        "name": "أنطونيوس هاني مكرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
       {
         "code": 64342,
         "name": "ابانوب عماد",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 81381,
@@ -721,7 +908,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 76184,
@@ -729,15 +917,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 89862,
-        "name": "أنطونيوس هاني مكرم",
+        "code": 58911,
+        "name": "اميلي القس اسطفانوس",
         "cat": "طالب",
         "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 71231,
@@ -745,7 +935,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 56221,
@@ -753,7 +944,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 29858,
@@ -761,7 +953,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 23,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 68358,
@@ -769,7 +962,35 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 99661,
+        "name": "بارثينيا عماد حربى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 71935,
+        "name": "بافلى اشرف ادوار",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 48813,
+        "name": "بافلي عماد حربي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 86368,
@@ -777,7 +998,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 23113,
@@ -785,7 +1007,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 34468,
@@ -793,7 +1016,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 79321,
@@ -801,7 +1025,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 18243,
@@ -809,7 +1034,35 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 70700,
+        "name": "بيتر ايهاب جرجس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 33676,
+        "name": "بيرلا امير سامي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 87123,
+        "name": "توماس انطون",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 79058,
@@ -817,7 +1070,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 92219,
@@ -825,7 +1079,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 59184,
@@ -833,7 +1088,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 17,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 35692,
@@ -841,7 +1097,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 21015,
+        "name": "جوزيف نادر مكرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 15659,
@@ -849,7 +1115,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 17,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 63928,
@@ -857,7 +1124,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 63343,
+        "name": "جوفاني مايكل ماهر معوض",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 91617,
@@ -865,7 +1142,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 72495,
+        "name": "جوناثان عدلى عريان",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 73605,
@@ -873,7 +1160,26 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 35990,
+        "name": "جونير انيس صابر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 92340,
+        "name": "جونير نادر جرجس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 25831,
@@ -881,7 +1187,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 39200,
@@ -889,7 +1196,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 44971,
@@ -897,7 +1205,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 77708,
@@ -905,7 +1214,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 19,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 15614,
@@ -913,7 +1223,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 68607,
+        "name": "ستيفن شريف اسحق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 43206,
@@ -921,7 +1241,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 83657,
@@ -929,7 +1250,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 70334,
@@ -937,7 +1259,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 25342,
+        "name": "كاراس كرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 28756,
@@ -945,7 +1277,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 30228,
@@ -953,7 +1286,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 55960,
+        "name": "كارين هاني كمال عوض",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 54602,
@@ -961,7 +1304,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 31885,
@@ -969,7 +1313,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 68844,
+        "name": "كيرلس مينا نبيل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 47304,
@@ -977,7 +1331,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 58276,
+        "name": "لوريندا جورج",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 39569,
@@ -985,7 +1349,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 44439,
+        "name": "ليليان وائل رؤوف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 69449,
@@ -993,7 +1367,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 48408,
@@ -1001,7 +1376,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 45518,
+        "name": "مارك جوزيف كرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 29489,
@@ -1009,7 +1394,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 23205,
@@ -1017,7 +1403,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 40527,
@@ -1025,7 +1412,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 35664,
@@ -1033,7 +1421,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 95821,
@@ -1041,7 +1430,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 92067,
+        "name": "ميرا هانى البر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 13438,
@@ -1049,7 +1448,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 31397,
@@ -1057,7 +1457,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 22033,
+        "name": "ميلسيا غبريال ملاك",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 21605,
@@ -1065,7 +1475,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 76056,
@@ -1073,7 +1484,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 77794,
+        "name": "ناردين صبحي وحيد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 99126,
@@ -1081,7 +1502,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 31926,
@@ -1089,41 +1511,19 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       }
     ],
     "كنيسة السيدة العذراء مريم بدار السلام": [
-      {
-        "code": 73113,
-        "name": "اباكير نبيل شحاته خليل",
-        "cat": "ثانوية",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 33890,
-        "name": "ابانوب تامر جمال",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
       {
         "code": 47082,
         "name": "ايرينى أنطون سامى",
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      },
-      {
-        "code": 49607,
-        "name": "باتريك وجيه موريس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 65250,
@@ -1131,23 +1531,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 50994,
         "name": "بارثينيا سامح فتحي",
         "cat": "طالب",
         "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 22799,
-        "name": "بافلي نشأت فتحي إسكندر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 55105,
@@ -1155,7 +1549,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 66733,
+        "name": "بريتى القس بيمن",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 29030,
@@ -1163,39 +1567,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 41837,
-        "name": "تيموثي مايكل نبيل رياض",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 96479,
-        "name": "جورج اشرف فاروق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 18,
-        "req": 12
-      },
-      {
-        "code": 88315,
-        "name": "جورج شنودة نظيم يعقوب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 78052,
-        "name": "جورج صفوت عزمي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 99155,
@@ -1203,7 +1576,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 64722,
@@ -1211,7 +1585,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 83342,
@@ -1219,7 +1594,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 71804,
+        "name": "جومانه لطيف وفقي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 31863,
@@ -1227,7 +1612,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 14823,
@@ -1235,7 +1621,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 46500,
@@ -1243,55 +1630,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 10822,
-        "name": "ديفيد هانى فرج بولس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
-      },
-      {
-        "code": 38047,
-        "name": "ستيفن هاني حكيم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 14327,
-        "name": "شنودة مينا عياد",
-        "cat": "موظف",
-        "level": "2",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 73513,
-        "name": "فابيو اشرف نادي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 19945,
-        "name": "فادي فتحي توفيق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 38526,
         "name": "فرينا اشرف نصحي",
         "cat": "طالب",
         "level": "2",
-        "total": 17,
-        "req": 12
+        "total": 18,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 62844,
@@ -1299,31 +1648,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 11154,
-        "name": "فيلوباتير تامر سرور",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 32134,
-        "name": "كاراس سيد نصري",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 90454,
         "name": "كارولين ناجح فؤاد حبيب",
         "cat": "طالب",
         "level": "2",
-        "total": 18,
-        "req": 12
+        "total": 19,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 18324,
@@ -1331,15 +1666,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 80491,
-        "name": "كريستيانو ياسر أنور",
+        "code": 99326,
+        "name": "كارين برسوم منير بولس",
         "cat": "طالب",
         "level": "2",
-        "total": 14,
-        "req": 12
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 91280,
@@ -1347,15 +1684,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 75631,
-        "name": "كيفين هانى حكيم سعيد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 21,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 23317,
@@ -1363,23 +1693,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 26969,
-        "name": "مارتن ميلاد فتحى بباوى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 92128,
-        "name": "مارك مرقس لوقا بولس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 32576,
@@ -1387,15 +1702,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 69281,
-        "name": "منير مينا منير عيسي",
+        "code": 95669,
+        "name": "مارينا صموئيل عبد الجيد عبد القوى",
         "cat": "طالب",
         "level": "2",
-        "total": 24,
-        "req": 12
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 32417,
@@ -1403,15 +1720,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      },
-      {
-        "code": 31613,
-        "name": "مينا امير سلوانس جرجس",
-        "cat": "موظف",
-        "level": "2",
-        "total": 9,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 89221,
@@ -1419,7 +1729,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 18822,
@@ -1427,7 +1738,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 83484,
@@ -1435,7 +1747,224 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 73113,
+        "name": "اباكير نبيل شحاته خليل",
+        "cat": "ثانوية",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 33890,
+        "name": "ابانوب تامر جمال",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 60732,
+        "name": "اندرو هاني اسحق عطا",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 98056,
+        "name": "أوليفر مايكل شوقي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 49607,
+        "name": "باتريك وجيه موريس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 22799,
+        "name": "بافلي نشأت فتحي إسكندر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 41837,
+        "name": "تيموثي مايكل نبيل رياض",
+        "cat": "طالب",
+        "level": "2",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 96479,
+        "name": "جورج اشرف فاروق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 18,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 88315,
+        "name": "جورج شنودة نظيم يعقوب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 78052,
+        "name": "جورج صفوت عزمي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 10822,
+        "name": "ديفيد هانى فرج بولس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 38047,
+        "name": "ستيفن هاني حكيم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 73513,
+        "name": "فابيو اشرف نادي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 19945,
+        "name": "فادي فتحي توفيق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 11154,
+        "name": "فيلوباتير تامر سرور",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 32134,
+        "name": "كاراس سيد نصري",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 91667,
+        "name": "كروز لبيب عجايبى برتلا",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 80491,
+        "name": "كريستيانو ياسر أنور",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 28599,
+        "name": "كيفين ناصر صبرى صليب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 75631,
+        "name": "كيفين هانى حكيم سعيد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 21,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 26969,
+        "name": "مارتن ميلاد فتحى بباوى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 92128,
+        "name": "مارك مرقس لوقا بولس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 69281,
+        "name": "منير مينا منير عيسي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 24,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 31613,
+        "name": "مينا امير سلوانس جرجس",
+        "cat": "موظف",
+        "level": "2",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 95929,
@@ -1443,7 +1972,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 14327,
+        "name": "شنودة مينا عياد",
+        "cat": "موظف",
+        "level": "2",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الشهيد ابي سيفين والانبا رويس بحدائق المعادي": [
@@ -1453,15 +1992,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 44887,
-        "name": "ايريني صموئيل",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 45326,
@@ -1469,7 +2001,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 85138,
@@ -1477,39 +2010,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 24,
-        "req": 12
-      },
-      {
-        "code": 92088,
-        "name": "بيمن عهدي",
-        "cat": "موظف",
-        "level": "2",
-        "total": 13,
-        "req": 6
-      },
-      {
-        "code": 15493,
-        "name": "جورج حليم",
-        "cat": "موظف",
-        "level": "2",
-        "total": 16,
-        "req": 6
-      },
-      {
-        "code": 43233,
-        "name": "جورج سمير",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 12518,
-        "name": "جومانا سامح",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 70115,
@@ -1517,7 +2019,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 30735,
+        "name": "جون بطرس حناوي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 82611,
@@ -1525,7 +2037,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 80255,
@@ -1533,15 +2046,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
-      },
-      {
-        "code": 38657,
-        "name": "شنودة هاني",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 64673,
@@ -1549,7 +2055,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 34392,
@@ -1557,7 +2064,8 @@
         "cat": "موظف",
         "level": "2",
         "total": 31,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 21359,
@@ -1565,7 +2073,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 98207,
@@ -1573,7 +2082,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 99205,
@@ -1581,15 +2091,8 @@
         "cat": "موظف",
         "level": "2",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 15794,
-        "name": "كاراس فايق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 60744,
@@ -1597,31 +2100,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 78145,
-        "name": "كيرلس جرجس",
-        "cat": "موظف",
-        "level": "2",
-        "total": 15,
-        "req": 6
-      },
-      {
-        "code": 81850,
-        "name": "كيرلس رزق",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 74081,
-        "name": "كيرلس روماني",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 62930,
@@ -1629,23 +2109,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 31849,
-        "name": "كيرلس ميلاد",
-        "cat": "موظف",
-        "level": "2",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 31804,
-        "name": "كيرلس هاني",
-        "cat": "طالب",
-        "level": "2",
-        "total": 35,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 81300,
@@ -1653,39 +2118,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 17,
-        "req": 12
-      },
-      {
-        "code": 67012,
-        "name": "كيفين ايمن",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 62256,
-        "name": "لوسندا امير",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 77691,
-        "name": "مارسيلنو امير",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 44230,
-        "name": "مارلينا ايهاب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 13424,
@@ -1693,15 +2127,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 35315,
-        "name": "مارينا رافت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 71860,
@@ -1709,7 +2136,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 24831,
@@ -1717,15 +2145,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 25265,
-        "name": "مجدي ايمن",
-        "cat": "موظف",
-        "level": "2",
-        "total": 13,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 73678,
@@ -1733,31 +2154,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 61592,
-        "name": "مينا سمير",
-        "cat": "موظف",
+        "code": 14377,
+        "name": "ميرا مايكل رفعت",
+        "cat": "طالب",
         "level": "2",
-        "total": 14,
-        "req": 6
-      },
-      {
-        "code": 93296,
-        "name": "مينا ماجد",
-        "cat": "موظف",
-        "level": "2",
-        "total": 13,
-        "req": 6
-      },
-      {
-        "code": 56878,
-        "name": "نعيم رامي",
-        "cat": "موظف",
-        "level": "2",
-        "total": 10,
-        "req": 6
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 87917,
@@ -1765,345 +2172,226 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      }
-    ],
-    "كنيسة الشهيد مارجرجس بحدائق المعادي": [
-      {
-        "code": 68789,
-        "name": "ادم نشأت فتحي",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 15110,
-        "name": "أستيفن روماني يوسف",
+        "code": 44887,
+        "name": "ايريني صموئيل",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 74092,
-        "name": "استيفين يوسف سعيد",
+        "code": 92088,
+        "name": "بيمن عهدي",
         "cat": "موظف",
         "level": "2",
-        "total": 6,
-        "req": 6
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 28262,
-        "name": "اندرو شنوده بيري",
+        "code": 15493,
+        "name": "جورج حليم",
         "cat": "موظف",
         "level": "2",
-        "total": 6,
-        "req": 6
+        "total": 16,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 86483,
-        "name": "أندرو شنوده ذكرى",
-        "cat": "موظف",
-        "level": "2",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 65143,
-        "name": "أندرو عزت",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 84843,
-        "name": "ايريني اسحاق مارى جرجس",
+        "code": 43233,
+        "name": "جورج سمير",
         "cat": "طالب",
         "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 56058,
-        "name": "ايريني ذكي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 75888,
-        "name": "ايريني صبحى حبيب حنا سعد",
+        "code": 12518,
+        "name": "جومانا سامح",
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 70756,
-        "name": "ايفان سامح عدلي",
+        "code": 38657,
+        "name": "شنودة هاني",
         "cat": "موظف",
         "level": "2",
-        "total": 8,
-        "req": 6
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
       },
+      {
+        "code": 30501,
+        "name": "فادي باسم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 15794,
+        "name": "كاراس فايق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 78145,
+        "name": "كيرلس جرجس",
+        "cat": "موظف",
+        "level": "2",
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 81850,
+        "name": "كيرلس رزق",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 74081,
+        "name": "كيرلس روماني",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 28123,
+        "name": "كيرلس عصام",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 31849,
+        "name": "كيرلس ميلاد",
+        "cat": "موظف",
+        "level": "2",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 31804,
+        "name": "كيرلس هاني",
+        "cat": "طالب",
+        "level": "2",
+        "total": 35,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 62256,
+        "name": "لوسندا امير",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 77691,
+        "name": "مارسيلنو امير",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 44230,
+        "name": "مارلينا ايهاب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 35315,
+        "name": "مارينا رافت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 25265,
+        "name": "مجدي ايمن",
+        "cat": "موظف",
+        "level": "2",
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 61592,
+        "name": "مينا سمير",
+        "cat": "موظف",
+        "level": "2",
+        "total": 14,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 93296,
+        "name": "مينا ماجد",
+        "cat": "موظف",
+        "level": "2",
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 56878,
+        "name": "نعيم رامي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 67012,
+        "name": "كيفين ايمن",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة الشهيد مارجرجس بحدائق المعادي": [
       {
         "code": 10493,
         "name": "ايلاريا عوض شحاته",
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 88691,
-        "name": "ايمن انسي",
-        "cat": "موظف",
-        "level": "2",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 99720,
-        "name": "بافلي بيتر عوض",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 15858,
-        "name": "بافلى شنودة شحاته",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 36513,
-        "name": "برناديت نصري ابراهيم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 54850,
-        "name": "بولا سمير",
-        "cat": "موظف",
-        "level": "2",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 45030,
-        "name": "تونى رافت شكرى",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 66615,
-        "name": "جورج جرجس بخيت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 30138,
-        "name": "جوفاني جرجس عاطف",
-        "cat": "موظف",
-        "level": "2",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 59856,
-        "name": "جونير جرجس عاطف",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 67124,
-        "name": "چورچ رأفت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 41,
-        "req": 12
-      },
-      {
-        "code": 87183,
-        "name": "خيرى جوزيف",
-        "cat": "موظف",
-        "level": "2",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 78675,
-        "name": "روفينا باسم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 36301,
-        "name": "سارة سعد سلامة",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 15716,
-        "name": "سيلفيا عاطف وهيب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 69248,
-        "name": "فيرونيا جرجس جميل",
-        "cat": "طالب",
-        "level": "2",
-        "total": 16,
-        "req": 12
-      },
-      {
-        "code": 65919,
-        "name": "كاراس اسامه رافت جندي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 18,
-        "req": 12
-      },
-      {
-        "code": 61167,
-        "name": "كاراس أيمن رزق الله",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 16416,
-        "name": "كاراس رامز عوض",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 27887,
-        "name": "كارين جرجس صبحي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 88670,
-        "name": "كارين عماد لوكاس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 78457,
-        "name": "لينا عبدالله نسيم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 66400,
-        "name": "مارتي مينا",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 47548,
-        "name": "مارفل كرم رزق اللة",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 50118,
-        "name": "ماركو ميلاد",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 63588,
-        "name": "مارلي هيثم وصفي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 59915,
-        "name": "ماروسكا بسام زكريا",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 24412,
-        "name": "مارينا مايكل محروس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 95133,
-        "name": "مريم يعقوب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 18,
-        "req": 12
-      },
-      {
-        "code": 99645,
-        "name": "مورينيو مينا بندى",
-        "cat": "موظف",
-        "level": "2",
-        "total": 11,
-        "req": 6
-      },
-      {
-        "code": 25438,
-        "name": "مونيكا منصور",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 18036,
-        "name": "ميرولا رؤوف لطفي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 12450,
@@ -2111,15 +2399,116 @@
         "cat": "موظف",
         "level": "2",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 56515,
-        "name": "يوأنا رأفت مسعود",
+        "code": 15110,
+        "name": "أستيفن روماني يوسف",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 15716,
+        "name": "سيلفيا عاطف وهيب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 15858,
+        "name": "بافلى شنودة شحاته",
+        "cat": "طالب",
+        "level": "2",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 16416,
+        "name": "كاراس رامز عوض",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 18036,
+        "name": "ميرولا رؤوف لطفي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 21663,
+        "name": "شنودة عاطف",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 24412,
+        "name": "مارينا مايكل محروس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 25438,
+        "name": "مونيكا منصور",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 27887,
+        "name": "كارين جرجس صبحي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 28262,
+        "name": "اندرو شنوده بيري",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 30138,
+        "name": "جوفاني جرجس عاطف",
+        "cat": "موظف",
+        "level": "2",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 31288,
+        "name": "بيشوى هانى هارون",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 35595,
@@ -2127,7 +2516,71 @@
         "cat": "طالب",
         "level": "2",
         "total": 17,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 36301,
+        "name": "سارة سعد سلامة",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 36513,
+        "name": "برناديت نصري ابراهيم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 37142,
+        "name": "يؤنا صموئيل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 45030,
+        "name": "تونى رافت شكرى",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 47548,
+        "name": "مارفل كرم رزق اللة",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 50118,
+        "name": "ماركو ميلاد",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 54850,
+        "name": "بولا سمير",
+        "cat": "موظف",
+        "level": "2",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 55704,
@@ -2135,49 +2588,289 @@
         "cat": "موظف",
         "level": "2",
         "total": 6,
-        "req": 6
-      }
-    ],
-    "كنيسة الشهيد مارجرجس بكوتسيكا": [
-      {
-        "code": 32307,
-        "name": "ابانوب جرجس شكري",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 13017,
-        "name": "افرايم تامر محروس",
+        "code": 56058,
+        "name": "ايريني ذكي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 56515,
+        "name": "يوأنا رأفت مسعود",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 59856,
+        "name": "جونير جرجس عاطف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 59915,
+        "name": "ماروسكا بسام زكريا",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 61167,
+        "name": "كاراس أيمن رزق الله",
         "cat": "موظف",
         "level": "2",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 66443,
-        "name": "إلينور اسحق",
+        "code": 62850,
+        "name": "هيفين مينا تاوضروس",
         "cat": "طالب",
         "level": "2",
-        "total": 15,
-        "req": 12
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
+      {
+        "code": 63588,
+        "name": "مارلي هيثم وصفي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 65143,
+        "name": "أندرو عزت",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 65919,
+        "name": "كاراس اسامه رافت جندي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 18,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 66400,
+        "name": "مارتي مينا",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 66615,
+        "name": "جورج جرجس بخيت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 67124,
+        "name": "چورچ رأفت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 41,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 68789,
+        "name": "ادم نشأت فتحي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 69248,
+        "name": "فيرونيا جرجس جميل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 70756,
+        "name": "ايفان سامح عدلي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 74092,
+        "name": "استيفين يوسف سعيد",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 75888,
+        "name": "ايريني صبحى حبيب حنا سعد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 76110,
+        "name": "كارين سامح محفوظ",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 78457,
+        "name": "لينا عبدالله نسيم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 78675,
+        "name": "روفينا باسم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 84843,
+        "name": "ايريني اسحاق مارى جرجس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 86483,
+        "name": "أندرو شنوده ذكرى",
+        "cat": "موظف",
+        "level": "2",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 87183,
+        "name": "خيرى جوزيف",
+        "cat": "موظف",
+        "level": "2",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 88670,
+        "name": "كارين عماد لوكاس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 88691,
+        "name": "ايمن انسي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 89559,
+        "name": "مينا طياب",
+        "cat": "موظف",
+        "level": "2",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 94098,
+        "name": "بيتر مرقص",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 95133,
+        "name": "مريم يعقوب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 18,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 99645,
+        "name": "مورينيو مينا بندى",
+        "cat": "موظف",
+        "level": "2",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 99720,
+        "name": "بافلي بيتر عوض",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة الشهيد مارجرجس بكوتسيكا": [
       {
         "code": 74366,
         "name": "باڤلي بيشوي عدلي",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 17660,
-        "name": "بولا سامر عبد المسيح",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 63049,
@@ -2185,23 +2878,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 68953,
-        "name": "ترنيم انطون",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 68375,
-        "name": "توماس ايهاب سمير",
-        "cat": "موظف",
-        "level": "2",
-        "total": 20,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 75859,
@@ -2209,31 +2887,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 68850,
-        "name": "چوليا چوزيف عادل",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 41141,
-        "name": "چون ايمن عوض الله",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 62111,
-        "name": "چونير تامر كمال",
-        "cat": "طالب",
-        "level": "2",
-        "total": 32,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 34692,
@@ -2241,7 +2896,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 34049,
@@ -2249,7 +2905,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 30526,
@@ -2257,23 +2914,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 40608,
-        "name": "عياد كيرلس عياد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 38,
-        "req": 12
-      },
-      {
-        "code": 29507,
-        "name": "كاترين عيسى كامل",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 18653,
@@ -2281,15 +2923,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 35841,
-        "name": "مارلي يسري فرح",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 13208,
@@ -2297,15 +2932,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 31,
-        "req": 12
-      },
-      {
-        "code": 87164,
-        "name": "مونيكا ممدوح مكرم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 69446,
@@ -2313,7 +2941,116 @@
         "cat": "طالب",
         "level": "2",
         "total": 17,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 32307,
+        "name": "ابانوب جرجس شكري",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 13017,
+        "name": "افرايم تامر محروس",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 24976,
+        "name": "ايريني عزت جاد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 66443,
+        "name": "إلينور اسحق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 17660,
+        "name": "بولا سامر عبد المسيح",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 68375,
+        "name": "توماس ايهاب سمير",
+        "cat": "موظف",
+        "level": "2",
+        "total": 20,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 68850,
+        "name": "چوليا چوزيف عادل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 41141,
+        "name": "چون ايمن عوض الله",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 62111,
+        "name": "چونير تامر كمال",
+        "cat": "طالب",
+        "level": "2",
+        "total": 33,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 40608,
+        "name": "عياد كيرلس عياد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 38,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 29507,
+        "name": "كاترين عيسى كامل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 87164,
+        "name": "مونيكا ممدوح مكرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 82959,
@@ -2321,7 +3058,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 51467,
@@ -2329,7 +3067,8 @@
         "cat": "موظف",
         "level": "2",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 86236,
@@ -2337,15 +3076,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 64991,
-        "name": "هيلانة صابر محروس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 38,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 24454,
@@ -2353,7 +3085,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 23,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 52573,
@@ -2361,137 +3094,46 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      }
-    ],
-    "كنيسة الشهيد مارمينا والقديس اغسطينوس بدرا السلام": [
-      {
-        "code": 28558,
-        "name": "ابانوب ملاك",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 22967,
-        "name": "امير نبيل",
-        "cat": "طالب",
-        "level": "2",
-        "total": 28,
-        "req": 12
-      },
-      {
-        "code": 51401,
-        "name": "ان سامح",
+        "code": 68953,
+        "name": "ترنيم انطون",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 43403,
-        "name": "اندرو هاني إبراهيم",
+        "code": 64991,
+        "name": "هيلانة صابر محروس",
         "cat": "طالب",
         "level": "2",
-        "total": 13,
-        "req": 12
+        "total": 38,
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 53428,
-        "name": "ايريني اشرف سعيد",
+        "code": 35841,
+        "name": "مارلي يسري فرح",
         "cat": "طالب",
         "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 35059,
-        "name": "بيتر جرجس عزت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 86566,
-        "name": "جورج عاطف عبد المسيح سلامة زكي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 16,
-        "req": 12
-      },
-      {
-        "code": 75708,
-        "name": "سيمون حاتم امين",
-        "cat": "طالب",
-        "level": "2",
-        "total": 18,
-        "req": 12
-      },
-      {
-        "code": 65620,
-        "name": "فلوباتير هانى عزت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 24,
-        "req": 12
-      },
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة الشهيد مارمينا والقديس اغسطينوس بدرا السلام": [
       {
         "code": 83604,
         "name": "كاراس ماجد",
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 94994,
-        "name": "كارن كرم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 67764,
-        "name": "كيرلس تامر كرم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 57313,
-        "name": "كيرلس فادي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 27261,
-        "name": "ماجي بدر عاطف",
-        "cat": "طالب",
-        "level": "2",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 59064,
-        "name": "مارتن تامر كرم",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 58301,
-        "name": "مارتينا سمير شكري صادق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 18,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 62506,
@@ -2499,7 +3141,197 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 92539,
+        "name": "مريم واصف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 72153,
+        "name": "ابانوب سامح جورج",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 28558,
+        "name": "ابانوب ملاك",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 22967,
+        "name": "امير نبيل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 28,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 51401,
+        "name": "ان سامح",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 43403,
+        "name": "اندرو هاني إبراهيم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 74864,
+        "name": "اوليفيا سمير مهني",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 53428,
+        "name": "ايريني اشرف سعيد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 71670,
+        "name": "ايريني رضا",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 71928,
+        "name": "باڤلي نادي أنور",
+        "cat": "موظف",
+        "level": "2",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 35059,
+        "name": "بيتر جرجس عزت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 86566,
+        "name": "جورج عاطف عبد المسيح سلامة زكي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 35182,
+        "name": "ساندي تامر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 75708,
+        "name": "سيمون حاتم امين",
+        "cat": "طالب",
+        "level": "2",
+        "total": 18,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 65620,
+        "name": "فلوباتير هانى عزت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 24,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 94994,
+        "name": "كارن كرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 67764,
+        "name": "كيرلس تامر كرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 57313,
+        "name": "كيرلس فادي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 27261,
+        "name": "ماجي بدر عاطف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 59064,
+        "name": "مارتن تامر كرم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 17073,
+        "name": "ماريا سعيد ميلاد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 55422,
@@ -2507,7 +3339,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 47591,
@@ -2515,7 +3348,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 50104,
@@ -2523,7 +3357,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 57818,
@@ -2531,7 +3366,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 11574,
@@ -2539,7 +3375,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 76917,
@@ -2547,7 +3384,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 81711,
@@ -2555,7 +3393,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 18,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 83335,
@@ -2563,7 +3402,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 29,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 86218,
+        "name": "ميلسيا وجدي نسيم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 19719,
@@ -2571,7 +3420,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 18,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 40794,
+        "name": "نيرفانا مسعد فهمي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 44759,
@@ -2579,7 +3438,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 47191,
@@ -2587,7 +3447,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 45703,
@@ -2595,179 +3456,219 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 58301,
+        "name": "مارتينا سمير شكري صادق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 18,
+        "req": 12,
+        "status": "qualified"
       }
     ],
     "كنيسة الصليب المقدس بطرة": [
       {
-        "code": 31918,
-        "name": "امل مجدى",
+        "code": 35116,
+        "name": "مارتن امجد ناثان",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 62654,
-        "name": "بارثينيا اسحق",
+        "code": 33244,
+        "name": "ايتن مايكل",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 26297,
         "name": "بافلى ايهاب ابراهيم",
         "cat": "طالب",
         "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 18112,
+        "name": "بافلى نميرى فرج",
+        "cat": "طالب",
+        "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 55661,
         "name": "بيتر جمال",
         "cat": "طالب",
         "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 39477,
         "name": "جوستينا هانى اسحق",
         "cat": "طالب",
         "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 85414,
-        "name": "جوليا ياسر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 94180,
         "name": "جيسيكا ابرام",
         "cat": "طالب",
         "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 86535,
-        "name": "ديفيد باسم جرجس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 78948,
-        "name": "صوفى اسحق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 79324,
         "name": "فيلوباتير هانى اسحق",
         "cat": "طالب",
         "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 76401,
         "name": "مارسلينو هانى نبيل",
         "cat": "طالب",
         "level": "2",
-        "total": 13,
-        "req": 12
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 87083,
         "name": "ملاك مجدى",
         "cat": "طالب",
         "level": "2",
-        "total": 15,
-        "req": 12
-      },
-      {
-        "code": 90991,
-        "name": "مينا روبير",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 99442,
         "name": "ناردين نادى",
         "cat": "طالب",
         "level": "2",
-        "total": 12,
-        "req": 12
-      }
-    ],
-    "كنيسة القديس ماربولس الرسول بالبساتين": [
-      {
-        "code": 73981,
-        "name": "أرسانى هانى جورجي ذكى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 19,
-        "req": 12
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 37273,
-        "name": "بافلي سامي فهيم رزق الله",
+        "code": 78948,
+        "name": "صوفى اسحق",
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
+      {
+        "code": 47575,
+        "name": "مينا هشام",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 31918,
+        "name": "امل مجدى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 44361,
+        "name": "ماريا بول",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 90991,
+        "name": "مينا روبير",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 86535,
+        "name": "ديفيد باسم جرجس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 62654,
+        "name": "بارثينيا اسحق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 82236,
+        "name": "بافلى اسحق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 85414,
+        "name": "جوليا ياسر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 59929,
+        "name": "كريستين سامح",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة القديس ماربولس الرسول بالبساتين": [
       {
         "code": 24917,
         "name": "جيسيكا ميشيل ناجى ميخائيل",
         "cat": "طالب",
         "level": "2",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 10230,
-        "name": "ديفيد مجدي نصير زكري",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 66182,
-        "name": "سيلفيا جاد الرب وهيب جاد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 20,
-        "req": 12
-      },
-      {
-        "code": 38572,
-        "name": "سيلينا حلمي ذكي عازر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 50145,
-        "name": "فيبي ايمن لمعي جرجس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 35548,
@@ -2775,23 +3676,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 21,
-        "req": 12
-      },
-      {
-        "code": 53689,
-        "name": "ماثيو ماجد نشأت حشمت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 52508,
-        "name": "ماروسكا مجدي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 85840,
@@ -2799,57 +3685,145 @@
         "cat": "طالب",
         "level": "2",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 50145,
+        "name": "فيبي ايمن لمعي جرجس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 10230,
+        "name": "ديفيد مجدي نصير زكري",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 73981,
+        "name": "أرسانى هانى جورجي ذكى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 20,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 38572,
+        "name": "سيلينا حلمي ذكي عازر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 34610,
+        "name": "سيلڤيا حلمي ذكي عازر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 37273,
+        "name": "بافلي سامي فهيم رزق الله",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 72265,
+        "name": "چوزفين عماد سيف المسيح",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 81147,
+        "name": "جونير البرت جرجس عبد الله",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 52508,
+        "name": "ماروسكا مجدي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 24690,
+        "name": "مارينا عطية فاهم عطية",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 66182,
+        "name": "سيلفيا جاد الرب وهيب جاد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 20,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 73725,
+        "name": "ميرولا وائل صادق حكيم",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 93273,
+        "name": "يوانا هاني جورجي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 53689,
+        "name": "ماثيو ماجد نشأت حشمت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       }
     ],
     "كنيسة القديس مارمرقس الرسول بالمعادي": [
-      {
-        "code": 16577,
-        "name": "جولى جوزيف",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 76588,
-        "name": "جونا جورج نزيه",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 22721,
-        "name": "رافايل عماد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
       {
         "code": 96945,
         "name": "شنودة لوقا",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 94978,
-        "name": "فيلوباتير بيشوى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 85289,
-        "name": "كيفين هانى",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 61381,
@@ -2857,15 +3831,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 41907,
-        "name": "ماري جون نزيه",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 97956,
@@ -2873,15 +3840,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
-      },
-      {
-        "code": 22245,
-        "name": "مهرائيل نادي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 98157,
@@ -2889,7 +3849,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 40736,
@@ -2897,219 +3858,111 @@
         "cat": "طالب",
         "level": "2",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 82437,
+        "name": "بولا چاك",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 22721,
+        "name": "رافايل عماد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 29969,
+        "name": "بافلي چورچ",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 85289,
+        "name": "كيفين هانى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 94978,
+        "name": "فيلوباتير بيشوى",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 76588,
+        "name": "جونا جورج نزيه",
+        "cat": "طالب",
+        "level": "2",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 41907,
+        "name": "ماري جون نزيه",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 16577,
+        "name": "جولى جوزيف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 22245,
+        "name": "مهرائيل نادي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       }
     ],
-    "كنيسة الملاك رافائيل بالمعادي الجديدة": [
+    "كنيسة الملاك ميخائيل بالمعادي": [
       {
-        "code": 43982,
-        "name": "ابرام ميلاد",
+        "code": 18953,
+        "name": "ميرولا مايكل نجدى",
         "cat": "طالب",
         "level": "2",
-        "total": 16,
-        "req": 12
-      },
-      {
-        "code": 92327,
-        "name": "ترنيم سعد لمعي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 20,
-        "req": 12
-      },
-      {
-        "code": 18606,
-        "name": "فيلوباتير القس اغسطينوس",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 98047,
-        "name": "كاراس تامر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
-      },
-      {
-        "code": 83236,
-        "name": "كاراس سمير",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 66327,
-        "name": "كاراس هاني",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 95402,
-        "name": "كارولين كامل",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
-      },
-      {
-        "code": 33527,
-        "name": "كيرلس صليب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 14017,
-        "name": "كيرلس طارق",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 81540,
-        "name": "ماريا وائل",
-        "cat": "طالب",
-        "level": "2",
-        "total": 13,
-        "req": 12
+        "total": 11,
+        "req": 12,
+        "status": "near"
       }
     ],
     "كنيسة الملكة هيلانة بعرب المعادي": [
-      {
-        "code": 29756,
-        "name": ".جوشوا ايهاب",
-        "cat": "طالب",
-        "level": "2",
-        "total": 16,
-        "req": 12
-      },
-      {
-        "code": 79207,
-        "name": "باسل نمر",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 87818,
-        "name": "بيشوي صفوت",
-        "cat": "طالب",
-        "level": "2",
-        "total": 15,
-        "req": 12
-      },
-      {
-        "code": 58523,
-        "name": "جورج مايكل",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 57799,
-        "name": "جوفاني مجدي",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
       {
         "code": 17400,
         "name": "جومانا مجدي",
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 49291,
-        "name": "جوي ادوارد",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 68322,
-        "name": "دانيال الطيب",
-        "cat": "موظف",
-        "level": "2",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 41538,
-        "name": "كرم مجدي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 93078,
-        "name": "كيرلس جرجس",
-        "cat": "موظف",
-        "level": "2",
-        "total": 11,
-        "req": 6
-      },
-      {
-        "code": 77230,
-        "name": "كيرلس سامح",
-        "cat": "موظف",
-        "level": "2",
-        "total": 13,
-        "req": 6
-      },
-      {
-        "code": 63451,
-        "name": "كيرلس شريف",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 74095,
-        "name": "كيرلس محسن",
-        "cat": "طالب",
-        "level": "2",
-        "total": 17,
-        "req": 12
-      },
-      {
-        "code": 11559,
-        "name": "كيرلس نبيل",
-        "cat": "موظف",
-        "level": "2",
-        "total": 10,
-        "req": 6
-      },
-      {
-        "code": 10956,
-        "name": "ماري سليمان",
-        "cat": "موظف",
-        "level": "2",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 16916,
-        "name": "ماريا مجدي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 30635,
@@ -3117,15 +3970,17 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 54527,
-        "name": "مريم ابادير",
+        "code": 16916,
+        "name": "ماريا مجدي",
         "cat": "طالب",
         "level": "2",
-        "total": 15,
-        "req": 12
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 60523,
@@ -3133,15 +3988,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
-        "req": 12
-      },
-      {
-        "code": 77463,
-        "name": "ميرولا امير",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 46529,
@@ -3149,23 +3997,8 @@
         "cat": "طالب",
         "level": "2",
         "total": 18,
-        "req": 12
-      },
-      {
-        "code": 41229,
-        "name": "نرمين سامي",
-        "cat": "طالب",
-        "level": "2",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 58516,
-        "name": "نعمان الجازولي",
-        "cat": "موظف",
-        "level": "2",
-        "total": 14,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 29228,
@@ -3173,7 +4006,107 @@
         "cat": "موظف",
         "level": "2",
         "total": 17,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 58523,
+        "name": "جورج مايكل",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 57799,
+        "name": "جوفاني مجدي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 68322,
+        "name": "دانيال الطيب",
+        "cat": "موظف",
+        "level": "2",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 69239,
+        "name": "شوقي وائل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 41538,
+        "name": "كرم مجدي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 93078,
+        "name": "كيرلس جرجس",
+        "cat": "موظف",
+        "level": "2",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 77230,
+        "name": "كيرلس سامح",
+        "cat": "موظف",
+        "level": "2",
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 63451,
+        "name": "كيرلس شريف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 74095,
+        "name": "كيرلس محسن",
+        "cat": "طالب",
+        "level": "2",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 11559,
+        "name": "كيرلس نبيل",
+        "cat": "موظف",
+        "level": "2",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 58516,
+        "name": "نعمان الجازولي",
+        "cat": "موظف",
+        "level": "2",
+        "total": 14,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 92702,
@@ -3181,7 +4114,80 @@
         "cat": "موظف",
         "level": "2",
         "total": 10,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 49291,
+        "name": "جوي ادوارد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 79207,
+        "name": "باسل نمر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 29756,
+        "name": "جوشوا ايهاب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 10956,
+        "name": "ماري سليمان",
+        "cat": "موظف",
+        "level": "2",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 87818,
+        "name": "بيشوي صفوت",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 54527,
+        "name": "مريم ابادير",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 41229,
+        "name": "نرمين سامي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 77463,
+        "name": "ميرولا امير",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       }
     ]
   }

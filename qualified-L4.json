@@ -1,41 +1,18 @@
 {
-  "generated": "2026-08-23T14:45:01.011Z",
+  "generated": "2026-08-24T14:16:19.779Z",
   "level": "4",
-  "totalQualified": 313,
+  "totalAllowed": 344,
   "churchCount": 14,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
-      {
-        "code": 80456,
-        "name": "أيمن وهبه",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 21025,
-        "name": "سالي حليم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 13700,
-        "name": "كيرلس أسامة",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
       {
         "code": 94891,
         "name": "كيرلس القمص",
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 62361,
@@ -43,23 +20,26 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 10893,
-        "name": "مهرائيل حليم",
+        "code": 80456,
+        "name": "أيمن وهبه",
         "cat": "موظف",
         "level": "4",
-        "total": 7,
-        "req": 6
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 51586,
-        "name": "مينا وجدي",
+        "code": 13700,
+        "name": "كيرلس أسامة",
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 35533,
@@ -67,25 +47,46 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 51586,
+        "name": "مينا وجدي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 21025,
+        "name": "سالي حليم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 10893,
+        "name": "مهرائيل حليم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الانبا انطونيوس بزهراء المعادي": [
-      {
-        "code": 12784,
-        "name": "ابانوب عادل فوزي جرجس",
-        "cat": "طالب",
-        "level": "4",
-        "total": 15,
-        "req": 12
-      },
       {
         "code": 17786,
         "name": "انجلا مينا جورج",
         "cat": "طالب",
         "level": "4",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 72702,
@@ -93,63 +94,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 73755,
-        "name": "بولا عماد رشدي حبشي",
-        "cat": "طالب",
-        "level": "4",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 47119,
-        "name": "تيموثي جودت عزيز منصور",
-        "cat": "طالب",
-        "level": "4",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 31384,
-        "name": "جورج عماد  عيد فهمي",
-        "cat": "طالب",
-        "level": "4",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 76854,
-        "name": "جوناثان علاء عيد فهمي",
-        "cat": "طالب",
-        "level": "4",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 67788,
-        "name": "ديفيد ملاك مكرم لويز",
-        "cat": "طالب",
-        "level": "4",
-        "total": 13,
-        "req": 12
-      },
-      {
-        "code": 41557,
-        "name": "رامز ميخائيل حامي جندي",
-        "cat": "طالب",
-        "level": "4",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 58855,
-        "name": "طونى أمير نبيل انطون",
-        "cat": "طالب",
-        "level": "4",
-        "total": 16,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 22013,
@@ -157,7 +103,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 87416,
@@ -165,23 +112,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 47628,
-        "name": "مارك رائف صفوت صادق",
-        "cat": "طالب",
-        "level": "4",
-        "total": 14,
-        "req": 12
-      },
-      {
-        "code": 70547,
-        "name": "مينا شريف سامي توفيق",
-        "cat": "طالب",
-        "level": "4",
-        "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 16179,
@@ -189,7 +121,98 @@
         "cat": "طالب",
         "level": "4",
         "total": 14,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 12784,
+        "name": "ابانوب عادل فوزي جرجس",
+        "cat": "طالب",
+        "level": "4",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 73755,
+        "name": "بولا عماد رشدي حبشي",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 47119,
+        "name": "تيموثي جودت عزيز منصور",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 31384,
+        "name": "جورج عماد  عيد فهمي",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 76854,
+        "name": "جوناثان علاء عيد فهمي",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 67788,
+        "name": "ديفيد ملاك مكرم لويز",
+        "cat": "طالب",
+        "level": "4",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 41557,
+        "name": "رامز ميخائيل حامي جندي",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 58855,
+        "name": "طونى أمير نبيل انطون",
+        "cat": "طالب",
+        "level": "4",
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 47628,
+        "name": "مارك رائف صفوت صادق",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 70547,
+        "name": "مينا شريف سامي توفيق",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 91920,
@@ -197,113 +220,19 @@
         "cat": "طالب",
         "level": "4",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       }
     ],
     "كنيسة الانبا بيشوي بزهراء المعادي": [
       {
-        "code": 25250,
-        "name": "ابانوب سامي أديب",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 65365,
-        "name": "اندرو عماد منير",
+        "code": 75357,
+        "name": "مريم كرم شوقي",
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
-      },
-      {
-        "code": 57706,
-        "name": "ايرينى نبيل كمال",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 67960,
-        "name": "باسم بسطا",
-        "cat": "موظف",
-        "level": "4",
-        "total": 10,
-        "req": 6
-      },
-      {
-        "code": 71173,
-        "name": "بسنت مجدي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 15,
-        "req": 6
-      },
-      {
-        "code": 40763,
-        "name": "بولا فتحي جاب الله",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 64629,
-        "name": "بيشوي جرجس رزق الله",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 15827,
-        "name": "بيشوي جميل قادر",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 12546,
-        "name": "بيشوي عايد مريد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 68424,
-        "name": "تريزا سمسم رمزي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 14885,
-        "name": "جرجس عاطف عزمي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 66881,
-        "name": "جوزيف مجدي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 11230,
-        "name": "حسني جمال",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 26011,
@@ -311,63 +240,26 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 93698,
-        "name": "رامى مرزق",
+        "code": 43599,
+        "name": "بيشوي تادرس فهمي",
         "cat": "موظف",
         "level": "4",
-        "total": 15,
-        "req": 6
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
-        "code": 80716,
-        "name": "ريموندا رزق مؤنس",
+        "code": 14885,
+        "name": "جرجس عاطف عزمي",
         "cat": "موظف",
         "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 37239,
-        "name": "سمير حنا",
-        "cat": "موظف",
-        "level": "4",
-        "total": 13,
-        "req": 6
-      },
-      {
-        "code": 22620,
-        "name": "سمير صابر",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 86328,
-        "name": "شيرين جمال عزيز",
-        "cat": "موظف",
-        "level": "4",
-        "total": 32,
-        "req": 6
-      },
-      {
-        "code": 56807,
-        "name": "فادى أسحق",
-        "cat": "موظف",
-        "level": "4",
-        "total": 35,
-        "req": 6
-      },
-      {
-        "code": 28348,
-        "name": "كاترين صليب اسحاق",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 66290,
@@ -375,31 +267,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 46449,
-        "name": "كيرلس جمال عزيز",
-        "cat": "موظف",
-        "level": "4",
-        "total": 11,
-        "req": 6
-      },
-      {
-        "code": 91983,
-        "name": "مارو رمزى سامى",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 71250,
-        "name": "مارينا بخيت",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 67098,
@@ -407,31 +276,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 20,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 23253,
-        "name": "ماريو عادل",
+        "code": 68424,
+        "name": "تريزا سمسم رمزي",
         "cat": "موظف",
         "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 75357,
-        "name": "مريم كرم شوقي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 20813,
-        "name": "منار كرم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 44872,
@@ -439,39 +294,26 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 54159,
-        "name": "مهرائيل فيكتور عادل",
+        "code": 57706,
+        "name": "ايرينى نبيل كمال",
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 17683,
-        "name": "ميلاد مريد",
+        "code": 71173,
+        "name": "بسنت مجدي",
         "cat": "موظف",
         "level": "4",
-        "total": 30,
-        "req": 6
-      },
-      {
-        "code": 17748,
-        "name": "مينا شنودة",
-        "cat": "موظف",
-        "level": "4",
-        "total": 48,
-        "req": 6
-      },
-      {
-        "code": 12633,
-        "name": "هاني جرجس",
-        "cat": "موظف",
-        "level": "4",
-        "total": 30,
-        "req": 6
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 83427,
@@ -479,7 +321,224 @@
         "cat": "موظف",
         "level": "4",
         "total": 9,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 25250,
+        "name": "ابانوب سامي أديب",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 65365,
+        "name": "اندرو عماد منير",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 67960,
+        "name": "باسم بسطا",
+        "cat": "موظف",
+        "level": "4",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 40763,
+        "name": "بولا فتحي جاب الله",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 64629,
+        "name": "بيشوي جرجس رزق الله",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 15827,
+        "name": "بيشوي جميل قادر",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 66881,
+        "name": "جوزيف مجدي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 11230,
+        "name": "حسني جمال",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 93698,
+        "name": "رامى مرزق",
+        "cat": "موظف",
+        "level": "4",
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 80716,
+        "name": "ريموندا رزق مؤنس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 37239,
+        "name": "سمير حنا",
+        "cat": "موظف",
+        "level": "4",
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 22620,
+        "name": "سمير صابر",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 86328,
+        "name": "شيرين جمال عزيز",
+        "cat": "موظف",
+        "level": "4",
+        "total": 32,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 56807,
+        "name": "فادى أسحق",
+        "cat": "موظف",
+        "level": "4",
+        "total": 35,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 28348,
+        "name": "كاترين صليب اسحاق",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 46449,
+        "name": "كيرلس جمال عزيز",
+        "cat": "موظف",
+        "level": "4",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 91983,
+        "name": "مارو رمزى سامى",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 71250,
+        "name": "مارينا بخيت",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 23253,
+        "name": "ماريو عادل",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 20813,
+        "name": "منار كرم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 54159,
+        "name": "مهرائيل فيكتور عادل",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 17683,
+        "name": "ميلاد مريد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 30,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 17748,
+        "name": "مينا شنودة",
+        "cat": "موظف",
+        "level": "4",
+        "total": 48,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 12633,
+        "name": "هاني جرجس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 30,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 53239,
@@ -487,7 +546,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 9,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 12546,
+        "name": "بيشوي عايد مريد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة السيدة العذراء مريم بالمعادي": [
@@ -497,7 +566,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 15146,
@@ -505,7 +575,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 26480,
@@ -513,7 +584,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 12,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 27160,
@@ -521,7 +593,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 76541,
@@ -529,7 +602,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 84043,
@@ -537,7 +611,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 50918,
@@ -545,7 +620,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 62304,
@@ -553,7 +629,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 9,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 32378,
+        "name": "جوزيف مدحت",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 98525,
@@ -561,7 +647,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 94375,
@@ -569,7 +656,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 33275,
@@ -577,7 +665,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 62145,
@@ -585,7 +674,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 19356,
@@ -593,7 +683,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 38504,
@@ -601,7 +692,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 10,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 32490,
@@ -609,7 +701,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 9,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 47679,
@@ -617,7 +710,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 40268,
@@ -625,7 +719,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 78051,
@@ -633,7 +728,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 13,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 79227,
@@ -641,7 +737,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 13686,
@@ -649,7 +746,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 86667,
@@ -657,7 +755,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 62023,
@@ -665,7 +764,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 29162,
@@ -673,7 +773,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 77609,
@@ -681,7 +782,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 35936,
@@ -689,7 +791,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 67415,
@@ -697,7 +800,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 18,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 13154,
@@ -705,7 +809,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 69320,
+        "name": "ماريا سمير",
+        "cat": "طالب",
+        "level": "4",
+        "total": 11,
+        "req": 12,
+        "status": "near"
       },
       {
         "code": 40030,
@@ -713,7 +827,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 27387,
@@ -721,7 +836,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 95408,
@@ -729,7 +845,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 86522,
@@ -737,7 +854,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 77474,
@@ -745,7 +863,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 63715,
@@ -753,7 +872,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 87746,
@@ -761,7 +881,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 12,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 20049,
@@ -769,7 +890,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 14679,
@@ -777,7 +899,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 66875,
@@ -785,7 +908,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 52389,
@@ -793,7 +917,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 12,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 49571,
@@ -801,7 +926,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 19602,
@@ -809,7 +935,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 53777,
@@ -817,7 +944,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 68329,
@@ -825,7 +953,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 19261,
@@ -833,7 +962,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 46807,
@@ -841,137 +971,28 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة السيدة العذراء مريم بدار السلام": [
-      {
-        "code": 51661,
-        "name": "ابانوب سمير بشاي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 13381,
-        "name": "ابرام رأفت نجيب",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 36661,
-        "name": "امير وائل ميلاد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 18046,
-        "name": "اندرو فكرى شوقي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 11,
-        "req": 6
-      },
       {
         "code": 28610,
         "name": "اوجيني اشرف حليم",
         "cat": "موظف",
         "level": "4",
         "total": 12,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 15602,
-        "name": "ايريني جميل صدقي",
+        "code": 43025,
+        "name": "رودانيا عادل بخيت",
         "cat": "موظف",
         "level": "4",
-        "total": 24,
-        "req": 6
-      },
-      {
-        "code": 31989,
-        "name": "ايفيلين اشرف حليم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 25,
-        "req": 6
-      },
-      {
-        "code": 22457,
-        "name": "بولا نبيل رياض",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 23339,
-        "name": "بيتر ثروت نعيم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 59704,
-        "name": "بيمن بدر كرمي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 19450,
-        "name": "جورج إبراهيم عزيز",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 35102,
-        "name": "جون إميل ثابت",
-        "cat": "موظف",
-        "level": "4",
-        "total": 30,
-        "req": 6
-      },
-      {
-        "code": 51428,
-        "name": "رشا عطية عبد السيد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 58346,
-        "name": "رومانى سامح متى",
-        "cat": "موظف",
-        "level": "4",
-        "total": 15,
-        "req": 6
-      },
-      {
-        "code": 10960,
-        "name": "سارة سمير بشاي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 20,
-        "req": 6
-      },
-      {
-        "code": 55167,
-        "name": "سيلفيا عماد حلمي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 26,
-        "req": 6
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 94341,
@@ -979,39 +1000,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
-      },
-      {
-        "code": 62827,
-        "name": "صبري عاطف صبري",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 59954,
         "name": "كرستين عادل ميخائيل",
         "cat": "موظف",
         "level": "4",
-        "total": 11,
-        "req": 6
-      },
-      {
-        "code": 35596,
-        "name": "مارينا رمسيس فهمي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 75957,
-        "name": "مارينا شاكر هنري",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 93075,
@@ -1019,15 +1018,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 63530,
-        "name": "ماريو ميخائيل حنا",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 39949,
@@ -1035,23 +1027,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 82698,
-        "name": "مايكل ميلاد سامي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 81152,
-        "name": "مريم عبد الملاك إبراهيم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 12,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 86740,
@@ -1059,7 +1036,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 35603,
@@ -1067,31 +1045,134 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 48856,
-        "name": "مينا عبد المسيح",
+        "code": 18046,
+        "name": "اندرو فكرى شوقي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 23339,
+        "name": "بيتر ثروت نعيم",
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 38544,
-        "name": "مينا عماد صبحي",
+        "code": 59704,
+        "name": "بيمن بدر كرمي",
         "cat": "موظف",
         "level": "4",
-        "total": 36,
-        "req": 6
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 72673,
-        "name": "مينا ميشيل زكي",
+        "code": 19450,
+        "name": "جورج إبراهيم عزيز",
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 58346,
+        "name": "رومانى سامح متى",
+        "cat": "موظف",
+        "level": "4",
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 82698,
+        "name": "مايكل ميلاد سامي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 15602,
+        "name": "ايريني جميل صدقي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 24,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 31989,
+        "name": "ايفيلين اشرف حليم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 25,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 55167,
+        "name": "سيلفيا عماد حلمي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 26,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 51428,
+        "name": "رشا عطية عبد السيد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 10960,
+        "name": "سارة سمير بشاي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 20,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 35596,
+        "name": "مارينا رمسيس فهمي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 75957,
+        "name": "مارينا شاكر هنري",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 81152,
+        "name": "مريم عبد الملاك إبراهيم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 48553,
@@ -1099,15 +1180,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 11856,
-        "name": "يوساب ابراهيم عزيز",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 66078,
@@ -1115,7 +1189,125 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 51661,
+        "name": "ابانوب سمير بشاي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 73735,
+        "name": "ابانوب ملاك ناجي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 13381,
+        "name": "ابرام رأفت نجيب",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 36661,
+        "name": "امير وائل ميلاد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 22457,
+        "name": "بولا نبيل رياض",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 35102,
+        "name": "جون إميل ثابت",
+        "cat": "موظف",
+        "level": "4",
+        "total": 30,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 62827,
+        "name": "صبري عاطف صبري",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 63530,
+        "name": "ماريو ميخائيل حنا",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 55615,
+        "name": "مينا رافت نجيب",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 48856,
+        "name": "مينا عبد المسيح",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 38544,
+        "name": "مينا عماد صبحي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 36,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 72673,
+        "name": "مينا ميشيل زكي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 11856,
+        "name": "يوساب ابراهيم عزيز",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 99268,
@@ -1123,7 +1315,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الشهيد ابي سيفين والانبا رويس بحدائق المعادي": [
@@ -1133,7 +1326,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 37207,
@@ -1141,7 +1335,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 48037,
+        "name": "بولا ماجد منير",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 53960,
@@ -1149,7 +1353,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 11,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 66940,
@@ -1157,7 +1362,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 27,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 67560,
@@ -1165,7 +1371,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 16,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 81682,
@@ -1173,7 +1380,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 57758,
@@ -1181,7 +1389,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 99984,
@@ -1189,7 +1398,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 46192,
@@ -1197,7 +1407,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 18,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 38406,
+        "name": "مارتينا صفوت فام",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 54740,
@@ -1205,7 +1425,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 59706,
+        "name": "ماريو محفوظ حبيب",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 47484,
@@ -1213,7 +1443,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 13,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 51800,
+        "name": "ميرنا عصام",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 54978,
@@ -1221,7 +1461,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 34211,
@@ -1229,7 +1470,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 57506,
@@ -1237,7 +1479,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 25693,
@@ -1245,7 +1488,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 76328,
@@ -1253,7 +1497,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 26946,
@@ -1261,321 +1506,19 @@
         "cat": "موظف",
         "level": "4",
         "total": 23,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الشهيد مارجرجس بحدائق المعادي": [
       {
-        "code": 79346,
-        "name": "ابانوب سمير",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 46824,
-        "name": "ابانوب منير",
-        "cat": "موظف",
-        "level": "4",
-        "total": 19,
-        "req": 6
-      },
-      {
-        "code": 76296,
-        "name": "ابانوب نبيل كمال",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 12235,
-        "name": "اغاثون عباس",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 46121,
-        "name": "أميرة موسي",
+        "code": 11300,
+        "name": "مينا هاني لمعي",
         "cat": "موظف",
         "level": "4",
         "total": 15,
-        "req": 6
-      },
-      {
-        "code": 58987,
-        "name": "بولا رياض شحاتة",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 57494,
-        "name": "بيتر ميلاد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 27414,
-        "name": "بيتر نادي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 14,
-        "req": 6
-      },
-      {
-        "code": 96609,
-        "name": "تريزا طلعت",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 26936,
-        "name": "جرجس عبده اديب",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 23778,
-        "name": "جوليا اكرامى",
-        "cat": "موظف",
-        "level": "4",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 50785,
-        "name": "جينا وجدي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 39267,
-        "name": "دميانة ابراهيم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 16789,
-        "name": "دميانة رمزي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 40175,
-        "name": "ديفيد شنودة الفي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 19216,
-        "name": "روز ملاك ملاك عطالله",
-        "cat": "موظف",
-        "level": "4",
-        "total": 10,
-        "req": 6
-      },
-      {
-        "code": 37046,
-        "name": "ساره فوزي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 79494,
-        "name": "ساندي سامح",
-        "cat": "موظف",
-        "level": "4",
-        "total": 28,
-        "req": 6
-      },
-      {
-        "code": 31374,
-        "name": "سهير مسعود",
-        "cat": "موظف",
-        "level": "4",
-        "total": 16,
-        "req": 6
-      },
-      {
-        "code": 89334,
-        "name": "فادي اندراوس حنا يونان",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 44478,
-        "name": "فيفيان فايق",
-        "cat": "موظف",
-        "level": "4",
-        "total": 15,
-        "req": 6
-      },
-      {
-        "code": 82005,
-        "name": "كاترين نزيه",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 72198,
-        "name": "كرياكوس القس توماس",
-        "cat": "موظف",
-        "level": "4",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 23150,
-        "name": "كمال خيري",
-        "cat": "موظف",
-        "level": "4",
-        "total": 14,
-        "req": 6
-      },
-      {
-        "code": 26896,
-        "name": "مارتينا عاطف جبره",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 22580,
-        "name": "مارتينا عريان",
-        "cat": "موظف",
-        "level": "4",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 17685,
-        "name": "ماري منير",
-        "cat": "موظف",
-        "level": "4",
-        "total": 13,
-        "req": 6
-      },
-      {
-        "code": 92945,
-        "name": "ماريا ايمن سمير عبدالحكيم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 15,
-        "req": 6
-      },
-      {
-        "code": 32509,
-        "name": "ماريان عاطف",
-        "cat": "موظف",
-        "level": "4",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 53430,
-        "name": "ماريز شنودة",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 62406,
-        "name": "مارينا منير",
-        "cat": "موظف",
-        "level": "4",
-        "total": 13,
-        "req": 6
-      },
-      {
-        "code": 55537,
-        "name": "مارينا ميشيل ابراهيم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 80131,
-        "name": "مارينا ميشيل ميلاد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 12,
-        "req": 6
-      },
-      {
-        "code": 45061,
-        "name": "ماريهان رمزي زاخر",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 30843,
-        "name": "مايكل وليم",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 79623,
-        "name": "ملكة صفوت",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 57649,
-        "name": "مهرائيل عيسي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 88665,
-        "name": "مورين نبيل",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 43746,
-        "name": "ميرنا ثابت",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 11368,
@@ -1583,39 +1526,44 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 81809,
-        "name": "مينا خيري",
+        "code": 12235,
+        "name": "اغاثون عباس",
         "cat": "موظف",
         "level": "4",
-        "total": 6,
-        "req": 6
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 60765,
-        "name": "مينا منير",
+        "code": 16789,
+        "name": "دميانة رمزي",
         "cat": "موظف",
         "level": "4",
-        "total": 6,
-        "req": 6
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 34925,
-        "name": "مينا نادي",
+        "code": 17685,
+        "name": "ماري منير",
         "cat": "موظف",
         "level": "4",
-        "total": 6,
-        "req": 6
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 11300,
-        "name": "مينا هاني لمعي",
+        "code": 19216,
+        "name": "روز ملاك ملاك عطالله",
         "cat": "موظف",
         "level": "4",
-        "total": 15,
-        "req": 6
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 20751,
@@ -1623,15 +1571,359 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 95505,
-        "name": "يوستينا ماجد",
+        "code": 22580,
+        "name": "مارتينا عريان",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 23150,
+        "name": "كمال خيري",
+        "cat": "موظف",
+        "level": "4",
+        "total": 14,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 23778,
+        "name": "جوليا اكرامى",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 26190,
+        "name": "بافلي اكرامي الفي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 26896,
+        "name": "مارتينا عاطف جبره",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 26936,
+        "name": "جرجس عبده اديب",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 27414,
+        "name": "بيتر نادي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 14,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 30843,
+        "name": "مايكل وليم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 31374,
+        "name": "سهير مسعود",
+        "cat": "موظف",
+        "level": "4",
+        "total": 16,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 31612,
+        "name": "ماريا ثروت",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 32509,
+        "name": "ماريان عاطف",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 34925,
+        "name": "مينا نادي",
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 37046,
+        "name": "ساره فوزي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 39267,
+        "name": "دميانة ابراهيم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 40175,
+        "name": "ديفيد شنودة الفي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 43746,
+        "name": "ميرنا ثابت",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 44478,
+        "name": "فيفيان فايق",
+        "cat": "موظف",
+        "level": "4",
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 45061,
+        "name": "ماريهان رمزي زاخر",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 46121,
+        "name": "أميرة موسي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 46824,
+        "name": "ابانوب منير",
+        "cat": "موظف",
+        "level": "4",
+        "total": 19,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 50346,
+        "name": "جومانة ماكن",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 50785,
+        "name": "جينا وجدي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 52071,
+        "name": "كارولين نزيه",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 53430,
+        "name": "ماريز شنودة",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 55537,
+        "name": "مارينا ميشيل ابراهيم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 57494,
+        "name": "بيتر ميلاد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 57649,
+        "name": "مهرائيل عيسي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 58987,
+        "name": "بولا رياض شحاتة",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 60765,
+        "name": "مينا منير",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 62406,
+        "name": "مارينا منير",
+        "cat": "موظف",
+        "level": "4",
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 70795,
+        "name": "امير نبيل",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 72198,
+        "name": "كرياكوس القس توماس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 76296,
+        "name": "ابانوب نبيل كمال",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 79346,
+        "name": "ابانوب سمير",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 79494,
+        "name": "ساندي سامح",
+        "cat": "موظف",
+        "level": "4",
+        "total": 28,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 79623,
+        "name": "ملكة صفوت",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 80131,
+        "name": "مارينا ميشيل ميلاد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 81809,
+        "name": "مينا خيري",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 82005,
+        "name": "كاترين نزيه",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 88202,
@@ -1639,7 +1931,53 @@
         "cat": "موظف",
         "level": "4",
         "total": 49,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 88665,
+        "name": "مورين نبيل",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 89334,
+        "name": "فادي اندراوس حنا يونان",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 92945,
+        "name": "ماريا ايمن سمير عبدالحكيم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 95505,
+        "name": "يوستينا ماجد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 96609,
+        "name": "تريزا طلعت",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الشهيد مارجرجس بكوتسيكا": [
@@ -1649,7 +1987,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 29749,
@@ -1657,7 +1996,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 94394,
@@ -1665,7 +2005,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 66016,
@@ -1673,7 +2014,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 14,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 64545,
@@ -1681,7 +2023,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 12,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 87933,
@@ -1689,15 +2032,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 88730,
         "name": "مارينا حبيب فرج",
         "cat": "موظف",
         "level": "4",
-        "total": 12,
-        "req": 6
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 62314,
@@ -1705,7 +2050,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 73041,
@@ -1713,7 +2059,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 87256,
@@ -1721,7 +2068,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 15257,
@@ -1729,17 +2077,19 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الشهيد مارمينا والقديس اغسطينوس بدرا السلام": [
       {
-        "code": 87456,
-        "name": "ارميا مكرم",
+        "code": 59443,
+        "name": "ابانوب وائل",
         "cat": "موظف",
         "level": "4",
-        "total": 7,
-        "req": 6
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 40891,
@@ -1747,7 +2097,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 95747,
@@ -1755,7 +2106,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 27760,
+        "name": "امير حسام",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 29929,
@@ -1763,7 +2124,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 97557,
@@ -1771,7 +2133,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 42913,
@@ -1779,7 +2142,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 57817,
@@ -1787,7 +2151,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 40163,
@@ -1795,15 +2160,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
-      },
-      {
-        "code": 61484,
-        "name": "بيشوي عادل",
-        "cat": "موظف",
-        "level": "4",
-        "total": 11,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 57885,
@@ -1811,7 +2169,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 62985,
@@ -1819,7 +2178,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 23645,
@@ -1827,7 +2187,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 70754,
@@ -1835,7 +2196,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 93588,
@@ -1843,7 +2205,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 28874,
@@ -1851,7 +2214,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 76883,
@@ -1859,7 +2223,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 17988,
@@ -1867,15 +2232,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
-      },
-      {
-        "code": 32080,
-        "name": "فادي اسامة",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 41582,
@@ -1883,7 +2241,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 18982,
@@ -1891,7 +2250,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 38296,
@@ -1899,7 +2259,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 44496,
@@ -1907,7 +2268,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 84460,
@@ -1915,7 +2277,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 32045,
+        "name": "لورا عماد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 74473,
@@ -1923,7 +2295,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 72341,
@@ -1931,7 +2304,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 87092,
@@ -1939,7 +2313,26 @@
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 33000,
+        "name": "مريم عادل حسني",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 49178,
+        "name": "مريم عادل يوسف",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 44054,
@@ -1947,7 +2340,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 39540,
@@ -1955,7 +2349,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 72000,
@@ -1963,7 +2358,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 10347,
@@ -1971,7 +2367,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 28546,
@@ -1979,7 +2376,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 72426,
+        "name": "هيلانة فؤاد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 47621,
@@ -1987,17 +2394,118 @@
         "cat": "موظف",
         "level": "4",
         "total": 10,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 32080,
+        "name": "فادي اسامة",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 61484,
+        "name": "بيشوي عادل",
+        "cat": "موظف",
+        "level": "4",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 46075,
+        "name": "سرابيون ميخائيل",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 87456,
+        "name": "ارميا مكرم",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الصليب المقدس بطرة": [
       {
-        "code": 27142,
-        "name": "اميرة سعيد طوبيا",
+        "code": 31811,
+        "name": "ديانا ميشيل",
         "cat": "موظف",
         "level": "4",
-        "total": 9,
-        "req": 6
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 99857,
+        "name": "فيبى نصرى",
+        "cat": "طالب",
+        "level": "4",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 94990,
+        "name": "ليزا البير فوزي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 41818,
+        "name": "مريم مدحت رمسيس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 34338,
+        "name": "كيرلس رضا جرجس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 79502,
+        "name": "مايكل البير فوزي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 33021,
+        "name": "مينا جرجس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 28984,
+        "name": "نبيل شرين",
+        "cat": "موظف",
+        "level": "4",
+        "total": 12,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 14660,
@@ -2005,15 +2513,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 79719,
-        "name": "بيير اشرف",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 17195,
@@ -2021,87 +2522,89 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 31811,
-        "name": "ديانا ميشيل",
+        "code": 79719,
+        "name": "بيير اشرف",
         "cat": "موظف",
         "level": "4",
-        "total": 8,
-        "req": 6
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 27142,
+        "name": "اميرة سعيد طوبيا",
+        "cat": "موظف",
+        "level": "4",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 84017,
         "name": "فيفيان نسيم لبيب",
         "cat": "موظف",
         "level": "4",
-        "total": 9,
-        "req": 6
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 11014,
         "name": "كرستين ابراهيم",
         "cat": "موظف",
         "level": "4",
-        "total": 6,
-        "req": 6
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 34338,
-        "name": "كيرلس رضا جرجس",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 94990,
-        "name": "ليزا البير فوزي",
-        "cat": "موظف",
+        "code": 30044,
+        "name": "كيرلس صموئيل",
+        "cat": "طالب",
         "level": "4",
         "total": 11,
-        "req": 6
+        "req": 12,
+        "status": "near"
       },
       {
-        "code": 79502,
-        "name": "مايكل البير فوزي",
+        "code": 75740,
+        "name": "ماجدة صبحي سمعان",
         "cat": "موظف",
         "level": "4",
-        "total": 11,
-        "req": 6
+        "total": 5,
+        "req": 6,
+        "status": "near"
       },
       {
         "code": 75158,
         "name": "مجدلين نهرو مرزوق",
         "cat": "موظف",
         "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 41818,
-        "name": "مريم مدحت رمسيس",
-        "cat": "موظف",
-        "level": "4",
-        "total": 11,
-        "req": 6
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 76937,
         "name": "مينا امير يوسف",
         "cat": "موظف",
         "level": "4",
-        "total": 6,
-        "req": 6
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 28984,
-        "name": "نبيل شرين",
+        "code": 77714,
+        "name": "بيتر مجدي",
         "cat": "موظف",
         "level": "4",
-        "total": 11,
-        "req": 6
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 73775,
@@ -2109,97 +2612,19 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة القديس ماربولس الرسول بالبساتين": [
-      {
-        "code": 79861,
-        "name": "بولس كنعان بولس",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 98745,
-        "name": "بيشوي عاطف وليم عزيز",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 33569,
-        "name": "توماس عياد فلتاؤس عويضه",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 71432,
-        "name": "جاكلين رزق نظير فندي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 10,
-        "req": 6
-      },
-      {
-        "code": 78056,
-        "name": "ريهام ثروت ظريف",
-        "cat": "طالب",
-        "level": "4",
-        "total": 12,
-        "req": 12
-      },
       {
         "code": 67366,
         "name": "سارة جميل زكريا عوض",
         "cat": "موظف",
         "level": "4",
         "total": 33,
-        "req": 6
-      },
-      {
-        "code": 76864,
-        "name": "سمير صبري إبراهيم وهيب",
-        "cat": "موظف",
-        "level": "4",
-        "total": 25,
-        "req": 6
-      },
-      {
-        "code": 33343,
-        "name": "عماد سمير مسعد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 67733,
-        "name": "مادونا سمير مهني فندي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 18,
-        "req": 6
-      },
-      {
-        "code": 23637,
-        "name": "مريم ايمن لمعي جرجس",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 17427,
-        "name": "مريم جميل زكريا عوض",
-        "cat": "طالب",
-        "level": "4",
-        "total": 12,
-        "req": 12
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 53097,
@@ -2207,15 +2632,107 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 32934,
-        "name": "هلال نشأت راغب دوس",
+        "code": 82926,
+        "name": "مينا مجدي زكريا عوض",
         "cat": "موظف",
         "level": "4",
-        "total": 11,
-        "req": 6
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 23637,
+        "name": "مريم ايمن لمعي جرجس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 67733,
+        "name": "مادونا سمير مهني فندي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 18,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 71432,
+        "name": "جاكلين رزق نظير فندي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 10,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 76864,
+        "name": "سمير صبري إبراهيم وهيب",
+        "cat": "موظف",
+        "level": "4",
+        "total": 25,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 61020,
+        "name": "مارتينا مجدي صابر فاكيوس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 33569,
+        "name": "توماس عياد فلتاؤس عويضه",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 68637,
+        "name": "اندرو تيتو جورج توفيق",
+        "cat": "موظف",
+        "level": "4",
+        "total": 5,
+        "req": 6,
+        "status": "near"
+      },
+      {
+        "code": 17427,
+        "name": "مريم جميل زكريا عوض",
+        "cat": "طالب",
+        "level": "4",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 79861,
+        "name": "بولس كنعان بولس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 98745,
+        "name": "بيشوي عاطف وليم عزيز",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 85883,
@@ -2223,33 +2740,73 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 33343,
+        "name": "عماد سمير مسعد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 32934,
+        "name": "هلال نشأت راغب دوس",
+        "cat": "موظف",
+        "level": "4",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 78056,
+        "name": "ريهام ثروت ظريف",
+        "cat": "طالب",
+        "level": "4",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       }
     ],
     "كنيسة القديس مارمرقس الرسول بالمعادي": [
+      {
+        "code": 90931,
+        "name": "كريستين رائف",
+        "cat": "طالب",
+        "level": "4",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 42748,
+        "name": "شيري لوقا",
+        "cat": "طالب",
+        "level": "4",
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
       {
         "code": 47809,
         "name": "أمير أمير سميح",
         "cat": "طالب",
         "level": "4",
         "total": 15,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 59730,
-        "name": "أندرو سامح",
+        "code": 70426,
+        "name": "أمير نادي نجيب",
         "cat": "طالب",
         "level": "4",
-        "total": 12,
-        "req": 12
-      },
-      {
-        "code": 78587,
-        "name": "بريتني سامح عدلي",
-        "cat": "طالب",
-        "level": "4",
-        "total": 12,
-        "req": 12
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 47700,
@@ -2257,7 +2814,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 49961,
@@ -2265,7 +2823,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 34538,
@@ -2273,23 +2832,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 14,
-        "req": 12
-      },
-      {
-        "code": 48409,
-        "name": "روز رفعت اسحق",
-        "cat": "موظف",
-        "level": "4",
-        "total": 9,
-        "req": 6
-      },
-      {
-        "code": 12575,
-        "name": "غادة فوزي سعيد انطون",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 71714,
@@ -2297,23 +2841,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 9,
-        "req": 6
-      },
-      {
-        "code": 32193,
-        "name": "فيرينا سامح",
-        "cat": "موظف",
-        "level": "4",
-        "total": 8,
-        "req": 6
-      },
-      {
-        "code": 90931,
-        "name": "كريستين رائف",
-        "cat": "طالب",
-        "level": "4",
-        "total": 15,
-        "req": 12
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 54033,
@@ -2321,7 +2850,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 12,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 20712,
@@ -2329,7 +2859,8 @@
         "cat": "طالب",
         "level": "4",
         "total": 46,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 96922,
@@ -2337,15 +2868,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 18,
-        "req": 6
-      },
-      {
-        "code": 14396,
-        "name": "مارييت نزيه وصفي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 14,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 15562,
@@ -2353,7 +2877,8 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 91456,
@@ -2361,65 +2886,64 @@
         "cat": "طالب",
         "level": "4",
         "total": 16,
-        "req": 12
-      }
-    ],
-    "كنيسة القديس ماريوحنا المعمدان بالمعراج": [
+        "req": 12,
+        "status": "qualified"
+      },
       {
-        "code": 23384,
-        "name": "ابانوب جميل",
+        "code": 78587,
+        "name": "بريتني سامح عدلي",
         "cat": "طالب",
         "level": "4",
-        "total": 14,
-        "req": 12
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 66172,
-        "name": "ابرام يوسف",
+        "code": 48409,
+        "name": "روز رفعت اسحق",
         "cat": "موظف",
         "level": "4",
-        "total": 15,
-        "req": 6
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 41285,
-        "name": "بيشوي اشرف",
+        "code": 12575,
+        "name": "غادة فوزي سعيد انطون",
         "cat": "موظف",
         "level": "4",
-        "total": 11,
-        "req": 6
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 81175,
-        "name": "جاكوب ايمن",
-        "cat": "طالب",
-        "level": "4",
-        "total": 15,
-        "req": 12
-      },
-      {
-        "code": 49530,
-        "name": "جيوفاني ايمن",
-        "cat": "ثانوية",
-        "level": "4",
-        "total": 13,
-        "req": 6
-      },
-      {
-        "code": 61910,
-        "name": "فادي اشرف",
+        "code": 32193,
+        "name": "فيرينا سامح",
         "cat": "موظف",
         "level": "4",
         "total": 8,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
+      {
+        "code": 14396,
+        "name": "مارييت نزيه وصفي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 14,
+        "req": 6,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة القديس ماريوحنا المعمدان بالمعراج": [
       {
         "code": 50900,
         "name": "فيدور فادي",
         "cat": "طالب",
         "level": "4",
         "total": 18,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 52632,
@@ -2427,15 +2951,26 @@
         "cat": "طالب",
         "level": "4",
         "total": 18,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
       },
       {
-        "code": 94390,
-        "name": "ماركو سامي",
-        "cat": "موظف",
+        "code": 23384,
+        "name": "ابانوب جميل",
+        "cat": "طالب",
         "level": "4",
-        "total": 19,
-        "req": 6
+        "total": 14,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 81175,
+        "name": "جاكوب ايمن",
+        "cat": "طالب",
+        "level": "4",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
       },
       {
         "code": 15418,
@@ -2443,49 +2978,64 @@
         "cat": "طالب",
         "level": "4",
         "total": 13,
-        "req": 12
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 66172,
+        "name": "ابرام يوسف",
+        "cat": "موظف",
+        "level": "4",
+        "total": 15,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 61910,
+        "name": "فادي اشرف",
+        "cat": "موظف",
+        "level": "4",
+        "total": 8,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 41285,
+        "name": "بيشوي اشرف",
+        "cat": "موظف",
+        "level": "4",
+        "total": 11,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 49530,
+        "name": "جيوفاني ايمن",
+        "cat": "ثانوية",
+        "level": "4",
+        "total": 13,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 94390,
+        "name": "ماركو سامي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 19,
+        "req": 6,
+        "status": "qualified"
       }
     ],
     "كنيسة الملكة هيلانة بعرب المعادي": [
       {
-        "code": 73141,
-        "name": "ابرام عادل",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 43962,
-        "name": "اغابي ميلاد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 74433,
-        "name": "انطون ميلاد",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
-      },
-      {
-        "code": 82015,
-        "name": "جورج ايهاب",
+        "code": 33633,
+        "name": "ماريز شريف",
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
-      },
-      {
-        "code": 61758,
-        "name": "راندا وجيه",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 43863,
@@ -2493,31 +3043,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
-        "code": 97823,
-        "name": "فادي هاني",
+        "code": 43962,
+        "name": "اغابي ميلاد",
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
-      },
-      {
-        "code": 33633,
-        "name": "ماريز شريف",
-        "cat": "موظف",
-        "level": "4",
-        "total": 7,
-        "req": 6
-      },
-      {
-        "code": 63375,
-        "name": "مارينا مجدي",
-        "cat": "موظف",
-        "level": "4",
-        "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 54178,
@@ -2525,7 +3061,53 @@
         "cat": "موظف",
         "level": "4",
         "total": 6,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 63375,
+        "name": "مارينا مجدي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 61758,
+        "name": "راندا وجيه",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 74433,
+        "name": "انطون ميلاد",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 82015,
+        "name": "جورج ايهاب",
+        "cat": "موظف",
+        "level": "4",
+        "total": 7,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 97823,
+        "name": "فادي هاني",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
       },
       {
         "code": 85845,
@@ -2533,7 +3115,17 @@
         "cat": "موظف",
         "level": "4",
         "total": 7,
-        "req": 6
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 73141,
+        "name": "ابرام عادل",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
       }
     ]
   }

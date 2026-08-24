@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-24T08:38:38.361Z",
+  "generated": "2026-08-24T14:16:19.773Z",
   "level": "3",
-  "totalAllowed": 339,
+  "totalAllowed": 337,
   "churchCount": 14,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
@@ -84,15 +84,6 @@
         "level": "3",
         "total": 12,
         "req": 12,
-        "status": "qualified"
-      },
-      {
-        "code": 30773,
-        "name": "فردوس فرنسيس",
-        "cat": "ثانوية",
-        "level": "3",
-        "total": 6,
-        "req": 6,
         "status": "qualified"
       },
       {
@@ -2004,7 +1995,7 @@
         "name": "البرتو يونان اسحق",
         "cat": "طالب",
         "level": "3",
-        "total": 25,
+        "total": 26,
         "req": 12,
         "status": "qualified"
       },
@@ -2672,6 +2663,15 @@
         "status": "qualified"
       },
       {
+        "code": 59730,
+        "name": "أندرو سامح",
+        "cat": "طالب",
+        "level": "3",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
         "code": 51337,
         "name": "بيير ايمن مسعد",
         "cat": "ثانوية",
@@ -2827,29 +2827,11 @@
     ],
     "كنيسة الملاك رافائيل بالمعادي الجديدة": [
       {
-        "code": 44530,
-        "name": "كيرلس القس اغسطينوس",
-        "cat": "طالب",
-        "level": "3",
-        "total": 12,
-        "req": 12,
-        "status": "qualified"
-      },
-      {
-        "code": 24265,
-        "name": "مارتينا وائل غالى",
-        "cat": "طالب",
-        "level": "3",
-        "total": 13,
-        "req": 12,
-        "status": "qualified"
-      },
-      {
         "code": 47836,
         "name": "شادي كامل كمال (ميشو)",
         "cat": "موظف",
         "level": "3",
-        "total": 10,
+        "total": 7,
         "req": 6,
         "status": "qualified"
       }
