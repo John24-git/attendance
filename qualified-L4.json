@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-24T14:49:21.671Z",
+  "generated": "2026-08-24T14:55:57.712Z",
   "level": "4",
-  "totalAllowed": 344,
+  "totalAllowed": 345,
   "churchCount": 14,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
@@ -1096,6 +1096,15 @@
       {
         "code": 82698,
         "name": "مايكل ميلاد سامي",
+        "cat": "موظف",
+        "level": "4",
+        "total": 6,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
+        "code": 82042,
+        "name": "يوسف جرجس حليم",
         "cat": "موظف",
         "level": "4",
         "total": 6,
