@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#800000">
+<title>شمامسة ٢٠٢٦ — مطرانية المعادي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Literata:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Tajawal',sans-serif;color:#1b1c1a;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+
+/* ══ HOME SCREEN ══ */
+.home-bg{position:fixed;inset:0;background:linear-gradient(160deg,#800000 0%,#570000 50%,#3d0000 100%);z-index:0}
+.home-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 25% 75%,rgba(254,214,91,.07),transparent 55%),radial-gradient(circle at 75% 25%,rgba(255,255,255,.04),transparent 45%)}
+#homeScreen{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;text-align:center}
+
+/* ══ PORTAL SCREEN ══ */
+#portalScreen{display:none;position:relative;z-index:1;min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px}
+.portal-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;margin-top:28px}
+.pbtn{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:16px;padding:16px 20px;color:#fff;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:.15s;text-align:right;width:100%}
+.pbtn:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);transform:translateY(-1px)}
+.pbtn:active{transform:scale(.98)}
+.pbtn-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.pbtn-sub{font-size:10px;font-weight:700;color:rgba(255,255,255,.45);margin-top:2px}
+.gold{background:rgba(254,214,91,.2)}
+.blue{background:rgba(100,160,255,.2)}
+.green{background:rgba(80,200,120,.2)}
+.red{background:rgba(220,80,80,.2)}
+
+/* ══ LOGIN OVERLAY ══ */
+#loginOv{position:fixed;inset:0;z-index:999;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
+.login-sheet{background:#fbf9f5;width:100%;max-width:600px;border-radius:24px 24px 0 0;padding:24px 24px 40px;box-shadow:0 -8px 40px rgba(0,0,0,.2)}
+.login-handle{width:40px;height:4px;background:#e2bfb9;border-radius:4px;margin:0 auto 22px}
+.login-inp{width:100%;background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:14px;padding:13px 16px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;color:#1b1c1a;outline:none;transition:.15s;margin-bottom:12px}
+.login-inp:focus{border-color:#800000;background:#fff;box-shadow:0 0 0 3px rgba(128,0,0,.08)}
+.login-lbl{font-size:10px;font-weight:800;color:#5a413d;letter-spacing:.12em;margin-bottom:6px;display:block}
+.login-err{display:none;background:#fff5f5;border:1px solid #fca5a5;color:#ba1a1a;border-radius:10px;padding:9px 14px;font-size:12px;font-weight:700;text-align:center;margin-bottom:12px}
+.login-btns{display:flex;gap:10px;margin-top:4px}
+.btn-cancel{flex:1;padding:13px;border-radius:14px;background:#efeeea;border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;color:#5a413d;cursor:pointer}
+.btn-login{flex:2;padding:13px;border-radius:14px;background:linear-gradient(135deg,#800000,#570000);border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:900;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(128,0,0,.25)}
+.btn-login:hover{opacity:.92}
+
+/* ══ SHARED ══ */
+.spin{display:inline-block;width:20px;height:20px;border:2.5px solid rgba(87,0,0,.2);border-top-color:#800000;border-radius:50%;animation:sp .7s linear infinite}
+.spin-w{border-color:rgba(255,255,255,.3);border-top-color:#fff}
+@keyframes sp{to{transform:rotate(360deg)}}
+.logout-btn{margin-top:20px;background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;padding:8px 18px;border-radius:20px;transition:.15s}
+.logout-btn:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.8)}
+.foot{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.15);font-size:10px;font-weight:600;letter-spacing:.05em;z-index:1;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="home-bg"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:400px;font-weight:900;color:rgba(255,255,255,.025);pointer-events:none;user-select:none;font-family:Tajawal,sans-serif;line-height:1">✝</div></div>
+
+<!-- ══ HOME ═══════════════════════════════════════════════════ -->
+<div id="homeScreen">
+  <div style="width:84px;height:84px;background:rgba(254,214,91,.15);border:2px solid rgba(254,214,91,.3);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:42px;margin-bottom:22px;backdrop-filter:blur(8px)">⛪</div>
+  <div style="font-size:10px;font-weight:800;letter-spacing:.2em;color:rgba(254,214,91,.65);margin-bottom:10px">مهرجان شمامسة ٢٠٢٦</div>
+  <h1 style="font-family:'Literata',serif;font-size:30px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:8px">مطرانية المعادي</h1>
+  <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:44px;line-height:1.7">سجل حضور قداسات الأحد<br>للشمامسة والشماسات</p>
+  <button onclick="openLogin()" style="display:flex;align-items:center;gap:10px;background:rgba(254,214,91,.9);color:#570000;border:none;padding:16px 36px;border-radius:16px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 8px 24px rgba(254,214,91,.25);transition:.15s" onmouseenter="this.style.background='#fed65b'" onmouseleave="this.style.background='rgba(254,214,91,.9)'" ontouchstart="this.style.transform='scale(.97)'" ontouchend="this.style.transform=''">
+    🔑 تسجيل الدخول
+  </button>
+  <div id="homeLoader" style="display:none;margin-top:24px;color:rgba(255,255,255,.5);font-size:12px;font-weight:700;gap:8px;align-items:center">
+    <div class="spin spin-w"></div> جارٍ تحميل...
+  </div>
+</div>
+
+<!-- ══ PORTAL ═════════════════════════════════════════════════ -->
+<div id="portalScreen">
+  <div style="width:66px;height:66px;background:rgba(254,214,91,.15);border:2px solid rgba(254,214,91,.25);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:14px">⛪</div>
+  <div style="font-size:10px;font-weight:800;letter-spacing:.18em;color:rgba(254,214,91,.65);margin-bottom:6px">مهرجان شمامسة ٢٠٢٦</div>
+  <div style="font-size:20px;font-weight:900;color:#fff;margin-bottom:4px" id="portalGreet">أهلاً</div>
+  <div style="font-size:11px;color:rgba(255,255,255,.45);font-weight:700" id="portalRole"></div>
+  <div class="portal-btns" id="portalBtns"></div>
+  <button class="logout-btn" onclick="doLogout()">← تسجيل الخروج</button>
+</div>
+
+<!-- ══ LOGIN OVERLAY ══════════════════════════════════════════ -->
+<div id="loginOv">
+  <div class="login-sheet">
+    <div class="login-handle"></div>
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:48px;margin-bottom:8px">🔑</div>
+      <h2 style="font-family:'Literata',serif;font-size:20px;font-weight:700;color:#570000">تسجيل الدخول</h2>
+      <p style="font-size:11px;color:#5a413d;margin-top:4px">لأمناء الشمامسة والآباء الكهنة</p>
+    </div>
+    <label class="login-lbl">اسم المستخدم</label>
+    <input class="login-inp" id="loginUser" type="text" placeholder="username" autocomplete="username" autocapitalize="off">
+    <label class="login-lbl">كلمة السر</label>
+    <input class="login-inp" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-btns">
+      <button class="btn-cancel" onclick="closeLogin()">إلغاء</button>
+      <button class="btn-login" id="loginBtn" onclick="doLogin()">🔑 دخول</button>
+    </div>
+  </div>
+</div>
+
+<div class="foot">✝ شمامسة ٢٠٢٦ — مطرانية المعادي</div>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════════════
+const SHEET_ID    = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const SHEET_USERS = 'Users';
+const TOKEN_TTL   = 12*60*60*1000;
+
+// ══ STATE ═════════════════════════════════════════════════════
+let USERS=[], user=null;
+
+// ══ INIT ══════════════════════════════════════════════════════
+(function init(){
+  const saved=sessionStorage.getItem('user');
+  if(saved){
+    try{
+      const d=JSON.parse(saved);
+      if(Date.now()<d.exp){ user=d; showPortal(); return; }
+    }catch{}
+  }
+  showHome();
+  // Preload users in background
+  loadUsers();
+})();
+
+// ══ USERS LOADER ══════════════════════════════════════════════
+async function loadUsers(){
+  if(USERS.length) return;
+  try{
+    const rows=await readSheetCSV(SHEET_USERS);
+    USERS=rows.map(r=>{
+      const v=Object.values(r);
+      return{
+        username:String(r['username']||r['اسم المستخدم']||v[0]||'').trim(),
+        password:String(r['password']||r['كلمة السر']||v[1]||'').trim(),
+        church:  String(r['church']||r['الكنيسة']||v[2]||'').trim(),
+        role:    String(r['role']||r['الدور']||v[3]||'supervisor').trim(),
+        levels:  String(r['levels']||r['المستويات']||v[4]||'').trim(),
+        gender:  normGender(r['gender']||r['النوع']||v[5]||''),
+      };
+    }).filter(u=>u.username);
+  }catch(e){ console.error('Users load error:', e); }
+}
+
+async function readSheetCSV(name){
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_=${Date.now()}`;
+  const r=await fetch(url); const text=await r.text();
+  const lines=text.trim().split('\n').filter(l=>l.trim());
+  if(lines.length<2) return[];
+  const parse=row=>{const res=[];let cur='';let inQ=false;
+    for(let i=0;i<row.length;i++){
+      if(row[i]==='"'&&!inQ)inQ=true;
+      else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}
+      else if(row[i]==='"'&&inQ)inQ=false;
+      else if(row[i]===','&&!inQ){res.push(cur.trim());cur='';}
+      else cur+=row[i];
+    }res.push(cur.trim());return res;
+  };
+  const headers=parse(lines[0]);
+  return lines.slice(1).map(line=>{const vals=parse(line);return Object.fromEntries(headers.map((h,i)=>[h,vals[i]||'']));});
+}
+
+function normGender(v){
+  const s=String(v||'').trim();if(!s)return'';
+  if(/أنث|انث|بنت|بنات|شماسة|female|girl|^f$/i.test(s))return'أنثى';
+  if(/ذكر|ذكور|ولد|اولاد|بنين|شماس|male|boy|^m$/i.test(s))return'ذكر';
+  return s;
+}
+
+// ══ LOGIN ═════════════════════════════════════════════════════
+function openLogin(){
+  document.getElementById('loginOv').style.display='flex';
+  setTimeout(()=>document.getElementById('loginUser').focus(),150);
+}
+function closeLogin(){
+  document.getElementById('loginOv').style.display='none';
+  document.getElementById('loginErr').style.display='none';
+}
+
+async function doLogin(){
+  const btn=document.getElementById('loginBtn');
+  const err=document.getElementById('loginErr');
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value.trim();
+  if(!u||!p){ showErr('أدخل اسم المستخدم وكلمة السر'); return; }
+  btn.innerHTML='<div class="spin spin-w"></div>';
+  btn.disabled=true; err.style.display='none';
+
+  if(!USERS.length){
+    document.getElementById('homeLoader').style.display='flex';
+    await loadUsers();
+    document.getElementById('homeLoader').style.display='none';
+  }
+
+  const found=USERS.find(x=>x.username===u&&x.password===p);
+  if(found){
+    user={...found, exp:Date.now()+TOKEN_TTL};
+    sessionStorage.setItem('user',JSON.stringify(user));
+    closeLogin();
+    showPortal();
+  }else{
+    showErr('اسم المستخدم أو كلمة السر غلط');
+  }
+  btn.innerHTML='🔑 دخول'; btn.disabled=false;
+}
+
+function showErr(msg){
+  const el=document.getElementById('loginErr');
+  el.textContent=msg; el.style.display='block';
+}
+
+// ══ SCREENS ═══════════════════════════════════════════════════
+function showHome(){
+  document.getElementById('homeScreen').style.display='flex';
+  document.getElementById('portalScreen').style.display='none';
+}
+
+function showPortal(){
+  document.getElementById('homeScreen').style.display='none';
+  document.getElementById('portalScreen').style.display='flex';
+  buildPortal();
+}
+
+function doLogout(){
+  user=null;
+  sessionStorage.removeItem('user');
+  document.getElementById('portalBtns').innerHTML='';
+  showHome();
+}
+
+// ══ PORTAL ════════════════════════════════════════════════════
+function buildPortal(){
+  if(!user) return;
+  const role=user.role||'deacon';
+  const roleMap={
+    super_admin:'مدير النظام',
+    admin:      'أدمن',
+    supervisor: 'أمين',
+    deacon:     'خادم / خادمة',
+  };
+  document.getElementById('portalGreet').textContent='أهلاً، '+user.username;
+  document.getElementById('portalRole').textContent=roleMap[role]||role;
+
+  const btns=document.getElementById('portalBtns');
+  btns.innerHTML='';
+
+  // حضور الأحد — كل الأدوار
+  btns.appendChild(btn('🗓','gold','حضور قداسات الأحد','تسجيل ومتابعة الحضور',
+    ()=>go('index.html')));
+
+  // امتحان الطقس — supervisor+
+  if(['supervisor','admin','super_admin'].includes(role)){
+    btns.appendChild(btn('📋','blue','متابعة امتحان الطقس','مراقبة التقديمات لحظة بلحظة',
+      ()=>go('exam-monitor.html')));
+  }
+
+  // تقارير — admin+
+  if(['admin','super_admin'].includes(role)){
+    btns.appendChild(btn('📊','green','التقارير','مؤهّلو المهرجان وكشوف الكنائس',
+      ()=>go('reports.html')));
+  }
+
+  // كنترول — super_admin فقط
+  if(role==='super_admin'){
+    btns.appendChild(btn('⚙️','red','لوحة التحكم','إعدادات الشيتات والروابط',
+      ()=>go('control.html')));
+  }
+}
+
+function btn(icon, cls, label, sub, onClick){
+  const el=document.createElement('button');
+  el.className='pbtn';
+  el.innerHTML=`
+    <div class="pbtn-icon ${cls}">${icon}</div>
+    <div style="flex:1;text-align:right">
+      <div>${label}</div>
+      <div class="pbtn-sub">${sub}</div>
+    </div>
+    <span style="color:rgba(255,255,255,.3);font-size:20px">›</span>`;
+  el.onclick=onClick;
+  return el;
+}
+
+function go(page){
+  window.location.href=page;
+}
+</script>
+</body>
+</html>

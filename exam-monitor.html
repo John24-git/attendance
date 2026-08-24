@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مراقبة امتحان الطقس — شمامسة ٢٠٢٦</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction:rtl;min-height:100vh}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,#5a0000,#800000);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.hdr-title{font-size:17px;font-weight:900}
+.hdr-sub{font-size:10px;opacity:.7;font-weight:700;margin-top:2px}
+.refresh-info{font-size:11px;font-weight:700;opacity:.8;display:flex;align-items:center;gap:8px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ── CONFIG CARD ── */
+.cfg-card{background:#fff;border-radius:14px;padding:14px 18px;margin:14px 14px 0;box-shadow:0 2px 10px rgba(128,0,0,.07);border:1px solid rgba(128,0,0,.1)}
+.cfg-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cfg-lbl{font-size:11px;font-weight:900;color:#5a413d;white-space:nowrap}
+.cfg-inp{flex:1;min-width:200px;background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:9px;padding:8px 12px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;color:#1a0000;outline:none;transition:.15s}
+.cfg-inp:focus{border-color:#800000;background:#fff}
+.cfg-btn{background:#800000;color:#fff;border:none;border-radius:9px;padding:8px 16px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;white-space:nowrap;transition:.15s}
+.cfg-btn:hover{background:#5a0000}
+
+/* ── CONTROLS ── */
+.controls{display:flex;gap:8px;padding:12px 14px;flex-wrap:wrap;align-items:center}
+
+/* Level tabs */
+.lvl-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.lvl-tab{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;cursor:pointer;transition:.15s}
+.lvl-tab:hover{border-color:#800000}
+.lvl-tab.on{background:#800000;color:#fff;border-color:#800000}
+
+/* Church filter */
+.ch-sel{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;outline:none;cursor:pointer;transition:.15s}
+.ch-sel:focus{border-color:#800000}
+
+/* Search */
+.srch{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#1a0000;outline:none;min-width:160px;transition:.15s}
+.srch:focus{border-color:#800000}
+
+/* Refresh btn */
+.ref-btn{background:#fff;border:1.5px solid rgba(128,0,0,.2);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;cursor:pointer;margin-right:auto;transition:.15s}
+.ref-btn:hover{background:#800000;color:#fff}
+
+/* ── KPI CARDS ── */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px 10px}
+.kpi{background:#fff;border-radius:12px;padding:12px;text-align:center;border:1px solid rgba(128,0,0,.08);box-shadow:0 1px 6px rgba(128,0,0,.05)}
+.kpi-n{font-size:26px;font-weight:900}
+.kpi-l{font-size:10px;font-weight:800;color:#9c7c78;margin-top:2px}
+
+/* ── TABLE CARD ── */
+.tcard{background:#fff;border-radius:14px;margin:0 14px 20px;box-shadow:0 2px 10px rgba(128,0,0,.06);border:1px solid rgba(128,0,0,.08);overflow:hidden}
+.tcard-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:#faf5ef;border-bottom:1px solid rgba(128,0,0,.08)}
+.tcard-title{font-size:13px;font-weight:900;color:#5a0000}
+.exp-btn{background:none;border:1.5px solid rgba(128,0,0,.2);border-radius:8px;padding:5px 12px;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:800;color:#800000;cursor:pointer;transition:.15s}
+.exp-btn:hover{background:#800000;color:#fff}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{background:#5a0000;color:#fff;padding:8px 10px;text-align:right;font-weight:900;font-size:11px;white-space:nowrap}
+.tbl td{padding:7px 10px;border-bottom:.5px solid #f0e8e0;text-align:right}
+.tbl tbody tr:nth-child(even) td{background:#faf8f5}
+.tbl tbody tr:hover td{background:#f5ede0}
+.tbl td.num{text-align:center;font-weight:700;color:#5a413d}
+.tbl td.tm{font-size:10px;color:#9c7c78;text-align:center}
+.tbl td.ch{font-size:11px;color:#5a413d}
+
+/* ── STATUS ── */
+.empty{text-align:center;padding:30px;color:#bbb;font-size:13px;font-weight:700}
+.err-msg{background:#fff5f5;border-radius:10px;padding:12px 16px;margin:0 14px 14px;font-size:12px;font-weight:700;color:#ba1a1a;border:1px solid #fca5a5;display:none}
+
+/* ── LAST UPDATE ── */
+.last-upd{text-align:center;font-size:10px;color:#bbb;font-weight:700;padding-bottom:10px}
+
+/* ── NEW BADGE ── */
+.new-badge{display:inline-block;background:#16A34A;color:#fff;font-size:9px;font-weight:900;padding:1px 6px;border-radius:10px;margin-right:4px;animation:pulse 1s ease-in-out 3}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-title">📋 مراقبة امتحان الطقس</div>
+    <div class="hdr-sub">✝ شمامسة ٢٠٢٦ — مطرانية المعادي</div>
+  </div>
+  <div class="refresh-info">
+    <div class="spin" id="spinner"></div>
+    <span id="countdown">تحديث كل ٣٠ ث</span>
+  </div>
+</div>
+
+<!-- Config -->
+<div class="cfg-card" id="cfgCard">
+  <div class="cfg-row">
+    <span class="cfg-lbl">🔗 Sheet ID:</span>
+    <input class="cfg-inp" id="sheetIdInp" placeholder="ألصق الـ Sheet ID أو الرابط الكامل">
+    <button class="cfg-btn" onclick="applySheet()">تطبيق</button>
+  </div>
+  <div style="font-size:10px;color:#9c7c78;margin-top:7px;font-weight:700">
+    الرابط أو الـ ID من Google Sheets — الشيت لازم يكون مفتوح للقراءة (Anyone with link → Viewer)
+  </div>
+</div>
+
+<div class="err-msg" id="errMsg"></div>
+
+<!-- Controls -->
+<div class="controls" id="controls" style="display:none">
+  <div class="lvl-tabs" id="lvlTabs"></div>
+  <select class="ch-sel" id="chSel" onchange="applyFilter()">
+    <option value="">كل الكنائس</option>
+  </select>
+  <input class="srch" id="srch" type="text" placeholder="🔍 بحث بالاسم أو الكود" oninput="applyFilter()">
+  <button class="ref-btn" onclick="loadData()">🔄 تحديث</button>
+</div>
+
+<!-- KPIs -->
+<div class="kpis" id="kpis" style="display:none">
+  <div class="kpi"><div class="kpi-n" id="kTotal" style="color:#800000">—</div><div class="kpi-l">إجمالي المقدّمين</div></div>
+  <div class="kpi"><div class="kpi-n" id="kChurches" style="color:#c9a227">—</div><div class="kpi-l">عدد الكنائس</div></div>
+  <div class="kpi"><div class="kpi-n" id="kLast" style="color:#16A34A">—</div><div class="kpi-l">آخر تقديم</div></div>
+</div>
+
+<!-- Table -->
+<div class="tcard" id="tcard" style="display:none">
+  <div class="tcard-head">
+    <div class="tcard-title" id="tTitle">المقدّمون</div>
+    <button class="exp-btn" onclick="exportExcel()">⬇ Excel</button>
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="text-align:center;width:40px">#</th>
+          <th>الاسم</th>
+          <th>الكنيسة</th>
+          <th style="text-align:center">الكود</th>
+          <th style="text-align:center">وقت التقديم</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="last-upd" id="lastUpd" style="display:none"></div>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════════════
+const SHEET_TABS = {
+  '1-a': { label:'المستوى الأول ألفا', sheet:'1-a' },
+  '1-b': { label:'المستوى الأول بيتا', sheet:'1-b' },
+  '2':   { label:'المستوى الثاني',     sheet:'2'   },
+  '3':   { label:'المستوى الثالث',     sheet:'3'   },
+  '4':   { label:'المستوى الرابع',     sheet:'4'   },
+};
+
+// Column indices in the sheet (0-based after timestamp)
+// Expected: Timestamp | الاسم | الكنيسة | الكود
+const COL = { ts:0, name:1, church:2, code:3 };
+
+// ══ STATE ═════════════════════════════════════════════════════
+let SHEET_ID = localStorage.getItem('exam_monitor_sheet') || '';
+let curTab   = '1-a';
+let allRows  = [];   // raw data for current tab
+let filtered = [];   // after filter
+let prevCount= 0;
+let timer    = null;
+let cdTimer  = null;
+let cdSec    = 30;
+
+// ══ INIT ══════════════════════════════════════════════════════
+(function init(){
+
+  // ── Auth check ──────────────────────────────────────────────
+  const __s=sessionStorage.getItem('user');
+  if(!__s){window.location.href='home.html';return;}
+  try{const __d=JSON.parse(__s);if(Date.now()>=__d.exp){sessionStorage.removeItem('user');window.location.href='home.html';return;}}
+  catch{window.location.href='home.html';return;}
+
+  // Try to read from control panel first (per-level)
+  // Falls back to manual entry
+  if(SHEET_ID){
+    document.getElementById('sheetIdInp').value = SHEET_ID;
+    buildTabs();
+    loadData();
+    startCountdown();
+  }
+  // Auto-load from control panel if available
+  const ctrlId = localStorage.getItem(`ctrl_exam_${curTab}`);
+  if(ctrlId && !SHEET_ID){
+    SHEET_ID = ctrlId;
+    localStorage.setItem('exam_monitor_sheet', SHEET_ID);
+    document.getElementById('sheetIdInp').value = SHEET_ID;
+    buildTabs();
+    loadData();
+    startCountdown();
+  }
+})();
+
+function applySheet(){
+  const raw = document.getElementById('sheetIdInp').value.trim();
+  const m   = raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  SHEET_ID  = m ? m[1] : raw;
+  if(!SHEET_ID){ showErr('ادخل الـ Sheet ID أو الرابط'); return; }
+  localStorage.setItem('exam_monitor_sheet', SHEET_ID);
+  buildTabs();
+  loadData();
+  startCountdown();
+}
+
+// ══ TABS ══════════════════════════════════════════════════════
+function buildTabs(){
+  const wrap = document.getElementById('lvlTabs');
+  wrap.innerHTML = '';
+  Object.keys(SHEET_TABS).forEach(k=>{
+    const btn = document.createElement('button');
+    btn.className = 'lvl-tab' + (k===curTab?' on':'');
+    btn.textContent = SHEET_TABS[k].label;
+    btn.onclick = ()=>{
+  curTab=k;
+  document.querySelectorAll('.lvl-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  // check control panel for this tab's sheet
+  const ctrlId = localStorage.getItem('ctrl_exam_'+k);
+  if(ctrlId){ SHEET_ID=ctrlId; document.getElementById('sheetIdInp').value=ctrlId; localStorage.setItem('exam_monitor_sheet',ctrlId); }
+  loadData();
+};
+    wrap.appendChild(btn);
+  });
+}
+
+// ══ LOAD DATA ═════════════════════════════════════════════════
+async function loadData(){
+  if(!SHEET_ID) return;
+  setSpinner(true);
+  hideErr();
+  try{
+    const sheetName = encodeURIComponent(SHEET_TABS[curTab].sheet);
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    const res = await fetch(url);
+    const txt = await res.text();
+    const json = JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    parseRows(json);
+    show('controls','kpis','tcard','lastUpd');
+    resetCountdown();
+  }catch(e){
+    showErr('خطأ في التحميل — تأكد إن الشيت مفتوح للعموم واسم التبويب صح: ' + e.message);
+  }
+  setSpinner(false);
+}
+
+function parseRows(json){
+  const rows = json.table.rows || [];
+  allRows = rows.map(r=>{
+    const cells = r.c || [];
+    return {
+      ts:     cells[COL.ts]?.v   || '',
+      tsF:    cells[COL.ts]?.f   || '',
+      name:   cells[COL.name]?.v || '',
+      church: cells[COL.church]?.v || '',
+      code:   String(cells[COL.code]?.v || ''),
+    };
+  }).filter(r=>r.name||r.code);
+
+  // detect new rows
+  const isNew = allRows.length > prevCount && prevCount > 0;
+  if(isNew) notifyNew(allRows.length - prevCount);
+  prevCount = allRows.length;
+
+  buildChurchFilter();
+  applyFilter(isNew);
+  updateKPIs();
+  document.getElementById('lastUpd').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG');
+}
+
+// ══ CHURCH FILTER ═════════════════════════════════════════════
+function buildChurchFilter(){
+  const sel = document.getElementById('chSel');
+  const cur = sel.value;
+  const churches = [...new Set(allRows.map(r=>r.church).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ar'));
+  sel.innerHTML = '<option value="">كل الكنائس</option>' + churches.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.value = cur && churches.includes(cur) ? cur : '';
+}
+
+// ══ FILTER + RENDER ═══════════════════════════════════════════
+function applyFilter(markNew=false){
+  const ch  = document.getElementById('chSel').value;
+  const q   = norm(document.getElementById('srch').value);
+  filtered  = allRows.filter(r=>{
+    if(ch && r.church !== ch) return false;
+    if(q  && !norm(r.name).includes(q) && !r.code.includes(q)) return false;
+    return true;
+  });
+  renderTable(markNew);
+  document.getElementById('tTitle').textContent = `المقدّمون${ch?' — '+ch:''} (${filtered.length})`;
+}
+
+function renderTable(markNew=false){
+  const tbody = document.getElementById('tbody');
+  if(!filtered.length){
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">لا يوجد بيانات</td></tr>';
+    return;
+  }
+  // newest first
+  const sorted = [...filtered].reverse();
+  const newFrom = markNew ? prevCount - allRows.length + sorted.length : 0;
+  tbody.innerHTML = sorted.map((r,i)=>{
+    const badge = (markNew && i < (allRows.length - (prevCount - (allRows.length - filtered.length))))
+      ? '<span class="new-badge">جديد</span>' : '';
+    return `<tr>
+      <td class="num">${filtered.length - i}</td>
+      <td>${badge}${esc(r.name)}</td>
+      <td class="ch">${esc(r.church)}</td>
+      <td class="num">${esc(r.code)}</td>
+      <td class="tm">${fmtTime(r.tsF||r.ts)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ══ KPIs ══════════════════════════════════════════════════════
+function updateKPIs(){
+  document.getElementById('kTotal').textContent    = allRows.length;
+  const churches = new Set(allRows.map(r=>r.church).filter(Boolean));
+  document.getElementById('kChurches').textContent = churches.size;
+  const last = allRows.length ? fmtTime(allRows[allRows.length-1].tsF||allRows[allRows.length-1].ts) : '—';
+  document.getElementById('kLast').textContent     = last;
+}
+
+// ══ COUNTDOWN ═════════════════════════════════════════════════
+function startCountdown(){
+  clearInterval(timer); clearInterval(cdTimer); cdSec=30;
+  timer   = setInterval(loadData, 30000);
+  cdTimer = setInterval(()=>{
+    cdSec--;
+    document.getElementById('countdown').textContent = `تحديث خلال ${cdSec} ث`;
+    if(cdSec<=0) cdSec=30;
+  }, 1000);
+}
+function resetCountdown(){ cdSec=30; }
+
+// ══ NOTIFY ════════════════════════════════════════════════════
+function notifyNew(n){
+  if(Notification?.permission === 'granted')
+    new Notification(`شمامسة ٢٠٢٦ — ${n} تقديم جديد`, {icon:'⛪'});
+  else if(Notification?.permission !== 'denied')
+    Notification?.requestPermission();
+}
+
+// ══ EXCEL EXPORT ══════════════════════════════════════════════
+function exportExcel(){
+  if(!filtered.length) return;
+  const ws = XLSX.utils.aoa_to_sheet([
+    ['#','الاسم','الكنيسة','الكود','وقت التقديم'],
+    ...filtered.map((r,i)=>[i+1,r.name,r.church,r.code,fmtTime(r.tsF||r.ts)])
+  ]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, SHEET_TABS[curTab].label);
+  XLSX.writeFile(wb, `امتحان_${curTab}_${new Date().toLocaleDateString('ar-EG').replace(/\//g,'-')}.xlsx`);
+}
+
+// ══ HELPERS ═══════════════════════════════════════════════════
+function norm(s){ return String(s||'').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,' ').trim().toLowerCase(); }
+function esc(s){ return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function fmtTime(v){
+  if(!v) return '—';
+  if(typeof v==='string' && v.includes('T')) try{ return new Date(v).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}); }catch{}
+  if(typeof v==='object' && v instanceof Date) return v.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
+  // gviz date: "Date(2024,5,15,10,30,0)"
+  const m = String(v).match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)/);
+  if(m) return `${m[4].padStart(2,'0')}:${m[5].padStart(2,'0')}`;
+  return String(v).slice(0,16);
+}
+function setSpinner(on){ document.getElementById('spinner').style.display = on?'inline-block':'none'; }
+function showErr(msg){ const el=document.getElementById('errMsg'); el.textContent=msg; el.style.display='block'; }
+function hideErr(){ document.getElementById('errMsg').style.display='none'; }
+function show(...ids){ ids.forEach(id=>document.getElementById(id).style.display=''); }
+</script>
+</body>
+</html>
