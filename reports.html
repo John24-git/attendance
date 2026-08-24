@@ -96,6 +96,15 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
 </style>
 </head>
 <body>
+<script>
+
+  // ── Auth check (admin+) ─────────────────────────────────────
+  const __s=sessionStorage.getItem('user');
+  if(!__s){window.location.href='home.html';return;}
+  try{const __d=JSON.parse(__s);if(Date.now()>=__d.exp||!['admin','super_admin'].includes(__d.role)){sessionStorage.removeItem('user');window.location.href='home.html';return;}}
+  catch{window.location.href='home.html';return;}
+
+</script>
 
 <header>
   <div class="h-title">📊 تقارير شمامسة ٢٠٢٦</div>
@@ -151,7 +160,7 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
       <div class="rcard">
         <div class="rcard-head">
           <div><div class="rcard-title">✅ مؤهّلون تماماً</div><div class="rcard-sub">اكتملوا الحد المطلوب</div></div>
-          <div style="display:flex;gap:6px"><button class="h-btn" onclick="exportQualPDF()">📄 PDF</button><button class="h-btn" onclick="exportQual()">⬇ Excel</button></div>
+          <div style="display:flex;gap:6px"><button class="h-btn" onclick="exportQualPDF()">📄 PDF</button><button class="h-btn" onclick="exportQual()">⬇ Excel</button><button class="h-btn" style="background:#16A34A;color:#fff" onclick="exportGateJSON()">📦 JSON للبوابة</button></div>
         </div>
         <div class="rcard-body">
           <div class="tbl-wrap"><table class="tbl" id="t1qual"></table></div>
@@ -554,6 +563,58 @@ function exportChurchPDF(ch){
   if(nearD.length) rows+=`<tr><td colspan="11" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">🔵 يحتاج قداس واحد (${nearD.length})</td></tr>`+buildRows(nearD);
   const sub=ch+' — مؤهّل: '+qualD.length+' | يحتاج قداس: '+nearD.length;
   makePDF('كشف حضور — '+ch,sub,rows,data.length);
+}
+
+
+// ══ JSON EXPORT FOR FESTIVAL GATE ════════════════════════════
+function exportGateJSON(){
+  const base=getFiltered();
+  // مؤهّل (12/6+) + يحتاج قداس (11/5)
+  const allowed=base.filter(p=>p.qualified||p.near);
+
+  if(!allowed.length){makePDF;alert('لا يوجد مؤهّلون أو قريبون للتصدير');return;}
+
+  // Group by level
+  const byLevel={};
+  allowed.forEach(p=>{
+    const lvl=String(p.level||'1');
+    if(!byLevel[lvl]) byLevel[lvl]={};
+    if(!byLevel[lvl][p.church]) byLevel[lvl][p.church]=[];
+    byLevel[lvl][p.church].push({
+      code:p.code,
+      name:p.name,
+      cat:p.category,
+      level:p.level,
+      total:p.total,
+      req:p.maxAtt,
+      status:p.qualified?'qualified':'near'
+    });
+  });
+
+  // Export one JSON per level
+  const levels=Object.keys(byLevel).sort((a,b)=>a.localeCompare(b,'ar',{numeric:true}));
+  if(levels.length===0){alert('لا توجد بيانات');return;}
+
+  levels.forEach(lvl=>{
+    const churches=byLevel[lvl];
+    const total=Object.values(churches).reduce((s,a)=>s+a.length,0);
+    const chCount=Object.keys(churches).length;
+    const json={
+      generated: new Date().toISOString(),
+      level: lvl,
+      totalAllowed: total,
+      churchCount: chCount,
+      churches: churches
+    };
+    const blob=new Blob([JSON.stringify(json,null,2)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=`qualified-L${lvl}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  toast(`✅ تم تصدير ${levels.length} ملف JSON`);
 }
 
 loadData();
