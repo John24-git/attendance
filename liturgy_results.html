@@ -255,14 +255,23 @@ function buildLevelTabs(){
   });
 }
 
+function extractSheetId(val){
+  if(!val)return val;
+  val=val.trim();
+  const m=val.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  return m?m[1]:val;
+}
+
 async function loadLevel(lvl){
   const st=document.getElementById('lvlStatus');
   if(st){st.textContent='⏳ جاري تحميل '+lvl+'...';}
   document.getElementById('content').style.display='none';
   // Read from control panel localStorage, fall back to default
-  const sheetId=localStorage.getItem('ctrl_scores_'+lvl)||DEFAULT_SHEET_ID;
+  const raw=localStorage.getItem('ctrl_scores_'+lvl)||DEFAULT_SHEET_ID;
+  const sheetId=extractSheetId(raw);
   try{
-    const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(lvl)}&_=${Date.now()}`;
+    const sheetTab='Form Responses 1';
+    const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetTab)}&_=${Date.now()}`;
     const res=await fetch(url);
     const txt=await res.text();
     const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
