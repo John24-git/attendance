@@ -2,60 +2,61 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مراقبة امتحان الطقس — شمامسة ٢٠٢٦</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#800000">
+<title>متابعة امتحان الطقس — شمامسة ٢٠٢٦</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction:rtl;min-height:100vh}
 
-/* ── HEADER ── */
-.hdr{background:linear-gradient(135deg,#5a0000,#800000);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.hdr-title{font-size:17px;font-weight:900}
-.hdr-sub{font-size:10px;opacity:.7;font-weight:700;margin-top:2px}
-.refresh-info{font-size:11px;font-weight:700;opacity:.8;display:flex;align-items:center;gap:8px}
-.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:none}
-@keyframes sp{to{transform:rotate(360deg)}}
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;z-index:100;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(160deg,#800000,#570000,#3d0000)}
+#loginScreen.hidden{display:none}
+.login-sheet{background:#fbf9f5;width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:24px 24px 48px;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.login-handle{width:40px;height:4px;background:#e2bfb9;border-radius:4px;margin:0 auto 20px}
+.login-icon{font-size:44px;text-align:center;margin-bottom:10px}
+.login-title{font-size:20px;font-weight:900;color:#570000;text-align:center;margin-bottom:4px}
+.login-sub{font-size:11px;color:#8e706c;text-align:center;margin-bottom:20px}
+.login-lbl{font-size:10px;font-weight:800;color:#5a413d;letter-spacing:.1em;margin-bottom:5px;display:block}
+.login-inp{width:100%;background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:12px;padding:12px 15px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;color:#1a0000;outline:none;transition:.15s;margin-bottom:12px}
+.login-inp:focus{border-color:#800000;background:#fff}
+.login-err{display:none;background:#fff5f5;border:1px solid #fca5a5;color:#ba1a1a;border-radius:10px;padding:9px;font-size:12px;font-weight:700;text-align:center;margin-bottom:12px}
+.login-btn{width:100%;background:linear-gradient(135deg,#800000,#570000);color:#fff;border:none;border-radius:14px;padding:14px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(128,0,0,.25)}
 
-/* ── CONFIG CARD ── */
-.cfg-card{background:#fff;border-radius:14px;padding:14px 18px;margin:14px 14px 0;box-shadow:0 2px 10px rgba(128,0,0,.07);border:1px solid rgba(128,0,0,.1)}
-.cfg-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.cfg-lbl{font-size:11px;font-weight:900;color:#5a413d;white-space:nowrap}
-.cfg-inp{flex:1;min-width:200px;background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:9px;padding:8px 12px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;color:#1a0000;outline:none;transition:.15s}
-.cfg-inp:focus{border-color:#800000;background:#fff}
-.cfg-btn{background:#800000;color:#fff;border:none;border-radius:9px;padding:8px 16px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;white-space:nowrap;transition:.15s}
-.cfg-btn:hover{background:#5a0000}
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,#800000,#570000);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;box-shadow:0 2px 12px rgba(128,0,0,.2)}
+.hdr-title{font-size:15px;font-weight:900;color:#fed65b}
+.hdr-user{font-size:11px;font-weight:700;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:8px}
+.logout-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:5px 12px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:800;cursor:pointer}
 
 /* ── CONTROLS ── */
-.controls{display:flex;gap:8px;padding:12px 14px;flex-wrap:wrap;align-items:center}
-
-/* Level tabs */
-.lvl-tabs{display:flex;gap:6px;flex-wrap:wrap}
-.lvl-tab{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;cursor:pointer;transition:.15s}
+.controls{display:flex;gap:8px;padding:10px 14px;flex-wrap:wrap;align-items:center;display:none}
+.lvl-tabs{display:flex;gap:5px;flex-wrap:wrap}
+.lvl-tab{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:18px;padding:6px 13px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;cursor:pointer;transition:.15s}
 .lvl-tab:hover{border-color:#800000}
 .lvl-tab.on{background:#800000;color:#fff;border-color:#800000}
-
-/* Church filter */
-.ch-sel{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;outline:none;cursor:pointer;transition:.15s}
-.ch-sel:focus{border-color:#800000}
-
-/* Search */
-.srch{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#1a0000;outline:none;min-width:160px;transition:.15s}
-.srch:focus{border-color:#800000}
-
-/* Refresh btn */
-.ref-btn{background:#fff;border:1.5px solid rgba(128,0,0,.2);border-radius:20px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;cursor:pointer;margin-right:auto;transition:.15s}
+.ch-sel{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:18px;padding:6px 13px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;outline:none;cursor:pointer}
+.ref-btn{background:#fff;border:1.5px solid rgba(128,0,0,.2);border-radius:18px;padding:6px 13px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;cursor:pointer;margin-right:auto;transition:.15s}
 .ref-btn:hover{background:#800000;color:#fff}
 
-/* ── KPI CARDS ── */
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 14px 10px}
+/* ── CFG (admin only) ── */
+.cfg-card{background:#fff;border-radius:12px;padding:12px 16px;margin:10px 14px 0;border:1px solid rgba(128,0,0,.1);display:none}
+.cfg-row{display:flex;gap:8px;align-items:center}
+.cfg-inp{flex:1;background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:9px;padding:8px 12px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;color:#1a0000;outline:none;transition:.15s}
+.cfg-inp:focus{border-color:#800000}
+.cfg-btn{background:#800000;color:#fff;border:none;border-radius:9px;padding:8px 16px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;white-space:nowrap}
+
+/* ── KPIs ── */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 14px;display:none}
 .kpi{background:#fff;border-radius:12px;padding:12px;text-align:center;border:1px solid rgba(128,0,0,.08);box-shadow:0 1px 6px rgba(128,0,0,.05)}
 .kpi-n{font-size:26px;font-weight:900}
 .kpi-l{font-size:10px;font-weight:800;color:#9c7c78;margin-top:2px}
 
-/* ── TABLE CARD ── */
-.tcard{background:#fff;border-radius:14px;margin:0 14px 20px;box-shadow:0 2px 10px rgba(128,0,0,.06);border:1px solid rgba(128,0,0,.08);overflow:hidden}
+/* ── TABLE ── */
+.tcard{background:#fff;border-radius:14px;margin:0 14px 20px;box-shadow:0 2px 10px rgba(128,0,0,.06);border:1px solid rgba(128,0,0,.08);overflow:hidden;display:none}
 .tcard-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:#faf5ef;border-bottom:1px solid rgba(128,0,0,.08)}
 .tcard-title{font-size:13px;font-weight:900;color:#5a0000}
 .exp-btn{background:none;border:1.5px solid rgba(128,0,0,.2);border-radius:8px;padding:5px 12px;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:800;color:#800000;cursor:pointer;transition:.15s}
@@ -65,374 +66,388 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 .tbl th{background:#5a0000;color:#fff;padding:8px 10px;text-align:right;font-weight:900;font-size:11px;white-space:nowrap}
 .tbl td{padding:7px 10px;border-bottom:.5px solid #f0e8e0;text-align:right}
 .tbl tbody tr:nth-child(even) td{background:#faf8f5}
-.tbl tbody tr:hover td{background:#f5ede0}
-.tbl td.num{text-align:center;font-weight:700;color:#5a413d}
 .tbl td.tm{font-size:10px;color:#9c7c78;text-align:center}
-.tbl td.ch{font-size:11px;color:#5a413d}
+.new-badge{display:inline-block;background:#16A34A;color:#fff;font-size:9px;font-weight:900;padding:1px 6px;border-radius:10px;margin-left:4px}
 
 /* ── STATUS ── */
 .empty{text-align:center;padding:30px;color:#bbb;font-size:13px;font-weight:700}
 .err-msg{background:#fff5f5;border-radius:10px;padding:12px 16px;margin:0 14px 14px;font-size:12px;font-weight:700;color:#ba1a1a;border:1px solid #fca5a5;display:none}
-
-/* ── LAST UPDATE ── */
 .last-upd{text-align:center;font-size:10px;color:#bbb;font-weight:700;padding-bottom:10px}
-
-/* ── NEW BADGE ── */
-.new-badge{display:inline-block;background:#16A34A;color:#fff;font-size:9px;font-weight:900;padding:1px 6px;border-radius:10px;margin-right:4px;animation:pulse 1s ease-in-out 3}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.cd{font-size:11px;font-weight:700;color:rgba(255,255,255,.6)}
 </style>
 </head>
 <body>
 
-<div class="hdr">
-  <div>
-    <div class="hdr-title">📋 مراقبة امتحان الطقس</div>
-    <div class="hdr-sub">✝ شمامسة ٢٠٢٦ — مطرانية المعادي</div>
-  </div>
-  <div id="userBar" style="font-size:11px;font-weight:800;color:rgba(255,255,255,.7)"></div>
-  <div class="refresh-info">
-    <div class="spin" id="spinner"></div>
-    <span id="countdown">تحديث كل ٣٠ ث</span>
+<!-- ══ LOGIN ══════════════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-sheet">
+    <div class="login-handle"></div>
+    <div class="login-icon">📋</div>
+    <div class="login-title">متابعة امتحان الطقس</div>
+    <div class="login-sub">شمامسة ٢٠٢٦ — مطرانية المعادي</div>
+    <label class="login-lbl">اسم المستخدم</label>
+    <input class="login-inp" id="loginUser" type="text" placeholder="username" autocomplete="username" autocapitalize="off">
+    <label class="login-lbl">كلمة السر</label>
+    <input class="login-inp" id="loginPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-err" id="loginErr"></div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">🔑 دخول</button>
   </div>
 </div>
 
-<!-- Config -->
-<div class="cfg-card" id="cfgCard">
-  <div class="cfg-row">
-    <span class="cfg-lbl">🔗 Sheet ID:</span>
-    <input class="cfg-inp" id="sheetIdInp" placeholder="ألصق الـ Sheet ID أو الرابط الكامل">
-    <button class="cfg-btn" onclick="applySheet()">تطبيق</button>
+<!-- ══ HEADER ══════════════════════════════════════════════════ -->
+<div class="hdr">
+  <div class="hdr-title">📋 متابعة امتحان الطقس</div>
+  <div class="hdr-user">
+    <span id="userLabel"></span>
+    <button class="logout-btn" onclick="doLogout()">خروج</button>
   </div>
-  <div style="font-size:10px;color:#9c7c78;margin-top:7px;font-weight:700">
-    الرابط أو الـ ID من Google Sheets — الشيت لازم يكون مفتوح للقراءة (Anyone with link → Viewer)
+</div>
+
+<!-- ══ CFG (admin only) ════════════════════════════════════════ -->
+<div class="cfg-card" id="cfgCard">
+  <div style="font-size:11px;font-weight:800;color:#5a413d;margin-bottom:8px">🔗 Sheet ID ردود الامتحان</div>
+  <div class="cfg-row">
+    <input class="cfg-inp" id="sheetIdInp" placeholder="الصق الـ Sheet ID أو الرابط">
+    <button class="cfg-btn" onclick="applySheet()">تطبيق</button>
   </div>
 </div>
 
 <div class="err-msg" id="errMsg"></div>
 
-<!-- Controls -->
-<div class="controls" id="controls" style="display:none">
+<!-- ══ CONTROLS ═══════════════════════════════════════════════ -->
+<div class="controls" id="controls">
   <div class="lvl-tabs" id="lvlTabs"></div>
   <select class="ch-sel" id="chSel" onchange="applyFilter()">
     <option value="">كل الكنائس</option>
   </select>
-  <input class="srch" id="srch" type="text" placeholder="🔍 بحث بالاسم أو الكود" oninput="applyFilter()">
   <button class="ref-btn" onclick="loadData()">🔄 تحديث</button>
+  <span class="cd" id="countdown"></span>
 </div>
 
-<!-- KPIs -->
-<div class="kpis" id="kpis" style="display:none">
+<!-- ══ KPIs ════════════════════════════════════════════════════ -->
+<div class="kpis" id="kpis">
   <div class="kpi"><div class="kpi-n" id="kTotal" style="color:#800000">—</div><div class="kpi-l">إجمالي المقدّمين</div></div>
   <div class="kpi"><div class="kpi-n" id="kChurches" style="color:#c9a227">—</div><div class="kpi-l">عدد الكنائس</div></div>
   <div class="kpi"><div class="kpi-n" id="kLast" style="color:#16A34A">—</div><div class="kpi-l">آخر تقديم</div></div>
 </div>
 
-<!-- Table -->
-<div class="tcard" id="tcard" style="display:none">
+<!-- ══ TABLE ═══════════════════════════════════════════════════ -->
+<div class="tcard" id="tcard">
   <div class="tcard-head">
     <div class="tcard-title" id="tTitle">المقدّمون</div>
     <button class="exp-btn" onclick="exportExcel()">⬇ Excel</button>
   </div>
   <div class="tbl-wrap">
     <table class="tbl">
-      <thead>
-        <tr>
-          <th style="text-align:center;width:40px">#</th>
-          <th>الاسم</th>
-          <th>الكنيسة</th>
-          <th style="text-align:center">الكود</th>
-          <th style="text-align:center">وقت التقديم</th>
-        </tr>
-      </thead>
+      <thead><tr>
+        <th style="text-align:center;width:36px">#</th>
+        <th>الاسم</th><th>الكنيسة</th>
+        <th style="text-align:center">الكود</th>
+        <th style="text-align:center">وقت التقديم</th>
+      </tr></thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
 </div>
-
-<div class="last-upd" id="lastUpd" style="display:none"></div>
+<div class="last-upd" id="lastUpd"></div>
 
 <script>
 // ══ CONFIG ════════════════════════════════════════════════════
+const USERS_SHEET_ID = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const USERS_SHEET    = 'Users';
+const TOKEN_TTL      = 12*60*60*1000;
 const SHEET_TABS = {
-  '1-a': { label:'المستوى الأول ألفا', sheet:'1-a' },
-  '1-b': { label:'المستوى الأول بيتا', sheet:'1-b' },
-  '2':   { label:'المستوى الثاني',     sheet:'2'   },
-  '3':   { label:'المستوى الثالث',     sheet:'3'   },
-  '4':   { label:'المستوى الرابع',     sheet:'4'   },
+  '1-a':'المستوى الأول ألفا',
+  '1-b':'المستوى الأول بيتا',
+  '2':'المستوى الثاني',
+  '3':'المستوى الثالث',
+  '4':'المستوى الرابع',
 };
 
-// Column indices in the sheet (0-based after timestamp)
-// Expected: Timestamp | الاسم | الكنيسة | الكود
-const COL = { ts:0, name:1, church:2, code:3 };
-
 // ══ STATE ═════════════════════════════════════════════════════
-let SHEET_ID = localStorage.getItem('exam_monitor_sheet') || '';
-let curTab   = '1-a';
-let allRows  = [];   // raw data for current tab
-let filtered = [];   // after filter
-let prevCount= 0;
-let timer    = null;
-let cdTimer  = null;
-let cdSec    = 30;
+let user=null, USERS=[], SHEET_ID='1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA', curTab='1-a';
+let allRows=[], filtered=[], prevCount=0;
+let timer=null, cdTimer=null, cdSec=30;
 
 // ══ INIT ══════════════════════════════════════════════════════
-(function init(){
-
-  // ── User session (no redirect — portal controls access) ──────
-  const __s=localStorage.getItem('user');
-  let __user=null;
-  try{
-    if(__s){
-      const __d=JSON.parse(__s);
-      if(Date.now()<__d.exp) __user=__d;
-    }
-  }catch{}
-
-  const role=(__user?.role||'').toLowerCase();
-  const isAdmin=!__user||['admin','super_admin'].includes(role);
-  window.__examUser=__user;
-  window.__examIsAdmin=isAdmin;
-
-  // Hide Sheet ID config for non-admins
-  const cfgCard=document.getElementById('cfgCard');
-  if(cfgCard) cfgCard.style.display=isAdmin?'':'none';
-
-  // User info bar
-  const ubar=document.getElementById('userBar');
-  if(ubar&&__user){
-    const roleLabel={'super_admin':'أدمن عام','admin':'أدمن','supervisor':'أمين','deacon':'خادم'}[role]||role;
-    ubar.textContent='👤 '+(__user.username||'')+' — '+roleLabel+(__user.church?' | '+__user.church:'');
+(function(){
+  const saved=localStorage.getItem('exam_monitor_user');
+  if(saved){
+    try{
+      const d=JSON.parse(saved);
+      if(Date.now()<d.exp){user=d;afterLogin();return;}
+    }catch{}
   }
-  // Auto-load from control panel
-  const ctrlId = localStorage.getItem('ctrl_exam_'+curTab);
-  const savedId = localStorage.getItem('exam_monitor_sheet');
-  const finalId = ctrlId || savedId || SHEET_ID;
-  if(finalId){
-    SHEET_ID = finalId;
-    const inp=document.getElementById('sheetIdInp');
-    if(inp)inp.value=finalId;
-    buildTabs();
-    loadData();
-    startCountdown();
-  } else {
-    buildTabs();
-    // Show config card only for admins
-    if(!window.__examIsAdmin){
-      document.getElementById('controls').style.display='none';
-      document.getElementById('kpis').style.display='none';
-    }
-  }
+  // Show login
+  loadUsersInBackground();
 })();
 
+async function loadUsersInBackground(){
+  try{
+    const rows=await readCSV(USERS_SHEET_ID,USERS_SHEET);
+    USERS=parseUsers(rows);
+  }catch(e){console.warn('Users preload failed:',e);}
+}
+
+function parseUsers(rows){
+  return rows.map(r=>{
+    const v=Object.values(r);
+    return{
+      username:String(r['username']||r['اسم المستخدم']||v[0]||'').trim(),
+      password:String(r['password']||r['كلمة السر']||v[1]||'').trim(),
+      church:  String(r['church']||r['الكنيسة']||v[2]||'').trim(),
+      role:    String(r['role']||r['الدور']||v[3]||'supervisor').trim().toLowerCase(),
+      levels:  String(r['levels']||r['المستويات']||v[4]||'').trim(),
+      gender:  String(r['gender']||r['النوع']||v[5]||'').trim(),
+    };
+  }).filter(u=>u.username);
+}
+
+// ══ LOGIN ═════════════════════════════════════════════════════
+async function doLogin(){
+  const btn=document.getElementById('loginBtn');
+  const err=document.getElementById('loginErr');
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value.trim();
+  if(!u||!p){showErr('أدخل اسم المستخدم وكلمة السر');return;}
+  btn.innerHTML='<div class="spin"></div> جارٍ التحقق...';
+  btn.disabled=true; err.style.display='none';
+  if(!USERS.length){
+    try{
+      const rows=await readCSV(USERS_SHEET_ID,USERS_SHEET);
+      USERS=parseUsers(rows);
+    }catch(e){showErr('تعذّر تحميل بيانات المستخدمين');btn.innerHTML='🔑 دخول';btn.disabled=false;return;}
+  }
+  const found=USERS.find(x=>x.username===u&&x.password===p);
+  if(found){
+    user={...found,exp:Date.now()+TOKEN_TTL};
+    localStorage.setItem('exam_monitor_user',JSON.stringify(user));
+    btn.innerHTML='🔑 دخول'; btn.disabled=false;
+    afterLogin();
+  }else{
+    showErr('اسم المستخدم أو كلمة السر غلط');
+    btn.innerHTML='🔑 دخول'; btn.disabled=false;
+  }
+}
+function showErr(msg){const el=document.getElementById('loginErr');el.textContent=msg;el.style.display='block';}
+
+function doLogout(){
+  user=null;
+  localStorage.removeItem('exam_monitor_user');
+  clearInterval(timer);clearInterval(cdTimer);
+  location.reload();
+}
+
+// ══ AFTER LOGIN ═══════════════════════════════════════════════
+function afterLogin(){
+  document.getElementById('loginScreen').classList.add('hidden');
+  const isAdmin=['admin','super_admin'].includes(user.role||'');
+  document.getElementById('userLabel').textContent=
+    '👤 '+user.username+(user.church?' | '+user.church:'');
+
+  // Admin: show Sheet ID config
+  if(isAdmin){
+    document.getElementById('cfgCard').style.display='block';
+    // Load saved sheet ID
+    const saved=localStorage.getItem('exam_monitor_sheet_'+curTab)||'1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA'||
+                localStorage.getItem('ctrl_exam_'+curTab)||
+                localStorage.getItem('exam_monitor_sheet')||'';
+    if(saved){document.getElementById('sheetIdInp').value=saved;SHEET_ID=saved;}
+  }
+
+  buildTabs(isAdmin);
+  document.getElementById('controls').style.display='flex';
+  document.getElementById('kpis').style.display='grid';
+
+  // Auto-load if sheet known
+  SHEET_ID='1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA';
+  if(isAdmin){const inp=document.getElementById('sheetIdInp');if(inp)inp.value=SHEET_ID;}
+  loadData();startCountdown();
+}
+
+// ══ SHEET CONFIG ══════════════════════════════════════════════
 function applySheet(){
-  const raw = document.getElementById('sheetIdInp').value.trim();
-  const m   = raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  SHEET_ID  = m ? m[1] : raw;
-  if(!SHEET_ID){ showErr('ادخل الـ Sheet ID أو الرابط'); return; }
-  localStorage.setItem('exam_monitor_sheet', SHEET_ID);
-  buildTabs();
-  loadData();
-  startCountdown();
+  const raw=document.getElementById('sheetIdInp').value.trim();
+  const m=raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  SHEET_ID=m?m[1]:raw;
+  if(!SHEET_ID){alert('ادخل الـ Sheet ID أو الرابط');return;}
+  localStorage.setItem('exam_monitor_sheet',SHEET_ID);
+  localStorage.setItem('exam_monitor_sheet_'+curTab,SHEET_ID);
+  loadData();startCountdown();
 }
 
 // ══ TABS ══════════════════════════════════════════════════════
-function buildTabs(){
-  const wrap = document.getElementById('lvlTabs');
-  wrap.innerHTML = '';
+function buildTabs(isAdmin){
+  const wrap=document.getElementById('lvlTabs');
+  wrap.innerHTML='';
+  // Determine which tabs to show based on user levels
+  const userLevels=user.levels?user.levels.split(',').map(l=>l.trim()).filter(Boolean):null;
   Object.keys(SHEET_TABS).forEach(k=>{
-    const btn = document.createElement('button');
-    btn.className = 'lvl-tab' + (k===curTab?' on':'');
-    btn.textContent = SHEET_TABS[k].label;
-    btn.onclick = ()=>{
-  curTab=k;
-  document.querySelectorAll('.lvl-tab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  // check control panel for this tab's sheet
-  const ctrlId = localStorage.getItem('ctrl_exam_'+k);
-  if(ctrlId){
-    SHEET_ID=ctrlId;
-    const inp=document.getElementById('sheetIdInp');
-    if(inp)inp.value=ctrlId;
-    localStorage.setItem('exam_monitor_sheet',ctrlId);
-  }
-  loadData();
-};
+    if(!isAdmin&&userLevels&&!userLevels.includes(k))return;
+    const btn=document.createElement('button');
+    btn.className='lvl-tab'+(k===curTab?' on':'');
+    btn.textContent=SHEET_TABS[k];
+    btn.onclick=()=>{
+      curTab=k;
+      document.querySelectorAll('.lvl-tab').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      const ctrlId=localStorage.getItem('ctrl_exam_'+k)||localStorage.getItem('exam_monitor_sheet_'+k);
+      if(ctrlId){SHEET_ID=ctrlId;const inp=document.getElementById('sheetIdInp');if(inp)inp.value=ctrlId;}
+      loadData();
+    };
     wrap.appendChild(btn);
   });
+  // Select first available tab for supervisors
+  const firstBtn=wrap.querySelector('.lvl-tab');
+  if(firstBtn&&!wrap.querySelector('.on')){firstBtn.classList.add('on');curTab=Object.keys(SHEET_TABS)[0];}
 }
 
 // ══ LOAD DATA ═════════════════════════════════════════════════
 async function loadData(){
-  if(!SHEET_ID) return;
-  setSpinner(true);
+  if(!SHEET_ID){hideErr();return;}
   hideErr();
   try{
-    const sheetName = encodeURIComponent(SHEET_TABS[curTab].sheet);
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
-    const res = await fetch(url);
-    const txt = await res.text();
-    const json = JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(curTab)}&_=${Date.now()}`;
+    const res=await fetch(url);
+    const txt=await res.text();
+    const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
     parseRows(json);
-    show('controls','kpis','tcard','lastUpd');
+    document.getElementById('tcard').style.display='block';
+    document.getElementById('lastUpd').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG');
     resetCountdown();
   }catch(e){
-    showErr('خطأ في التحميل — تأكد إن الشيت مفتوح للعموم واسم التبويب صح: ' + e.message);
+    document.getElementById('errMsg').style.display='block';
+    document.getElementById('errMsg').textContent='خطأ في التحميل — تأكد إن الشيت مفتوح للعموم واسم التبويب صح: '+e.message;
   }
-  setSpinner(false);
 }
 
 function parseRows(json){
-  const rows = json.table.rows || [];
-  allRows = rows.map(r=>{
-    const cells = r.c || [];
-    return {
-      ts:     cells[COL.ts]?.v   || '',
-      tsF:    cells[COL.ts]?.f   || '',
-      name:   cells[COL.name]?.v || '',
-      church: cells[COL.church]?.v || '',
-      code:   String(cells[COL.code]?.v || ''),
+  const rows=json.table.rows||[];
+  const cols=json.table.cols||[];
+  // Find column indices
+  const labels=cols.map(c=>(c.label||'').trim());
+  const iName=findCol(labels,['الاسم','name','اسم']);
+  const iChurch=findCol(labels,['الكنيسة','church','كنيسة']);
+  const iCode=findCol(labels,['الكود','code','كود']);
+  const iTs=findCol(labels,['Timestamp','timestamp','التاريخ','تاريخ']);
+
+  allRows=rows.map(r=>{
+    const cells=r.c||[];
+    return{
+      name:  cells[iName]?.v||'',
+      church:cells[iChurch]?.v||'',
+      code:  String(cells[iCode]?.v||''),
+      tsRaw: cells[iTs]?.v||'',
+      tsF:   cells[iTs]?.f||'',
     };
   }).filter(r=>r.name||r.code);
 
-  // User info bar
-  const ubar=document.getElementById('userBar');
-  if(ubar&&__u){
-    const roleLabel={'super_admin':'أدمن عام','admin':'أدمن','supervisor':'أمين','deacon':'خادم'}[role]||role;
-    ubar.textContent='👤 '+(__u.username||'')+' — '+roleLabel+(__u.church?' | '+__u.church:'');
-  }
-  // Auto-filter by church for supervisors
-  const __u=window.__examUser;
-  if(__u && !window.__examIsAdmin && __u.church){
-    const chSel=document.getElementById('chSel');
-    // wait for church filter to be built, then set it
-    setTimeout(()=>{
-      const chSel=document.getElementById('chSel');
-      if(chSel && __u.church){
-        chSel.value=__u.church;
-        // if exact match not found, try partial
-        if(!chSel.value){
-          for(let i=0;i<chSel.options.length;i++){
-            if(chSel.options[i].value.includes(__u.church)||__u.church.includes(chSel.options[i].value)){
-              chSel.selectedIndex=i;break;
-            }
-          }
-        }
-        applyFilter();
-      }
-    },100);
-  }
-  // detect new rows
-  const isNew = allRows.length > prevCount && prevCount > 0;
-  if(isNew) notifyNew(allRows.length - prevCount);
-  prevCount = allRows.length;
+  const isNew=allRows.length>prevCount&&prevCount>0;
+  if(isNew&&Notification?.permission==='granted')
+    new Notification('📋 تقديم جديد!',{body:allRows.length-prevCount+' مقدّم جديد في المستوى '+curTab});
+  else if(isNew&&Notification?.permission!=='denied') Notification?.requestPermission();
+  prevCount=allRows.length;
 
   buildChurchFilter();
+  // Auto-filter for supervisors
+  if(user&&!['admin','super_admin'].includes(user.role)&&user.church){
+    const sel=document.getElementById('chSel');
+    if(sel){sel.value=user.church;if(!sel.value){for(let i=0;i<sel.options.length;i++){if(sel.options[i].value.includes(user.church)||user.church.includes(sel.options[i].value)){sel.selectedIndex=i;break;}}}}
+  }
   applyFilter(isNew);
-  updateKPIs();
-  document.getElementById('lastUpd').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG');
 }
 
-// ══ CHURCH FILTER ═════════════════════════════════════════════
+function findCol(labels,keys){
+  for(const k of keys){const i=labels.findIndex(l=>l.includes(k));if(i>-1)return i;}
+  return -1;
+}
+
 function buildChurchFilter(){
-  const sel = document.getElementById('chSel');
-  const cur = sel.value;
-  const churches = [...new Set(allRows.map(r=>r.church).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ar'));
-  sel.innerHTML = '<option value="">كل الكنائس</option>' + churches.map(c=>`<option value="${c}">${c}</option>`).join('');
-  sel.value = cur && churches.includes(cur) ? cur : '';
+  const sel=document.getElementById('chSel');
+  const cur=sel.value;
+  const isAdmin=['admin','super_admin'].includes(user?.role||'');
+  if(!isAdmin){sel.style.display='none';return;} // supervisors don't need church filter
+  sel.style.display='';
+  const churches=[...new Set(allRows.map(r=>r.church).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ar'));
+  sel.innerHTML='<option value="">كل الكنائس</option>'+churches.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.value=cur&&churches.includes(cur)?cur:'';
 }
 
-// ══ FILTER + RENDER ═══════════════════════════════════════════
 function applyFilter(markNew=false){
-  const ch  = document.getElementById('chSel').value;
-  const q   = norm(document.getElementById('srch').value);
-  filtered  = allRows.filter(r=>{
-    if(ch && r.church !== ch) return false;
-    if(q  && !norm(r.name).includes(q) && !r.code.includes(q)) return false;
-    return true;
-  });
+  const ch=document.getElementById('chSel').value;
+  const isAdmin=['admin','super_admin'].includes(user?.role||'');
+  // Supervisors: always filter by their church
+  const churchToFilter=!isAdmin&&user?.church?user.church:ch;
+  filtered=churchToFilter?allRows.filter(r=>r.church===churchToFilter||r.church.includes(churchToFilter)||churchToFilter.includes(r.church)):allRows;
+  updateKPIs();
   renderTable(markNew);
-  document.getElementById('tTitle').textContent = `المقدّمون${ch?' — '+ch:''} (${filtered.length})`;
+  const label=churchToFilter?('⛪ '+churchToFilter):'المقدّمون';
+  document.getElementById('tTitle').textContent=label+' ('+filtered.length+')';
+}
+
+function updateKPIs(){
+  const base=document.getElementById('chSel').value||(!['admin','super_admin'].includes(user?.role||'')&&user?.church)?filtered:allRows;
+  document.getElementById('kTotal').textContent=filtered.length;
+  document.getElementById('kChurches').textContent=new Set(allRows.map(r=>r.church).filter(Boolean)).size;
+  const last=allRows.length?fmtTime(allRows[allRows.length-1].tsF||allRows[allRows.length-1].tsRaw):'—';
+  document.getElementById('kLast').textContent=last;
 }
 
 function renderTable(markNew=false){
-  const tbody = document.getElementById('tbody');
-  if(!filtered.length){
-    tbody.innerHTML = '<tr><td colspan="5" class="empty">لا يوجد بيانات</td></tr>';
-    return;
-  }
-  // newest first
-  const sorted = [...filtered].reverse();
-  const newFrom = markNew ? prevCount - allRows.length + sorted.length : 0;
-  tbody.innerHTML = sorted.map((r,i)=>{
-    const badge = (markNew && i < (allRows.length - (prevCount - (allRows.length - filtered.length))))
-      ? '<span class="new-badge">جديد</span>' : '';
-    return `<tr>
-      <td class="num">${filtered.length - i}</td>
-      <td>${badge}${esc(r.name)}</td>
-      <td class="ch">${esc(r.church)}</td>
-      <td class="num">${esc(r.code)}</td>
-      <td class="tm">${fmtTime(r.tsF||r.ts)}</td>
-    </tr>`;
-  }).join('');
+  const sorted=[...filtered].reverse();
+  document.getElementById('tbody').innerHTML=sorted.length?sorted.map((r,i)=>`
+    <tr>
+      <td style="text-align:center;color:#9c7c78;font-size:11px">${filtered.length-i}</td>
+      <td style="font-weight:800">${esc(r.name)}${markNew&&i<(allRows.length-prevCount+1)?'<span class="new-badge">جديد</span>':''}</td>
+      <td style="font-size:11px">${esc(r.church)}</td>
+      <td style="text-align:center;font-weight:700">${esc(r.code)}</td>
+      <td class="tm">${fmtTime(r.tsF||r.tsRaw)}</td>
+    </tr>`).join(''):'<tr><td colspan="5" class="empty">لا يوجد بيانات</td></tr>';
 }
 
-// ══ KPIs ══════════════════════════════════════════════════════
-function updateKPIs(){
-  document.getElementById('kTotal').textContent    = allRows.length;
-  const churches = new Set(allRows.map(r=>r.church).filter(Boolean));
-  document.getElementById('kChurches').textContent = churches.size;
-  const last = allRows.length ? fmtTime(allRows[allRows.length-1].tsF||allRows[allRows.length-1].ts) : '—';
-  document.getElementById('kLast').textContent     = last;
-}
-
-// ══ COUNTDOWN ═════════════════════════════════════════════════
-function startCountdown(){
-  clearInterval(timer); clearInterval(cdTimer); cdSec=30;
-  timer   = setInterval(loadData, 30000);
-  cdTimer = setInterval(()=>{
-    cdSec--;
-    document.getElementById('countdown').textContent = `تحديث خلال ${cdSec} ث`;
-    if(cdSec<=0) cdSec=30;
-  }, 1000);
-}
-function resetCountdown(){ cdSec=30; }
-
-// ══ NOTIFY ════════════════════════════════════════════════════
-function notifyNew(n){
-  if(Notification?.permission === 'granted')
-    new Notification(`شمامسة ٢٠٢٦ — ${n} تقديم جديد`, {icon:'⛪'});
-  else if(Notification?.permission !== 'denied')
-    Notification?.requestPermission();
-}
-
-// ══ EXCEL EXPORT ══════════════════════════════════════════════
-function exportExcel(){
-  if(!filtered.length) return;
-  const ws = XLSX.utils.aoa_to_sheet([
-    ['#','الاسم','الكنيسة','الكود','وقت التقديم'],
-    ...filtered.map((r,i)=>[i+1,r.name,r.church,r.code,fmtTime(r.tsF||r.ts)])
-  ]);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, SHEET_TABS[curTab].label);
-  XLSX.writeFile(wb, `امتحان_${curTab}_${new Date().toLocaleDateString('ar-EG').replace(/\//g,'-')}.xlsx`);
-}
-
-// ══ HELPERS ═══════════════════════════════════════════════════
-function norm(s){ return String(s||'').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,' ').trim().toLowerCase(); }
-function esc(s){ return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function fmtTime(v){
-  if(!v) return '—';
-  if(typeof v==='string' && v.includes('T')) try{ return new Date(v).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}); }catch{}
-  if(typeof v==='object' && v instanceof Date) return v.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
-  // gviz date: "Date(2024,5,15,10,30,0)"
-  const m = String(v).match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)/);
-  if(m) return `${m[4].padStart(2,'0')}:${m[5].padStart(2,'0')}`;
+  if(!v)return'—';
+  if(typeof v==='string'&&v.includes('T'))try{return new Date(v).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});}catch{}
+  const m=String(v).match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)/);
+  if(m)return`${m[4].padStart(2,'0')}:${m[5].padStart(2,'0')}`;
   return String(v).slice(0,16);
 }
-function setSpinner(on){ document.getElementById('spinner').style.display = on?'inline-block':'none'; }
-function showErr(msg){ const el=document.getElementById('errMsg'); el.textContent=msg; el.style.display='block'; }
-function hideErr(){ document.getElementById('errMsg').style.display='none'; }
-function show(...ids){ ids.forEach(id=>document.getElementById(id).style.display=''); }
+
+function exportExcel(){
+  if(!filtered.length)return;
+  const ws=XLSX.utils.aoa_to_sheet([
+    ['#','الاسم','الكنيسة','الكود','وقت التقديم'],
+    ...filtered.map((r,i)=>[i+1,r.name,r.church,r.code,fmtTime(r.tsF||r.tsRaw)])
+  ]);
+  ws['!views']=[{RTL:true}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,SHEET_TABS[curTab]||curTab);
+  XLSX.writeFile(wb,'امتحان_'+curTab+'_'+new Date().toLocaleDateString('ar-EG').replace(/\//g,'-')+'.xlsx');
+}
+
+// ══ CSV READER ════════════════════════════════════════════════
+async function readCSV(id,sheet){
+  const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}&_=${Date.now()}`;
+  const r=await fetch(url);const text=await r.text();
+  const lines=text.trim().split('\n').filter(l=>l.trim());if(lines.length<2)return[];
+  const parse=row=>{const res=[];let cur='',inQ=false;
+    for(let i=0;i<row.length;i++){if(row[i]==='"'&&!inQ)inQ=true;else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}else if(row[i]==='"'&&inQ)inQ=false;else if(row[i]===','&&!inQ){res.push(cur.trim());cur='';}else cur+=row[i];}
+    res.push(cur.trim());return res;};
+  const headers=parse(lines[0]);
+  return lines.slice(1).map(line=>{const vals=parse(line);return Object.fromEntries(headers.map((h,i)=>[h,vals[i]||'']));});
+}
+
+// ══ COUNTDOWN + HELPERS ═══════════════════════════════════════
+function startCountdown(){
+  clearInterval(timer);clearInterval(cdTimer);cdSec=30;
+  timer=setInterval(loadData,30000);
+  cdTimer=setInterval(()=>{cdSec--;document.getElementById('countdown').textContent='تحديث خلال '+cdSec+' ث';if(cdSec<=0)cdSec=30;},1000);
+}
+function resetCountdown(){cdSec=30;}
+function hideErr(){document.getElementById('errMsg').style.display='none';}
+function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 </script>
 </body>
 </html>
