@@ -281,9 +281,9 @@ function parseGviz(json,lvl){
   const iName=findCol(cols,['اسم','name','الاسم']);
   const iCode=findCol(cols,['كود','code','الكود','id','رقم']);
   const iChurch=findCol(cols,['كنيسة','church','الكنيسة']);
-  const iScore=findCol(cols,['سكور','score','الدرجة','درجة','نتيجة','result','mark','grade','total']);
+  const iScore=findCol(cols,['سكور','score','الدرجة','درجة','نتيجة','result','mark','grade','total','20','من 20','الدرجه','degree']);
 
-  if(iScore===-1){setStatus('❌ ما لقيتش عمود سكور/درجة — تأكد من أسماء الأعمدة');document.getElementById('loadBtn').disabled=false;return;}
+  if(iScore===-1){const _e=document.getElementById('lvlStatus');if(_e)_e.textContent='❌ ما لقيتش عمود درجة — أعمدة الشيت: '+cols.join(', ');return;}
 
   RAW=rows.map(r=>({
     name:  iName>-1  ? (r.c[iName]?.v||'')  : '—',
@@ -292,7 +292,7 @@ function parseGviz(json,lvl){
     score: parseFloat(r.c[iScore]?.v)||0
   })).filter(p=>p.church);
 
-  if(!RAW.length){setStatus('❌ البيانات فاضية');document.getElementById('loadBtn').disabled=false;return;}
+  if(!RAW.length){const _e=document.getElementById('lvlStatus');if(_e)_e.textContent='❌ البيانات فاضية';return;}
 
   const minC=Math.min(...Object.values(groupBy(RAW,'church')).map(a=>a.length));
   document.getElementById('minCount').textContent=minC;
@@ -304,10 +304,8 @@ function parseGviz(json,lvl){
 
   const _st=document.getElementById('lvlStatus');
   if(_st)_st.textContent=`✅ ${RAW.length} مشارك من ${Object.keys(groupBy(RAW,'church')).length} كنيسة — المستوى ${lvl||curLevel}`;
-  document.getElementById('loadBtn') && (document.getElementById('loadBtn').disabled=false);
-  document.getElementById('loadBtn').disabled=false;
-  document.getElementById('nCard').style.display='block';
-  document.getElementById('tabs').style.display='flex';
+  // show content
+  const _nc=document.getElementById('nCard');if(_nc)_nc.style.display='block';
   document.getElementById('content').style.display='block';
   render();
 }
