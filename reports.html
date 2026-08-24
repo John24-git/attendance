@@ -467,11 +467,33 @@ function export25PDF(){ makePDF('تقرير ٢٥ قداس فأكثر','٢٥ قد
 
 function exportChurch(ch){
   const all=getFiltered().filter(p=>p.church===ch);
-  const data=[...all.filter(p=>p.qualified),...all.filter(p=>p.near)];
+  const allowed=[...all.filter(p=>p.qualified),...all.filter(p=>p.near)];
   const wb=XLSX.utils.book_new();
-  const summary=[['الكنيسة',ch],['إجمالي مسجّل',data.length],['مؤهّلون',data.filter(p=>p.qualified).length],['يحتاج قداس واحد',data.filter(p=>p.near).length],['تاريخ التقرير',new Date().toLocaleDateString('ar-EG')],['']];
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(summary),'ملخص');
-  XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'الكشف التفصيلي');
+
+  // Summary sheet
+  const byLvl={};
+  allowed.forEach(p=>{const l=p.level||'—';if(!byLvl[l])byLvl[l]=[];byLvl[l].push(p);});
+  const lvls=Object.keys(byLvl).sort((a,b)=>a.localeCompare(b,'ar',{numeric:true}));
+  const summary=[
+    ['الكنيسة',ch],
+    ['تاريخ التقرير',new Date().toLocaleDateString('ar-EG')],
+    [''],
+    ['المستوى','إجمالي','مؤهّل','يحتاج قداس'],
+    ...lvls.map(l=>[l,byLvl[l].length,byLvl[l].filter(p=>p.qualified).length,byLvl[l].filter(p=>p.near).length]),
+    [''],
+    ['الإجمالي الكلي',allowed.length,allowed.filter(p=>p.qualified).length,allowed.filter(p=>p.near).length]
+  ];
+  const wsSum=XLSX.utils.aoa_to_sheet(summary);
+  wsSum['!views']=[{RTL:true}];
+  XLSX.utils.book_append_sheet(wb,wsSum,'ملخص');
+
+  // One sheet per level
+  lvls.forEach(lvl=>{
+    const data=byLvl[lvl];
+    const ws=makeWs(data.map((p,i)=>personExRow(p,i)));
+    XLSX.utils.book_append_sheet(wb,ws,String(lvl).slice(0,31));
+  });
+
   XLSX.writeFile(wb,churchFileName(ch,'xlsx'));
 }
 function exportChurchPDF(ch){
