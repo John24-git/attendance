@@ -1148,6 +1148,15 @@
         "status": "qualified"
       },
       {
+        "code": 18296,
+        "name": "جون ياسر حنا صليب",
+        "cat": "موظف",
+        "level": "3",
+        "total": 9,
+        "req": 6,
+        "status": "qualified"
+      },
+      {
         "code": 89715,
         "name": "ساندرا نشأت فتحي",
         "cat": "ثانوية",
