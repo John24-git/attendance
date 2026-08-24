@@ -14,76 +14,59 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
 .h-title{font-family:'Literata',serif;font-size:18px;color:#fed65b;font-weight:700}
 .h-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:6px 14px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;cursor:pointer}
 .main{max-width:700px;margin:0 auto;padding:16px}
-
-/* Cards */
 .rcard{background:#fff;border-radius:16px;border:1px solid rgba(128,0,0,.1);box-shadow:0 2px 12px rgba(128,0,0,.06);margin-bottom:14px;overflow:hidden}
 .rcard-head{background:linear-gradient(135deg,#800000,#570000);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .rcard-title{color:#fff;font-size:14px;font-weight:800}
 .rcard-sub{color:rgba(255,255,255,.6);font-size:11px;font-weight:700}
 .rcard-body{padding:14px}
-
-/* Tabs */
 .tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px}
 .tab{padding:7px 14px;border-radius:20px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;border:none;cursor:pointer;white-space:nowrap;background:#eae8e4;color:#5a413d;transition:.15s}
 .tab.on{background:#800000;color:#fff}
-
-/* Status badge */
 .bdg{display:inline-block;padding:1px 8px;border-radius:20px;font-size:9px;font-weight:800;line-height:1.7}
 .b-green{background:rgba(22,163,74,.12);color:#16A34A}
 .b-gold{background:rgba(254,214,91,.25);color:#745c00}
 .b-red{background:rgba(220,38,38,.1);color:#B91C1C}
 .b-blue{background:rgba(26,86,219,.1);color:#1E40AF}
 .b-gray{background:#e4e2de;color:#5a413d}
-
-/* Table */
 .tbl{width:100%;border-collapse:collapse;font-size:12px}
 .tbl th{background:#f5f3ef;padding:8px 10px;text-align:right;font-weight:800;font-size:10px;color:#5a413d;letter-spacing:.05em;border-bottom:2px solid #e2bfb9;position:sticky;top:0}
 .tbl td{padding:7px 10px;border-bottom:1px solid rgba(226,191,185,.35);font-weight:600;vertical-align:middle}
 .tbl tr:hover td{background:rgba(128,0,0,.025)}
 .tbl-wrap{max-height:380px;overflow-y:auto;border-radius:10px;border:1px solid rgba(226,191,185,.4)}
-
-/* Church section */
 .ch-block{margin-bottom:10px;border:1px solid rgba(128,0,0,.1);border-radius:12px;overflow:hidden}
 .ch-block-head{background:linear-gradient(90deg,rgba(128,0,0,.08),transparent);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
 .ch-block-name{font-size:13px;font-weight:800;color:#570000}
 .ch-block-stats{display:flex;gap:6px;align-items:center}
-
-/* KPIs */
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-
 .kpi{background:#fff;border-radius:12px;padding:12px 10px;border:1.5px solid rgba(128,0,0,.08);text-align:center;cursor:pointer;transition:.2s;user-select:none}
 .kpi:hover{border-color:rgba(128,0,0,.25);transform:translateY(-1px);box-shadow:0 4px 12px rgba(128,0,0,.1)}
 .kpi.active-kpi{border-color:#800000;background:rgba(128,0,0,.05);box-shadow:0 0 0 2px rgba(128,0,0,.15)}
-
 .kpi-n{font-family:'Literata',serif;font-size:24px;font-weight:700;line-height:1}
 .kpi-l{font-size:9px;font-weight:800;color:#5a413d;margin-top:3px;letter-spacing:.04em}
-
-/* Export bar */
 .exp-bar{display:flex;gap:8px;margin-top:12px}
 .exp-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;border-radius:10px;border:none;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;cursor:pointer}
 .exp-green{background:#16A34A;color:#fff}
 .exp-red{background:#DC2626;color:#fff}
-
-/* Spin */
 .spin{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(87,0,0,.2);border-top-color:#800000;border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:32px;color:#5a413d;font-weight:700;font-size:13px}
 .empty{text-align:center;padding:32px;color:#8e706c;font-size:13px;font-weight:700}
-
 .filter-bar{background:#fff;border:1px solid rgba(128,0,0,.1);border-radius:14px;padding:12px 14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(128,0,0,.04)}
 .filter-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .filter-lbl{font-size:9px;font-weight:800;color:#5a413d;margin-bottom:4px;letter-spacing:.05em}
 .filter-sel{width:100%;background:#f5f3ef;border:1px solid #e2bfb9;border-radius:8px;padding:6px 10px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#1b1c1a;cursor:pointer;outline:none;appearance:none}
 .filter-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:800;background:rgba(128,0,0,.08);color:#800000;margin-top:8px}
-
-/* ═══ PRINT STYLES ═══════════════════════════════════════════ */
+.ch-exp-btn{background:none;border:1px solid rgba(128,0,0,.2);border-radius:6px;padding:3px 8px;font-family:'Tajawal',sans-serif;font-size:10px;font-weight:800;color:#800000;cursor:pointer;transition:.15s;white-space:nowrap}
+.ch-exp-btn:hover{background:#800000;color:#fff;border-color:#800000}
+.ch-exp-btns{display:flex;gap:4px;align-items:center;flex-shrink:0}
+.toast-el{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1b1c1a;color:#fff;padding:10px 22px;border-radius:30px;font-size:12px;font-weight:800;box-shadow:0 4px 20px rgba(0,0,0,.35);z-index:9999;white-space:nowrap;animation:ti .2s}
+@keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(10px)}}
 #_printArea{display:none}
 @media print{
   body>*:not(#_printArea){display:none!important}
   #_printArea{display:block!important;direction:rtl;font-family:'Tajawal',sans-serif;padding:0;margin:0}
   .pr-title{font-size:17pt;font-weight:900;color:#570000;text-align:center;margin-bottom:2mm}
   .pr-sub{font-size:9pt;color:#666;text-align:center;margin-bottom:5mm;border-bottom:1.5pt solid #800000;padding-bottom:3mm}
-  .pr-section{font-size:9pt;font-weight:900;padding:3mm 4mm;margin:4mm 0 1mm;background:#f5eee8;border-right:4px solid #800000}
   .pr-tbl{width:100%;border-collapse:collapse;font-size:8pt;page-break-inside:auto}
   .pr-tbl th{background:#570000!important;color:#fff!important;padding:4pt 5pt;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .pr-tbl td{padding:3pt 5pt;border-bottom:0.5pt solid #e8e0d8;text-align:center}
@@ -93,21 +76,17 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
   .pr-footer{font-size:7.5pt;color:#aaa;text-align:center;margin-top:4mm;border-top:0.5pt solid #ddd;padding-top:2mm}
   @page{size:A4 landscape;margin:10mm}
 }
-
-.ch-exp-btn{background:none;border:1px solid rgba(128,0,0,.2);border-radius:6px;padding:3px 8px;font-family:'Tajawal',sans-serif;font-size:10px;font-weight:800;color:#800000;cursor:pointer;transition:.15s;white-space:nowrap}
-.ch-exp-btn:hover{background:#800000;color:#fff;border-color:#800000}
-.ch-exp-btns{display:flex;gap:4px;align-items:center;flex-shrink:0}
 </style>
 </head>
 <body>
 <script>
 (function(){
-  const __s=sessionStorage.getItem('user');
+  const __s=localStorage.getItem('user');
   if(!__s){window.location.href='home.html';return;}
   try{
     const __d=JSON.parse(__s);
     if(Date.now()>=__d.exp||!['admin','super_admin'].includes(__d.role)){
-      sessionStorage.removeItem('user');window.location.href='home.html';return;
+      localStorage.removeItem('user');window.location.href='home.html';return;
     }
   }catch{window.location.href='home.html';}
 })();
@@ -122,9 +101,8 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
   <div id="loadMsg" class="loading"><div class="spin"></div> جارٍ تحميل البيانات...</div>
   <div id="content" style="display:none">
 
-
     <!-- ══ FILTERS ══ -->
-    <div class="filter-bar" id="filterBar">
+    <div class="filter-bar">
       <div class="filter-row">
         <div>
           <div class="filter-lbl">الفئة</div>
@@ -153,83 +131,112 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
       <div id="filterTag" style="display:none" class="filter-tag">🔍 فلتر مفعّل — <span id="filterDesc"></span></div>
     </div>
 
-    <!-- ══ TABS ══ -->
+    <!-- فلتر كنيسة لكشف المؤهّلين -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <span style="font-size:11px;font-weight:900;color:#5a413d">🔍 فلتر كنيسة:</span>
+      <select class="filter-sel" id="fChurch" onchange="churchFilter=this.value;buildT1()" style="width:auto;min-width:200px;flex:1">
+        <option value="">كل الكنائس</option>
+      </select>
+      <span id="churchFilterTag" style="display:none;font-size:10px;font-weight:800;color:#800000;background:rgba(128,0,0,.08);padding:3px 10px;border-radius:20px"></span>
+    </div>
 
+    <!-- ══ TABS ══ -->
     <div class="tabs">
       <button class="tab on" onclick="showTab('t1',this)">🏆 مؤهلو المهرجان</button>
       <button class="tab" onclick="showTab('t2',this)">📅 ٢٥ قداس فأكثر</button>
       <button class="tab" onclick="showTab('t3',this)">⛪ كشف الكنائس</button>
     </div>
 
-    <!-- ══ TAB 1: Festival eligibility ══ -->
+    <!-- TAB 1 -->
     <div id="t1">
       <div class="kpis" id="t1kpi"></div>
       <div class="rcard">
         <div class="rcard-head">
           <div><div class="rcard-title">✅ مؤهّلون تماماً</div><div class="rcard-sub">اكتملوا الحد المطلوب</div></div>
-          <div style="display:flex;gap:6px"><button class="h-btn" onclick="exportQualPDF()">📄 PDF</button><button class="h-btn" onclick="exportQual()">⬇ Excel</button><button class="h-btn" style="background:#16A34A;color:#fff" onclick="exportGateJSON()">📦 JSON للبوابة</button></div>
+          <div style="display:flex;gap:6px">
+            <button class="h-btn" onclick="exportQualPDF()">📄 PDF</button>
+            <button class="h-btn" onclick="exportQual()">⬇ Excel</button>
+            <button class="h-btn" style="background:#16A34A;color:#fff" onclick="exportGateJSON()">📦 JSON للبوابة</button>
+          </div>
         </div>
-        <div class="rcard-body">
-          <div class="tbl-wrap"><table class="tbl" id="t1qual"></table></div>
-        </div>
+        <div class="rcard-body"><div class="tbl-wrap"><table class="tbl" id="t1qual"></table></div></div>
       </div>
       <div class="rcard">
         <div class="rcard-head">
           <div><div class="rcard-title">🔵 يحتاج قداس واحد</div><div class="rcard-sub">وصل الحد - ١</div></div>
-          <div style="display:flex;gap:6px"><button class="h-btn" onclick="exportNearPDF()">📄 PDF</button><button class="h-btn" onclick="exportNear()">⬇ Excel</button></div>
+          <div style="display:flex;gap:6px">
+            <button class="h-btn" onclick="exportNearPDF()">📄 PDF</button>
+            <button class="h-btn" onclick="exportNear()">⬇ Excel</button>
+          </div>
         </div>
-        <div class="rcard-body">
-          <div class="tbl-wrap"><table class="tbl" id="t1near"></table></div>
-        </div>
+        <div class="rcard-body"><div class="tbl-wrap"><table class="tbl" id="t1near"></table></div></div>
       </div>
     </div>
 
-    <!-- ══ TAB 2: 25+ attendance ══ -->
+    <!-- TAB 2 -->
     <div id="t2" style="display:none">
       <div class="kpis" id="t2kpi"></div>
       <div class="rcard">
         <div class="rcard-head">
           <div><div class="rcard-title">🌟 ٢٥ قداس فأكثر</div><div class="rcard-sub" id="t2sub"></div></div>
-          <div style="display:flex;gap:6px"><button class="h-btn" onclick="export25PDF()">📄 PDF</button><button class="h-btn" onclick="export25()">⬇ Excel</button></div>
+          <div style="display:flex;gap:6px">
+            <button class="h-btn" onclick="export25PDF()">📄 PDF</button>
+            <button class="h-btn" onclick="export25()">⬇ Excel</button>
+          </div>
         </div>
-        <div class="rcard-body">
-          <div class="tbl-wrap"><table class="tbl" id="t2tbl"></table></div>
-        </div>
+        <div class="rcard-body"><div class="tbl-wrap"><table class="tbl" id="t2tbl"></table></div></div>
       </div>
     </div>
 
-    <!-- ══ TAB 3: Church roster ══ -->
+    <!-- TAB 3 -->
     <div id="t3" style="display:none">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <div style="font-size:12px;color:#5a413d;font-weight:700">كشف تفصيلي لكل كنيسة</div>
-        <div style="display:flex;gap:6px"><button class="exp-btn exp-red" style="flex:0;padding:7px 14px" onclick="exportAllChurchesPDF()">📄 كل الكنائس PDF</button><button class="exp-btn exp-green" style="flex:0;padding:7px 14px" onclick="exportAllChurches()">⬇ كل الكنائس Excel</button></div>
+        <div style="display:flex;gap:6px">
+          <button class="exp-btn exp-red" style="flex:0;padding:7px 14px" onclick="exportAllChurchesPDF()">📄 كل الكنائس PDF</button>
+          <button class="exp-btn exp-green" style="flex:0;padding:7px 14px" onclick="exportAllChurches()">⬇ كل الكنائس Excel</button>
+        </div>
       </div>
       <div id="t3list"></div>
     </div>
 
-  </div><!-- /content -->
+  </div>
 </div>
+<div id="_printArea"></div>
 
 <script>
 // ══ CONFIG ════════════════════════════════════════════════════
-const SHEET_ID    = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
-const SHEET_DB    = 'Data';
-const SHEET_ATT_ID= '12Eq2wViycVa0wE2zwGKDXGJAcCVrRX5WIR8VZosJDso';
-const SHEET_ATT   = 'Form Responses 1';
-const CAT_MAX     = {'طالب':12,'ثانوية':6,'موظف':6};
-const MAX_DEF     = 12;
+const SHEET_ID     = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const SHEET_DB     = 'Data';
+const SHEET_ATT_ID = '12Eq2wViycVa0wE2zwGKDXGJAcCVrRX5WIR8VZosJDso';
+const SHEET_ATT    = 'Form Responses 1';
+const CAT_MAX      = {'طالب':12,'ثانوية':6,'موظف':6};
+const MAX_DEF      = 12;
 
 // ══ STATE ═════════════════════════════════════════════════════
-let DB=[],attMap={},members=[];
+let DB=[], attMap={}, members=[], filtered=[];
+let statusFilter='', churchFilter='';
 
-// ══ LOAD ══════════════════════════════════════════════════════
+// ══ HELPERS ═══════════════════════════════════════════════════
+function toast(msg){
+  const t=document.createElement('div');t.className='toast-el';t.textContent=msg;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
+}
+function getLvlLabel(){ const v=document.getElementById('fLvl').value; return v?('المستوى_'+v):''; }
+function safeFileName(s){ return String(s).replace(/[\s\/\\:*?"<>|]+/g,'_').slice(0,40); }
+function churchFileName(ch,ext){ const lvl=getLvlLabel(); return [lvl,safeFileName(ch)].filter(Boolean).join('_')+'.'+ext; }
+function allChurchesFileName(ext){ return (getLvlLabel()||'كل_المستويات')+'_كل_الكنائس_'+new Date().toISOString().slice(0,10)+'.'+ext; }
+
+// ══ SHEET READER ══════════════════════════════════════════════
 async function readSheet(name,id=SHEET_ID){
   const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}&headers=1&_=${Date.now()}`;
-  const r=await fetch(url);const text=await r.text();
+  const r=await fetch(url); const text=await r.text();
   const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
   if(!json.table||!json.table.rows)return[];
   let cols=json.table.cols.map(c=>c.label||''),rows=json.table.rows;
-  if(cols.every(c=>!c.trim())&&rows.length>0){cols=rows[0].c.map(c=>c?String(c.v!==undefined?c.v:(c.f||'')).trim():'');rows=rows.slice(1);}
+  if(cols.every(c=>!c.trim())&&rows.length>0){
+    cols=rows[0].c.map(c=>c?String(c.v!==undefined?c.v:(c.f||'')).trim():'');rows=rows.slice(1);
+  }
   return rows.map(row=>Object.fromEntries(cols.map((col,i)=>[col,row.c&&row.c[i]?row.c[i].v??'':'']).filter(([k])=>k.trim())));
 }
 function parseDate(v){
@@ -242,8 +249,8 @@ function fmtDate(d){const dd=new Date(d);return`${dd.getFullYear()}-${String(dd.
 function precedingSunday(d){const dd=new Date(d),day=dd.getDay();if(day===0)return dd;dd.setDate(dd.getDate()-day);return dd;}
 function normCat(c){c=String(c).trim();if(/طالب|school/i.test(c))return'طالب';if(/ثانو|شباب/i.test(c))return'ثانوية';if(/موظف|عمال/i.test(c))return'موظف';return c||'طالب';}
 function getMax(m){return CAT_MAX[m.category]||MAX_DEF;}
-function AR(n){return String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);}
 
+// ══ LOAD DATA ═════════════════════════════════════════════════
 async function loadData(){
   document.getElementById('loadMsg').style.display='flex';
   document.getElementById('content').style.display='none';
@@ -271,7 +278,7 @@ async function loadData(){
     filtered=[];
     members=DB.map(m=>{
       const rec=attMap[m.code]||{sundays:new Set()};
-      const total=rec.sundays.size;const mx=getMax(m);
+      const total=rec.sundays.size; const mx=getMax(m);
       return{...m,total,maxAtt:mx,qualified:total>=mx,near:total===mx-1,pct:Math.round(total/mx*100)};
     });
 
@@ -285,6 +292,43 @@ async function loadData(){
   }
 }
 
+// ══ FILTERS ═══════════════════════════════════════════════════
+function populateLevels(){
+  const lvls=[...new Set(DB.map(m=>m.level).filter(Boolean))].sort((a,b)=>{
+    const na=parseFloat(a),nb=parseFloat(b);return(!isNaN(na)&&!isNaN(nb))?na-nb:a.localeCompare(b,'ar');
+  });
+  document.getElementById('fLvl').innerHTML='<option value="">كل المستويات</option>'+lvls.map(v=>`<option value="${v}">${v}</option>`).join('');
+}
+function populateChurches(){
+  const chs=[...new Set(members.map(m=>m.church).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ar'));
+  const sel=document.getElementById('fChurch');
+  if(!sel)return;
+  sel.innerHTML='<option value="">كل الكنائس</option>'+chs.map(v=>`<option value="${v}">${v}</option>`).join('');
+}
+function applyFilters(){
+  const cat=document.getElementById('fCat').value;
+  const lvl=document.getElementById('fLvl').value;
+  const gen=document.getElementById('fGen').value;
+  filtered=members.filter(m=>{
+    if(cat&&m.category!==cat)return false;
+    if(lvl&&m.level!==lvl)return false;
+    if(gen&&m.gender!==gen)return false;
+    return true;
+  });
+  const active=[cat,lvl,gen].filter(Boolean);
+  const tag=document.getElementById('filterTag');
+  tag.style.display=active.length?'inline-flex':'none';
+  document.getElementById('filterDesc').textContent=[cat,lvl,gen==='ذكر'?'شماس':gen==='أنثى'?'شماسة':''].filter(Boolean).join(' · ');
+  buildT1();buildT2();buildT3();
+}
+function getFiltered(){return filtered.length?filtered:members;}
+function setStatus(s){
+  statusFilter=s;
+  buildT1();
+  document.getElementById('t1qual').closest('.rcard').style.display=(!s||s==='qual')?'':'none';
+  document.getElementById('t1near').closest('.rcard').style.display=(!s||s==='near')?'':'none';
+}
+
 // ══ TAB SWITCH ════════════════════════════════════════════════
 function showTab(id,btn){
   ['t1','t2','t3'].forEach(t=>document.getElementById(t).style.display='none');
@@ -295,7 +339,6 @@ function showTab(id,btn){
 
 // ══ TABLE HELPERS ═════════════════════════════════════════════
 const THEAD=`<thead><tr><th>#</th><th>الاسم</th><th>الكود</th><th>الكنيسة</th><th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr></thead>`;
-
 function personRow(p,i){
   const g=p.gender==='ذكر'?'شماس':'شماسة';
   const stClr=p.qualified?'#16A34A':p.near?'#800000':'#D97706';
@@ -315,32 +358,26 @@ function personRow(p,i){
   </tr>`;
 }
 
-// ══ T1: FESTIVAL ELIGIBILITY ══════════════════════════════════
+// ══ BUILD T1 ══════════════════════════════════════════════════
 function buildT1(){
-  const base=getFiltered();
-  const baseFiltered=churchFilter?base.filter(p=>p.church===churchFilter):base;
-  const qual=baseFiltered.filter(p=>p.qualified).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
-  const near=baseFiltered.filter(p=>p.near).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
-  const total=baseFiltered.length;
-  // Update church filter tag
+  const base=churchFilter?getFiltered().filter(p=>p.church===churchFilter):getFiltered();
+  const qual=base.filter(p=>p.qualified).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
+  const near=base.filter(p=>p.near).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
   const tag=document.getElementById('churchFilterTag');
   if(tag){tag.style.display=churchFilter?'inline':'none';tag.textContent='⛪ '+churchFilter;}
-
   document.getElementById('t1kpi').innerHTML=`
     <div class="kpi ${statusFilter==='qual'?'active-kpi':''}" onclick="setStatus('qual')"><div class="kpi-n" style="color:#16A34A">${qual.length}</div><div class="kpi-l">مؤهّل تماماً</div></div>
     <div class="kpi ${statusFilter==='near'?'active-kpi':''}" onclick="setStatus('near')"><div class="kpi-n" style="color:#800000">${near.length}</div><div class="kpi-l">يحتاج قداس واحد</div></div>
-    <div class="kpi ${statusFilter===''?'active-kpi':''}" onclick="setStatus('')"><div class="kpi-n" style="color:#5a413d">${total}</div><div class="kpi-l">إجمالي مسجّل</div></div>`;
-
-  const renderTbl=(tblId,data)=>{
-    const el=document.getElementById(tblId);
-    if(!data.length){el.innerHTML=`<tr><td colspan="11" class="empty">لا يوجد</td></tr>`;return;}
-    el.innerHTML=THEAD+`<tbody>${data.map((p,i)=>personRow(p,i)).join('')}</tbody>`;
+    <div class="kpi ${statusFilter===''?'active-kpi':''}" onclick="setStatus('')"><div class="kpi-n" style="color:#5a413d">${base.length}</div><div class="kpi-l">إجمالي مسجّل</div></div>`;
+  const renderTbl=(id,data)=>{
+    const el=document.getElementById(id);
+    el.innerHTML=data.length?THEAD+`<tbody>${data.map((p,i)=>personRow(p,i)).join('')}</tbody>`:`<tr><td colspan="11" class="empty">لا يوجد</td></tr>`;
   };
   renderTbl('t1qual',qual);
   renderTbl('t1near',near);
 }
 
-// ══ T2: 25+ ATTENDANCE ════════════════════════════════════════
+// ══ BUILD T2 ══════════════════════════════════════════════════
 function buildT2(){
   const data=getFiltered().filter(p=>p.total>=25).sort((a,b)=>b.total-a.total);
   const maxAtt=data.length?data[0].total:0;
@@ -350,62 +387,49 @@ function buildT2(){
     <div class="kpi"><div class="kpi-n" style="color:#5a413d">${data.length?Math.round(data.reduce((s,p)=>s+p.total,0)/data.length):0}</div><div class="kpi-l">متوسط الحضور</div></div>`;
   document.getElementById('t2sub').textContent=`${data.length} شماس/شماسة`;
   const el=document.getElementById('t2tbl');
-  if(!data.length){el.innerHTML=`<tr><td colspan="11" class="empty">لا يوجد</td></tr>`;return;}
-  el.innerHTML=THEAD+`<tbody>${data.map((p,i)=>personRow(p,i)).join('')}</tbody>`;
+  el.innerHTML=data.length?THEAD+`<tbody>${data.map((p,i)=>personRow(p,i)).join('')}</tbody>`:`<tr><td colspan="11" class="empty">لا يوجد</td></tr>`;
 }
 
-// ══ T3: CHURCH ROSTER ═════════════════════════════════════════
+// ══ BUILD T3 ══════════════════════════════════════════════════
 function buildT3(){
   const byChurch={};
   getFiltered().forEach(m=>{if(!byChurch[m.church])byChurch[m.church]=[];byChurch[m.church].push(m);});
-  const churches=Object.keys(byChurch).sort();
   const list=document.getElementById('t3list');
   list.innerHTML='';
-  churches.forEach(ch=>{
+  Object.keys(byChurch).sort().forEach(ch=>{
     const all=byChurch[ch].sort((a,b)=>b.total-a.total);
     const qualPpl=all.filter(p=>p.qualified);
     const nearPpl=all.filter(p=>p.near);
-    const allowed=[...qualPpl,...nearPpl]; // مسموح بالامتحان
-    const qual=qualPpl.length;
-    const near=nearPpl.length;
-    const div=document.createElement('div');div.className='ch-block';
-    // Build the allowed rows with section separators
+    const allowed=[...qualPpl,...nearPpl];
     let rowsHtml='';
-    if(qualPpl.length){
-      rowsHtml+=`<tr><td colspan="11" style="background:#e8f5e9;color:#1b5e20;font-weight:900;font-size:11px;padding:5px 10px;text-align:right">✅ مؤهّلون (${qualPpl.length})</td></tr>`;
-      rowsHtml+=qualPpl.map((p,i)=>personRow(p,i)).join('');
-    }
-    if(nearPpl.length){
-      rowsHtml+=`<tr><td colspan="11" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:11px;padding:5px 10px;text-align:right">🔵 يحتاج قداس واحد (${nearPpl.length})</td></tr>`;
-      rowsHtml+=nearPpl.map((p,i)=>personRow(p,i)).join('');
-    }
-    if(!allowed.length){
-      rowsHtml=`<tr><td colspan="11" class="empty">لا يوجد مسموح بالامتحان</td></tr>`;
-    }
+    if(qualPpl.length) rowsHtml+=`<tr><td colspan="11" style="background:#e8f5e9;color:#1b5e20;font-weight:900;font-size:11px;padding:5px 10px;text-align:right">✅ مؤهّلون (${qualPpl.length})</td></tr>`+qualPpl.map((p,i)=>personRow(p,i)).join('');
+    if(nearPpl.length) rowsHtml+=`<tr><td colspan="11" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:11px;padding:5px 10px;text-align:right">🔵 يحتاج قداس واحد (${nearPpl.length})</td></tr>`+nearPpl.map((p,i)=>personRow(p,i)).join('');
+    if(!allowed.length) rowsHtml=`<tr><td colspan="11" class="empty">لا يوجد مسموح بالامتحان</td></tr>`;
+    const safeChName=ch.replace(/'/g,"\'");
+    const div=document.createElement('div');
+    div.className='ch-block';
     div.innerHTML=`
       <div class="ch-block-head" onclick="toggleCh(this)">
         <div class="ch-block-name">⛪ ${ch}</div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <div class="ch-block-stats">
-            <span class="bdg" style="background:rgba(0,128,60,.12);color:#006030;font-weight:900">${qual} مؤهّل</span>
-            <span class="bdg b-gold">${near} قداس واحد</span>
+            <span class="bdg" style="background:rgba(0,128,60,.12);color:#006030;font-weight:900">${qualPpl.length} مؤهّل</span>
+            <span class="bdg b-gold">${nearPpl.length} قداس واحد</span>
             <span class="bdg" style="background:rgba(128,0,0,.1);color:#800000;font-weight:900">🎫 ${allowed.length} مسموح</span>
             <span class="bdg b-gray">${all.length} إجمالي</span>
           </div>
           <div class="ch-exp-btns" onclick="event.stopPropagation()">
-            <button class="ch-exp-btn" onclick="exportChurchPDF('${ch.replace(/'/g,"\'")}')">📄 PDF</button>
-            <button class="ch-exp-btn" onclick="exportChurch('${ch.replace(/'/g,"\'")}')">⬇ Excel</button>
+            <button class="ch-exp-btn" onclick="exportChurchPDF('${safeChName}')">📄 PDF</button>
+            <button class="ch-exp-btn" onclick="exportChurch('${safeChName}')">⬇ Excel</button>
           </div>
           <span style="color:#8e706c;font-size:14px">▾</span>
         </div>
       </div>
       <div class="ch-body" style="display:none;overflow-x:auto">
-        <table class="tbl">
-          ${THEAD}
-          <tbody>${rowsHtml}</tbody>
-        </table>
-        <div style="padding:8px 12px">
-          <button onclick="exportChurchPDF('${ch}')" class="exp-btn exp-red" style="display:inline-flex;width:auto;padding:6px 14px;font-size:11px;margin-left:6px">📄 PDF</button><button onclick="exportChurch('${ch}')" class="exp-btn exp-green" style="display:inline-flex;width:auto;padding:6px 14px;font-size:11px">⬇ Excel</button>
+        <table class="tbl">${THEAD}<tbody>${rowsHtml}</tbody></table>
+        <div style="padding:8px 12px;display:flex;gap:8px">
+          <button onclick="exportChurchPDF('${safeChName}')" class="exp-btn exp-red" style="flex:0;padding:6px 14px;font-size:11px">📄 PDF</button>
+          <button onclick="exportChurch('${safeChName}')" class="exp-btn exp-green" style="flex:0;padding:6px 14px;font-size:11px">⬇ Excel</button>
         </div>
       </div>`;
     list.appendChild(div);
@@ -418,294 +442,120 @@ function toggleCh(head){
   head.querySelector('span:last-child').textContent=open?'▾':'▴';
 }
 
-// ══ EXPORTS ═══════════════════════════════════════════════════
-const EXP_HEADERS=['#','الاسم','الكود','الكنيسة','الفئة','المستوى','النوع','الحضور','الهدف','النسبة%','الحالة'];
-function personExRow(p,i){return[i+1,p.name,p.code,p.church,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهّل':p.near?'يحتاج قداس':'متوسط'];}
-function makeWs(data){
-  const ws=XLSX.utils.aoa_to_sheet([EXP_HEADERS,...data]);
-  ws['!cols']=[{wch:4},{wch:22},{wch:8},{wch:20},{wch:8},{wch:10},{wch:8},{wch:8},{wch:8},{wch:8},{wch:12}];
-  return ws;
-}
-function exportQual(){
-  const data=getFiltered().filter(p=>p.qualified).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'مؤهّلون');
-  XLSX.writeFile(wb,`مؤهلو_المهرجان_${new Date().toISOString().slice(0,10)}.xlsx`);
-}
-function exportNear(){
-  const data=getFiltered().filter(p=>p.near).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'يحتاج قداس واحد');
-  XLSX.writeFile(wb,`يحتاج_قداس_واحد_${new Date().toISOString().slice(0,10)}.xlsx`);
-}
-function export25(){
-  const data=getFiltered().filter(p=>p.total>=25).sort((a,b)=>b.total-a.total);
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'٢٥ قداس فأكثر');
-  XLSX.writeFile(wb,`٢٥_قداس_فأكثر_${new Date().toISOString().slice(0,10)}.xlsx`);
-}
-function exportChurch(ch){
-  const all=getFiltered().filter(p=>p.church===ch);
-  const data=[...all.filter(p=>p.qualified),...all.filter(p=>p.near)];// مسموح بالامتحان فقط
-  const wb=XLSX.utils.book_new();
-  const summary=[['الكنيسة',ch],['إجمالي مسجّل',data.length],['مؤهّلون',data.filter(p=>p.qualified).length],['يحتاج قداس واحد',data.filter(p=>p.near).length],['متوسط الحضور',(data.reduce((s,p)=>s+p.total,0)/data.length).toFixed(1)],['تاريخ التقرير',new Date().toLocaleDateString('ar-EG')],['']];
-  const wsS=XLSX.utils.aoa_to_sheet(summary);
-  XLSX.utils.book_append_sheet(wb,wsS,'ملخص');
-  XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'الكشف التفصيلي');
-  XLSX.writeFile(wb,`كشف_${ch.slice(0,20)}_${new Date().toISOString().slice(0,10)}.xlsx`);
-}
-
-function exportAllChurchesPDF(){
-  const lvl=document.getElementById('fLvl').value;
-  const byChurch={};
-  getFiltered().forEach(m=>{if(!byChurch[m.church])byChurch[m.church]=[];byChurch[m.church].push(m);});
-  const churches=Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar'));
-  if(!churches.length){alert('لا توجد بيانات');return;}
-  const now=new Date().toLocaleDateString('ar-EG');
-  const pa=document.getElementById('_printArea');
-  if(!pa){alert('عنصر الطباعة غير موجود');return;}
-  let html='';
-  churches.forEach((ch,ci)=>{
-    const all=byChurch[ch];
-    const qualD=all.filter(p=>p.qualified);
-    const nearD=all.filter(p=>p.near);
-    const data=[...qualD,...nearD];
-    if(!data.length)return;
-    let rows='';
-    if(qualD.length) rows+=`<tr><td colspan="9" style="background:#e8f5e9;color:#1b5e20;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">✅ مؤهّلون (${qualD.length})</td></tr>`+
-      qualD.map((p,i)=>`<tr><td>${i+1}</td><td style="text-align:right;font-weight:800">${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td>${p.total}</td><td>${p.maxAtt}</td><td>${p.pct}%</td></tr>`).join('');
-    if(nearD.length) rows+=`<tr><td colspan="9" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">🔵 يحتاج قداس واحد (${nearD.length})</td></tr>`+
-      nearD.map((p,i)=>`<tr><td>${qualD.length+i+1}</td><td style="text-align:right;font-weight:800">${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td>${p.total}</td><td>${p.maxAtt}</td><td>${p.pct}%</td></tr>`).join('');
-    html+=`<div style="page-break-after:${ci<churches.length-1?'always':'auto'};direction:rtl;font-family:Tajawal,sans-serif;padding:8mm">
-      <div style="text-align:center;border-bottom:2px solid #800000;padding-bottom:8px;margin-bottom:12px">
-        <div style="font-size:10px;font-weight:800;color:#800000;letter-spacing:.1em">✝ مطرانية المعادي الأرثوذكسية ✝</div>
-        <div style="font-size:18px;font-weight:900;color:#1a0000;margin-top:4px">${ch}</div>
-        <div style="font-size:10px;color:#888;margin-top:3px">${lvl?'المستوى '+lvl+' · ':''}مؤهّل: ${qualD.length} | يحتاج قداس: ${nearD.length} | مسموح: ${data.length} · ${now}</div>
-      </div>
-      <table style="width:100%;border-collapse:collapse;font-size:10px;text-align:center">
-        <thead><tr style="background:#570000;color:#fff">
-          <th style="padding:5px">#</th><th style="text-align:right;padding:5px 8px">الاسم</th>
-          <th>الكود</th><th>الفئة</th><th>المستوى</th><th>النوع</th>
-          <th>الحضور</th><th>الهدف</th><th>النسبة</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
-  });
-  pa.innerHTML=html;
-  const fname=(lvl?'المستوى_'+lvl+'_':'')+now.replace(/\//g,'-')+'_كل_الكنائس';
-  document.title=fname;
-  setTimeout(()=>{ window.print(); document.title='شمامسة ٢٠٢٦'; },150);
-}
-
-function exportAllChurches(){
-  const lvl=document.getElementById('fLvl').value;
-  const byChurch={};
-  getFiltered().forEach(m=>{
-    if(!byChurch[m.church])byChurch[m.church]=[];
-    byChurch[m.church].push(m);
-  });
-  const wb=XLSX.utils.book_new();
-  // Summary sheet
-  const churches=Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar'));
-  const sumData=[['الكنيسة','إجمالي','مؤهّل','يحتاج قداس','مسموح بالامتحان'],
-    ...churches.map(ch=>{
-      const all=byChurch[ch];
-      const qual=all.filter(p=>p.qualified).length;
-      const near=all.filter(p=>p.near).length;
-      return[ch,all.length,qual,near,qual+near];
-    })
-  ];
-  const wsSum=XLSX.utils.aoa_to_sheet(sumData);
-  wsSum['!views']=[{RTL:true}];
-  XLSX.utils.book_append_sheet(wb,wsSum,'ملخص');
-  // One sheet per church
-  churches.forEach(ch=>{
-    const all=byChurch[ch];
-    const data=[...all.filter(p=>p.qualified),...all.filter(p=>p.near)];
-    const wsData=[['#','الاسم','الكود','الفئة','المستوى','النوع','الحضور','الهدف','النسبة%','الحالة'],
-      ...data.map((p,i)=>[i+1,p.name,p.code,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهّل':'يحتاج قداس'])
-    ];
-    const ws=XLSX.utils.aoa_to_sheet(wsData);
-    ws['!views']=[{RTL:true}];
-    // Sheet name: level + short church name (max 31 chars)
-    const sheetName=(lvl?'م'+lvl+'-':'')+ch.replace(/كنيسة\s*/,'').slice(0,25);
-    XLSX.utils.book_append_sheet(wb,ws,sheetName.slice(0,31));
-  });
-  XLSX.writeFile(wb, allChurchesFileName('xlsx'));
-  toast('✅ تم تصدير كل الكنائس');
-}
-
-
-function populateChurches(){
-  const chs=[...new Set(members.map(m=>m.church).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ar'));
-  const sel=document.getElementById('fChurch');
-  if(!sel)return;
-  sel.innerHTML='<option value="">كل الكنائس</option>'+chs.map(v=>`<option value="${v}">${v}</option>`).join('');
-}
-
-function populateLevels(){
-  const lvls=[...new Set(DB.map(m=>m.level).filter(Boolean))].sort((a,b)=>{
-    const na=parseFloat(a),nb=parseFloat(b);return(!isNaN(na)&&!isNaN(nb))?na-nb:a.localeCompare(b,'ar');
-  });
-  const sel=document.getElementById('fLvl');
-  sel.innerHTML='<option value="">كل المستويات</option>'+lvls.map(v=>`<option value="${v}">${v}</option>`).join('');
-}
-
-function applyFilters(){
-  const cat=document.getElementById('fCat').value;
-  const lvl=document.getElementById('fLvl').value;
-  const gen=document.getElementById('fGen').value;
-  filtered=members.filter(m=>{
-    if(cat&&m.category!==cat)return false;
-    if(lvl&&m.level!==lvl)return false;
-    if(gen&&m.gender!==gen)return false;
-    return true;
-  });
-  const active=[cat,lvl,gen].filter(Boolean);
-  const tag=document.getElementById('filterTag');
-  const desc=document.getElementById('filterDesc');
-  tag.style.display=active.length?'inline-flex':'none';
-  desc.textContent=[cat,lvl,gen==='ذكر'?'شماس':gen==='أنثى'?'شماسة':''].filter(Boolean).join(' · ');
-  buildT1();buildT2();buildT3();
-}
-
-function getFiltered(){return filtered.length?filtered:members;}
-function setStatus(s){
-  statusFilter=s;
-  buildT1();
-  // Scroll to tables
-  document.getElementById('t1qual').closest('.rcard').style.display=(!s||s==='qual')?'':'none';
-  document.getElementById('t1near').closest('.rcard').style.display=(!s||s==='near')?'':'none';
-}
-
-// ══ PDF HELPER ════════════════════════════════════════════════
+// ══ PDF ═══════════════════════════════════════════════════════
 function makePDF(title,subtitle,rows_html,count,filename){
   const now=new Date().toLocaleDateString('ar-EG');
   const pa=document.getElementById('_printArea');
-  const thead=`<tr><th>#</th><th style="text-align:right">الاسم</th><th>الكود</th>
-    <th style="text-align:right">الكنيسة</th><th>الفئة</th><th>المستوى</th>
-    <th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr>`;
+  const thead=`<tr><th>#</th><th style="text-align:right">الاسم</th><th>الكود</th><th style="text-align:right">الكنيسة</th><th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th><th>الحالة</th></tr>`;
   pa.innerHTML=`
     <div class="pr-title">✝ ${title} ✝</div>
     <div class="pr-sub">${subtitle} — ${now} — إجمالي: ${count}</div>
     <table class="pr-tbl"><thead>${thead}</thead><tbody>${rows_html}</tbody></table>
     <div class="pr-footer">شمامسة ٢٠٢٦ — مطرانية المعادي الأرثوذكسية</div>`;
-  setTimeout(()=>{ document.title=(filename||title);
-setTimeout(()=>{ window.print(); document.title='سجل الحضور — شمامسة ٢٠٢٦'; },120);
+  document.title=filename||title;
+  setTimeout(()=>{ window.print(); document.title='تقارير شمامسة ٢٠٢٦'; },150);
 }
-
 function buildRows(data){
   return data.map((p,i)=>{
     const g=p.gender==='ذكر'?'شماس':'شماسة';
     const stLbl=p.qualified?'✅ مؤهّل':p.near?'🔵 قداس واحد':'🟡 متوسط';
-    return`<tr>
-      <td>${i+1}</td><td class="nm">${p.name}</td><td>${p.code}</td>
-      <td class="ch">${p.church}</td><td>${p.category}</td>
-      <td>${p.level||'—'}</td><td>${g}</td>
-      <td style="font-weight:900;color:${p.qualified?'#16A34A':p.near?'#800000':'#D97706'}">${p.total}</td>
-      <td style="color:#888">${p.maxAtt}</td><td>${p.pct}%</td><td>${stLbl}</td>
-    </tr>`;
+    return`<tr><td>${i+1}</td><td class="nm">${p.name}</td><td>${p.code}</td><td class="ch">${p.church}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${g}</td><td style="font-weight:900;color:${p.qualified?'#16A34A':p.near?'#800000':'#D97706'}">${p.total}</td><td style="color:#888">${p.maxAtt}</td><td>${p.pct}%</td><td>${stLbl}</td></tr>`;
   }).join('');
 }
 
-function exportQualPDF(){
-  const data=getFiltered().filter(p=>p.qualified).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
-  const sub='مؤهّلو المهرجان — '+data.length+' شماس/شماسة';
-  makePDF('تقرير المؤهّلين — مهرجان شمامسة ٢٠٢٦',sub,buildRows(data),data.length);
+// ══ EXCEL ═════════════════════════════════════════════════════
+const EXP_HEADERS=['#','الاسم','الكود','الكنيسة','الفئة','المستوى','النوع','الحضور','الهدف','النسبة%','الحالة'];
+function personExRow(p,i){return[i+1,p.name,p.code,p.church,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهّل':p.near?'يحتاج قداس':'متوسط'];}
+function makeWs(data){
+  const ws=XLSX.utils.aoa_to_sheet([EXP_HEADERS,...data]);
+  ws['!cols']=[{wch:4},{wch:22},{wch:8},{wch:20},{wch:8},{wch:10},{wch:8},{wch:8},{wch:8},{wch:8},{wch:12}];
+  ws['!views']=[{RTL:true}];return ws;
 }
-function exportNearPDF(){
-  const data=getFiltered().filter(p=>p.near).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total);
-  const sub='يحتاج قداس واحد — '+data.length+' شماس/شماسة';
-  makePDF('تقرير يحتاج قداس واحد — مهرجان شمامسة ٢٠٢٦',sub,buildRows(data),data.length);
-}
-function export25PDF(){
-  const data=getFiltered().filter(p=>p.total>=25).sort((a,b)=>b.total-a.total);
-  const sub='٢٥ قداس فأكثر — '+data.length+' شماس/شماسة';
-  makePDF('تقرير ٢٥ قداس فأكثر — مهرجان شمامسة ٢٠٢٦',sub,buildRows(data),data.length);
+function exportQual(){ const data=getFiltered().filter(p=>p.qualified).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'مؤهّلون'); XLSX.writeFile(wb,`مؤهلو_المهرجان_${new Date().toISOString().slice(0,10)}.xlsx`); }
+function exportNear(){ const data=getFiltered().filter(p=>p.near).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'يحتاج قداس واحد'); XLSX.writeFile(wb,`يحتاج_قداس_واحد_${new Date().toISOString().slice(0,10)}.xlsx`); }
+function export25(){ const data=getFiltered().filter(p=>p.total>=25).sort((a,b)=>b.total-a.total); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'٢٥ قداس فأكثر'); XLSX.writeFile(wb,`٢٥_قداس_فأكثر_${new Date().toISOString().slice(0,10)}.xlsx`); }
+function exportQualPDF(){ makePDF('تقرير المؤهّلين — مهرجان شمامسة ٢٠٢٦','مؤهّلو المهرجان — '+getFiltered().filter(p=>p.qualified).length+' شماس/شماسة',buildRows(getFiltered().filter(p=>p.qualified).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total)),getFiltered().filter(p=>p.qualified).length); }
+function exportNearPDF(){ makePDF('تقرير يحتاج قداس واحد','يحتاج قداس واحد — '+getFiltered().filter(p=>p.near).length+' شماس/شماسة',buildRows(getFiltered().filter(p=>p.near).sort((a,b)=>a.church.localeCompare(b.church,'ar')||b.total-a.total)),getFiltered().filter(p=>p.near).length); }
+function export25PDF(){ makePDF('تقرير ٢٥ قداس فأكثر','٢٥ قداس فأكثر — '+getFiltered().filter(p=>p.total>=25).length+' شماس/شماسة',buildRows(getFiltered().filter(p=>p.total>=25).sort((a,b)=>b.total-a.total)),getFiltered().filter(p=>p.total>=25).length); }
+
+function exportChurch(ch){
+  const all=getFiltered().filter(p=>p.church===ch);
+  const data=[...all.filter(p=>p.qualified),...all.filter(p=>p.near)];
+  const wb=XLSX.utils.book_new();
+  const summary=[['الكنيسة',ch],['إجمالي مسجّل',data.length],['مؤهّلون',data.filter(p=>p.qualified).length],['يحتاج قداس واحد',data.filter(p=>p.near).length],['تاريخ التقرير',new Date().toLocaleDateString('ar-EG')],['']];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(summary),'ملخص');
+  XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'الكشف التفصيلي');
+  XLSX.writeFile(wb,churchFileName(ch,'xlsx'));
 }
 function exportChurchPDF(ch){
   const all=getFiltered().filter(p=>p.church===ch);
-  const qualD=all.filter(p=>p.qualified);
-  const nearD=all.filter(p=>p.near);
+  const qualD=all.filter(p=>p.qualified); const nearD=all.filter(p=>p.near);
   const data=[...qualD,...nearD];
   let rows='';
   if(qualD.length) rows+=`<tr><td colspan="11" style="background:#e8f5e9;color:#1b5e20;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">✅ مؤهّلون (${qualD.length})</td></tr>`+buildRows(qualD);
   if(nearD.length) rows+=`<tr><td colspan="11" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">🔵 يحتاج قداس واحد (${nearD.length})</td></tr>`+buildRows(nearD);
-  const sub=ch+' — مؤهّل: '+qualD.length+' | يحتاج قداس: '+nearD.length;
-  makePDF('كشف حضور — '+ch,sub,rows,data.length,churchFileName(ch,'pdf'));
+  makePDF('كشف حضور — '+ch,ch+' — مؤهّل: '+qualD.length+' | يحتاج قداس: '+nearD.length,rows,data.length,churchFileName(ch,'pdf'));
 }
 
-
-// ══ JSON EXPORT FOR FESTIVAL GATE ════════════════════════════
-
-function getLvlLabel(){
-  const v=document.getElementById('fLvl').value;
-  return v?('المستوى_'+v):'';
-}
-function safeFileName(s){ return String(s).replace(/[\s/\\:*?"<>|]+/g,'_').slice(0,40); }
-function churchFileName(ch, ext){
-  const lvl=getLvlLabel();
-  const parts=[lvl,safeFileName(ch)].filter(Boolean);
-  return parts.join('_')+'.'+ext;
-}
-function allChurchesFileName(ext){
-  const lvl=getLvlLabel()||'كل_المستويات';
-  return lvl+'_كل_الكنائس_'+new Date().toISOString().slice(0,10)+'.'+ext;
+function exportAllChurches(){
+  const lvl=document.getElementById('fLvl').value;
+  const byChurch={};getFiltered().forEach(m=>{if(!byChurch[m.church])byChurch[m.church]=[];byChurch[m.church].push(m);});
+  const churches=Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar'));
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['الكنيسة','إجمالي','مؤهّل','يحتاج قداس','مسموح'],...churches.map(ch=>{const all=byChurch[ch];const q=all.filter(p=>p.qualified).length;const n=all.filter(p=>p.near).length;return[ch,all.length,q,n,q+n];})]),'ملخص');
+  churches.forEach(ch=>{
+    const all=byChurch[ch];const data=[...all.filter(p=>p.qualified),...all.filter(p=>p.near)];
+    const ws=makeWs(data.map((p,i)=>personExRow(p,i)));
+    const sn=((lvl?'م'+lvl+'-':'')+ch.replace(/كنيسة\s*/,'')).slice(0,31);
+    XLSX.utils.book_append_sheet(wb,ws,sn);
+  });
+  XLSX.writeFile(wb,allChurchesFileName('xlsx'));
+  toast('✅ تم تصدير كل الكنائس');
 }
 
+function exportAllChurchesPDF(){
+  const lvl=document.getElementById('fLvl').value;
+  const byChurch={};getFiltered().forEach(m=>{if(!byChurch[m.church])byChurch[m.church]=[];byChurch[m.church].push(m);});
+  const churches=Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar'));
+  if(!churches.length){alert('لا توجد بيانات');return;}
+  const now=new Date().toLocaleDateString('ar-EG');
+  let html='';
+  churches.forEach((ch,ci)=>{
+    const all=byChurch[ch];const qualD=all.filter(p=>p.qualified);const nearD=all.filter(p=>p.near);
+    const data=[...qualD,...nearD];if(!data.length)return;
+    let rows='';
+    if(qualD.length) rows+=`<tr><td colspan="9" style="background:#e8f5e9;color:#1b5e20;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">✅ مؤهّلون (${qualD.length})</td></tr>`+qualD.map((p,i)=>`<tr><td>${i+1}</td><td style="text-align:right;font-weight:800">${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td>${p.total}</td><td>${p.maxAtt}</td><td>${p.pct}%</td></tr>`).join('');
+    if(nearD.length) rows+=`<tr><td colspan="9" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">🔵 يحتاج قداس واحد (${nearD.length})</td></tr>`+nearD.map((p,i)=>`<tr><td>${qualD.length+i+1}</td><td style="text-align:right;font-weight:800">${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td>${p.total}</td><td>${p.maxAtt}</td><td>${p.pct}%</td></tr>`).join('');
+    html+=`<div style="page-break-after:${ci<churches.length-1?'always':'auto'};direction:rtl;font-family:Tajawal,sans-serif;padding:8mm"><div style="text-align:center;border-bottom:2px solid #800000;padding-bottom:8px;margin-bottom:12px"><div style="font-size:10px;font-weight:800;color:#800000">✝ مطرانية المعادي الأرثوذكسية ✝</div><div style="font-size:18px;font-weight:900;color:#1a0000;margin-top:4px">${ch}</div><div style="font-size:10px;color:#888;margin-top:3px">${lvl?'المستوى '+lvl+' · ':''}مؤهّل: ${qualD.length} | يحتاج قداس: ${nearD.length} | مسموح: ${data.length} · ${now}</div></div><table style="width:100%;border-collapse:collapse;font-size:10px;text-align:center"><thead><tr style="background:#570000;color:#fff"><th style="padding:5px">#</th><th style="text-align:right;padding:5px 8px">الاسم</th><th>الكود</th><th>الفئة</th><th>المستوى</th><th>النوع</th><th>الحضور</th><th>الهدف</th><th>النسبة</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  });
+  document.getElementById('_printArea').innerHTML=html;
+  document.title=(lvl?'المستوى_'+lvl+'_':'')+now.replace(/\//g,'-')+'_كل_الكنائس';
+  setTimeout(()=>{ window.print(); document.title='تقارير شمامسة ٢٠٢٦'; },150);
+}
+
+// ══ JSON للبوابة ═══════════════════════════════════════════════
 function exportGateJSON(){
-  const base=getFiltered();
-  // مؤهّل (12/6+) + يحتاج قداس (11/5)
-  const allowed=base.filter(p=>p.qualified||p.near);
-
-  if(!allowed.length){makePDF;alert('لا يوجد مؤهّلون أو قريبون للتصدير');return;}
-
-  // Group by level
+  const allowed=getFiltered().filter(p=>p.qualified||p.near);
+  if(!allowed.length){alert('لا يوجد مؤهّلون أو قريبون للتصدير');return;}
   const byLevel={};
   allowed.forEach(p=>{
     const lvl=String(p.level||'1');
-    if(!byLevel[lvl]) byLevel[lvl]={};
-    if(!byLevel[lvl][p.church]) byLevel[lvl][p.church]=[];
-    byLevel[lvl][p.church].push({
-      code:p.code,
-      name:p.name,
-      cat:p.category,
-      level:p.level,
-      total:p.total,
-      req:p.maxAtt,
-      status:p.qualified?'qualified':'near'
-    });
+    if(!byLevel[lvl])byLevel[lvl]={};
+    if(!byLevel[lvl][p.church])byLevel[lvl][p.church]=[];
+    byLevel[lvl][p.church].push({code:p.code,name:p.name,cat:p.category,level:p.level,total:p.total,req:p.maxAtt,status:p.qualified?'qualified':'near'});
   });
-
-  // Export one JSON per level
-  const levels=Object.keys(byLevel).sort((a,b)=>a.localeCompare(b,'ar',{numeric:true}));
-  if(levels.length===0){alert('لا توجد بيانات');return;}
-
-  levels.forEach(lvl=>{
+  Object.keys(byLevel).sort((a,b)=>a.localeCompare(b,'ar',{numeric:true})).forEach(lvl=>{
     const churches=byLevel[lvl];
     const total=Object.values(churches).reduce((s,a)=>s+a.length,0);
-    const chCount=Object.keys(churches).length;
-    const json={
-      generated: new Date().toISOString(),
-      level: lvl,
-      totalAllowed: total,
-      churchCount: chCount,
-      churches: churches
-    };
-    const blob=new Blob([JSON.stringify(json,null,2)],{type:'application/json'});
+    const json={generated:new Date().toISOString(),level:lvl,totalAllowed:total,churchCount:Object.keys(churches).length,churches};
     const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
-    a.download=`qualified-L${lvl}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    a.href=URL.createObjectURL(new Blob([JSON.stringify(json,null,2)],{type:'application/json'}));
+    a.download=`qualified-L${lvl}.json`;a.click();URL.revokeObjectURL(a.href);
   });
-
-  toast(`✅ تم تصدير ${levels.length} ملف JSON`);
+  toast(`✅ تم تصدير ${Object.keys(byLevel).length} ملف JSON`);
 }
 
 loadData();
 </script>
-<div id="_printArea"></div>
 </body>
 </html>
