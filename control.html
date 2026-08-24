@@ -177,11 +177,11 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 
 <script>
 const LEVELS = [
-  {k:'1a', label:'المستوى الأول ألفا'},
-  {k:'1b', label:'المستوى الأول بيتا'},
-  {k:'2',  label:'المستوى الثاني'},
-  {k:'3',  label:'المستوى الثالث'},
-  {k:'4',  label:'المستوى الرابع'},
+  {k:'1-a', label:'المستوى الأول ألفا'},
+  {k:'1-b', label:'المستوى الأول بيتا'},
+  {k:'2',   label:'المستوى الثاني'},
+  {k:'3',   label:'المستوى الثالث'},
+  {k:'4',   label:'المستوى الرابع'},
 ];
 
 // ══ BUILD LEVEL ROWS ══════════════════════════════════════════
@@ -274,9 +274,11 @@ function toast(msg){
 
 // ══ INIT ══════════════════════════════════════════════════════
 buildLevelRows('examBody','exam','Sheet ID ردود الطقس');
-buildLevelRows('scoresBody','scores','Sheet ID الدرجات (مثال: '+`1PB8C2-...`+')');
+buildLevelRows('scoresBody','scores','Sheet ID الدرجات');
 buildLevelRows('hymnBody','hymn','Sheet ID ردود الألحان');
 loadSaved();
+// Open all cards by default
+document.querySelectorAll('.card').forEach(c=>c.classList.add('open'));
 </script>
 </body>
 </html>
