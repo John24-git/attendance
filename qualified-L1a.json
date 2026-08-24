@@ -1,8 +1,8 @@
 {
-  "generated": "2026-08-24T14:16:19.764Z",
+  "generated": "2026-08-24T14:48:52.776Z",
   "level": "1-a",
-  "totalAllowed": 397,
-  "churchCount": 15,
+  "totalAllowed": 404,
+  "churchCount": 16,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
       {
@@ -3392,6 +3392,71 @@
         "cat": "طالب",
         "level": "1-a",
         "total": 13,
+        "req": 12,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة الملاك رافائيل بالمعادي الجديدة": [
+      {
+        "code": 94416,
+        "name": "بوليكاربوس مينا",
+        "cat": "طالب",
+        "level": "1-a",
+        "total": 17,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 10467,
+        "name": "انجلينا ولسن",
+        "cat": "طالب",
+        "level": "1-a",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 11853,
+        "name": "مارسيلينو هاني",
+        "cat": "طالب",
+        "level": "1-a",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 96064,
+        "name": "كاراس رومانى",
+        "cat": "طالب",
+        "level": "1-a",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 54523,
+        "name": "فادى مايكل",
+        "cat": "طالب",
+        "level": "1-a",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 79289,
+        "name": "مينا ايمن",
+        "cat": "طالب",
+        "level": "1-a",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 50906,
+        "name": "يوليانة كمال",
+        "cat": "طالب",
+        "level": "1-a",
+        "total": 14,
         "req": 12,
         "status": "qualified"
       }

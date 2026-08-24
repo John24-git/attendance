@@ -1,8 +1,8 @@
 {
-  "generated": "2026-08-24T14:16:19.767Z",
+  "generated": "2026-08-24T14:49:05.988Z",
   "level": "1-b",
-  "totalAllowed": 387,
-  "churchCount": 13,
+  "totalAllowed": 392,
+  "churchCount": 14,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
       {
@@ -3304,6 +3304,53 @@
       {
         "code": 56148,
         "name": "سلفانا سمير رسمي",
+        "cat": "طالب",
+        "level": "1-b",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة الملاك رافائيل بالمعادي الجديدة": [
+      {
+        "code": 93026,
+        "name": "بيشوي عادل",
+        "cat": "طالب",
+        "level": "1-b",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 66480,
+        "name": "بيشوي كامل",
+        "cat": "طالب",
+        "level": "1-b",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 66327,
+        "name": "كاراس هاني",
+        "cat": "طالب",
+        "level": "1-b",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 88808,
+        "name": "اسحق مايكل",
+        "cat": "طالب",
+        "level": "1-b",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 13883,
+        "name": "بافلى هانى",
         "cat": "طالب",
         "level": "1-b",
         "total": 12,

@@ -1,8 +1,8 @@
 {
-  "generated": "2026-08-24T14:16:19.770Z",
+  "generated": "2026-08-24T14:49:11.417Z",
   "level": "2",
-  "totalAllowed": 462,
-  "churchCount": 14,
+  "totalAllowed": 475,
+  "churchCount": 15,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
       {
@@ -3939,6 +3939,125 @@
         "cat": "طالب",
         "level": "2",
         "total": 12,
+        "req": 12,
+        "status": "qualified"
+      }
+    ],
+    "كنيسة الملاك رافائيل بالمعادي الجديدة": [
+      {
+        "code": 33750,
+        "name": "ابرام سمير",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 18606,
+        "name": "فيلوباتير القس اغسطينوس",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 41577,
+        "name": "فيولا اشرف",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 83236,
+        "name": "كاراس سمير",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 33527,
+        "name": "كيرلس صليب",
+        "cat": "طالب",
+        "level": "2",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 81540,
+        "name": "ماريا وائل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 10949,
+        "name": "ماريا هاني",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 43982,
+        "name": "ابرام ميلاد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 16,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 61681,
+        "name": "روجينا عماد",
+        "cat": "طالب",
+        "level": "2",
+        "total": 11,
+        "req": 12,
+        "status": "near"
+      },
+      {
+        "code": 98047,
+        "name": "كاراس تامر",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 95402,
+        "name": "كارولين كامل",
+        "cat": "طالب",
+        "level": "2",
+        "total": 15,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 14017,
+        "name": "كيرلس طارق",
+        "cat": "طالب",
+        "level": "2",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 92327,
+        "name": "ترنيم سعد لمعي",
+        "cat": "طالب",
+        "level": "2",
+        "total": 20,
         "req": 12,
         "status": "qualified"
       }

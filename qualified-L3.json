@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-24T14:16:19.773Z",
+  "generated": "2026-08-24T14:49:17.381Z",
   "level": "3",
-  "totalAllowed": 337,
+  "totalAllowed": 339,
   "churchCount": 14,
   "churches": {
     "كنيسة الانبا ارسانيوس بطرة": [
@@ -2827,11 +2827,29 @@
     ],
     "كنيسة الملاك رافائيل بالمعادي الجديدة": [
       {
+        "code": 44530,
+        "name": "كيرلس القس اغسطينوس",
+        "cat": "طالب",
+        "level": "3",
+        "total": 12,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
+        "code": 24265,
+        "name": "مارتينا وائل غالى",
+        "cat": "طالب",
+        "level": "3",
+        "total": 13,
+        "req": 12,
+        "status": "qualified"
+      },
+      {
         "code": 47836,
         "name": "شادي كامل كمال (ميشو)",
         "cat": "موظف",
         "level": "3",
-        "total": 7,
+        "total": 10,
         "req": 6,
         "status": "qualified"
       }
