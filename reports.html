@@ -101,13 +101,16 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
 </head>
 <body>
 <script>
-
-  // ── Auth check (admin+) ─────────────────────────────────────
+(function(){
   const __s=sessionStorage.getItem('user');
   if(!__s){window.location.href='home.html';return;}
-  try{const __d=JSON.parse(__s);if(Date.now()>=__d.exp||!['admin','super_admin'].includes(__d.role)){sessionStorage.removeItem('user');window.location.href='home.html';return;}}
-  catch{window.location.href='home.html';return;}
-
+  try{
+    const __d=JSON.parse(__s);
+    if(Date.now()>=__d.exp||!['admin','super_admin'].includes(__d.role)){
+      sessionStorage.removeItem('user');window.location.href='home.html';return;
+    }
+  }catch{window.location.href='home.html';}
+})();
 </script>
 
 <header>
