@@ -2,24 +2,18 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>لوحة التحكم — شمامسة ٢٠٢٦</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction:rtl;min-height:100vh}
-
-.hdr{background:linear-gradient(135deg,#5a0000,#800000);color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
-.hdr-title{font-size:17px;font-weight:900}
-.hdr-sub{font-size:10px;opacity:.7;font-weight:700;margin-top:2px}
-.save-all-btn{background:rgba(254,214,91,.9);color:#570000;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:.15s}
-.save-all-btn:hover{background:#fed65b}
-
-.wrap{max-width:700px;margin:0 auto;padding:16px}
-
-/* Info */
-.info{background:#fff;border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:11px;font-weight:700;color:#5a413d;line-height:1.8;border-right:3px solid #c9a227}
-.info b{color:#800000}
+body{font-family:'Tajawal',sans-serif;background:#f5f0ea;direction:rtl;min-height:100vh;padding-bottom:40px}
+.hdr{background:linear-gradient(135deg,#5a0000,#800000);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.hdr-t{font-size:17px;font-weight:900}
+.hdr-s{font-size:10px;opacity:.7;margin-top:2px}
+.save-btn{background:rgba(254,214,91,.9);color:#570000;border:none;border-radius:10px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer}
+.save-btn:hover{background:#fed65b}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
 
 /* Section */
 .sec{background:#fff;border-radius:16px;margin-bottom:14px;overflow:hidden;box-shadow:0 2px 10px rgba(128,0,0,.06);border:1px solid rgba(128,0,0,.08)}
@@ -27,54 +21,44 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 .sec-icon{font-size:18px}
 .sec-title{font-size:14px;font-weight:900;color:#5a0000;flex:1}
 .sec-badge{font-size:10px;font-weight:800;background:rgba(128,0,0,.08);color:#800000;padding:3px 10px;border-radius:20px}
-.sec-body{padding:16px 18px;display:grid;gap:10px}
+.sec-body{padding:14px 18px;display:flex;flex-direction:column;gap:10px}
 
 /* Level row */
 .lvl-row{background:#f9f5f0;border-radius:12px;padding:12px 14px}
-.lvl-label{font-size:12px;font-weight:900;color:#5a0000;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.lvl-num{width:26px;height:26px;background:#800000;color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0}
-.fields{display:grid;gap:7px}
-.field{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center}
-.field-lbl{font-size:10px;font-weight:800;color:#9c7c78;white-space:nowrap}
-.field-inp{background:#fff;border:1.5px solid #e2bfb9;border-radius:9px;padding:8px 12px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#1a0000;outline:none;transition:.15s;width:100%}
-.field-inp:focus{border-color:#800000;background:#fff}
-.field-inp.saved{border-color:#16A34A}
+.lvl-head{font-size:12px;font-weight:900;color:#5a0000;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.lvl-badge{width:28px;height:28px;background:#800000;color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
+.inp-row{display:flex;flex-direction:column;gap:4px}
+.inp-lbl{font-size:10px;font-weight:800;color:#9c7c78}
+.inp{width:100%;background:#fff;border:1.5px solid #e2bfb9;border-radius:9px;padding:9px 12px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#1a0000;outline:none;transition:.15s}
+.inp:focus{border-color:#800000}
+.inp.saved{border-color:#16A34A}
 
-/* Users section */
-.users-row{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center}
+/* Single field */
+.single-row{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;padding:8px 14px}
+.single-lbl{font-size:11px;font-weight:800;color:#5a413d;white-space:nowrap}
 
-/* Quick links */
-.links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 18px}
-.qlink{display:flex;align-items:center;gap:10px;background:#f9f5f0;border:1.5px solid rgba(128,0,0,.1);border-radius:12px;padding:12px 14px;cursor:pointer;transition:.15s;text-decoration:none;color:#1a0000}
-.qlink:hover{border-color:#800000;background:#fff}
-.qlink-icon{font-size:20px}
-.qlink-label{font-size:12px;font-weight:800}
-.qlink-sub{font-size:10px;color:#9c7c78;font-weight:700;margin-top:1px}
+/* Links */
+.links{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 18px}
+.lnk{display:flex;align-items:center;gap:8px;background:#f9f5f0;border:1.5px solid rgba(128,0,0,.1);border-radius:12px;padding:11px 14px;text-decoration:none;color:#1a0000;transition:.15s}
+.lnk:hover{border-color:#800000}
+.lnk-icon{font-size:18px}
+.lnk-txt{font-size:12px;font-weight:800}
+.lnk-sub{font-size:10px;color:#9c7c78;font-weight:600}
 
 /* Toast */
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a0000;color:#fff;padding:10px 20px;border-radius:30px;font-size:12px;font-weight:800;display:none;z-index:999;white-space:nowrap}
-
-/* Save btn per section */
-.mini-save{background:#800000;color:#fff;border:none;border-radius:8px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:11px;font-weight:900;cursor:pointer;margin-top:4px;transition:.15s}
-.mini-save:hover{background:#5a0000}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1a0000;color:#fff;padding:9px 20px;border-radius:30px;font-size:12px;font-weight:800;display:none;z-index:99}
 </style>
 </head>
 <body>
-
 <div class="hdr">
   <div>
-    <div class="hdr-title">⚙️ لوحة التحكم</div>
-    <div class="hdr-sub">✝ شمامسة ٢٠٢٦ — مطرانية المعادي</div>
+    <div class="hdr-t">⚙️ لوحة التحكم</div>
+    <div class="hdr-s">✝ شمامسة ٢٠٢٦ — مطرانية المعادي</div>
   </div>
-  <button class="save-all-btn" onclick="saveAll()">💾 حفظ الكل</button>
+  <button class="save-btn" onclick="saveAll()">💾 حفظ الكل</button>
 </div>
 
 <div class="wrap">
-
-  <div class="info">
-    <b>طريقة الاستخدام:</b> حط الـ Sheet IDs هنا وكل الصفحات التانية هتاخدهم تلقائياً.<br>
-    الـ Sheet ID موجود في رابط الشيت: <b>docs.google.com/spreadsheets/d/<span style="color:#800000">ID_هنا</span>/edit</b>
-  </div>
 
   <!-- ══ USERS ══ -->
   <div class="sec">
@@ -84,15 +68,14 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
       <div class="sec-badge">مشترك</div>
     </div>
     <div class="sec-body">
-      <div class="users-row">
-        <div class="field-lbl">Sheet ID</div>
-        <input class="field-inp" id="usersSheet" placeholder="Sheet ID بتاع Users">
+      <div class="single-row">
+        <div class="single-lbl">Sheet ID</div>
+        <input class="inp" id="users_sheet" placeholder="Sheet ID بتاع Users">
       </div>
-      <div class="users-row">
-        <div class="field-lbl">Sheet ID الحضور</div>
-        <input class="field-inp" id="attSheet" placeholder="Sheet ID بتاع بيانات الحضور">
+      <div class="single-row">
+        <div class="single-lbl">Sheet ID الحضور</div>
+        <input class="inp" id="att_sheet" placeholder="Sheet ID بتاع بيانات الحضور">
       </div>
-      <button class="mini-save" onclick="saveSection('users')">حفظ</button>
     </div>
   </div>
 
@@ -101,19 +84,15 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
     <div class="sec-head">
       <div class="sec-icon">📋</div>
       <div class="sec-title">شيتات ردود امتحان الطقس</div>
-      <div class="sec-badge">لكل مستوى</div>
+      <div class="sec-badge">exam-monitor</div>
     </div>
-    <div class="sec-body" id="examBody"></div>
-  </div>
-
-  <!-- ══ HYMN JUDGING ══ -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-icon">🎶</div>
-      <div class="sec-title">شيتات ردود تحكيم الألحان</div>
-      <div class="sec-badge">لكل مستوى</div>
+    <div class="sec-body">
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">1a</div>المستوى الأول ألفا</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="exam_1-a" placeholder="Sheet ID ردود المستوى الأول ألفا"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">1b</div>المستوى الأول بيتا</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="exam_1-b" placeholder="Sheet ID ردود المستوى الأول بيتا"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">2</div>المستوى الثاني</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="exam_2" placeholder="Sheet ID ردود المستوى الثاني"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">3</div>المستوى الثالث</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="exam_3" placeholder="Sheet ID ردود المستوى الثالث"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">4</div>المستوى الرابع</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="exam_4" placeholder="Sheet ID ردود المستوى الرابع"></div></div>
     </div>
-    <div class="sec-body" id="hymnBody"></div>
   </div>
 
   <!-- ══ SCORES ══ -->
@@ -123,162 +102,87 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
       <div class="sec-title">شيتات الدرجات (نتائج الامتحان)</div>
       <div class="sec-badge">liturgy_results</div>
     </div>
-    <div class="sec-body" id="scoresBody"></div>
+    <div class="sec-body">
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">1a</div>المستوى الأول ألفا</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="scores_1-a" placeholder="Sheet ID درجات المستوى الأول ألفا"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">1b</div>المستوى الأول بيتا</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="scores_1-b" placeholder="Sheet ID درجات المستوى الأول بيتا"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">2</div>المستوى الثاني</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="scores_2" placeholder="Sheet ID درجات المستوى الثاني"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">3</div>المستوى الثالث</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="scores_3" placeholder="Sheet ID درجات المستوى الثالث"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">4</div>المستوى الرابع</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="scores_4" placeholder="Sheet ID درجات المستوى الرابع"></div></div>
+    </div>
   </div>
 
-  <!-- ══ GATE ══ -->
+  <!-- ══ HYMN ══ -->
   <div class="sec">
     <div class="sec-head">
-      <div class="sec-icon">🚪</div>
-      <div class="sec-title">بوابة الامتحان (festival-gate)</div>
-      <div class="sec-badge">admin-panel</div>
+      <div class="sec-icon">🎶</div>
+      <div class="sec-title">شيتات ردود تحكيم الألحان</div>
+      <div class="sec-badge">لكل مستوى</div>
     </div>
-    <div class="links-grid" style="padding:14px 18px">
-      <a class="qlink" href="admin-panel.html" target="_blank">
-        <div class="qlink-icon">⚙️</div>
-        <div><div class="qlink-label">لوحة البوابة</div><div class="qlink-sub">إعداد الفورمات وتوليد HTML</div></div>
-      </a>
-      <a class="qlink" href="liturgy_results.html" target="_blank">
-        <div class="qlink-icon">🏆</div>
-        <div><div class="qlink-label">نتائج الطقس</div><div class="qlink-sub">ترتيب الكنائس والأفراد</div></div>
-      </a>
+    <div class="sec-body">
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">1a</div>المستوى الأول ألفا</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="hymn_1-a" placeholder="Sheet ID ألحان المستوى الأول ألفا"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">1b</div>المستوى الأول بيتا</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="hymn_1-b" placeholder="Sheet ID ألحان المستوى الأول بيتا"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">2</div>المستوى الثاني</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="hymn_2" placeholder="Sheet ID ألحان المستوى الثاني"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">3</div>المستوى الثالث</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="hymn_3" placeholder="Sheet ID ألحان المستوى الثالث"></div></div>
+      <div class="lvl-row"><div class="lvl-head"><div class="lvl-badge">4</div>المستوى الرابع</div><div class="inp-row"><div class="inp-lbl">Sheet ID</div><input class="inp" id="hymn_4" placeholder="Sheet ID ألحان المستوى الرابع"></div></div>
     </div>
   </div>
 
-  <!-- ══ QUICK LINKS ══ -->
+  <!-- ══ LINKS ══ -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-icon">🔗</div>
       <div class="sec-title">روابط سريعة</div>
     </div>
-    <div class="links-grid">
-      <a class="qlink" href="index.html" target="_blank">
-        <div class="qlink-icon">🗓</div>
-        <div><div class="qlink-label">حضور الأحد</div><div class="qlink-sub">التطبيق الرئيسي</div></div>
-      </a>
-      <a class="qlink" href="exam-monitor.html" target="_blank">
-        <div class="qlink-icon">📋</div>
-        <div><div class="qlink-label">مراقبة الامتحان</div><div class="qlink-sub">ردود لحظة بلحظة</div></div>
-      </a>
-      <a class="qlink" href="reports.html" target="_blank">
-        <div class="qlink-icon">📊</div>
-        <div><div class="qlink-label">التقارير</div><div class="qlink-sub">المؤهّلون وكشوف الكنائس</div></div>
-      </a>
-      <a class="qlink" href="draw2026.html" target="_blank">
-        <div class="qlink-icon">🎲</div>
-        <div><div class="qlink-label">القرعة</div><div class="qlink-sub">قرعة المجموعات</div></div>
-      </a>
+    <div class="links">
+      <a class="lnk" href="index.html" target="_blank"><div class="lnk-icon">🗓</div><div><div class="lnk-txt">حضور الأحد</div><div class="lnk-sub">index.html</div></div></a>
+      <a class="lnk" href="exam-monitor.html" target="_blank"><div class="lnk-icon">📋</div><div><div class="lnk-txt">مراقبة الامتحان</div><div class="lnk-sub">exam-monitor.html</div></div></a>
+      <a class="lnk" href="reports.html" target="_blank"><div class="lnk-icon">📊</div><div><div class="lnk-txt">التقارير</div><div class="lnk-sub">reports.html</div></div></a>
+      <a class="lnk" href="liturgy_results.html" target="_blank"><div class="lnk-icon">🏆</div><div><div class="lnk-txt">نتائج الامتحان</div><div class="lnk-sub">liturgy_results.html</div></div></a>
+      <a class="lnk" href="admin-panel.html" target="_blank"><div class="lnk-icon">🚪</div><div><div class="lnk-txt">بوابة المهرجان</div><div class="lnk-sub">admin-panel.html</div></div></a>
+      <a class="lnk" href="draw2026.html" target="_blank"><div class="lnk-icon">🎲</div><div><div class="lnk-txt">القرعة</div><div class="lnk-sub">draw2026.html</div></div></a>
     </div>
   </div>
 
 </div>
-
 <div id="toast"></div>
 
 <script>
-const LEVELS = [
-  {k:'1-a', label:'المستوى الأول ألفا'},
-  {k:'1-b', label:'المستوى الأول بيتا'},
-  {k:'2',   label:'المستوى الثاني'},
-  {k:'3',   label:'المستوى الثالث'},
-  {k:'4',   label:'المستوى الرابع'},
-];
+const FIELDS={
+  users_sheet:'ctrl_users_sheet', att_sheet:'ctrl_att_sheet',
+  'exam_1-a':'ctrl_exam_1-a','exam_1-b':'ctrl_exam_1-b',
+  exam_2:'ctrl_exam_2',exam_3:'ctrl_exam_3',exam_4:'ctrl_exam_4',
+  'scores_1-a':'ctrl_scores_1-a','scores_1-b':'ctrl_scores_1-b',
+  scores_2:'ctrl_scores_2',scores_3:'ctrl_scores_3',scores_4:'ctrl_scores_4',
+  'hymn_1-a':'ctrl_hymn_1-a','hymn_1-b':'ctrl_hymn_1-b',
+  hymn_2:'ctrl_hymn_2',hymn_3:'ctrl_hymn_3',hymn_4:'ctrl_hymn_4',
+};
 
-// ══ BUILD LEVEL ROWS ══════════════════════════════════════════
-function 
-(function(){
-  const __s=localStorage.getItem('user');
-  if(!__s){window.location.href='home.html';return;}
-  try{
-    const __d=JSON.parse(__s);
-    const role=(__d.role||'').trim().toLowerCase();
-    if(Date.now()>=__d.exp){localStorage.removeItem('user');window.location.href='home.html';return;}
-    if(role!=='super_admin'){window.location.href='home.html';return;}
-  }catch{window.location.href='home.html';}
-})();
-
-function buildLevelRows(containerId, prefix, placeholder){
-  const wrap = document.getElementById(containerId);
-  wrap.innerHTML = '';
-  LEVELS.forEach(l=>{
-    const saved = localStorage.getItem(`ctrl_${prefix}_${l.k}`) || '';
-    wrap.innerHTML += `
-      <div class="lvl-row">
-        <div class="lvl-label">
-          <div class="lvl-num">${l.k}</div>
-          ${l.label}
-        </div>
-        <div class="fields">
-          <div class="field">
-            <div class="field-lbl">Sheet ID</div>
-            <input class="field-inp ${saved?'saved':''}" id="${prefix}_${l.k}"
-              placeholder="${placeholder}" value="${saved}"
-              oninput="markChanged(this)">
-          </div>
-        </div>
-      </div>`;
-  });
-  // Save button
-  wrap.innerHTML += `<button class="mini-save" onclick="saveSection('${prefix}')">💾 حفظ</button>`;
-}
-
-function markChanged(el){ el.classList.remove('saved'); }
-
-// ══ LOAD SAVED ════════════════════════════════════════════════
-function loadSaved(){
-  // Users
-  const usersSheet = localStorage.getItem('ctrl_users_sheet') || '';
-  const attSheet   = localStorage.getItem('ctrl_att_sheet')   || '';
-  document.getElementById('usersSheet').value = usersSheet;
-  document.getElementById('attSheet').value   = attSheet;
-  if(usersSheet) document.getElementById('usersSheet').classList.add('saved');
-  if(attSheet)   document.getElementById('attSheet').classList.add('saved');
-}
-
-// ══ SAVE ══════════════════════════════════════════════════════
-function saveSection(section){
-  if(section === 'users'){
-    const us = document.getElementById('usersSheet').value.trim();
-    const at = document.getElementById('attSheet').value.trim();
-    localStorage.setItem('ctrl_users_sheet', us);
-    localStorage.setItem('ctrl_att_sheet',   at);
-    if(us) document.getElementById('usersSheet').classList.add('saved');
-    if(at) document.getElementById('attSheet').classList.add('saved');
-  } else {
-    // level-based section
-    LEVELS.forEach(l=>{
-      const el  = document.getElementById(`${section}_${l.k}`);
-      const val = (el?.value||'').trim();
-      localStorage.setItem(`ctrl_${section}_${l.k}`, val);
-      if(val && el) el.classList.add('saved');
-    });
-  }
-  toast('✅ تم الحفظ');
-}
+// Load saved values
+Object.entries(FIELDS).forEach(([id,key])=>{
+  const el=document.getElementById(id);
+  if(!el)return;
+  const val=localStorage.getItem(key)||'';
+  el.value=val;
+  if(val)el.classList.add('saved');
+});
 
 function saveAll(){
-  saveSection('users');
-  saveSection('exam');
-  saveSection('hymn');
-  saveSection('scores');
+  Object.entries(FIELDS).forEach(([id,key])=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const val=el.value.trim();
+    if(val){localStorage.setItem(key,val);el.classList.add('saved');}
+    else localStorage.removeItem(key);
+  });
   toast('✅ تم حفظ كل الإعدادات');
 }
 
-// ══ TOAST ═════════════════════════════════════════════════════
 let tt;
 function toast(msg){
   const el=document.getElementById('toast');
-  el.textContent=msg; el.style.display='block';
-  clearTimeout(tt); tt=setTimeout(()=>el.style.display='none',2500);
+  el.textContent=msg;el.style.display='block';
+  clearTimeout(tt);tt=setTimeout(()=>el.style.display='none',2500);
 }
-
-// ══ INIT ══════════════════════════════════════════════════════
-buildLevelRows('examBody','exam','Sheet ID ردود الطقس');
-buildLevelRows('scoresBody','scores','Sheet ID الدرجات');
-buildLevelRows('hymnBody','hymn','Sheet ID ردود الألحان');
-loadSaved();
-// Open all cards by default
-document.querySelectorAll('.card').forEach(c=>c.classList.add('open'));
 </script>
 </body>
 </html>
