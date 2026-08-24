@@ -89,6 +89,7 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
     <div class="hdr-title">📋 مراقبة امتحان الطقس</div>
     <div class="hdr-sub">✝ شمامسة ٢٠٢٦ — مطرانية المعادي</div>
   </div>
+  <div id="userBar" style="font-size:11px;font-weight:800;color:rgba(255,255,255,.7)"></div>
   <div class="refresh-info">
     <div class="spin" id="spinner"></div>
     <span id="countdown">تحديث كل ٣٠ ث</span>
@@ -178,28 +179,48 @@ let cdSec    = 30;
 (function init(){
 
   // ── Auth check ──────────────────────────────────────────────
-  const __s=sessionStorage.getItem('user');
-  if(!__s){window.location.href='home.html';return;}
-  try{const __d=JSON.parse(__s);if(Date.now()>=__d.exp){sessionStorage.removeItem('user');window.location.href='home.html';return;}}
-  catch{window.location.href='home.html';return;}
+  const __s=localStorage.getItem('user');
+  if(!__s){window.location.href='admin.html';return;}
+  let __user=null;
+  try{
+    const __d=JSON.parse(__s);
+    if(Date.now()>=__d.exp){localStorage.removeItem('user');window.location.href='admin.html';return;}
+    __user=__d;
+  }catch{window.location.href='admin.html';return;}
 
-  // Try to read from control panel first (per-level)
-  // Falls back to manual entry
-  if(SHEET_ID){
-    document.getElementById('sheetIdInp').value = SHEET_ID;
-    buildTabs();
-    loadData();
-    startCountdown();
+  const role=(__user.role||'').toLowerCase();
+  const isAdmin=['admin','super_admin'].includes(role);
+  window.__examUser=__user;
+  window.__examIsAdmin=isAdmin;
+
+  // Hide Sheet ID config for supervisors
+  const cfgCard=document.getElementById('cfgCard');
+  if(cfgCard) cfgCard.style.display=isAdmin?'':'none';
+
+  // User info bar
+  const ubar=document.getElementById('userBar');
+  if(ubar){
+    const roleLabel={'super_admin':'أدمن عام','admin':'أدمن','supervisor':'أمين','deacon':'خادم'}[role]||role;
+    ubar.textContent='👤 '+(__user.username||'')+' — '+roleLabel+(__user.church?' | '+__user.church:'');
   }
-  // Auto-load from control panel if available
-  const ctrlId = localStorage.getItem(`ctrl_exam_${curTab}`);
-  if(ctrlId && !SHEET_ID){
-    SHEET_ID = ctrlId;
-    localStorage.setItem('exam_monitor_sheet', SHEET_ID);
-    document.getElementById('sheetIdInp').value = SHEET_ID;
+  // Auto-load from control panel
+  const ctrlId = localStorage.getItem('ctrl_exam_'+curTab);
+  const savedId = localStorage.getItem('exam_monitor_sheet');
+  const finalId = ctrlId || savedId || SHEET_ID;
+  if(finalId){
+    SHEET_ID = finalId;
+    const inp=document.getElementById('sheetIdInp');
+    if(inp)inp.value=finalId;
     buildTabs();
     loadData();
     startCountdown();
+  } else {
+    buildTabs();
+    // Show config card only for admins
+    if(!window.__examIsAdmin){
+      document.getElementById('controls').style.display='none';
+      document.getElementById('kpis').style.display='none';
+    }
   }
 })();
 
@@ -228,7 +249,12 @@ function buildTabs(){
   btn.classList.add('on');
   // check control panel for this tab's sheet
   const ctrlId = localStorage.getItem('ctrl_exam_'+k);
-  if(ctrlId){ SHEET_ID=ctrlId; document.getElementById('sheetIdInp').value=ctrlId; localStorage.setItem('exam_monitor_sheet',ctrlId); }
+  if(ctrlId){
+    SHEET_ID=ctrlId;
+    const inp=document.getElementById('sheetIdInp');
+    if(inp)inp.value=ctrlId;
+    localStorage.setItem('exam_monitor_sheet',ctrlId);
+  }
   loadData();
 };
     wrap.appendChild(btn);
@@ -268,6 +294,33 @@ function parseRows(json){
     };
   }).filter(r=>r.name||r.code);
 
+  // User info bar
+  const ubar=document.getElementById('userBar');
+  if(ubar&&__u){
+    const roleLabel={'super_admin':'أدمن عام','admin':'أدمن','supervisor':'أمين','deacon':'خادم'}[role]||role;
+    ubar.textContent='👤 '+(__u.username||'')+' — '+roleLabel+(__u.church?' | '+__u.church:'');
+  }
+  // Auto-filter by church for supervisors
+  const __u=window.__examUser;
+  if(__u && !window.__examIsAdmin && __u.church){
+    const chSel=document.getElementById('chSel');
+    // wait for church filter to be built, then set it
+    setTimeout(()=>{
+      const chSel=document.getElementById('chSel');
+      if(chSel && __u.church){
+        chSel.value=__u.church;
+        // if exact match not found, try partial
+        if(!chSel.value){
+          for(let i=0;i<chSel.options.length;i++){
+            if(chSel.options[i].value.includes(__u.church)||__u.church.includes(chSel.options[i].value)){
+              chSel.selectedIndex=i;break;
+            }
+          }
+        }
+        applyFilter();
+      }
+    },100);
+  }
   // detect new rows
   const isNew = allRows.length > prevCount && prevCount > 0;
   if(isNew) notifyNew(allRows.length - prevCount);
