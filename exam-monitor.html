@@ -178,28 +178,28 @@ let cdSec    = 30;
 // ══ INIT ══════════════════════════════════════════════════════
 (function init(){
 
-  // ── Auth check ──────────────────────────────────────────────
+  // ── User session (no redirect — portal controls access) ──────
   const __s=localStorage.getItem('user');
-  if(!__s){window.location.href='admin.html';return;}
   let __user=null;
   try{
-    const __d=JSON.parse(__s);
-    if(Date.now()>=__d.exp){localStorage.removeItem('user');window.location.href='admin.html';return;}
-    __user=__d;
-  }catch{window.location.href='admin.html';return;}
+    if(__s){
+      const __d=JSON.parse(__s);
+      if(Date.now()<__d.exp) __user=__d;
+    }
+  }catch{}
 
-  const role=(__user.role||'').toLowerCase();
-  const isAdmin=['admin','super_admin'].includes(role);
+  const role=(__user?.role||'').toLowerCase();
+  const isAdmin=!__user||['admin','super_admin'].includes(role);
   window.__examUser=__user;
   window.__examIsAdmin=isAdmin;
 
-  // Hide Sheet ID config for supervisors
+  // Hide Sheet ID config for non-admins
   const cfgCard=document.getElementById('cfgCard');
   if(cfgCard) cfgCard.style.display=isAdmin?'':'none';
 
   // User info bar
   const ubar=document.getElementById('userBar');
-  if(ubar){
+  if(ubar&&__user){
     const roleLabel={'super_admin':'أدمن عام','admin':'أدمن','supervisor':'أمين','deacon':'خادم'}[role]||role;
     ubar.textContent='👤 '+(__user.username||'')+' — '+roleLabel+(__user.church?' | '+__user.church:'');
   }
