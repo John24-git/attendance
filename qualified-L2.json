@@ -24,15 +24,6 @@
         "status": "qualified"
       },
       {
-        "code": 56703,
-        "name": "مينا رامي عريان",
-        "cat": "موظف",
-        "level": "2",
-        "total": 10,
-        "req": 6,
-        "status": "qualified"
-      },
-      {
         "code": 39226,
         "name": "توماس وجيه",
         "cat": "طالب",
@@ -1532,6 +1523,15 @@
         "level": "2",
         "total": 13,
         "req": 12,
+        "status": "qualified"
+      },
+   {
+        "code": 56703,
+        "name": "مينا رامي عريان",
+        "cat": "موظف",
+        "level": "2",
+        "total": 10,
+        "req": 6,
         "status": "qualified"
       },
       {
