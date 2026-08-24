@@ -93,6 +93,10 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
   .pr-footer{font-size:7.5pt;color:#aaa;text-align:center;margin-top:4mm;border-top:0.5pt solid #ddd;padding-top:2mm}
   @page{size:A4 landscape;margin:10mm}
 }
+
+.ch-exp-btn{background:none;border:1px solid rgba(128,0,0,.2);border-radius:6px;padding:3px 8px;font-family:'Tajawal',sans-serif;font-size:10px;font-weight:800;color:#800000;cursor:pointer;transition:.15s;white-space:nowrap}
+.ch-exp-btn:hover{background:#800000;color:#fff;border-color:#800000}
+.ch-exp-btns{display:flex;gap:4px;align-items:center;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -195,7 +199,7 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 20px;height:
     <div id="t3" style="display:none">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <div style="font-size:12px;color:#5a413d;font-weight:700">كشف تفصيلي لكل كنيسة</div>
-        <button class="exp-btn exp-green" style="flex:0;padding:7px 14px" onclick="exportAllChurches()">⬇ كل الكنائس Excel</button>
+        <div style="display:flex;gap:6px"><button class="exp-btn exp-red" style="flex:0;padding:7px 14px" onclick="exportAllChurchesPDF()">📄 كل الكنائس PDF</button><button class="exp-btn exp-green" style="flex:0;padding:7px 14px" onclick="exportAllChurches()">⬇ كل الكنائس Excel</button></div>
       </div>
       <div id="t3list"></div>
     </div>
@@ -378,11 +382,17 @@ function buildT3(){
     div.innerHTML=`
       <div class="ch-block-head" onclick="toggleCh(this)">
         <div class="ch-block-name">⛪ ${ch}</div>
-        <div class="ch-block-stats">
-          <span class="bdg" style="background:rgba(0,128,60,.12);color:#006030;font-weight:900">${qual} مؤهّل</span>
-          <span class="bdg b-gold">${near} قداس واحد</span>
-          <span class="bdg" style="background:rgba(128,0,0,.1);color:#800000;font-weight:900">🎫 ${allowed.length} مسموح بالامتحان</span>
-          <span class="bdg b-gray">${all.length} إجمالي</span>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <div class="ch-block-stats">
+            <span class="bdg" style="background:rgba(0,128,60,.12);color:#006030;font-weight:900">${qual} مؤهّل</span>
+            <span class="bdg b-gold">${near} قداس واحد</span>
+            <span class="bdg" style="background:rgba(128,0,0,.1);color:#800000;font-weight:900">🎫 ${allowed.length} مسموح</span>
+            <span class="bdg b-gray">${all.length} إجمالي</span>
+          </div>
+          <div class="ch-exp-btns" onclick="event.stopPropagation()">
+            <button class="ch-exp-btn" onclick="exportChurchPDF('${ch.replace(/'/g,"\'")}')">📄 PDF</button>
+            <button class="ch-exp-btn" onclick="exportChurch('${ch.replace(/'/g,"\'")}')">⬇ Excel</button>
+          </div>
           <span style="color:#8e706c;font-size:14px">▾</span>
         </div>
       </div>
@@ -441,31 +451,88 @@ function exportChurch(ch){
   XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),'الكشف التفصيلي');
   XLSX.writeFile(wb,`كشف_${ch.slice(0,20)}_${new Date().toISOString().slice(0,10)}.xlsx`);
 }
-function exportAllChurches(){
+
+function exportAllChurchesPDF(){
+  const lvl=document.getElementById('fLvl').value;
   const byChurch={};
   getFiltered().forEach(m=>{if(!byChurch[m.church])byChurch[m.church]=[];byChurch[m.church].push(m);});
-  const wb=XLSX.utils.book_new();
-  // Summary sheet
-  const sumData=Object.entries(byChurch).sort((a,b)=>a[0].localeCompare(b[0],'ar')).map(([ch,ppl],i)=>[
-    i+1,ch,ppl.length,ppl.filter(p=>p.qualified).length,ppl.filter(p=>p.near).length,
-    ppl.length?(ppl.reduce((s,p)=>s+p.total,0)/ppl.length).toFixed(1):0
-  ]);
-  const sumWs=XLSX.utils.aoa_to_sheet([['#','الكنيسة','إجمالي','مؤهّلون','يحتاج قداس','متوسط'],...sumData]);
-  sumWs['!cols']=[{wch:4},{wch:30},{wch:10},{wch:10},{wch:14},{wch:10}];
-  XLSX.utils.book_append_sheet(wb,sumWs,'ملخص الكنائس');
-  // One sheet per church
-  Object.entries(byChurch).sort((a,b)=>a[0].localeCompare(b[0],'ar')).forEach(([ch,ppl])=>{
-    const data=ppl.sort((a,b)=>b.total-a.total);
-    XLSX.utils.book_append_sheet(wb,makeWs(data.map((p,i)=>personExRow(p,i))),ch.slice(0,31));
+  const churches=Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar'));
+  if(!churches.length){alert('لا توجد بيانات');return;}
+  const now=new Date().toLocaleDateString('ar-EG');
+  const pa=document.getElementById('_printArea');
+  if(!pa){alert('عنصر الطباعة غير موجود');return;}
+  let html='';
+  churches.forEach((ch,ci)=>{
+    const all=byChurch[ch];
+    const qualD=all.filter(p=>p.qualified);
+    const nearD=all.filter(p=>p.near);
+    const data=[...qualD,...nearD];
+    if(!data.length)return;
+    let rows='';
+    if(qualD.length) rows+=`<tr><td colspan="9" style="background:#e8f5e9;color:#1b5e20;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">✅ مؤهّلون (${qualD.length})</td></tr>`+
+      qualD.map((p,i)=>`<tr><td>${i+1}</td><td style="text-align:right;font-weight:800">${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td>${p.total}</td><td>${p.maxAtt}</td><td>${p.pct}%</td></tr>`).join('');
+    if(nearD.length) rows+=`<tr><td colspan="9" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">🔵 يحتاج قداس واحد (${nearD.length})</td></tr>`+
+      nearD.map((p,i)=>`<tr><td>${qualD.length+i+1}</td><td style="text-align:right;font-weight:800">${p.name}</td><td>${p.code}</td><td>${p.category}</td><td>${p.level||'—'}</td><td>${p.gender==='ذكر'?'شماس':'شماسة'}</td><td>${p.total}</td><td>${p.maxAtt}</td><td>${p.pct}%</td></tr>`).join('');
+    html+=`<div style="page-break-after:${ci<churches.length-1?'always':'auto'};direction:rtl;font-family:Tajawal,sans-serif;padding:8mm">
+      <div style="text-align:center;border-bottom:2px solid #800000;padding-bottom:8px;margin-bottom:12px">
+        <div style="font-size:10px;font-weight:800;color:#800000;letter-spacing:.1em">✝ مطرانية المعادي الأرثوذكسية ✝</div>
+        <div style="font-size:18px;font-weight:900;color:#1a0000;margin-top:4px">${ch}</div>
+        <div style="font-size:10px;color:#888;margin-top:3px">${lvl?'المستوى '+lvl+' · ':''}مؤهّل: ${qualD.length} | يحتاج قداس: ${nearD.length} | مسموح: ${data.length} · ${now}</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:10px;text-align:center">
+        <thead><tr style="background:#570000;color:#fff">
+          <th style="padding:5px">#</th><th style="text-align:right;padding:5px 8px">الاسم</th>
+          <th>الكود</th><th>الفئة</th><th>المستوى</th><th>النوع</th>
+          <th>الحضور</th><th>الهدف</th><th>النسبة</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
   });
-  XLSX.writeFile(wb,`كشف_كل_الكنائس_${new Date().toISOString().slice(0,10)}.xlsx`);
+  pa.innerHTML=html;
+  const fname=(lvl?'المستوى_'+lvl+'_':'')+now.replace(/\//g,'-')+'_كل_الكنائس';
+  document.title=fname;
+  setTimeout(()=>{ window.print(); document.title='شمامسة ٢٠٢٦'; },150);
 }
 
+function exportAllChurches(){
+  const lvl=document.getElementById('fLvl').value;
+  const byChurch={};
+  getFiltered().forEach(m=>{
+    if(!byChurch[m.church])byChurch[m.church]=[];
+    byChurch[m.church].push(m);
+  });
+  const wb=XLSX.utils.book_new();
+  // Summary sheet
+  const churches=Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar'));
+  const sumData=[['الكنيسة','إجمالي','مؤهّل','يحتاج قداس','مسموح بالامتحان'],
+    ...churches.map(ch=>{
+      const all=byChurch[ch];
+      const qual=all.filter(p=>p.qualified).length;
+      const near=all.filter(p=>p.near).length;
+      return[ch,all.length,qual,near,qual+near];
+    })
+  ];
+  const wsSum=XLSX.utils.aoa_to_sheet(sumData);
+  wsSum['!views']=[{RTL:true}];
+  XLSX.utils.book_append_sheet(wb,wsSum,'ملخص');
+  // One sheet per church
+  churches.forEach(ch=>{
+    const all=byChurch[ch];
+    const data=[...all.filter(p=>p.qualified),...all.filter(p=>p.near)];
+    const wsData=[['#','الاسم','الكود','الفئة','المستوى','النوع','الحضور','الهدف','النسبة%','الحالة'],
+      ...data.map((p,i)=>[i+1,p.name,p.code,p.category,p.level||'—',p.gender==='ذكر'?'شماس':'شماسة',p.total,p.maxAtt,p.pct+'%',p.qualified?'مؤهّل':'يحتاج قداس'])
+    ];
+    const ws=XLSX.utils.aoa_to_sheet(wsData);
+    ws['!views']=[{RTL:true}];
+    // Sheet name: level + short church name (max 31 chars)
+    const sheetName=(lvl?'م'+lvl+'-':'')+ch.replace(/كنيسة\s*/,'').slice(0,25);
+    XLSX.utils.book_append_sheet(wb,ws,sheetName.slice(0,31));
+  });
+  XLSX.writeFile(wb, allChurchesFileName('xlsx'));
+  toast('✅ تم تصدير كل الكنائس');
+}
 
-// ══ FILTERS ═══════════════════════════════════════════════════
-let filtered=[];
-let statusFilter='';
-let churchFilter='';
 
 function populateChurches(){
   const chs=[...new Set(members.map(m=>m.church).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ar'));
@@ -510,7 +577,7 @@ function setStatus(s){
 }
 
 // ══ PDF HELPER ════════════════════════════════════════════════
-function makePDF(title,subtitle,rows_html,count){
+function makePDF(title,subtitle,rows_html,count,filename){
   const now=new Date().toLocaleDateString('ar-EG');
   const pa=document.getElementById('_printArea');
   const thead=`<tr><th>#</th><th style="text-align:right">الاسم</th><th>الكود</th>
@@ -521,7 +588,8 @@ function makePDF(title,subtitle,rows_html,count){
     <div class="pr-sub">${subtitle} — ${now} — إجمالي: ${count}</div>
     <table class="pr-tbl"><thead>${thead}</thead><tbody>${rows_html}</tbody></table>
     <div class="pr-footer">شمامسة ٢٠٢٦ — مطرانية المعادي الأرثوذكسية</div>`;
-  setTimeout(()=>{ window.print(); },120);
+  setTimeout(()=>{ document.title=(filename||title);
+setTimeout(()=>{ window.print(); document.title='سجل الحضور — شمامسة ٢٠٢٦'; },120);
 }
 
 function buildRows(data){
@@ -562,11 +630,27 @@ function exportChurchPDF(ch){
   if(qualD.length) rows+=`<tr><td colspan="11" style="background:#e8f5e9;color:#1b5e20;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">✅ مؤهّلون (${qualD.length})</td></tr>`+buildRows(qualD);
   if(nearD.length) rows+=`<tr><td colspan="11" style="background:#fff3e0;color:#7c4700;font-weight:900;font-size:9pt;text-align:right;padding:4pt 6pt">🔵 يحتاج قداس واحد (${nearD.length})</td></tr>`+buildRows(nearD);
   const sub=ch+' — مؤهّل: '+qualD.length+' | يحتاج قداس: '+nearD.length;
-  makePDF('كشف حضور — '+ch,sub,rows,data.length);
+  makePDF('كشف حضور — '+ch,sub,rows,data.length,churchFileName(ch,'pdf'));
 }
 
 
 // ══ JSON EXPORT FOR FESTIVAL GATE ════════════════════════════
+
+function getLvlLabel(){
+  const v=document.getElementById('fLvl').value;
+  return v?('المستوى_'+v):'';
+}
+function safeFileName(s){ return String(s).replace(/[\s/\\:*?"<>|]+/g,'_').slice(0,40); }
+function churchFileName(ch, ext){
+  const lvl=getLvlLabel();
+  const parts=[lvl,safeFileName(ch)].filter(Boolean);
+  return parts.join('_')+'.'+ext;
+}
+function allChurchesFileName(ext){
+  const lvl=getLvlLabel()||'كل_المستويات';
+  return lvl+'_كل_الكنائس_'+new Date().toISOString().slice(0,10)+'.'+ext;
+}
+
 function exportGateJSON(){
   const base=getFiltered();
   // مؤهّل (12/6+) + يحتاج قداس (11/5)
