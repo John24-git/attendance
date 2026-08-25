@@ -133,11 +133,12 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;direction:rtl;min-heigh
 
   <!-- STATS -->
   <div id="statsDiv" style="display:none">
-    <div class="stats" style="grid-template-columns:repeat(5,1fr)">
+    <div class="stats" style="grid-template-columns:repeat(6,1fr)">
       <div class="stat"><div class="stat-n" id="sTotal" style="color:#5a413d">0</div><div class="stat-l">إجمالي الردود</div></div>
       <div class="stat"><div class="stat-n" id="sBad" style="color:#dc2626">0</div><div class="stat-l">تحتاج مراجعة</div></div>
       <div class="stat"><div class="stat-n" id="sWarn" style="color:#d97706">0</div><div class="stat-l">تحذير</div></div>
       <div class="stat"><div class="stat-n" id="sDup" style="color:#7c3aed">0</div><div class="stat-l">مكرر</div></div>
+      <div class="stat"><div class="stat-n" id="sPerf" style="color:#16A34A">0</div><div class="stat-l">في perfect</div></div>
       <div class="stat"><div class="stat-n" id="sOk" style="color:#16A34A">0</div><div class="stat-l">تمام</div></div>
     </div>
     <div class="fbar">
@@ -197,7 +198,7 @@ function findC(cols,keys){
 }
 
 // ══ LOAD EXCEL ════════════════════════════════════════════════
-let WB=null, curSheet='';
+let WB=null, curSheet='', PERFECT=[];
 
 function loadExcel(ev){
   const f=ev.target.files[0]; if(!f)return;
@@ -270,6 +271,8 @@ function updateStats(){
   document.getElementById('sBad').textContent=bad;
   document.getElementById('sWarn').textContent=warn;
   document.getElementById('sDup').textContent=dup;
+  const perfCount=ROWS.filter(r=>!corrections[r._idx]&&findInPerfect(r).found&&rowStatus(r)!=='ok').length;
+  document.getElementById('sPerf').textContent=perfCount;
   document.getElementById('sOk').textContent=ROWS.length-bad-warn-dup;
 }
 
@@ -341,13 +344,31 @@ function buildRowBody(r){
         <div class="field-val" style="color:#800000">${esc(r.matched_name||r.matched_church||'—')}</div>
       </div>
     </div>
-    ${(isBool(r.is_duplicate_code,true)||isBool(r.is_duplicate_name,true))?`
-    <div style="background:#faf5ff;border:1px solid rgba(124,58,237,.2);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12px;font-weight:700;color:#7c3aed">
-      🔁 تكرار: ${isBool(r.is_duplicate_code,true)?'كود مكرر ':''}${isBool(r.is_duplicate_name,true)?'اسم مكرر':''}
-      <div style="margin-top:6px;font-size:11px;color:#5a413d">
-        ${findDuplicates(r).map(d=>`<div>• ${esc(d.name)} | كود: ${esc(String(d.code))} | ${esc(d.church)}</div>`).join('')}
-      </div>
-    </div>`:''}`;
+    ${(()=>{
+      const pf=findInPerfect(r);
+      const isDup=isBool(r.is_duplicate_code,true)||isBool(r.is_duplicate_name,true);
+      let html='';
+      if(pf.found){
+        const fz=pf.fuzzy?'⚠️ ':''
+        html+=`<div style="background:#f0fdf4;border:1.5px solid rgba(22,163,74,.3);border-radius:10px;padding:10px 12px;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:900;color:#16A34A;margin-bottom:4px">✅ موجود في شيت perfect (تطابق بالـ ${pf.how})</div>
+          <div style="font-size:11px;color:#5a413d">
+            ${fz}<b>${esc(pf.match.name)}</b> | كود: ${esc(String(pf.match.code))} | ${esc(pf.match.church)}
+            ${pf.match.score?'| درجة: '+pf.match.score:''}
+          </div>
+          <button onclick="selectMatch(${r._idx},{name:'${pf.match.name.replace(/'/g,"\\'")}',code:'${pf.match.code}',church:'${pf.match.church.replace(/'/g,"\\'")}'})" style="margin-top:8px;background:#16A34A;color:#fff;border:none;border-radius:8px;padding:5px 14px;font-family:Tajawal,sans-serif;font-size:11px;font-weight:800;cursor:pointer">✅ استخدم هذه البيانات</button>
+        </div>`;
+      }
+      if(isDup){
+        html+=`<div style="background:#faf5ff;border:1px solid rgba(124,58,237,.2);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12px;font-weight:700;color:#7c3aed">
+          🔁 تكرار: ${isBool(r.is_duplicate_code,true)?'كود مكرر ':''}${isBool(r.is_duplicate_name,true)?'اسم مكرر':''}
+          <div style="margin-top:6px;font-size:11px;color:#5a413d">
+            ${findDuplicates(r).map(d=>`<div>• ${esc(d.name)} | كود: ${esc(String(d.code))} | ${esc(d.church)}</div>`).join('')}
+          </div>
+        </div>`;
+      }
+      return html;
+    })()}`;
 
   // If already corrected
   if(corr) return fields+`
@@ -491,6 +512,27 @@ function exportExcel(){
 }
 
 // ══ HELPERS ═══════════════════════════════════════════════════
+function findInPerfect(r){
+  const nq=norm(r.name||'');
+  const cq=String(r.code||'').replace(/\D/g,'');
+  // Match by code first, then by name
+  const byCode=PERFECT.filter(p=>String(p.code).replace(/\D/g,'')===cq&&cq);
+  if(byCode.length) return {found:true,match:byCode[0],how:'كود'};
+  const byName=PERFECT.filter(p=>norm(p.name)===nq&&nq.length>3);
+  if(byName.length) return {found:true,match:byName[0],how:'اسم'};
+  // Fuzzy name match
+  const fuzzy=PERFECT.map(p=>({...p,sc:nameScore(nq,norm(p.name))})).filter(p=>p.sc>0.8).sort((a,b)=>b.sc-a.sc);
+  if(fuzzy.length) return {found:true,match:fuzzy[0],how:'تطابق جزئي',fuzzy:true};
+  return {found:false};
+}
+function nameScore(a,b){
+  if(!a||!b)return 0;
+  if(a===b)return 1;
+  const aw=a.split(' ').filter(Boolean), bw=b.split(' ').filter(Boolean);
+  const common=aw.filter(w=>bw.some(bww=>bww.includes(w)||w.includes(bww)));
+  return common.length/Math.max(aw.length,bw.length);
+}
+
 function findDuplicates(r){
   return ROWS.filter(other=>
     other._idx!==r._idx && (
