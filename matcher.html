@@ -379,7 +379,7 @@ function buildRowBody(r){
 
   return fields+`
     <div style="font-size:11px;font-weight:800;color:#5a413d;margin-bottom:6px">🔍 ابحث في قاعدة البيانات واختار الشخص الصح:</div>
-    <input class="db-search" id="dbs${r._idx}" placeholder="اكتب اسم أو كود أو كنيسة..." oninput="searchDB(${r._idx},this.value)" value="${esc(r.name||'')}">
+    <input class="db-search" id="dbs${r._idx}" placeholder="اكتب اسم أو كود أو كنيسة..." oninput="searchDB(${r._idx},this.value)" value="${esc(r.name||'')}"><div style="font-size:10px;color:#9c7c78;margin:4px 0 6px;font-weight:700">💡 بحث بالاسم أو الكود</div>
     <div class="suggestions" id="sug${r._idx}"></div>
     <div class="btn-row">
       <button class="btn btn-skip" onclick="markOk(${r._idx})">✅ صحيح كما هو</button>
@@ -392,9 +392,14 @@ function toggleRow(idx){
   const open=card.classList.contains('open');
   card.classList.toggle('open',!open);
   if(!open){
-    // Trigger search with existing name
     const inp=document.getElementById('dbs'+idx);
-    if(inp) searchDB(idx,inp.value);
+    if(inp){
+      // Search by code first for better results
+      const row=ROWS.find(r=>r._idx===idx);
+      const codeQ=String(row?.code_norm||row?.code||'').trim();
+      if(codeQ) searchDB(idx,codeQ);
+      else searchDB(idx,inp.value);
+    }
   }
 }
 
@@ -405,9 +410,9 @@ function searchDB(idx,q){
   if(!q.trim()){sug.innerHTML='';return;}
   const nq=norm(q);
   const results=DB.map(p=>({...p,sc:score(nq,p)}))
-    .filter(p=>p.sc>0)
+    .filter(p=>p.sc>0.15)
     .sort((a,b)=>b.sc-a.sc)
-    .slice(0,6);
+    .slice(0,8);
   if(!results.length){sug.innerHTML='<div style="text-align:center;color:#bbb;padding:10px;font-size:12px">لا يوجد نتائج</div>';return;}
   sug.innerHTML=results.map(p=>`
     <div class="sug-row" onclick="selectMatch(${idx},${JSON.stringify(p).replace(/"/g,'&quot;')})">
@@ -421,18 +426,43 @@ function searchDB(idx,q){
 }
 
 function score(q,p){
-  const n=norm(p.name), c=String(p.code), ch=norm(p.church);
+  const n=norm(p.name), cd=String(p.code).replace(/\D/g,''), ch=norm(p.church);
+  const qq=q.replace(/\D/g,'');
   let s=0;
-  if(c===q.replace(/\D/g,''))s+=1;
-  if(n===q)s+=1;
-  if(n.includes(q)||q.includes(n))s+=0.8;
-  if(ch.includes(q)||q.includes(ch))s+=0.3;
-  // partial word match
-  const qw=q.split(' ').filter(Boolean);
-  const nw=n.split(' ').filter(Boolean);
-  const common=qw.filter(w=>nw.some(nww=>nww.includes(w)||w.includes(nww)));
-  s+=common.length/Math.max(qw.length,1)*0.6;
+  // Code match — exact
+  if(qq&&cd&&cd===qq) return 1;
+  // Code starts-with match
+  if(qq&&cd&&(cd.startsWith(qq)||qq.startsWith(cd))&&qq.length>=3) s+=0.85;
+  // Exact name
+  if(n===q) return 1;
+  // Name contains
+  if(n.includes(q)||q.includes(n)) s+=0.9;
+  // Word-by-word — each matching word adds score
+  const qw=q.split(' ').filter(w=>w.length>1);
+  const nw=n.split(' ').filter(w=>w.length>1);
+  if(qw.length&&nw.length){
+    let matches=0;
+    qw.forEach(w=>{ if(nw.some(nww=>nww.includes(w)||w.includes(nww)||levenshtein(w,nww)<=1)) matches++; });
+    const wordScore=matches/Math.max(qw.length,nw.length);
+    s+=wordScore*0.8;
+    // Bonus: if most words match regardless of order
+    if(matches>=2&&matches>=Math.min(qw.length,nw.length)) s+=0.3;
+  }
+  // Church partial
+  if(ch.includes(q)||q.includes(ch)) s+=0.15;
   return Math.min(s,1);
+}
+
+function levenshtein(a,b){
+  if(a===b)return 0;
+  if(!a.length)return b.length;
+  if(!b.length)return a.length;
+  const m=[];
+  for(let i=0;i<=b.length;i++)m[i]=[i];
+  for(let j=0;j<=a.length;j++)m[0][j]=j;
+  for(let i=1;i<=b.length;i++)for(let j=1;j<=a.length;j++)
+    m[i][j]=b[i-1]===a[j-1]?m[i-1][j-1]:1+Math.min(m[i-1][j],m[i][j-1],m[i-1][j-1]);
+  return m[b.length][a.length];
 }
 
 function selectMatch(idx,p){
