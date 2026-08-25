@@ -76,6 +76,28 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .cd{font-size:11px;font-weight:700;color:rgba(255,255,255,.6)}
+
+/* ── SUMMARY ── */
+.sum-tabs{display:flex;gap:6px;padding:10px 14px 0;border-bottom:1px solid rgba(128,0,0,.08);background:#fff;position:sticky;top:56px;z-index:30}
+.sum-tab{padding:8px 16px;border-radius:10px 10px 0 0;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;border:none;cursor:pointer;background:#f5f3ef;color:#5a413d;transition:.15s}
+.sum-tab.on{background:#800000;color:#fff}
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;padding:14px}
+.sum-card{background:#fff;border-radius:12px;border:1px solid rgba(128,0,0,.08);overflow:hidden;box-shadow:0 2px 8px rgba(128,0,0,.05)}
+.sum-card-head{background:linear-gradient(90deg,rgba(128,0,0,.07),transparent);padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.sum-church{font-size:12px;font-weight:900;color:#5a0000}
+.sum-total{font-size:18px;font-weight:900;color:#800000}
+.sum-total-l{font-size:9px;color:#9c7c78;font-weight:700}
+.sum-genders{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(128,0,0,.06)}
+.sum-g{padding:8px;text-align:center;border-left:1px solid rgba(128,0,0,.06)}
+.sum-g:last-child{border-left:none}
+.sum-gn{font-size:16px;font-weight:900}
+.sum-gl{font-size:9px;color:#9c7c78;font-weight:700;margin-top:1px}
+.sum-bar{height:4px;margin:0 14px 10px;background:#f0e8e0;border-radius:4px;overflow:hidden}
+.sum-fill{height:100%;background:linear-gradient(90deg,#800000,#b91c1c);border-radius:4px;transition:.4s}
+.sum-total-row{display:flex;gap:8px;padding:10px 14px;background:#f9f5f0;border-top:1.5px solid rgba(128,0,0,.1);margin-top:4px;border-radius:0 0 12px 12px}
+.sum-total-box{flex:1;text-align:center}
+.sum-total-n{font-size:20px;font-weight:900}
+.sum-total-lbl{font-size:9px;color:#9c7c78;font-weight:700}
 </style>
 </head>
 <body>
@@ -115,6 +137,18 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 </div>
 
 <div class="err-msg" id="errMsg"></div>
+
+
+<!-- ══ VIEW TABS ══════════════════════════════════════════════ -->
+<div class="sum-tabs" id="viewTabs" style="display:none">
+  <button class="sum-tab on" id="vt-data" onclick="switchView('data')">📋 التقديمات</button>
+  <button class="sum-tab" id="vt-summary" onclick="switchView('summary')">📊 ملخص إداري</button>
+</div>
+
+<!-- ══ SUMMARY VIEW ═══════════════════════════════════════════ -->
+<div id="summaryView" style="display:none">
+  <div id="sumContent"></div>
+</div>
 
 <!-- ══ CONTROLS ═══════════════════════════════════════════════ -->
 <div class="controls" id="controls">
@@ -168,6 +202,7 @@ const SHEET_TABS = {
 
 // ══ STATE ═════════════════════════════════════════════════════
 let user=null, USERS=[], SHEET_ID='1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA', curTab='1-a';
+let MAINDB={}; // code → {gender, church, name}
 let allRows=[], filtered=[], prevCount=0;
 let timer=null, cdTimer=null, cdSec=30;
 
@@ -263,7 +298,7 @@ function afterLogin(){
 
   // Auto-load if sheet known
   SHEET_ID='1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA';
-  if(isAdmin){const inp=document.getElementById('sheetIdInp');if(inp)inp.value=SHEET_ID;}
+  if(isAdmin){const inp=document.getElementById('sheetIdInp');if(inp)inp.value=SHEET_ID; document.getElementById('viewTabs').style.display='flex'; loadMainDB();}
   loadData();startCountdown();
 }
 
@@ -315,6 +350,8 @@ async function loadData(){
     const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
     parseRows(json);
     document.getElementById('tcard').style.display='block';
+  // Refresh summary if open
+  if(document.getElementById('summaryView').style.display==='block') renderSummary();
     document.getElementById('lastUpd').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG');
     resetCountdown();
   }catch(e){
@@ -425,6 +462,103 @@ function exportExcel(){
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,SHEET_TABS[curTab]||curTab);
   XLSX.writeFile(wb,'امتحان_'+curTab+'_'+new Date().toLocaleDateString('ar-EG').replace(/\//g,'-')+'.xlsx');
+}
+
+
+// ══ MAIN DB (for gender) ═══════════════════════════════════════
+async function loadMainDB(){
+  try{
+    const url=`https://docs.google.com/spreadsheets/d/${USERS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=Data&_=${Date.now()}`;
+    const res=await fetch(url);
+    const txt=await res.text();
+    const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const cols=json.table.cols.map(c=>c.label||'');
+    const iCode=cols.findIndex(c=>c.includes('الكود')||c.includes('code'));
+    const iGen=cols.findIndex(c=>c.includes('النوع')||c.includes('gender'));
+    const iName=cols.findIndex(c=>c.includes('الاسم')||c.includes('name'));
+    const iChurch=cols.findIndex(c=>c.includes('الكنيسة')||c.includes('church'));
+    json.table.rows.forEach(r=>{
+      const code=String(r.c[iCode]?.v||'').trim();
+      if(code) MAINDB[code]={
+        gender:String(r.c[iGen]?.v||'').trim(),
+        name:String(r.c[iName]?.v||'').trim(),
+        church:String(r.c[iChurch]?.v||'').trim(),
+      };
+    });
+    console.log('MainDB loaded:', Object.keys(MAINDB).length);
+  }catch(e){console.warn('MainDB load failed:',e);}
+}
+
+// ══ VIEW SWITCH ════════════════════════════════════════════════
+function switchView(view){
+  document.getElementById('vt-data').classList.toggle('on', view==='data');
+  document.getElementById('vt-summary').classList.toggle('on', view==='summary');
+  document.getElementById('controls').style.display=view==='data'?'flex':'none';
+  document.getElementById('kpis').style.display=view==='data'?'grid':'none';
+  document.getElementById('tcard').style.display=view==='data'?'block':'none';
+  document.getElementById('lastUpd').style.display=view==='data'?'block':'none';
+  document.getElementById('summaryView').style.display=view==='summary'?'block':'none';
+  if(view==='summary') renderSummary();
+}
+
+// ══ RENDER SUMMARY ═════════════════════════════════════════════
+function renderSummary(){
+  const div=document.getElementById('sumContent');
+  if(!allRows.length){div.innerHTML='<div style="text-align:center;padding:40px;color:#bbb;font-size:13px;font-weight:700">لا يوجد بيانات — حمّل مستوى أولاً</div>';return;}
+
+  // Group by church
+  const byChurch={};
+  allRows.forEach(r=>{
+    const ch=r.church||'غير محدد';
+    if(!byChurch[ch])byChurch[ch]={total:0,male:0,female:0,unknown:0};
+    byChurch[ch].total++;
+    // Get gender from MAINDB by code
+    const dbEntry=MAINDB[String(r.code||'').trim()];
+    const g=dbEntry?.gender||'';
+    if(/ذكر|male|شماس|^m$/i.test(g)) byChurch[ch].male++;
+    else if(/أنث|female|شماسة|^f$/i.test(g)) byChurch[ch].female++;
+    else byChurch[ch].unknown++;
+  });
+
+  const churches=Object.keys(byChurch).sort((a,b)=>a.localeCompare(b,'ar'));
+  const grandTotal=allRows.length;
+  const grandMale=Object.values(byChurch).reduce((s,v)=>s+v.male,0);
+  const grandFemale=Object.values(byChurch).reduce((s,v)=>s+v.female,0);
+  const grandUnknown=Object.values(byChurch).reduce((s,v)=>s+v.unknown,0);
+
+  div.innerHTML=`
+    <!-- Grand total -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 14px">
+      <div class="kpi"><div class="kpi-n" style="color:#800000">${grandTotal}</div><div class="kpi-l">إجمالي المقدّمين</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:#1A56DB">${grandMale}</div><div class="kpi-l">👨 شماس</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:#E11D48">${grandFemale}</div><div class="kpi-l">👩 شماسة</div></div>
+      <div class="kpi"><div class="kpi-n" style="color:#9c7c78">${grandUnknown}</div><div class="kpi-l">غير محدد</div></div>
+    </div>
+
+    <!-- Level label -->
+    <div style="font-size:11px;font-weight:800;color:#9c7c78;padding:0 14px 8px">
+      📋 ${SHEET_TABS[curTab]||curTab} — ${churches.length} كنيسة
+    </div>
+
+    <!-- Church cards -->
+    <div class="sum-grid">
+      ${churches.map(ch=>{
+        const s=byChurch[ch];
+        const malePct=s.total?Math.round(s.male/s.total*100):0;
+        return`<div class="sum-card">
+          <div class="sum-card-head">
+            <div class="sum-church">⛪ ${ch.replace(/كنيسة\s*/,'').slice(0,22)}</div>
+            <div style="text-align:center"><div class="sum-total">${s.total}</div><div class="sum-total-l">مقدّم</div></div>
+          </div>
+          <div class="sum-bar"><div class="sum-fill" style="width:${malePct}%"></div></div>
+          <div class="sum-genders">
+            <div class="sum-g"><div class="sum-gn" style="color:#1A56DB">${s.male}</div><div class="sum-gl">👨 شماس</div></div>
+            <div class="sum-g"><div class="sum-gn" style="color:#E11D48">${s.female}</div><div class="sum-gl">👩 شماسة</div></div>
+          </div>
+          ${s.unknown?`<div style="font-size:10px;color:#9c7c78;text-align:center;padding:4px">غير محدد: ${s.unknown}</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>`;
 }
 
 // ══ CSV READER ════════════════════════════════════════════════
