@@ -43,16 +43,19 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;direction:rtl;min-heigh
 /* Row card */
 .row-card{background:#fff;border-radius:12px;border:1.5px solid rgba(128,0,0,.1);margin-bottom:10px;overflow:hidden}
 .row-card.ok{border-color:#16A34A}
+.row-card.dup{border-color:#7c3aed}
 .row-card.warn{border-color:#f59e0b}
 .row-card.bad{border-color:#dc2626}
 .row-head{padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#fafafa}
 .row-card.bad .row-head{background:#fff5f5}
 .row-card.warn .row-head{background:#fffbeb}
 .row-card.ok .row-head{background:#f0fdf4}
+.row-card.dup .row-head{background:#faf5ff}
 .row-badge{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px}
 .badge-ok{background:rgba(22,163,74,.12);color:#16A34A}
 .badge-warn{background:rgba(245,158,11,.12);color:#d97706}
 .badge-bad{background:rgba(220,38,38,.12);color:#dc2626}
+.badge-dup{background:rgba(124,58,237,.12);color:#7c3aed}
 .row-name{font-size:13px;font-weight:800;color:#1a0000;flex:1}
 .row-meta{font-size:11px;color:#9c7c78}
 .row-score{font-size:18px;font-weight:900;color:#800000}
@@ -130,16 +133,18 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;direction:rtl;min-heigh
 
   <!-- STATS -->
   <div id="statsDiv" style="display:none">
-    <div class="stats">
+    <div class="stats" style="grid-template-columns:repeat(5,1fr)">
       <div class="stat"><div class="stat-n" id="sTotal" style="color:#5a413d">0</div><div class="stat-l">إجمالي الردود</div></div>
       <div class="stat"><div class="stat-n" id="sBad" style="color:#dc2626">0</div><div class="stat-l">تحتاج مراجعة</div></div>
       <div class="stat"><div class="stat-n" id="sWarn" style="color:#d97706">0</div><div class="stat-l">تحذير</div></div>
+      <div class="stat"><div class="stat-n" id="sDup" style="color:#7c3aed">0</div><div class="stat-l">مكرر</div></div>
       <div class="stat"><div class="stat-n" id="sOk" style="color:#16A34A">0</div><div class="stat-l">تمام</div></div>
     </div>
     <div class="fbar">
       <button class="fbtn on" onclick="setFilter('all',this)">الكل</button>
       <button class="fbtn" onclick="setFilter('bad',this)">❌ تحتاج مراجعة</button>
       <button class="fbtn" onclick="setFilter('warn',this)">⚠️ تحذير</button>
+      <button class="fbtn" onclick="setFilter('dup',this)">🔁 مكرر</button>
       <button class="fbtn" onclick="setFilter('ok',this)">✅ تمام</button>
       <input class="fsrch" id="srch" placeholder="🔍 بحث بالاسم أو الكود..." oninput="renderRows()">
     </div>
@@ -192,46 +197,80 @@ function findC(cols,keys){
 }
 
 // ══ LOAD EXCEL ════════════════════════════════════════════════
+let WB=null, curSheet='';
+
 function loadExcel(ev){
   const f=ev.target.files[0]; if(!f)return;
   const rd=new FileReader();
   rd.onload=e=>{
     try{
-      const wb=XLSX.read(e.target.result,{type:'binary'});
-      const ws=wb.Sheets[wb.SheetNames[0]];
-      const data=XLSX.utils.sheet_to_json(ws,{defval:''});
-      ROWS=data.map((r,i)=>({...r,_idx:i}));
-      corrections={};
-      updateStats();
-      renderRows();
-      document.getElementById('statsDiv').style.display='block';
-      document.getElementById('exportBtn').style.display='block';
+      WB=XLSX.read(e.target.result,{type:'binary'});
       document.getElementById('uploadZone').classList.add('has');
-      document.getElementById('uploadZone').querySelector('.upload-txt').textContent='✅ '+f.name+' ('+ROWS.length+' صف)';
-      showStatus('excelStatus',`✅ تم تحميل ${ROWS.length} صف`,'#16A34A');
+      document.getElementById('uploadZone').querySelector('.upload-txt').textContent='✅ '+f.name;
+      showStatus('excelStatus',`✅ فيه ${WB.SheetNames.length} شيت — اختار الشيت اللي تشتغل عليه`,'#16A34A');
+      buildSheetTabs();
     }catch(e){showStatus('excelStatus','❌ خطأ في قراءة الملف: '+e.message);}
   };
   rd.readAsBinaryString(f);
 }
 
+function buildSheetTabs(){
+  const existing=document.getElementById('sheetTabs');
+  if(existing) existing.remove();
+  const div=document.createElement('div');
+  div.id='sheetTabs';
+  div.style.cssText='display:flex;gap:6px;flex-wrap:wrap;margin-top:10px';
+  WB.SheetNames.forEach(name=>{
+    const btn=document.createElement('button');
+    btn.className='fbtn'+(name===curSheet?' on':'');
+    btn.textContent='📋 '+name;
+    btn.onclick=()=>selectSheet(name);
+    div.appendChild(btn);
+  });
+  document.getElementById('step2').querySelector('.card-body').appendChild(div);
+  // Auto-select first sheet
+  if(WB.SheetNames.length===1) selectSheet(WB.SheetNames[0]);
+}
+
+function selectSheet(name){
+  curSheet=name;
+  document.querySelectorAll('#sheetTabs .fbtn').forEach(b=>{
+    b.classList.toggle('on', b.textContent.replace('📋 ','')===name);
+  });
+  const ws=WB.Sheets[name];
+  const data=XLSX.utils.sheet_to_json(ws,{defval:''});
+  ROWS=data.map((r,i)=>({...r,_idx:i}));
+  corrections={};
+  updateStats();
+  renderRows();
+  document.getElementById('statsDiv').style.display='block';
+  document.getElementById('exportBtn').style.display='block';
+  showStatus('excelStatus',`📋 ${name} — ${ROWS.length} صف`,'#16A34A');
+}
+
 // ══ ROW STATUS ════════════════════════════════════════════════
+function isBool(v, trueVal){
+  return v===trueVal||v===String(trueVal).toUpperCase()||v===String(trueVal).toLowerCase()||v===(trueVal?1:0);
+}
 function rowStatus(r){
+  if(isBool(r.is_duplicate_code,true)||isBool(r.is_duplicate_name,true)) return 'dup';
   const nr=r.needs_review;
-  const cc=r.code_check, nc=r.name_check, chk=r.church_check;
   if(nr===true||nr==='TRUE'||nr==='true'||nr===1) return 'bad';
-  if(cc===false||cc==='FALSE'||cc==='false'||cc===0) return 'bad';
-  if(nc===false||nc==='FALSE'||nc==='false'||nc===0) return 'warn';
-  if(chk===false||chk==='FALSE'||chk==='false'||chk===0) return 'warn';
+  if(isBool(r.code_check,false)) return 'bad';
+  if(isBool(r.name_check,false)) return 'warn';
+  if(isBool(r.church_check,false)) return 'warn';
   return 'ok';
 }
 
 function updateStats(){
   const bad=ROWS.filter(r=>rowStatus(r)==='bad').length;
   const warn=ROWS.filter(r=>rowStatus(r)==='warn').length;
+  const dup=ROWS.filter(r=>rowStatus(r)==='dup').length;
   document.getElementById('sTotal').textContent=ROWS.length;
   document.getElementById('sBad').textContent=bad;
   document.getElementById('sWarn').textContent=warn;
-  document.getElementById('sOk').textContent=ROWS.length-bad-warn;
+  document.getElementById('sDup').textContent=dup;
+  document.getElementById('sOk').textContent=ROWS.length-bad-warn-dup;
 }
 
 // ══ FILTER ════════════════════════════════════════════════════
@@ -258,8 +297,8 @@ function renderRows(){
     const dispName=corr?corr.name:r.name;
     const dispCode=corr?corr.code:r.code;
     const dispChurch=corr?corr.church:r.church;
-    const badgeCls=st==='ok'?'badge-ok':st==='warn'?'badge-warn':'badge-bad';
-    const badgeTxt=corr?'✅ تم التصحيح':st==='ok'?'✅ تمام':st==='warn'?'⚠️ تحقق':'❌ مراجعة';
+    const badgeCls=st==='ok'?'badge-ok':st==='warn'?'badge-warn':st==='dup'?'badge-dup':'badge-bad';
+    const badgeTxt=corr?'✅ تم التصحيح':st==='ok'?'✅ تمام':st==='warn'?'⚠️ تحقق':st==='dup'?'🔁 مكرر':'❌ مراجعة';
     return`<div class="row-card ${st}" id="rc${r._idx}">
       <div class="row-head" onclick="toggleRow(${r._idx})">
         <span class="row-badge ${badgeCls}">${badgeTxt}</span>
@@ -301,7 +340,14 @@ function buildRowBody(r){
         <div class="field-lbl">أقرب تطابق في DB</div>
         <div class="field-val" style="color:#800000">${esc(r.matched_name||r.matched_church||'—')}</div>
       </div>
-    </div>`;
+    </div>
+    ${(isBool(r.is_duplicate_code,true)||isBool(r.is_duplicate_name,true))?`
+    <div style="background:#faf5ff;border:1px solid rgba(124,58,237,.2);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12px;font-weight:700;color:#7c3aed">
+      🔁 تكرار: ${isBool(r.is_duplicate_code,true)?'كود مكرر ':''}${isBool(r.is_duplicate_name,true)?'اسم مكرر':''}
+      <div style="margin-top:6px;font-size:11px;color:#5a413d">
+        ${findDuplicates(r).map(d=>`<div>• ${esc(d.name)} | كود: ${esc(String(d.code))} | ${esc(d.church)}</div>`).join('')}
+      </div>
+    </div>`:''}`;
 
   // If already corrected
   if(corr) return fields+`
@@ -409,7 +455,7 @@ function undoCorrection(idx){
   const card=document.getElementById('rc'+idx);
   if(card){
     card.className='row-card '+st;
-    const badgeCls=st==='ok'?'badge-ok':st==='warn'?'badge-warn':'badge-bad';
+    const badgeCls=st==='ok'?'badge-ok':st==='warn'?'badge-warn':st==='dup'?'badge-dup':'badge-bad';
     const badgeTxt=st==='ok'?'✅ تمام':st==='warn'?'⚠️ تحقق':'❌ مراجعة';
     card.querySelector('.row-head .row-badge').className='row-badge '+badgeCls;
     card.querySelector('.row-head .row-badge').textContent=badgeTxt;
@@ -445,6 +491,15 @@ function exportExcel(){
 }
 
 // ══ HELPERS ═══════════════════════════════════════════════════
+function findDuplicates(r){
+  return ROWS.filter(other=>
+    other._idx!==r._idx && (
+      (isBool(r.is_duplicate_code,true) && String(other.code)===String(r.code)) ||
+      (isBool(r.is_duplicate_name,true) && norm(other.name||'')===norm(r.name||''))
+    )
+  ).map(o=>({name:o.name,code:o.code,church:o.church}));
+}
+
 function norm(s){
   return String(s||'').replace(/[\u064B-\u065F\u0670\u0640]/g,'')
     .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')
