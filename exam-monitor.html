@@ -189,9 +189,10 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 
 <script>
 // ══ CONFIG ════════════════════════════════════════════════════
-const USERS_SHEET_ID = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
-const USERS_SHEET    = 'Users';
-const TOKEN_TTL      = 12*60*60*1000;
+const USERS_SHEET_ID   = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const USERS_SHEET      = 'Users';
+const DEFAULT_SHEET_ID = '1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA';
+const TOKEN_TTL         = 12*60*60*1000;
 const SHEET_TABS = {
   '1-a':'المستوى الأول ألفا',
   '1-b':'المستوى الأول بيتا',
@@ -201,7 +202,7 @@ const SHEET_TABS = {
 };
 
 // ══ STATE ═════════════════════════════════════════════════════
-let user=null, USERS=[], SHEET_ID='1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA', curTab='1-a';
+let user=null, USERS=[], SHEET_ID=DEFAULT_SHEET_ID, curTab='1-a';
 let MAINDB={}; // code → {gender, church, name}
 let allRows=[], filtered=[], prevCount=0;
 let timer=null, cdTimer=null, cdSec=30;
@@ -253,7 +254,7 @@ async function doLogin(){
     try{
       const rows=await readCSV(USERS_SHEET_ID,USERS_SHEET);
       USERS=parseUsers(rows);
-    }catch(e){showErr('تعذّر تحميل بيانات المستخدمين');btn.innerHTML='🔑 دخول';btn.disabled=false;return;}
+    }catch(e){showErr('تعذّر تحميل بيانات المستخدمين — تأكد إن شيت اليوزرز منشور للعموم (Publish to web)');btn.innerHTML='🔑 دخول';btn.disabled=false;return;}
   }
   const found=USERS.find(x=>x.username===u&&x.password===p);
   if(found){
@@ -282,30 +283,30 @@ function afterLogin(){
   document.getElementById('userLabel').textContent=
     '👤 '+user.username+(user.church?' | '+user.church:'');
 
+  // Resolve which Sheet ID to use: saved-per-tab > globally saved > default
+  SHEET_ID = localStorage.getItem('exam_monitor_sheet_'+curTab)
+          || localStorage.getItem('exam_monitor_sheet')
+          || DEFAULT_SHEET_ID;
+
   // Admin: show Sheet ID config
   if(isAdmin){
     document.getElementById('cfgCard').style.display='block';
-    // Load saved sheet ID
-    const saved=localStorage.getItem('exam_monitor_sheet_'+curTab)||'1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA'||
-                localStorage.getItem('ctrl_exam_'+curTab)||
-                localStorage.getItem('exam_monitor_sheet')||'';
-    if(saved){document.getElementById('sheetIdInp').value=saved;SHEET_ID=saved;}
+    document.getElementById('sheetIdInp').value=SHEET_ID;
+    document.getElementById('viewTabs').style.display='flex';
+    loadMainDB();
   }
 
   buildTabs(isAdmin);
   document.getElementById('controls').style.display='flex';
   document.getElementById('kpis').style.display='grid';
 
-  // Auto-load if sheet known
-  SHEET_ID='1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA';
-  if(isAdmin){const inp=document.getElementById('sheetIdInp');if(inp)inp.value=SHEET_ID; document.getElementById('viewTabs').style.display='flex'; loadMainDB();}
   loadData();startCountdown();
 }
 
 // ══ SHEET CONFIG ══════════════════════════════════════════════
 function applySheet(){
   const raw=document.getElementById('sheetIdInp').value.trim();
-  const m=raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  const m=raw.match(/\/d\/(?:e\/)?([a-zA-Z0-9_-]+)/);
   SHEET_ID=m?m[1]:raw;
   if(!SHEET_ID){alert('ادخل الـ Sheet ID أو الرابط');return;}
   localStorage.setItem('exam_monitor_sheet',SHEET_ID);
@@ -328,8 +329,8 @@ function buildTabs(isAdmin){
       curTab=k;
       document.querySelectorAll('.lvl-tab').forEach(b=>b.classList.remove('on'));
       btn.classList.add('on');
-      const ctrlId=localStorage.getItem('ctrl_exam_'+k)||localStorage.getItem('exam_monitor_sheet_'+k);
-      if(ctrlId){SHEET_ID=ctrlId;const inp=document.getElementById('sheetIdInp');if(inp)inp.value=ctrlId;}
+      const savedId=localStorage.getItem('exam_monitor_sheet_'+k)||localStorage.getItem('exam_monitor_sheet');
+      if(savedId){SHEET_ID=savedId;const inp=document.getElementById('sheetIdInp');if(inp)inp.value=savedId;}
       loadData();
     };
     wrap.appendChild(btn);
@@ -339,79 +340,41 @@ function buildTabs(isAdmin){
   if(firstBtn&&!wrap.querySelector('.on')){firstBtn.classList.add('on');curTab=Object.keys(SHEET_TABS)[0];}
 }
 
-// // ══ LOAD DATA ═════════════════════════════════════════════════
-// async function loadData(){
-//   if(!SHEET_ID){hideErr();return;}
-//   hideErr();
-//   try{
-//     const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(curTab)}&_=${Date.now()}`;
-//     const res=await fetch(url);
-//     const txt=await res.text();
-//     const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-//     parseRows(json);
-//     document.getElementById('tcard').style.display='block';
-//   // Refresh summary if open
-//   if(document.getElementById('summaryView').style.display==='block') renderSummary();
-//     document.getElementById('lastUpd').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG');
-//     resetCountdown();
-//   }catch(e){
-//     document.getElementById('errMsg').style.display='block';
-//     document.getElementById('errMsg').textContent='خطأ في التحميل — تأكد إن الشيت مفتوح للعموم واسم التبويب صح: '+e.message;
-//   }
-// }
-// ══ LOAD DATA (CORS-Safe via JSONP) ════════════════════════════
-function loadData(){
+// ══ LOAD DATA ═════════════════════════════════════════════════
+// Uses the CSV export endpoint (out:csv) instead of out:json — the CSV
+// endpoint is far more reliable for cross-origin fetch() calls against
+// publicly-shared / published Google Sheets than the gviz JSON endpoint.
+async function loadData(){
   if(!SHEET_ID){hideErr();return;}
   hideErr();
-
-  // إنشاء اسم callback عشوائي لتفادي كاش المتصفح
-  const callbackName = 'gviz_cb_' + Date.now();
-
-  window[callbackName] = function(json) {
-    parseRows(json);
+  try{
+    const rows=await readCSV(SHEET_ID,curTab);
+    parseRows(rows);
     document.getElementById('tcard').style.display='block';
+    // Refresh summary if open
     if(document.getElementById('summaryView').style.display==='block') renderSummary();
     document.getElementById('lastUpd').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG');
     resetCountdown();
-    // تنظيف الـ Script بعد الانتهاء
-    delete window[callbackName];
-    const el = document.getElementById(callbackName);
-    if(el) el.remove();
-  };
-
-  const script = document.createElement('script');
-  script.id = callbackName;
-  script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(curTab)}&_=${Date.now()}`;
-  
-  script.onerror = function() {
+  }catch(e){
     document.getElementById('errMsg').style.display='block';
-    document.getElementById('errMsg').textContent='خطأ في التحميل — تأكد إن الشيت مفتوح للعموم (Anyone with link) واسم التبويب صح.';
-    delete window[callbackName];
-    script.remove();
-  };
-
-  document.body.appendChild(script);
+    document.getElementById('errMsg').textContent='خطأ في التحميل — تأكد إن الشيت منشور للعموم (Publish to web) واسم التبويب صح ("'+curTab+'"): '+e.message;
+  }
 }
-function parseRows(json){
-  const rows=json.table.rows||[];
-  const cols=json.table.cols||[];
-  // Find column indices
-  const labels=cols.map(c=>(c.label||'').trim());
-  const iName=findCol(labels,['الاسم','name','اسم']);
-  const iChurch=findCol(labels,['الكنيسة','church','كنيسة']);
-  const iCode=findCol(labels,['الكود','code','كود']);
-  const iTs=findCol(labels,['Timestamp','timestamp','التاريخ','تاريخ']);
 
-  allRows=rows.map(r=>{
-    const cells=r.c||[];
-    return{
-      name:  cells[iName]?.v||'',
-      church:cells[iChurch]?.v||'',
-      code:  String(cells[iCode]?.v||''),
-      tsRaw: cells[iTs]?.v||'',
-      tsF:   cells[iTs]?.f||'',
-    };
-  }).filter(r=>r.name||r.code);
+function parseRows(rows){
+  if(!rows.length){allRows=[];buildChurchFilter();applyFilter();return;}
+  const keys=Object.keys(rows[0]);
+  const iName  = findKeyCSV(keys,['الاسم','name','اسم']);
+  const iChurch= findKeyCSV(keys,['الكنيسة','church','كنيسة']);
+  const iCode  = findKeyCSV(keys,['الكود','code','كود']);
+  const iTs    = findKeyCSV(keys,['Timestamp','timestamp','التاريخ','تاريخ']);
+
+  allRows=rows.map(r=>({
+    name:  iName  ? (r[iName]  ||'') : '',
+    church:iChurch? (r[iChurch]||'') : '',
+    code:  String(iCode ? (r[iCode] ||'') : ''),
+    tsRaw: iTs    ? (r[iTs]    ||'') : '',
+  })).filter(r=>r.name||r.code);
 
   const isNew=allRows.length>prevCount&&prevCount>0;
   if(isNew&&Notification?.permission==='granted')
@@ -428,9 +391,9 @@ function parseRows(json){
   applyFilter(isNew);
 }
 
-function findCol(labels,keys){
-  for(const k of keys){const i=labels.findIndex(l=>l.includes(k));if(i>-1)return i;}
-  return -1;
+function findKeyCSV(keys,names){
+  for(const n of names){const k=keys.find(kk=>kk.includes(n));if(k)return k;}
+  return null;
 }
 
 function buildChurchFilter(){
@@ -457,10 +420,9 @@ function applyFilter(markNew=false){
 }
 
 function updateKPIs(){
-  const base=document.getElementById('chSel').value||(!['admin','super_admin'].includes(user?.role||'')&&user?.church)?filtered:allRows;
   document.getElementById('kTotal').textContent=filtered.length;
   document.getElementById('kChurches').textContent=new Set(allRows.map(r=>r.church).filter(Boolean)).size;
-  const last=allRows.length?fmtTime(allRows[allRows.length-1].tsF||allRows[allRows.length-1].tsRaw):'—';
+  const last=allRows.length?fmtTime(allRows[allRows.length-1].tsRaw):'—';
   document.getElementById('kLast').textContent=last;
 }
 
@@ -472,23 +434,28 @@ function renderTable(markNew=false){
       <td style="font-weight:800">${esc(r.name)}${markNew&&i<(allRows.length-prevCount+1)?'<span class="new-badge">جديد</span>':''}</td>
       <td style="font-size:11px">${esc(r.church)}</td>
       <td style="text-align:center;font-weight:700">${esc(r.code)}</td>
-      <td class="tm">${fmtTime(r.tsF||r.tsRaw)}</td>
+      <td class="tm">${fmtTime(r.tsRaw)}</td>
     </tr>`).join(''):'<tr><td colspan="5" class="empty">لا يوجد بيانات</td></tr>';
 }
 
 function fmtTime(v){
   if(!v)return'—';
-  if(typeof v==='string'&&v.includes('T'))try{return new Date(v).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});}catch{}
-  const m=String(v).match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)/);
+  const s=String(v).trim();
+  // Google Sheets serial-date literal, e.g. Date(2026,7,26,14,23)
+  const m=s.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)/);
   if(m)return`${m[4].padStart(2,'0')}:${m[5].padStart(2,'0')}`;
-  return String(v).slice(0,16);
+  // Try native parsing (covers ISO strings and typical Google Forms
+  // timestamp format like "8/26/2026 14:23:05")
+  const d=new Date(s);
+  if(!isNaN(d.getTime()))return d.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
+  return s.slice(0,16);
 }
 
 function exportExcel(){
   if(!filtered.length)return;
   const ws=XLSX.utils.aoa_to_sheet([
     ['#','الاسم','الكنيسة','الكود','وقت التقديم'],
-    ...filtered.map((r,i)=>[i+1,r.name,r.church,r.code,fmtTime(r.tsF||r.tsRaw)])
+    ...filtered.map((r,i)=>[i+1,r.name,r.church,r.code,fmtTime(r.tsRaw)])
   ]);
   ws['!views']=[{RTL:true}];
   const wb=XLSX.utils.book_new();
@@ -500,21 +467,19 @@ function exportExcel(){
 // ══ MAIN DB (for gender) ═══════════════════════════════════════
 async function loadMainDB(){
   try{
-    const url=`https://docs.google.com/spreadsheets/d/${USERS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=Data&_=${Date.now()}`;
-    const res=await fetch(url);
-    const txt=await res.text();
-    const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-    const cols=json.table.cols.map(c=>c.label||'');
-    const iCode=cols.findIndex(c=>c.includes('الكود')||c.includes('code'));
-    const iGen=cols.findIndex(c=>c.includes('النوع')||c.includes('gender'));
-    const iName=cols.findIndex(c=>c.includes('الاسم')||c.includes('name'));
-    const iChurch=cols.findIndex(c=>c.includes('الكنيسة')||c.includes('church'));
-    json.table.rows.forEach(r=>{
-      const code=String(r.c[iCode]?.v||'').trim();
-      if(code) MAINDB[code]={
-        gender:String(r.c[iGen]?.v||'').trim(),
-        name:String(r.c[iName]?.v||'').trim(),
-        church:String(r.c[iChurch]?.v||'').trim(),
+    const rows=await readCSV(USERS_SHEET_ID,'Data');
+    if(!rows.length)return;
+    const keys=Object.keys(rows[0]);
+    const kCode  =findKeyCSV(keys,['الكود','code']);
+    const kGen   =findKeyCSV(keys,['النوع','gender']);
+    const kName  =findKeyCSV(keys,['الاسم','name']);
+    const kChurch=findKeyCSV(keys,['الكنيسة','church']);
+    rows.forEach(r=>{
+      const code=String(kCode?(r[kCode]||''):'').trim();
+      if(code)MAINDB[code]={
+        gender:String(kGen?(r[kGen]||''):'').trim(),
+        name:String(kName?(r[kName]||''):'').trim(),
+        church:String(kChurch?(r[kChurch]||''):'').trim(),
       };
     });
     console.log('MainDB loaded:', Object.keys(MAINDB).length);
@@ -596,7 +561,9 @@ function renderSummary(){
 // ══ CSV READER ════════════════════════════════════════════════
 async function readCSV(id,sheet){
   const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}&_=${Date.now()}`;
-  const r=await fetch(url);const text=await r.text();
+  const r=await fetch(url);
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const text=await r.text();
   const lines=text.trim().split('\n').filter(l=>l.trim());if(lines.length<2)return[];
   const parse=row=>{const res=[];let cur='',inQ=false;
     for(let i=0;i<row.length;i++){if(row[i]==='"'&&!inQ)inQ=true;else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}else if(row[i]==='"'&&inQ)inQ=false;else if(row[i]===','&&!inQ){res.push(cur.trim());cur='';}else cur+=row[i];}
