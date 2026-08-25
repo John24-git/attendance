@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>أداة مطابقة الردود — شمامسة ٢٠٢٦</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal',sans-serif;background:#f5f0ea;direction:rtl;min-height:100vh;padding-bottom:40px}
+.hdr{background:linear-gradient(135deg,#5a0000,#800000);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.hdr-t{font-size:17px;font-weight:900}
+.hdr-s{font-size:10px;opacity:.7;margin-top:2px}
+.wrap{max-width:900px;margin:0 auto;padding:14px}
+
+/* Cards */
+.card{background:#fff;border-radius:14px;margin-bottom:12px;border:1px solid rgba(128,0,0,.1);box-shadow:0 2px 10px rgba(128,0,0,.06);overflow:hidden}
+.card-head{background:#faf5ef;padding:12px 16px;font-size:13px;font-weight:900;color:#5a0000;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(128,0,0,.08)}
+.card-body{padding:14px 16px}
+
+/* Upload */
+.upload-zone{border:2px dashed #e2bfb9;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:.15s;background:#faf8f5;position:relative}
+.upload-zone:hover{border-color:#800000;background:#fff8f0}
+.upload-zone.has{border-color:#16A34A;background:#f0fdf4}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:28px;margin-bottom:6px}
+.upload-txt{font-size:13px;font-weight:800;color:#5a413d}
+.upload-sub{font-size:10px;color:#9c7c78;margin-top:3px}
+
+/* Stats bar */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.stat{background:#fff;border-radius:10px;padding:10px;text-align:center;border:1px solid rgba(128,0,0,.08)}
+.stat-n{font-size:22px;font-weight:900}
+.stat-l{font-size:9px;font-weight:800;color:#9c7c78;margin-top:2px}
+
+/* Filter bar */
+.fbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.fbtn{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:18px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;color:#800000;cursor:pointer;transition:.15s}
+.fbtn:hover,.fbtn.on{background:#800000;color:#fff;border-color:#800000}
+.fsrch{background:#fff;border:1.5px solid rgba(128,0,0,.15);border-radius:18px;padding:6px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#1a0000;outline:none;flex:1;min-width:160px}
+
+/* Row card */
+.row-card{background:#fff;border-radius:12px;border:1.5px solid rgba(128,0,0,.1);margin-bottom:10px;overflow:hidden}
+.row-card.ok{border-color:#16A34A}
+.row-card.warn{border-color:#f59e0b}
+.row-card.bad{border-color:#dc2626}
+.row-head{padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#fafafa}
+.row-card.bad .row-head{background:#fff5f5}
+.row-card.warn .row-head{background:#fffbeb}
+.row-card.ok .row-head{background:#f0fdf4}
+.row-badge{font-size:11px;font-weight:900;padding:3px 10px;border-radius:20px}
+.badge-ok{background:rgba(22,163,74,.12);color:#16A34A}
+.badge-warn{background:rgba(245,158,11,.12);color:#d97706}
+.badge-bad{background:rgba(220,38,38,.12);color:#dc2626}
+.row-name{font-size:13px;font-weight:800;color:#1a0000;flex:1}
+.row-meta{font-size:11px;color:#9c7c78}
+.row-score{font-size:18px;font-weight:900;color:#800000}
+.row-body{display:none;padding:12px 14px;border-top:1px solid rgba(128,0,0,.08)}
+.row-card.open .row-body{display:block}
+
+/* Fields */
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.field-box{background:#f5f3ef;border-radius:10px;padding:10px 12px}
+.field-lbl{font-size:9px;font-weight:800;color:#9c7c78;letter-spacing:.08em;margin-bottom:4px}
+.field-val{font-size:13px;font-weight:800;color:#1a0000}
+.field-val.wrong{color:#dc2626}
+.field-val.ok{color:#16A34A}
+
+/* DB Search */
+.db-search{background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:10px;padding:9px 12px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;color:#1a0000;outline:none;width:100%;margin-bottom:8px;transition:.15s}
+.db-search:focus{border-color:#800000;background:#fff}
+.suggestions{display:flex;flex-direction:column;gap:5px;max-height:200px;overflow-y:auto}
+.sug-row{display:flex;align-items:center;gap:10px;padding:9px 12px;background:#f9f5f0;border-radius:9px;cursor:pointer;border:1.5px solid transparent;transition:.15s}
+.sug-row:hover{border-color:#800000;background:#fff}
+.sug-row.selected{border-color:#16A34A;background:#f0fdf4}
+.sug-name{font-size:13px;font-weight:800;color:#1a0000}
+.sug-meta{font-size:10px;color:#9c7c78;margin-top:1px}
+.sug-code{font-size:12px;font-weight:900;color:#800000;margin-right:auto}
+.match-score{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(128,0,0,.08);color:#800000;font-weight:800}
+
+/* Buttons */
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn{padding:9px 18px;border-radius:10px;border:none;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:.15s}
+.btn-confirm{background:#16A34A;color:#fff}
+.btn-skip{background:#eae8e4;color:#5a413d}
+.btn-export{background:linear-gradient(135deg,#800000,#570000);color:#fff;padding:11px 24px}
+
+/* Status */
+.status{font-size:12px;font-weight:700;color:#800000;padding:8px 0}
+.empty{text-align:center;padding:32px;color:#bbb;font-size:13px;font-weight:700}
+.spin{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(87,0,0,.2);border-top-color:#800000;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-left:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div><div class="hdr-t">🔗 أداة مطابقة الردود</div><div class="hdr-s">✝ شمامسة ٢٠٢٦ — مطرانية المعادي</div></div>
+  <button class="btn btn-export" onclick="exportExcel()" id="exportBtn" style="display:none">⬇ تصدير Excel المصحّح</button>
+</div>
+
+<div class="wrap">
+
+  <!-- STEP 1: Load DB -->
+  <div class="card" id="step1">
+    <div class="card-head">📊 الخطوة الأولى — تحميل قاعدة البيانات</div>
+    <div class="card-body">
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="font-size:12px;font-weight:800;color:#5a413d;white-space:nowrap">Sheet ID / URL:</div>
+        <input id="dbInp" style="flex:1;background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:10px;padding:9px 12px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;outline:none" value="1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI">
+        <button class="btn btn-confirm" onclick="loadDB()" id="dbBtn">تحميل</button>
+      </div>
+      <div id="dbStatus" class="status" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Upload Excel -->
+  <div class="card" id="step2" style="display:none">
+    <div class="card-head">📂 الخطوة الثانية — رفع ملف الردود (Excel)</div>
+    <div class="card-body">
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" accept=".xlsx,.xls,.csv" onchange="loadExcel(event)">
+        <div class="upload-icon">📊</div>
+        <div class="upload-txt">اسحب الملف هنا أو دوس للاختيار</div>
+        <div class="upload-sub">Excel بتاع الردود مع الأعمدة المطلوبة</div>
+      </div>
+      <div id="excelStatus" class="status" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div id="statsDiv" style="display:none">
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="sTotal" style="color:#5a413d">0</div><div class="stat-l">إجمالي الردود</div></div>
+      <div class="stat"><div class="stat-n" id="sBad" style="color:#dc2626">0</div><div class="stat-l">تحتاج مراجعة</div></div>
+      <div class="stat"><div class="stat-n" id="sWarn" style="color:#d97706">0</div><div class="stat-l">تحذير</div></div>
+      <div class="stat"><div class="stat-n" id="sOk" style="color:#16A34A">0</div><div class="stat-l">تمام</div></div>
+    </div>
+    <div class="fbar">
+      <button class="fbtn on" onclick="setFilter('all',this)">الكل</button>
+      <button class="fbtn" onclick="setFilter('bad',this)">❌ تحتاج مراجعة</button>
+      <button class="fbtn" onclick="setFilter('warn',this)">⚠️ تحذير</button>
+      <button class="fbtn" onclick="setFilter('ok',this)">✅ تمام</button>
+      <input class="fsrch" id="srch" placeholder="🔍 بحث بالاسم أو الكود..." oninput="renderRows()">
+    </div>
+  </div>
+
+  <!-- ROWS -->
+  <div id="rowsDiv"></div>
+
+</div>
+
+<script>
+// ══ STATE ═════════════════════════════════════════════════════
+let DB=[], ROWS=[], curFilter='all';
+// corrections: { rowIndex: { name, code, church, confirmed } }
+let corrections={};
+
+// ══ LOAD DB ═══════════════════════════════════════════════════
+async function loadDB(){
+  const raw=document.getElementById('dbInp').value.trim();
+  const m=raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  const id=m?m[1]:raw;
+  const btn=document.getElementById('dbBtn');
+  btn.textContent='⏳'; btn.disabled=true;
+  showStatus('dbStatus','⏳ جاري تحميل قاعدة البيانات...');
+  try{
+    const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&sheet=Data&_=${Date.now()}`;
+    const res=await fetch(url);
+    const txt=await res.text();
+    const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const cols=json.table.cols.map(c=>c.label||'');
+    const rows=json.table.rows;
+    DB=rows.map(r=>({
+      code: String(r.c[findC(cols,['الكود','code'])]?.v||'').trim(),
+      name: String(r.c[findC(cols,['الاسم الكامل','الاسم','name'])]?.v||'').trim(),
+      church: String(r.c[findC(cols,['الكنيسة','church'])]?.v||'').trim(),
+      level: String(r.c[findC(cols,['المستوى','level'])]?.v||'').trim(),
+      cat: String(r.c[findC(cols,['الفئة','category'])]?.v||'').trim(),
+    })).filter(p=>p.name);
+    showStatus('dbStatus',`✅ تم تحميل ${DB.length} سجل من قاعدة البيانات`,'#16A34A');
+    document.getElementById('step2').style.display='block';
+  }catch(e){
+    showStatus('dbStatus','❌ خطأ: '+e.message);
+  }
+  btn.textContent='تحميل'; btn.disabled=false;
+}
+
+function findC(cols,keys){
+  for(const k of keys){const i=cols.findIndex(c=>c.includes(k));if(i>-1)return i;}
+  return 0;
+}
+
+// ══ LOAD EXCEL ════════════════════════════════════════════════
+function loadExcel(ev){
+  const f=ev.target.files[0]; if(!f)return;
+  const rd=new FileReader();
+  rd.onload=e=>{
+    try{
+      const wb=XLSX.read(e.target.result,{type:'binary'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const data=XLSX.utils.sheet_to_json(ws,{defval:''});
+      ROWS=data.map((r,i)=>({...r,_idx:i}));
+      corrections={};
+      updateStats();
+      renderRows();
+      document.getElementById('statsDiv').style.display='block';
+      document.getElementById('exportBtn').style.display='block';
+      document.getElementById('uploadZone').classList.add('has');
+      document.getElementById('uploadZone').querySelector('.upload-txt').textContent='✅ '+f.name+' ('+ROWS.length+' صف)';
+      showStatus('excelStatus',`✅ تم تحميل ${ROWS.length} صف`,'#16A34A');
+    }catch(e){showStatus('excelStatus','❌ خطأ في قراءة الملف: '+e.message);}
+  };
+  rd.readAsBinaryString(f);
+}
+
+// ══ ROW STATUS ════════════════════════════════════════════════
+function rowStatus(r){
+  const nr=r.needs_review;
+  const cc=r.code_check, nc=r.name_check, chk=r.church_check;
+  if(nr===true||nr==='TRUE'||nr==='true'||nr===1) return 'bad';
+  if(cc===false||cc==='FALSE'||cc==='false'||cc===0) return 'bad';
+  if(nc===false||nc==='FALSE'||nc==='false'||nc===0) return 'warn';
+  if(chk===false||chk==='FALSE'||chk==='false'||chk===0) return 'warn';
+  return 'ok';
+}
+
+function updateStats(){
+  const bad=ROWS.filter(r=>rowStatus(r)==='bad').length;
+  const warn=ROWS.filter(r=>rowStatus(r)==='warn').length;
+  document.getElementById('sTotal').textContent=ROWS.length;
+  document.getElementById('sBad').textContent=bad;
+  document.getElementById('sWarn').textContent=warn;
+  document.getElementById('sOk').textContent=ROWS.length-bad-warn;
+}
+
+// ══ FILTER ════════════════════════════════════════════════════
+function setFilter(f,btn){
+  curFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderRows();
+}
+
+// ══ RENDER ROWS ═══════════════════════════════════════════════
+function renderRows(){
+  const q=norm(document.getElementById('srch').value||'');
+  const div=document.getElementById('rowsDiv');
+  let rows=ROWS;
+  if(curFilter!=='all') rows=rows.filter(r=>rowStatus(r)===curFilter);
+  if(q) rows=rows.filter(r=>norm(String(r.name||'')).includes(q)||String(r.code||'').includes(q)||norm(String(r.church||'')).includes(q));
+
+  if(!rows.length){div.innerHTML='<div class="empty">لا يوجد صفوف</div>';return;}
+
+  div.innerHTML=rows.map(r=>{
+    const st=corrections[r._idx]?'ok':rowStatus(r);
+    const corr=corrections[r._idx];
+    const dispName=corr?corr.name:r.name;
+    const dispCode=corr?corr.code:r.code;
+    const dispChurch=corr?corr.church:r.church;
+    const badgeCls=st==='ok'?'badge-ok':st==='warn'?'badge-warn':'badge-bad';
+    const badgeTxt=corr?'✅ تم التصحيح':st==='ok'?'✅ تمام':st==='warn'?'⚠️ تحقق':'❌ مراجعة';
+    return`<div class="row-card ${st}" id="rc${r._idx}">
+      <div class="row-head" onclick="toggleRow(${r._idx})">
+        <span class="row-badge ${badgeCls}">${badgeTxt}</span>
+        <div style="flex:1">
+          <div class="row-name">${esc(dispName)}</div>
+          <div class="row-meta">كود: ${esc(String(dispCode))} | ${esc(dispChurch)}</div>
+        </div>
+        <div class="row-score">${r.score||'—'}</div>
+        <span style="color:#9c7c78;font-size:13px;margin-right:8px">▾</span>
+      </div>
+      <div class="row-body" id="rb${r._idx}">
+        ${buildRowBody(r)}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildRowBody(r){
+  const corr=corrections[r._idx];
+  const ccOk=r.code_check!==false&&r.code_check!=='FALSE'&&r.code_check!=='false'&&r.code_check!==0;
+  const ncOk=r.name_check!==false&&r.name_check!=='FALSE'&&r.name_check!=='false'&&r.name_check!==0;
+  const chOk=r.church_check!==false&&r.church_check!=='FALSE'&&r.church_check!=='false'&&r.church_check!==0;
+
+  const fields=`
+    <div class="fields-grid">
+      <div class="field-box">
+        <div class="field-lbl">الاسم في الردود</div>
+        <div class="field-val ${ncOk?'ok':'wrong'}">${esc(r.name||'—')}</div>
+      </div>
+      <div class="field-box">
+        <div class="field-lbl">الكود في الردود</div>
+        <div class="field-val ${ccOk?'ok':'wrong'}">${esc(String(r.code||'—'))}</div>
+      </div>
+      <div class="field-box">
+        <div class="field-lbl">الكنيسة في الردود</div>
+        <div class="field-val ${chOk?'ok':'wrong'}">${esc(r.church||'—')}</div>
+      </div>
+      <div class="field-box">
+        <div class="field-lbl">أقرب تطابق في DB</div>
+        <div class="field-val" style="color:#800000">${esc(r.matched_name||r.matched_church||'—')}</div>
+      </div>
+    </div>`;
+
+  // If already corrected
+  if(corr) return fields+`
+    <div style="background:#f0fdf4;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12px;font-weight:700;color:#16A34A">
+      ✅ تم التصحيح → ${esc(corr.name)} | كود: ${esc(String(corr.code))} | ${esc(corr.church)}
+    </div>
+    <div class="btn-row"><button class="btn btn-skip" onclick="undoCorrection(${r._idx})">↩ تراجع</button></div>`;
+
+  return fields+`
+    <div style="font-size:11px;font-weight:800;color:#5a413d;margin-bottom:6px">🔍 ابحث في قاعدة البيانات واختار الشخص الصح:</div>
+    <input class="db-search" id="dbs${r._idx}" placeholder="اكتب اسم أو كود أو كنيسة..." oninput="searchDB(${r._idx},this.value)" value="${esc(r.name||'')}">
+    <div class="suggestions" id="sug${r._idx}"></div>
+    <div class="btn-row">
+      <button class="btn btn-skip" onclick="markOk(${r._idx})">✅ صحيح كما هو</button>
+    </div>`;
+}
+
+function toggleRow(idx){
+  const card=document.getElementById('rc'+idx);
+  const body=document.getElementById('rb'+idx);
+  const open=card.classList.contains('open');
+  card.classList.toggle('open',!open);
+  if(!open){
+    // Trigger search with existing name
+    const inp=document.getElementById('dbs'+idx);
+    if(inp) searchDB(idx,inp.value);
+  }
+}
+
+// ══ DB SEARCH ═════════════════════════════════════════════════
+function searchDB(idx,q){
+  const sug=document.getElementById('sug'+idx);
+  if(!sug)return;
+  if(!q.trim()){sug.innerHTML='';return;}
+  const nq=norm(q);
+  const results=DB.map(p=>({...p,sc:score(nq,p)}))
+    .filter(p=>p.sc>0)
+    .sort((a,b)=>b.sc-a.sc)
+    .slice(0,6);
+  if(!results.length){sug.innerHTML='<div style="text-align:center;color:#bbb;padding:10px;font-size:12px">لا يوجد نتائج</div>';return;}
+  sug.innerHTML=results.map(p=>`
+    <div class="sug-row" onclick="selectMatch(${idx},${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      <div style="flex:1">
+        <div class="sug-name">${esc(p.name)}</div>
+        <div class="sug-meta">${esc(p.church)} ${p.level?'| مستوى '+p.level:''} ${p.cat?'| '+p.cat:''}</div>
+      </div>
+      <div class="sug-code">${esc(p.code)}</div>
+      <div class="match-score">${Math.round(p.sc*100)}%</div>
+    </div>`).join('');
+}
+
+function score(q,p){
+  const n=norm(p.name), c=String(p.code), ch=norm(p.church);
+  let s=0;
+  if(c===q.replace(/\D/g,''))s+=1;
+  if(n===q)s+=1;
+  if(n.includes(q)||q.includes(n))s+=0.8;
+  if(ch.includes(q)||q.includes(ch))s+=0.3;
+  // partial word match
+  const qw=q.split(' ').filter(Boolean);
+  const nw=n.split(' ').filter(Boolean);
+  const common=qw.filter(w=>nw.some(nww=>nww.includes(w)||w.includes(nww)));
+  s+=common.length/Math.max(qw.length,1)*0.6;
+  return Math.min(s,1);
+}
+
+function selectMatch(idx,p){
+  corrections[idx]={name:p.name,code:p.code,church:p.church,confirmed:true};
+  updateStats();
+  // Re-render just this card
+  const card=document.getElementById('rc'+idx);
+  if(card){
+    const row=ROWS.find(r=>r._idx===idx);
+    if(row){
+      const st='ok';
+      card.className='row-card ok';
+      card.querySelector('.row-head .row-badge').className='row-badge badge-ok';
+      card.querySelector('.row-head .row-badge').textContent='✅ تم التصحيح';
+      card.querySelector('.row-name').textContent=p.name;
+      card.querySelector('.row-meta').textContent='كود: '+p.code+' | '+p.church;
+      card.querySelector('.row-body').innerHTML=buildRowBody(row);
+    }
+  }
+}
+
+function markOk(idx){
+  const row=ROWS.find(r=>r._idx===idx);
+  if(!row)return;
+  corrections[idx]={name:row.name,code:row.code,church:row.church,confirmed:true};
+  const card=document.getElementById('rc'+idx);
+  if(card){
+    card.className='row-card ok';
+    card.querySelector('.row-head .row-badge').className='row-badge badge-ok';
+    card.querySelector('.row-head .row-badge').textContent='✅ تمام';
+    card.querySelector('.row-body').innerHTML=buildRowBody(row);
+  }
+  updateStats();
+}
+
+function undoCorrection(idx){
+  delete corrections[idx];
+  const row=ROWS.find(r=>r._idx===idx);
+  if(!row)return;
+  const st=rowStatus(row);
+  const card=document.getElementById('rc'+idx);
+  if(card){
+    card.className='row-card '+st;
+    const badgeCls=st==='ok'?'badge-ok':st==='warn'?'badge-warn':'badge-bad';
+    const badgeTxt=st==='ok'?'✅ تمام':st==='warn'?'⚠️ تحقق':'❌ مراجعة';
+    card.querySelector('.row-head .row-badge').className='row-badge '+badgeCls;
+    card.querySelector('.row-head .row-badge').textContent=badgeTxt;
+    card.querySelector('.row-name').textContent=row.name;
+    card.querySelector('.row-meta').textContent='كود: '+row.code+' | '+row.church;
+    card.querySelector('.row-body').innerHTML=buildRowBody(row);
+  }
+  updateStats();
+}
+
+// ══ EXPORT ════════════════════════════════════════════════════
+function exportExcel(){
+  const data=ROWS.map(r=>{
+    const corr=corrections[r._idx];
+    const out={...r};
+    delete out._idx;
+    if(corr){
+      out.name=corr.name;
+      out.code=corr.code;
+      out.church=corr.church;
+      out.needs_review=false;
+      out.code_check=true;
+      out.name_check=true;
+      out.church_check=true;
+    }
+    return out;
+  });
+  const ws=XLSX.utils.json_to_sheet(data);
+  ws['!views']=[{RTL:true}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Matched');
+  XLSX.writeFile(wb,'ردود_مصحّحة_'+new Date().toISOString().slice(0,10)+'.xlsx');
+}
+
+// ══ HELPERS ═══════════════════════════════════════════════════
+function norm(s){
+  return String(s||'').replace(/[\u064B-\u065F\u0670\u0640]/g,'')
+    .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')
+    .replace(/\s+/g,' ').trim().toLowerCase();
+}
+function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function showStatus(id,msg,color='#800000'){
+  const el=document.getElementById(id);
+  el.style.display='block';el.style.color=color;el.textContent=msg;
+}
+</script>
+</body>
+</html>
