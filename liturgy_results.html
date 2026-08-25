@@ -229,17 +229,17 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 
 <script>
 // ══ CONFIG ════════════════════════════════════════════════════
-const DEFAULT_SHEET_ID='1PB8C2-2a5XfKwMicJs0SxhTdrDMZODKh2n_JYNNKbC4';
+const DEFAULT_SHEET_ID='1YGc5YViSggrXmHLQB-a57cETiW3QqdziFfUqPcTaLWE';
 const LEVELS=[
-  {k:'1-a',label:'المستوى الأول ألفا'},
-  {k:'1-b',label:'المستوى الأول بيتا'},
+  {k:'1a', label:'المستوى الأول ألفا'},
+  {k:'1b', label:'المستوى الأول بيتا'},
   {k:'2',  label:'المستوى الثاني'},
   {k:'3',  label:'المستوى الثالث'},
   {k:'4',  label:'المستوى الرابع'},
 ];
 
 // ══ STATE ══════════════════════════════════════════════════════
-let RAW=[], N=10, curLevel='1-a';
+let RAW=[], N=10, curLevel='1a';
 
 // ══ LEVEL TABS ════════════════════════════════════════════════
 function buildLevelTabs(){
@@ -267,11 +267,10 @@ async function loadLevel(lvl){
   if(st){st.textContent='⏳ جاري تحميل '+lvl+'...';}
   document.getElementById('content').style.display='none';
   // Read from control panel localStorage, fall back to default
-  const raw=localStorage.getItem('ctrl_scores_'+lvl)||DEFAULT_SHEET_ID;
+  const raw=DEFAULT_SHEET_ID; // Single sheet, tabs per level
   const sheetId=extractSheetId(raw);
   try{
-    const sheetTab='Form Responses 1';
-    const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetTab)}&_=${Date.now()}`;
+    const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(lvl)}&_=${Date.now()}`;  // tab = level key
     const res=await fetch(url);
     const txt=await res.text();
     const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
@@ -498,7 +497,7 @@ function showTab(id,btn){
 
 // ══ START ══════════════════════════════════════════════════════
 buildLevelTabs();
-loadLevel('1-a');
+loadLevel('1a');
 </script>
 </body>
 </html>
