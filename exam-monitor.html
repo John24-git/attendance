@@ -382,14 +382,14 @@ function parseRows(rows){
 //   else if(isNew&&Notification?.permission!=='denied') Notification?.requestPermission();
 //   prevCount=allRows.length;
 
-//   buildChurchFilter();
-//   // Auto-filter for supervisors
-//   if(user&&!['admin','super_admin'].includes(user.role)&&user.church){
-//     const sel=document.getElementById('chSel');
-//     if(sel){sel.value=user.church;if(!sel.value){for(let i=0;i<sel.options.length;i++){if(sel.options[i].value.includes(user.church)||user.church.includes(sel.options[i].value)){sel.selectedIndex=i;break;}}}}
-//   }
-//   applyFilter(isNew);
-// }
+  buildChurchFilter();
+  // Auto-filter for supervisors
+  if(user&&!['admin','super_admin'].includes(user.role)&&user.church){
+    const sel=document.getElementById('chSel');
+    if(sel){sel.value=user.church;if(!sel.value){for(let i=0;i<sel.options.length;i++){if(sel.options[i].value.includes(user.church)||user.church.includes(sel.options[i].value)){sel.selectedIndex=i;break;}}}}
+  }
+  applyFilter(isNew);
+}
 
 function findKeyCSV(keys,names){
   for(const n of names){const k=keys.find(kk=>kk.includes(n));if(k)return k;}
