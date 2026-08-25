@@ -376,11 +376,11 @@ function parseRows(rows){
     tsRaw: iTs    ? (r[iTs]    ||'') : '',
   })).filter(r=>r.name||r.code);
 
-//   const isNew=allRows.length>prevCount&&prevCount>0;
-//   if(isNew&&Notification?.permission==='granted')
-//     new Notification('📋 تقديم جديد!',{body:allRows.length-prevCount+' مقدّم جديد في المستوى '+curTab});
-//   else if(isNew&&Notification?.permission!=='denied') Notification?.requestPermission();
-//   prevCount=allRows.length;
+  const isNew=allRows.length>prevCount&&prevCount>0;
+  if(isNew&&Notification?.permission==='granted')
+    new Notification('📋 تقديم جديد!',{body:allRows.length-prevCount+' مقدّم جديد في المستوى '+curTab});
+  else if(isNew&&Notification?.permission!=='denied') Notification?.requestPermission();
+  prevCount=allRows.length;
 
   buildChurchFilter();
   // Auto-filter for supervisors
