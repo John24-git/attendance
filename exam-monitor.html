@@ -339,27 +339,59 @@ function buildTabs(isAdmin){
   if(firstBtn&&!wrap.querySelector('.on')){firstBtn.classList.add('on');curTab=Object.keys(SHEET_TABS)[0];}
 }
 
-// ══ LOAD DATA ═════════════════════════════════════════════════
-async function loadData(){
+// // ══ LOAD DATA ═════════════════════════════════════════════════
+// async function loadData(){
+//   if(!SHEET_ID){hideErr();return;}
+//   hideErr();
+//   try{
+//     const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(curTab)}&_=${Date.now()}`;
+//     const res=await fetch(url);
+//     const txt=await res.text();
+//     const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+//     parseRows(json);
+//     document.getElementById('tcard').style.display='block';
+//   // Refresh summary if open
+//   if(document.getElementById('summaryView').style.display==='block') renderSummary();
+//     document.getElementById('lastUpd').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG');
+//     resetCountdown();
+//   }catch(e){
+//     document.getElementById('errMsg').style.display='block';
+//     document.getElementById('errMsg').textContent='خطأ في التحميل — تأكد إن الشيت مفتوح للعموم واسم التبويب صح: '+e.message;
+//   }
+// }
+// ══ LOAD DATA (CORS-Safe via JSONP) ════════════════════════════
+function loadData(){
   if(!SHEET_ID){hideErr();return;}
   hideErr();
-  try{
-    const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(curTab)}&_=${Date.now()}`;
-    const res=await fetch(url);
-    const txt=await res.text();
-    const json=JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+
+  // إنشاء اسم callback عشوائي لتفادي كاش المتصفح
+  const callbackName = 'gviz_cb_' + Date.now();
+
+  window[callbackName] = function(json) {
     parseRows(json);
     document.getElementById('tcard').style.display='block';
-  // Refresh summary if open
-  if(document.getElementById('summaryView').style.display==='block') renderSummary();
+    if(document.getElementById('summaryView').style.display==='block') renderSummary();
     document.getElementById('lastUpd').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG');
     resetCountdown();
-  }catch(e){
-    document.getElementById('errMsg').style.display='block';
-    document.getElementById('errMsg').textContent='خطأ في التحميل — تأكد إن الشيت مفتوح للعموم واسم التبويب صح: '+e.message;
-  }
-}
+    // تنظيف الـ Script بعد الانتهاء
+    delete window[callbackName];
+    const el = document.getElementById(callbackName);
+    if(el) el.remove();
+  };
 
+  const script = document.createElement('script');
+  script.id = callbackName;
+  script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(curTab)}&_=${Date.now()}`;
+  
+  script.onerror = function() {
+    document.getElementById('errMsg').style.display='block';
+    document.getElementById('errMsg').textContent='خطأ في التحميل — تأكد إن الشيت مفتوح للعموم (Anyone with link) واسم التبويب صح.';
+    delete window[callbackName];
+    script.remove();
+  };
+
+  document.body.appendChild(script);
+}
 function parseRows(json){
   const rows=json.table.rows||[];
   const cols=json.table.cols||[];
