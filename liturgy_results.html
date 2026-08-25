@@ -303,12 +303,12 @@ function parseGviz(json,lvl){
   if(!RAW.length){const _e=document.getElementById('lvlStatus');if(_e)_e.textContent='❌ البيانات فاضية';return;}
 
   const minC=Math.min(...Object.values(groupBy(RAW,'church')).map(a=>a.length));
-  document.getElementById('minCount').textContent=minC;
+  const _mc=document.getElementById('minCount');if(_mc)_mc.textContent=minC;
   const nSlider=document.getElementById('nSlider');
-  nSlider.max=minC;
-  N=Math.min(N,minC);
-  nSlider.value=N;
-  document.getElementById('nVal').textContent=N;
+  if(nSlider){nSlider.max=Math.max(minC,3);
+  N=Math.min(N,Math.max(minC,3));
+  nSlider.value=N;}
+  const _nv=document.getElementById('nVal');if(_nv)_nv.textContent=N;
 
   const _st=document.getElementById('lvlStatus');
   if(_st)_st.textContent=`✅ ${RAW.length} مشارك من ${Object.keys(groupBy(RAW,'church')).length} كنيسة — المستوى ${lvl||curLevel}`;
