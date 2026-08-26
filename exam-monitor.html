@@ -183,13 +183,15 @@ const EXAM_SHEET_ID  = '1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA';
 const USERS_SHEET_ID = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
 const USERS_SHEET    = 'Users';
 const TOKEN_TTL      = 12*60*60*1000;
-const SHEET_TABS = {
-  '1-a':'المستوى الأول ألفا',
-  '1-b':'المستوى الأول بيتا',
-  '2':  'المستوى الثاني',
-  '3':  'المستوى الثالث',
-  '4':  'المستوى الرابع',
-};
+// Ordered array to guarantee RTL tab order
+const SHEET_TABS_ORDER = [
+  ['1-a','المستوى الأول ألفا'],
+  ['1-b','المستوى الأول فيتا'],
+  ['2',  'المستوى الثاني'],
+  ['3',  'المستوى الثالث'],
+  ['4',  'المستوى الرابع'],
+];
+const SHEET_TABS = Object.fromEntries(SHEET_TABS_ORDER);
 
 // ══ STATE ═════════════════════════════════════════════════════
 let user=null, USERS=[], MAINDB={};
@@ -291,7 +293,7 @@ function buildTabs(isAdmin){
   const wrap=document.getElementById('lvlTabs');
   wrap.innerHTML='';
   const userLevels=user.levels?user.levels.split(',').map(l=>l.trim()).filter(Boolean):null;
-  Object.entries(SHEET_TABS).forEach(([k,label])=>{
+  SHEET_TABS_ORDER.forEach(([k,label])=>{
     if(!isAdmin&&userLevels&&!userLevels.includes(k))return;
     const btn=document.createElement('button');
     btn.className='lvl-tab'+(k===curTab?' on':'');
