@@ -289,7 +289,7 @@ function afterLogin(){
           || DEFAULT_SHEET_ID;
 
   // Admin: show Sheet ID config
-  if(isAdmin){
+  if(false&&isAdmin){
     document.getElementById('cfgCard').style.display='block';
     document.getElementById('sheetIdInp').value=SHEET_ID;
     document.getElementById('viewTabs').style.display='flex';
@@ -329,8 +329,13 @@ function buildTabs(isAdmin){
       curTab=k;
       document.querySelectorAll('.lvl-tab').forEach(b=>b.classList.remove('on'));
       btn.classList.add('on');
-      const savedId=localStorage.getItem('exam_monitor_sheet_'+k)||localStorage.getItem('exam_monitor_sheet');
+      // Always use hardcoded sheet, just change tab
+      SHEET_ID=EXAM_SHEET_ID;
+      const savedId=EXAM_SHEET_ID;
       if(savedId){SHEET_ID=savedId;const inp=document.getElementById('sheetIdInp');if(inp)inp.value=savedId;}
+      allRows=[];prevCount=0;filtered=[];
+      document.getElementById('tbody').innerHTML='';
+      document.getElementById('tcard').style.display='none';
       loadData();
     };
     wrap.appendChild(btn);
@@ -348,7 +353,7 @@ async function loadData(){
   if(!SHEET_ID){hideErr();return;}
   hideErr();
   try{
-    const rows=await readCSV(SHEET_ID,curTab);
+    const rows=await readCSV(EXAM_SHEET_ID,curTab);
     parseRows(rows);
     document.getElementById('tcard').style.display='block';
     // Refresh summary if open
@@ -377,9 +382,6 @@ function parseRows(rows){
   })).filter(r=>r.name||r.code);
 
   const isNew=allRows.length>prevCount&&prevCount>0;
-  if(isNew&&Notification?.permission==='granted')
-    new Notification('📋 تقديم جديد!',{body:allRows.length-prevCount+' مقدّم جديد في المستوى '+curTab});
-  else if(isNew&&Notification?.permission!=='denied') Notification?.requestPermission();
   prevCount=allRows.length;
 
   buildChurchFilter();
