@@ -140,7 +140,7 @@ body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction
 <!-- KPIs -->
 <div class="kpis" id="kpis" style="display:none">
   <div class="kpi"><div class="kpi-n" id="kTotal" style="color:#800000">—</div><div class="kpi-l">إجمالي المقدّمين</div></div>
-  <div class="kpi"><div class="kpi-n" id="kChurches" style="color:#c9a227">—</div><div class="kpi-l">عدد الكنائس</div></div>
+  <div class="kpi"><div class="kpi-n" id="kChurches" style="color:#c9a227">—</div><div class="kpi-l" id="kChurchesLbl">عدد الكنائس</div></div>
   <div class="kpi"><div class="kpi-n" id="kLast" style="color:#16A34A">—</div><div class="kpi-l">آخر تقديم</div></div>
 </div>
 
@@ -281,6 +281,7 @@ function afterLogin(){
   // Supervisor: hide church filter (auto-filtered)
   if(!isAdmin&&user.church){
     document.getElementById('chSel').style.display='none';
+    const _lbl=document.getElementById('kChurchesLbl');if(_lbl)_lbl.textContent='الكنيسة';
   }
 
   buildTabs(isAdmin);
@@ -384,9 +385,15 @@ function applyFilter(markNew=false){
 }
 
 function updateKPIs(){
-  document.getElementById('kTotal').textContent=allRows.length;
-  document.getElementById('kChurches').textContent=new Set(allRows.map(r=>r.church).filter(Boolean)).size;
-  const last=allRows.length?fmtTime(allRows[allRows.length-1].ts):'—';
+  const isAdmin=['admin','super_admin'].includes(user?.role||'');
+  const data=isAdmin?allRows:filtered;
+  document.getElementById('kTotal').textContent=data.length;
+  if(isAdmin){
+    document.getElementById('kChurches').textContent=new Set(allRows.map(r=>r.church).filter(Boolean)).size;
+  }else{
+    document.getElementById('kChurches').textContent=(user?.church||'').replace(/كنيسة\s*/,'').slice(0,12)||'—';
+  }
+  const last=data.length?fmtTime(data[data.length-1].ts):'—';
   document.getElementById('kLast').textContent=last;
 }
 
