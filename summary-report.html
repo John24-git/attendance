@@ -88,6 +88,25 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 16px;height:
     <div class="lvl-lbl">اختر المستوى</div>
     <div class="lvl-tabs" id="lvlTabs"></div>
     <div class="lvl-status" id="lvlStatus"></div>
+  <!-- Group filter -->
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid rgba(128,0,0,.08)">
+    <span style="font-size:10px;font-weight:800;color:#5a413d;align-self:center">المجموعة:</span>
+    <button class="lvl-btn on" id="grp-all" onclick="setGroup('all',this)" style="font-size:11px;padding:5px 12px">كل المجموعات</button>
+    <button class="lvl-btn" id="grp-alfa" onclick="setGroup('ألفا',this)" style="font-size:11px;padding:5px 12px;background:rgba(128,0,0,.08);color:#800000">● ألفا</button>
+    <button class="lvl-btn" id="grp-vita" onclick="setGroup('فيتا',this)" style="font-size:11px;padding:5px 12px;background:rgba(26,86,219,.08);color:#1E40AF">● فيتا</button>
+    <button class="lvl-btn" id="grp-gamma" onclick="setGroup('غاما',this)" style="font-size:11px;padding:5px 12px;background:rgba(21,128,61,.08);color:#166534">● غاما</button>
+  </div>
+</div>
+
+  <!-- Group filter -->
+  <div id="grpFilter" style="display:none;background:#fff;border-radius:14px;padding:10px 14px;margin-bottom:12px;border:1px solid rgba(128,0,0,.08);box-shadow:0 2px 8px rgba(128,0,0,.04)">
+    <div style="font-size:10px;font-weight:800;color:#5a413d;margin-bottom:7px;letter-spacing:.08em">فلتر المجموعة</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="lvl-btn on" id="gf-all" onclick="setGrpFilter('all',this)">كل المجموعات</button>
+      <button class="lvl-btn" id="gf-alfa" onclick="setGrpFilter('ألفا',this)" style="background:rgba(128,0,0,.08);color:#800000">🔴 ألفا</button>
+      <button class="lvl-btn" id="gf-vita" onclick="setGrpFilter('فيتا',this)" style="background:rgba(26,86,219,.08);color:#1E40AF">🔵 فيتا</button>
+      <button class="lvl-btn" id="gf-gamma" onclick="setGrpFilter('غاما',this)" style="background:rgba(21,128,61,.08);color:#166534">🟢 غاما</button>
+    </div>
   </div>
 
   <!-- Print header (visible only in print) -->
@@ -116,6 +135,7 @@ header{background:linear-gradient(135deg,#800000,#570000);padding:0 16px;height:
           <tr>
             <th>#</th>
             <th>الكنيسة</th>
+            <th class="c">المجموعة</th>
             <th class="c">إجمالي</th>
             <th class="c" style="color:#90c8ff">👨 شماس</th>
             <th class="c" style="color:#ffb3c1">👩 شماسة</th>
@@ -144,13 +164,23 @@ const SHEET_TABS_ORDER=[
 const SHEET_TABS=Object.fromEntries(SHEET_TABS_ORDER);
 
 // ══ STATE ═════════════════════════════════════════════════════
-let curTab='1-a', allRows=[], MAINDB={}, summaryData=[];
+let curTab='1-a', curGroup='all', allRows=[], MAINDB={}, summaryData=[];
 
 // ══ INIT ══════════════════════════════════════════════════════
 (function(){
   buildLevelTabs();
   loadMainDB().then(()=>loadData());
 })();
+
+function setGrpFilter(g,btn){
+  curGrpFilter=g;
+  document.querySelectorAll('#grpFilter .lvl-btn').forEach(b=>{
+    b.classList.remove('on');
+    b.style.fontWeight='800';
+  });
+  if(btn){btn.classList.add('on');}
+  renderSummary();
+}
 
 function buildLevelTabs(){
   const bar=document.getElementById('lvlTabs');
@@ -218,7 +248,7 @@ function buildSummary(){
   const byChurch={};
   allRows.forEach(r=>{
     const ch=r.church;
-    if(!byChurch[ch])byChurch[ch]={total:0,male:0,female:0,unk:0};
+    if(!byChurch[ch])byChurch[ch]={total:0,male:0,female:0,unk:0,group:getChurchGroup(ch)};
     byChurch[ch].total++;
     const g=(MAINDB[r.code]?.gender||'').toLowerCase();
     if(/ذكر|male|^m$/.test(g))byChurch[ch].male++;
@@ -226,10 +256,14 @@ function buildSummary(){
     else byChurch[ch].unk++;
   });
 
-  summaryData=Object.entries(byChurch)
+  let entries=Object.entries(byChurch)
     .sort((a,b)=>a[0].localeCompare(b[0],'ar'))
     .map(([ch,s])=>({church:ch,...s}));
 
+  if(curGroup!=='all')
+    entries=entries.filter(s=>s.group===curGroup);
+
+  summaryData=entries;
   renderSummary();
 }
 
@@ -261,10 +295,12 @@ function renderSummary(){
   document.getElementById('tBadge').textContent=now;
 
   // Table body
+  const grpClr={'ألفا':'#800000','فيتا':'#1E40AF','غاما':'#166534'};
   document.getElementById('tbody').innerHTML=summaryData.map((s,i)=>`
     <tr>
       <td class="c" style="color:#9c7c78;font-size:11px">${i+1}</td>
       <td style="font-weight:800">${esc(s.church)}</td>
+      <td class="c"><span style="font-size:10px;font-weight:900;color:${grpClr[s.group]||'#9c7c78'};background:${s.group!=='—'?'rgba(0,0,0,.05)':'transparent'};padding:2px 8px;border-radius:10px">${s.group||'—'}</span></td>
       <td class="c" style="font-weight:900;color:#800000;font-size:14px">${s.total}</td>
       <td class="c" style="font-weight:800;color:#1A56DB">${s.male}</td>
       <td class="c" style="font-weight:800;color:#E11D48">${s.female}</td>
@@ -300,14 +336,14 @@ function exportExcel(){
     ['كشف أعداد المشاركين في امتحان الطقس'],
     [lvlLabel+' — '+new Date().toLocaleDateString('ar-EG')+' — مطرانية المعادي الأرثوذكسية'],
     [],
-    ['#','الكنيسة','إجمالي','شماس (ذكور)','شماسة (إناث)','غير محدد'],
-    ...summaryData.map((s,i)=>[i+1,s.church,s.total,s.male,s.female,s.unk||0]),
+    ['#','الكنيسة','المجموعة','إجمالي','شماس (ذكور)','شماسة (إناث)','غير محدد'],
+    ...summaryData.map((s,i)=>[i+1,s.church,s.group||'—',s.total,s.male,s.female,s.unk||0]),
     [],
     ['','الإجمالي',total,male,female,summaryData.reduce((a,s)=>a+s.unk,0)],
   ];
 
   const ws=XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols']=[{wch:5},{wch:38},{wch:10},{wch:14},{wch:14},{wch:10}];
+  ws['!cols']=[{wch:5},{wch:35},{wch:10},{wch:10},{wch:14},{wch:14},{wch:10}];
   ws['!views']=[{RTL:true}];
 
   const wb=XLSX.utils.book_new();
@@ -337,6 +373,44 @@ async function readCSV(id,sheet){
     const vals=parse(line);
     return Object.fromEntries(headers.map((h,i)=>[h,vals[i]||'']));
   });
+}
+
+function norm(s){return String(s||'').replace(/[ً-ٰٟـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,' ').trim().toLowerCase();}
+function getGroups(){
+  const parse=k=>(localStorage.getItem(k)||'').split('\n').map(l=>l.trim()).filter(Boolean);
+  return{'ألفا':parse('ctrl_grp_alfa'),'فيتا':parse('ctrl_grp_vita'),'غاما':parse('ctrl_grp_gamma')};
+}
+function getChurchGroup(church){
+  const n=norm(church);
+  const groups=getGroups();
+  for(const [g,chs] of Object.entries(groups)){
+    if(chs.some(ch=>{const cn=norm(ch);return cn===n||n.includes(cn.slice(4))||cn.includes(n.slice(4));})) return g;
+  }
+  return '—';
+}
+function setGroup(g,btn){
+  curGroup=g;
+  document.querySelectorAll('[id^="grp-"]').forEach(b=>{
+    b.classList.remove('on');
+    b.style.fontWeight='800';
+  });
+  btn.classList.add('on');
+  buildSummary();
+}
+
+// ══ GROUPS ════════════════════════════════════════════════════
+function getGroups(){
+  const parse=k=>(localStorage.getItem(k)||'').split('\n').map(l=>l.trim()).filter(Boolean);
+  return{'ألفا':parse('ctrl_grp_alfa'),'فيتا':parse('ctrl_grp_vita'),'غاما':parse('ctrl_grp_gamma')};
+}
+function norm(s){return String(s||'').replace(/[ً-ٰٟـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,' ').trim().toLowerCase();}
+function getChurchGroup(church){
+  const n=norm(church);
+  const groups=getGroups();
+  for(const [g,chs] of Object.entries(groups)){
+    if(chs.some(ch=>{const cn=norm(ch);return cn===n||n.includes(cn.slice(4))||cn.includes(n.slice(4));})) return g;
+  }
+  return null;
 }
 
 function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
