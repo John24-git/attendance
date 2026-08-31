@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#800000">
+<title>ملخص أعداد المشاركين — شمامسة ٢٠٢٦</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Literata:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction:rtl;min-height:100vh;padding-bottom:32px}
+header{background:linear-gradient(135deg,#800000,#570000);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;box-shadow:0 2px 12px rgba(128,0,0,.2)}
+.h-title{font-family:'Literata',serif;font-size:17px;color:#fed65b;font-weight:700}
+.hdr-btns{display:flex;gap:8px}
+.h-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);padding:6px 14px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:.15s}
+.h-btn:hover{background:rgba(255,255,255,.2)}
+.h-btn.green{background:#16A34A;border-color:#16A34A}
+.h-btn.red{background:#DC2626;border-color:#DC2626}
+.wrap{max-width:700px;margin:0 auto;padding:14px}
+
+/* Level tabs */
+.lvl-card{background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:12px;border:1px solid rgba(128,0,0,.08);box-shadow:0 2px 8px rgba(128,0,0,.04)}
+.lvl-lbl{font-size:10px;font-weight:800;color:#5a413d;letter-spacing:.08em;margin-bottom:8px}
+.lvl-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.lvl-btn{padding:7px 14px;border-radius:18px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:800;border:none;cursor:pointer;background:#eae8e4;color:#5a413d;transition:.15s;white-space:nowrap}
+.lvl-btn.on{background:#800000;color:#fff}
+.lvl-status{font-size:12px;font-weight:700;color:#800000;margin-top:8px;min-height:16px}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.kpi{background:#fff;border-radius:12px;padding:12px;text-align:center;border:1px solid rgba(128,0,0,.08);box-shadow:0 2px 6px rgba(128,0,0,.04)}
+.kpi-n{font-size:26px;font-weight:900}
+.kpi-l{font-size:9px;font-weight:800;color:#9c7c78;margin-top:2px}
+
+/* Table */
+.tcard{background:#fff;border-radius:14px;border:1px solid rgba(128,0,0,.08);box-shadow:0 2px 10px rgba(128,0,0,.05);overflow:hidden}
+.tcard-head{background:linear-gradient(135deg,#800000,#570000);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.tcard-title{color:#fff;font-size:13px;font-weight:900}
+.tcard-badge{background:rgba(255,255,255,.15);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{background:#5a0000;color:#fff;padding:9px 12px;text-align:right;font-weight:900;font-size:11px}
+.tbl th.c{text-align:center}
+.tbl td{padding:8px 12px;border-bottom:.5px solid #f0e8e0;font-weight:600;vertical-align:middle}
+.tbl td.c{text-align:center}
+.tbl tbody tr:nth-child(even) td{background:#faf8f5}
+.tbl tbody tr:hover td{background:rgba(128,0,0,.03)}
+.tbl tfoot td{background:#f5f3ef;font-weight:900;border-top:2px solid #e2bfb9}
+
+/* Utils */
+.empty{text-align:center;padding:32px;color:#bbb;font-size:13px;font-weight:700}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(87,0,0,.2);border-top-color:#800000;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-left:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* Print */
+@media print{
+  header,.lvl-card,.hdr-btns{display:none!important}
+  body{background:#fff;padding:0}
+  .wrap{max-width:100%;padding:0}
+  .kpis{margin-bottom:10px}
+  .tbl th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tbl tbody tr:nth-child(even) td{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#faf5ef!important}
+  .tbl tfoot td{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#f5f3ef!important}
+  .print-header{display:block!important}
+  @page{size:A4;margin:12mm}
+}
+.print-header{display:none;text-align:center;margin-bottom:12px}
+.print-header h1{font-size:16pt;color:#800000;font-weight:900}
+.print-header h2{font-size:10pt;color:#888;font-weight:400;margin-top:4px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-title">📊 ملخص أعداد المشاركين</div>
+  <div class="hdr-btns">
+    <button class="h-btn" onclick="loadData()">🔄 تحديث</button>
+    <button class="h-btn green" id="xlsBtn" onclick="exportExcel()" style="display:none">⬇ Excel</button>
+    <button class="h-btn red" id="pdfBtn" onclick="window.print()" style="display:none">📄 PDF</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- Level selector -->
+  <div class="lvl-card">
+    <div class="lvl-lbl">اختر المستوى</div>
+    <div class="lvl-tabs" id="lvlTabs"></div>
+    <div class="lvl-status" id="lvlStatus"></div>
+  </div>
+
+  <!-- Print header (visible only in print) -->
+  <div class="print-header" id="printHeader">
+    <h1>✝ كشف أعداد المشاركين في امتحان الطقس ✝</h1>
+    <h2 id="printSub">مطرانية المعادي الأرثوذكسية</h2>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpis" id="kpis" style="display:none">
+    <div class="kpi"><div class="kpi-n" id="kTotal" style="color:#800000">—</div><div class="kpi-l">إجمالي المشاركين</div></div>
+    <div class="kpi"><div class="kpi-n" id="kMale" style="color:#1A56DB">—</div><div class="kpi-l">👨 شماس</div></div>
+    <div class="kpi"><div class="kpi-n" id="kFemale" style="color:#E11D48">—</div><div class="kpi-l">👩 شماسة</div></div>
+    <div class="kpi"><div class="kpi-n" id="kChurches" style="color:#166534">—</div><div class="kpi-l">عدد الكنائس</div></div>
+  </div>
+
+  <!-- Table -->
+  <div class="tcard" id="tcard" style="display:none">
+    <div class="tcard-head">
+      <div class="tcard-title" id="tTitle">كشف الكنائس</div>
+      <div class="tcard-badge" id="tBadge">—</div>
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>الكنيسة</th>
+            <th class="c">إجمالي</th>
+            <th class="c" style="color:#90c8ff">👨 شماس</th>
+            <th class="c" style="color:#ffb3c1">👩 شماسة</th>
+            <th class="c">غير محدد</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+        <tfoot id="tfoot"></tfoot>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════════════
+const EXAM_SHEET_ID  = '1rzs48jlN1qzrFiQhn-2Ss3ua23HrwBj6tQVA7Axo7hA';
+const USERS_SHEET_ID = '1ZHQcf9XSYx5C2TxXjfmxbNqbsnwe6KC8J-MsLnsUbvI';
+const SHEET_TABS_ORDER=[
+  ['1-a','المستوى الأول ألفا'],
+  ['1-b','المستوى الأول بيتا'],
+  ['2',  'المستوى الثاني'],
+  ['3',  'المستوى الثالث'],
+  ['4',  'المستوى الرابع'],
+];
+const SHEET_TABS=Object.fromEntries(SHEET_TABS_ORDER);
+
+// ══ STATE ═════════════════════════════════════════════════════
+let curTab='1-a', allRows=[], MAINDB={}, summaryData=[];
+
+// ══ INIT ══════════════════════════════════════════════════════
+(function(){
+  buildLevelTabs();
+  loadMainDB().then(()=>loadData());
+})();
+
+function buildLevelTabs(){
+  const bar=document.getElementById('lvlTabs');
+  bar.innerHTML='';
+  SHEET_TABS_ORDER.forEach(([k,label])=>{
+    const btn=document.createElement('button');
+    btn.className='lvl-btn'+(k===curTab?' on':'');
+    btn.textContent=label;
+    btn.onclick=()=>{
+      curTab=k;
+      buildLevelTabs();
+      loadData();
+    };
+    bar.appendChild(btn);
+  });
+}
+
+// ══ LOAD MAIN DB (gender info) ════════════════════════════════
+async function loadMainDB(){
+  try{
+    const rows=await readCSV(USERS_SHEET_ID,'Data');
+    rows.forEach(r=>{
+      const code=String(r['الكود']||r.code||'').trim();
+      if(code)MAINDB[code]={
+        gender:String(r['النوع']||r.gender||'').trim(),
+        name:  String(r['الاسم الكامل']||r['الاسم']||r.name||'').trim(),
+        church:String(r['الكنيسة']||r.church||'').trim(),
+      };
+    });
+  }catch(e){console.warn('MainDB:',e);}
+}
+
+// ══ LOAD DATA ═════════════════════════════════════════════════
+async function loadData(){
+  const st=document.getElementById('lvlStatus');
+  st.innerHTML='<div class="spin"></div> جاري التحميل...';
+  document.getElementById('kpis').style.display='none';
+  document.getElementById('tcard').style.display='none';
+  document.getElementById('xlsBtn').style.display='none';
+  document.getElementById('pdfBtn').style.display='none';
+  try{
+    const rows=await readCSV(EXAM_SHEET_ID,curTab);
+    parseRows(rows);
+  }catch(e){
+    st.textContent='❌ خطأ: '+e.message+' — تأكد إن الشيت مفتوح للعموم';
+  }
+}
+
+function parseRows(rows){
+  if(!rows.length){document.getElementById('lvlStatus').textContent='❌ لا يوجد بيانات';return;}
+  const keys=Object.keys(rows[0]);
+  const fk=names=>keys.find(k=>names.some(n=>k.includes(n)))||null;
+  const iChurch=fk(['الكنيسة','church','كنيسة']);
+  const iCode=fk(['الكود','code','كود']);
+
+  allRows=rows.map(r=>({
+    church:iChurch?String(r[iChurch]||'').trim():'—',
+    code:  iCode  ?String(r[iCode]  ||'').trim():'—',
+  })).filter(r=>r.church&&r.church!=='—');
+
+  buildSummary();
+}
+
+function buildSummary(){
+  const byChurch={};
+  allRows.forEach(r=>{
+    const ch=r.church;
+    if(!byChurch[ch])byChurch[ch]={total:0,male:0,female:0,unk:0};
+    byChurch[ch].total++;
+    const g=(MAINDB[r.code]?.gender||'').toLowerCase();
+    if(/ذكر|male|^m$/.test(g))byChurch[ch].male++;
+    else if(/أنث|female|^f$/.test(g))byChurch[ch].female++;
+    else byChurch[ch].unk++;
+  });
+
+  summaryData=Object.entries(byChurch)
+    .sort((a,b)=>a[0].localeCompare(b[0],'ar'))
+    .map(([ch,s])=>({church:ch,...s}));
+
+  renderSummary();
+}
+
+function renderSummary(){
+  const lvlLabel=SHEET_TABS[curTab]||curTab;
+  const total =summaryData.reduce((a,s)=>a+s.total,0);
+  const male  =summaryData.reduce((a,s)=>a+s.male,0);
+  const female=summaryData.reduce((a,s)=>a+s.female,0);
+  const now=new Date().toLocaleDateString('ar-EG');
+
+  // Status
+  document.getElementById('lvlStatus').textContent=
+    `✅ ${total} مشارك — ${summaryData.length} كنيسة — ${lvlLabel}`;
+
+  // Print header
+  document.getElementById('printHeader').style.display='block';
+  document.getElementById('printSub').textContent=
+    lvlLabel+' — '+now+' — مطرانية المعادي الأرثوذكسية';
+
+  // KPIs
+  document.getElementById('kTotal').textContent=total;
+  document.getElementById('kMale').textContent=male;
+  document.getElementById('kFemale').textContent=female;
+  document.getElementById('kChurches').textContent=summaryData.length;
+  document.getElementById('kpis').style.display='grid';
+
+  // Title
+  document.getElementById('tTitle').textContent='كشف الكنائس — '+lvlLabel;
+  document.getElementById('tBadge').textContent=now;
+
+  // Table body
+  document.getElementById('tbody').innerHTML=summaryData.map((s,i)=>`
+    <tr>
+      <td class="c" style="color:#9c7c78;font-size:11px">${i+1}</td>
+      <td style="font-weight:800">${esc(s.church)}</td>
+      <td class="c" style="font-weight:900;color:#800000;font-size:14px">${s.total}</td>
+      <td class="c" style="font-weight:800;color:#1A56DB">${s.male}</td>
+      <td class="c" style="font-weight:800;color:#E11D48">${s.female}</td>
+      <td class="c" style="color:#9c7c78">${s.unk||'—'}</td>
+    </tr>`).join('');
+
+  // Table footer
+  document.getElementById('tfoot').innerHTML=`
+    <tr>
+      <td></td>
+      <td style="font-weight:900;color:#5a0000">الإجمالي</td>
+      <td class="c" style="font-weight:900;color:#800000;font-size:15px">${total}</td>
+      <td class="c" style="font-weight:900;color:#1A56DB">${male}</td>
+      <td class="c" style="font-weight:900;color:#E11D48">${female}</td>
+      <td class="c" style="color:#9c7c78">${summaryData.reduce((a,s)=>a+s.unk,0)||'—'}</td>
+    </tr>`;
+
+  // Show table + export buttons
+  document.getElementById('tcard').style.display='block';
+  document.getElementById('xlsBtn').style.display='block';
+  document.getElementById('pdfBtn').style.display='block';
+}
+
+// ══ EXPORT EXCEL ══════════════════════════════════════════════
+function exportExcel(){
+  if(!summaryData.length)return;
+  const lvlLabel=SHEET_TABS[curTab]||curTab;
+  const total =summaryData.reduce((a,s)=>a+s.total,0);
+  const male  =summaryData.reduce((a,s)=>a+s.male,0);
+  const female=summaryData.reduce((a,s)=>a+s.female,0);
+
+  const rows=[
+    ['كشف أعداد المشاركين في امتحان الطقس'],
+    [lvlLabel+' — '+new Date().toLocaleDateString('ar-EG')+' — مطرانية المعادي الأرثوذكسية'],
+    [],
+    ['#','الكنيسة','إجمالي','شماس (ذكور)','شماسة (إناث)','غير محدد'],
+    ...summaryData.map((s,i)=>[i+1,s.church,s.total,s.male,s.female,s.unk||0]),
+    [],
+    ['','الإجمالي',total,male,female,summaryData.reduce((a,s)=>a+s.unk,0)],
+  ];
+
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[{wch:5},{wch:38},{wch:10},{wch:14},{wch:14},{wch:10}];
+  ws['!views']=[{RTL:true}];
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,lvlLabel.slice(0,31));
+  XLSX.writeFile(wb,'ملخص_مشاركي_الطقس_'+curTab+'_'+new Date().toLocaleDateString('ar-EG').replace(/\//g,'-')+'.xlsx');
+}
+
+// ══ CSV READER ════════════════════════════════════════════════
+async function readCSV(id,sheet){
+  const url=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}&_=${Date.now()}`;
+  const r=await fetch(url);
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const text=await r.text();
+  const lines=text.trim().split('\n').filter(l=>l.trim());
+  if(lines.length<2)return[];
+  const parse=row=>{const res=[];let cur='',inQ=false;
+    for(let i=0;i<row.length;i++){
+      if(row[i]==='"'&&!inQ)inQ=true;
+      else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}
+      else if(row[i]==='"'&&inQ)inQ=false;
+      else if(row[i]===','&&!inQ){res.push(cur.trim());cur='';}
+      else cur+=row[i];
+    }res.push(cur.trim());return res;
+  };
+  const headers=parse(lines[0]);
+  return lines.slice(1).map(line=>{
+    const vals=parse(line);
+    return Object.fromEntries(headers.map((h,i)=>[h,vals[i]||'']));
+  });
+}
+
+function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+</script>
+</body>
+</html>
