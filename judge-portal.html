@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#800000">
+<title>بوابة المحكمين — شمامسة ٢٠٢٦</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&family=Literata:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Tajawal',sans-serif;background:#f5f0ea;color:#1a0000;direction:rtl;min-height:100vh;padding-bottom:40px}
+
+/* Header */
+header{background:linear-gradient(135deg,#800000,#570000);padding:0 16px;height:56px;display:flex;align-items:center;position:sticky;top:0;z-index:40;box-shadow:0 2px 12px rgba(128,0,0,.2)}
+.h-title{font-family:'Literata',serif;font-size:17px;color:#fed65b;font-weight:700}
+
+/* Wrap */
+.wrap{max-width:560px;margin:0 auto;padding:16px 14px}
+
+/* Step card */
+.step{background:#fff;border-radius:16px;padding:18px;margin-bottom:14px;border:1px solid rgba(128,0,0,.08);box-shadow:0 2px 10px rgba(128,0,0,.06);display:none}
+.step.active{display:block}
+.step-lbl{font-size:10px;font-weight:800;color:#9c7c78;letter-spacing:.1em;margin-bottom:12px}
+.step-title{font-size:16px;font-weight:900;color:#5a0000;margin-bottom:16px}
+
+/* Select */
+.sel{width:100%;background:#f5f3ef;border:1.5px solid #e2bfb9;border-radius:12px;padding:13px 14px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;color:#1a0000;outline:none;transition:.15s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23800000' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center;background-size:10px}
+.sel:focus{border-color:#800000;background-color:#fff}
+
+/* Btn */
+.btn{width:100%;background:linear-gradient(135deg,#800000,#570000);color:#fff;border:none;border-radius:14px;padding:14px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(128,0,0,.2);transition:.15s}
+.btn:active{transform:scale(.98)}
+.btn.outline{background:transparent;border:1.5px solid rgba(128,0,0,.25);color:#800000;box-shadow:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Assignment cards */
+.assign-card{background:#f9f5f0;border-radius:12px;padding:14px;margin-bottom:10px;border:1.5px solid rgba(128,0,0,.1);cursor:pointer;transition:.15s}
+.assign-card:hover,.assign-card.on{border-color:#800000;background:#fff8f5}
+.assign-card.on{box-shadow:0 0 0 3px rgba(128,0,0,.12)}
+.assign-lvl{font-size:14px;font-weight:900;color:#5a0000}
+.assign-grp{font-size:11px;font-weight:700;color:#9c7c78;margin-top:3px}
+
+/* Church cards */
+.church-card{background:#fff;border-radius:14px;border:1.5px solid rgba(128,0,0,.1);margin-bottom:10px;overflow:hidden;transition:.15s}
+.church-head{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.church-name{font-size:14px;font-weight:900;color:#1a0000;flex:1}
+.church-counts{display:flex;gap:10px;align-items:center}
+.count-box{text-align:center;background:#f5f3ef;border-radius:8px;padding:6px 10px;min-width:50px}
+.count-n{font-size:18px;font-weight:900}
+.count-l{font-size:9px;color:#9c7c78;font-weight:700;margin-top:1px}
+.church-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#800000,#570000);color:#fff;padding:12px 16px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;border:none;width:100%;transition:.15s}
+.church-btn:active{opacity:.85}
+.church-btn.done{background:#16A34A}
+
+/* Back btn */
+.back{display:flex;align-items:center;gap:6px;color:#800000;font-size:12px;font-weight:800;cursor:pointer;margin-bottom:14px;width:fit-content}
+
+/* Utils */
+.spin{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(87,0,0,.2);border-top-color:#800000;border-radius:50%;animation:sp .7s linear infinite}
+.spin-w{border-color:rgba(255,255,255,.3);border-top-color:#fff}
+@keyframes sp{to{transform:rotate(360deg)}}
+.err{background:#fff5f5;border:1px solid #fca5a5;color:#ba1a1a;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:700;margin-top:10px;display:none}
+.tag{display:inline-block;font-size:10px;font-weight:900;padding:3px 10px;border-radius:10px;background:rgba(128,0,0,.1);color:#800000}
+</style>
+</head>
+<body>
+<header>
+  <div class="h-title">⚖️ بوابة المحكمين — شمامسة ٢٠٢٦</div>
+</header>
+
+<div class="wrap">
+
+  <!-- STEP 1: اختار اسمك -->
+  <div class="step active" id="s1">
+    <div class="step-lbl">الخطوة الأولى</div>
+    <div class="step-title">👋 اختار اسمك</div>
+    <select class="sel" id="judgeSelect">
+      <option value="">جاري التحميل...</option>
+    </select>
+    <div class="err" id="s1err"></div>
+    <button class="btn" id="s1btn" onclick="goStep2()" disabled>التالي ←</button>
+  </div>
+
+  <!-- STEP 2: اختار المستوى -->
+  <div class="step" id="s2">
+    <div class="back" onclick="goBack(1)">→ رجوع</div>
+    <div class="step-lbl">الخطوة الثانية</div>
+    <div class="step-title" id="s2title">مهام التحكيم</div>
+    <div id="assignList"></div>
+  </div>
+
+  <!-- STEP 3: الكنائس -->
+  <div class="step" id="s3">
+    <div class="back" onclick="goBack(2)">→ رجوع</div>
+    <div class="step-lbl">الخطوة الثالثة</div>
+    <div class="step-title" id="s3title">كنائس المجموعة</div>
+    <div id="churchList"></div>
+  </div>
+
+</div>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════════════
+const JUDGES_ID   = '1TBe94GqmhU3TsRH6CULZLhr7BkK683HOt_eqC-g0nhQ';
+const JUDGES_TAB  = 'judges-26';
+const PARTS_ID    = '1WKlZ_cET76bCI_ZaGeWWtZ1h8N_BYT1rwhPD_QzO5us';
+// Hymn forms per level
+const HYMN_FORMS = {
+  'اول الفا':  '1FAIpQLSfKRO-fa__gVkc6Y3N2-VMEWCXUKrZ2KvHezaVgteW2hYDjIQ',
+  'اول فيتا':  '1FAIpQLSc7qxKEj3yVKgAKZWCo6TXvoa_SE6ofurP70LL4aiJIL6YelA',
+  'الثاني':   '1FAIpQLSfDg8uniWEVcCZBSZDO0z6f7LVuq9bPCVp2ZmgbbdD337qNmg',
+  'الثالث':   '1FAIpQLSeLFeN0tspQv1TD47hs1u74fH4pD03OpkEY9oFGm_bHZvenrg',
+  'الرابع':   '1FAIpQLSe3qUlAWIIANqvwx6StZw-FdTIV63_ICslVClvsVF3MfiE-zQ',
+  'الخامس':   '1FAIpQLSfDg8uniWEVcCZBSZDO0z6f7LVuq9bPCVp2ZmgbbdD337qNmg', // TODO
+};
+const SPECIAL_FORM = '1FAIpQLScpjQmpadx7nnrtrst59SxUsz0TsRHZkOgoHbzrehC1tNQ7Ag';
+const FORM_BASE = 'https://docs.google.com/forms/d/e/';
+
+// Entry IDs
+const E = {
+  judge:  'entry.812312499',
+  level:  'entry.568338002',
+  church: 'entry.310187769',
+  group:  'entry.1072482667',
+  male:   'entry.1541799805',
+  female: 'entry.1471236459',
+};
+
+// Level → participants sheet tab
+const LVL_TAB = {
+  'اول الفا':  '1a',
+  'اول فيتا':  'ab',
+  'الثاني':    '2',
+  'الثالث':    '3',
+  'الرابع':    '4',
+  'الخامس':    '5',
+};
+
+// Group letter → arabic (for participants sheet filter)
+const GRP_AR = {'A':'ألفا','B':'فيتا','C':'غاما'};
+// Group arabic → form letter
+const GRP_FORM = {'ألفا':'A','فيتا':'B','غاما':'C'};
+const GRP_COLOR = {'A':'#800000','B':'#1E40AF','C':'#166534'};
+
+// ══ STATE ═════════════════════════════════════════════════════
+let JUDGES = []; // [{name, level, group}]
+let curJudge = null; // name
+let curAssign = null; // {level, group}
+let curChurches = []; // [{church, group, total, male, female}]
+let doneForms = {}; // church → bool
+
+// ══ INIT ══════════════════════════════════════════════════════
+(async function(){
+  try{
+    const rows = await readCSV(JUDGES_ID, JUDGES_TAB);
+    if(!rows.length) throw new Error('الشيت فاضي');
+    // Columns: اسم_المحكم, المستوى, المجموعة
+    const keys = Object.keys(rows[0]);
+    const kName  = keys.find(k=>k.includes('المحكم')||k.includes('اسم'))||keys[0];
+    const kLevel = keys.find(k=>k.includes('المستوى'))||keys[1];
+    const kGroup = keys.find(k=>k.includes('المجموعة')||k.includes('الجروب'))||keys[2];
+    JUDGES = rows.map(r=>({
+      name:  String(r[kName] ||'').trim(),
+      level: String(r[kLevel]||'').trim(),
+      group: String(r[kGroup]||'').trim(),
+    })).filter(r=>r.name&&r.level);
+
+    // Build judge select
+    const sel = document.getElementById('judgeSelect');
+    const names = [...new Set(JUDGES.map(j=>j.name))].sort((a,b)=>a.localeCompare(b,'ar'));
+    sel.innerHTML = '<option value="">— اختار اسمك —</option>'
+      + names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    sel.onchange = ()=>{
+      document.getElementById('s1btn').disabled = !sel.value;
+    };
+  }catch(e){
+    const err = document.getElementById('s1err');
+    err.textContent = '❌ خطأ في تحميل بيانات المحكمين: '+e.message;
+    err.style.display = 'block';
+    document.getElementById('judgeSelect').innerHTML = '<option value="">خطأ في التحميل</option>';
+  }
+})();
+
+// ══ STEP 2: مهام المحكم ═══════════════════════════════════════
+function goStep2(){
+  const sel = document.getElementById('judgeSelect');
+  curJudge = sel.value;
+  if(!curJudge) return;
+
+  const assigns = JUDGES.filter(j=>j.name===curJudge);
+  document.getElementById('s2title').textContent = '👋 أهلاً '+curJudge;
+
+  const list = document.getElementById('assignList');
+  list.innerHTML = assigns.map((a,i)=>{
+    const color = GRP_COLOR[a.group]||'#800000';
+    return`<div class="assign-card" onclick="selectAssign(${i})" id="ac${i}">
+      <div class="assign-lvl">📋 ${a.level}</div>
+      <div class="assign-grp">مجموعة ${GRP_AR[a.group]||a.group} <span class="tag" style="color:${color};background:${color}18">${a.group}</span></div>
+    </div>`;
+  }).join('');
+
+  if(assigns.length===1){
+    // Auto-select if only one assignment
+    setTimeout(()=>selectAssign(0),100);
+  }
+
+  showStep(2);
+}
+
+async function selectAssign(i){
+  const assigns = JUDGES.filter(j=>j.name===curJudge);
+  curAssign = assigns[i];
+  document.querySelectorAll('.assign-card').forEach((c,j)=>c.classList.toggle('on',j===i));
+
+  // Load churches for this level + group
+  const tab = LVL_TAB[curAssign.level];
+  if(!tab){ alert('المستوى مش موجود في الشيت: '+curAssign.level); return; }
+
+  document.getElementById('s3title').textContent = `⛪ ${curAssign.level} — مجموعة ${GRP_AR[curAssign.group]||curAssign.group}`;
+
+  try{
+    const rows = await readCSV(PARTS_ID, tab);
+    const keys = Object.keys(rows[0]||{});
+    const kCh = keys.find(k=>k.includes('الكنيسة')||k.includes('church'))||keys[1];
+    const kGr = keys.find(k=>k.includes('المجموعة')||k.includes('group'))||keys[2];
+    const kTo = keys.find(k=>k.includes('إجمالي')||k.includes('total'))||keys[3];
+    const kMa = keys.find(k=>k.includes('شماس')||k.includes('male'))||keys[4];
+    const kFe = keys.find(k=>k.includes('شماسة')||k.includes('female'))||keys[5];
+
+    curChurches = rows
+      .filter(r=>{
+        if(!r[kCh])return false;
+        const grpAr = GRP_AR[curAssign.group]||curAssign.group;
+        return r[kGr]===grpAr||r[kGr]===curAssign.group;
+      })
+      .map(r=>({
+        church: String(r[kCh]||'').trim(),
+        group:  String(r[kGr]||'').trim(),
+        total:  parseInt(r[kTo])||0,
+        male:   parseInt(r[kMa])||0,
+        female: parseInt(r[kFe])||0,
+      }));
+
+    renderChurches();
+    showStep(3);
+  }catch(e){
+    alert('❌ خطأ في تحميل الكنائس: '+e.message);
+  }
+}
+
+// ══ STEP 3: الكنائس ═══════════════════════════════════════════
+function renderChurches(){
+  const color = GRP_COLOR[curAssign.group]||'#800000';
+  const list = document.getElementById('churchList');
+
+  if(!curChurches.length){
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:#bbb;font-size:13px;font-weight:700">لا يوجد كنائس مشاركة في هذا المستوى</div>';
+    return;
+  }
+
+  list.innerHTML = curChurches.map((ch,i)=>{
+    const done = doneForms[ch.church]?.hymn && doneForms[ch.church]?.special;
+    return`<div class="church-card" style="border-color:${color}33">
+      <div class="church-head">
+        <div style="flex:1">
+          <div class="church-name">⛪ ${esc(ch.church.replace(/كنيسة\s*/,''))}</div>
+          <div style="font-size:10px;color:#9c7c78;font-weight:700;margin-top:3px">${esc(ch.church)}</div>
+        </div>
+        <div class="church-counts">
+          <div class="count-box">
+            <div class="count-n" style="color:${color}">${ch.total}</div>
+            <div class="count-l">إجمالي</div>
+          </div>
+          <div class="count-box">
+            <div class="count-n" style="color:#1A56DB">${ch.male}</div>
+            <div class="count-l">👨 شماس</div>
+          </div>
+          <div class="count-box">
+            <div class="count-n" style="color:#E11D48">${ch.female}</div>
+            <div class="count-l">👩 شماسة</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px">
+        <button class="church-btn ${doneForms[ch.church]?.hymn?'done':''}" onclick="openHymnForm(${i})" style="border-radius:0 0 0 0">
+          ${doneForms[ch.church]?.hymn?'✅ الألحان':'📝 استمارة الألحان'}
+        </button>
+        <button class="church-btn ${doneForms[ch.church]?.special?'done':''}" onclick="openSpecialForm(${i})" style="border-radius:0;background:${doneForms[ch.church]?.special?'#16A34A':'#570000'}">
+          ${doneForms[ch.church]?.special?'✅ الخاص':'🎵 اللحن الخاص'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openForm(i){
+  const ch = curChurches[i];
+  const params = new URLSearchParams({
+    [E.judge]:  curJudge,
+    [E.level]:  curAssign.level,
+    [E.church]: ch.church,
+    [E.group]:  curAssign.group, // already A/B/C from judges sheet
+    [E.male]:   ch.male,
+    [E.female]: ch.female,
+  });
+  const url = `${FORM_URL}?usp=pp_url&${params.toString()}`;
+  window.open(url, '_blank');
+
+
+// ══ NAVIGATION ════════════════════════════════════════════════
+function showStep(n){
+  document.querySelectorAll('.step').forEach((s,i)=>{
+    s.classList.toggle('active', i===n-1);
+  });
+}
+function goBack(n){ showStep(n); }
+
+// ══ CSV READER ════════════════════════════════════════════════
+async function readCSV(id, sheet){
+  const url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}&_=${Date.now()}`;
+  const r = await fetch(url);
+  if(!r.ok) throw new Error('HTTP '+r.status+' — تأكد إن الشيت مفتوح للعموم');
+  const text = await r.text();
+  const lines = text.trim().split('\n').filter(l=>l.trim());
+  if(lines.length<2) return [];
+  const parse = row=>{
+    const res=[];let cur='',inQ=false;
+    for(let i=0;i<row.length;i++){
+      if(row[i]==='"'&&!inQ)inQ=true;
+      else if(row[i]==='"'&&inQ&&row[i+1]==='"'){cur+='"';i++;}
+      else if(row[i]==='"'&&inQ)inQ=false;
+      else if(row[i]===','&&!inQ){res.push(cur.trim());cur='';}
+      else cur+=row[i];
+    }res.push(cur.trim());return res;
+  };
+  const hdrs = parse(lines[0]);
+  return lines.slice(1).map(l=>{
+    const v=parse(l);
+    return Object.fromEntries(hdrs.map((h,i)=>[h,v[i]||'']));
+  });
+}
+
+function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+</script>
+</body>
+</html>
